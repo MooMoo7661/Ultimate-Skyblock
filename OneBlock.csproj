@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\tModLoader.targets" />
+  <PropertyGroup>
+    <AssemblyName>OneBlock</AssemblyName>
+    <TargetFramework>net6.0</TargetFramework>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="icon.png" />
+    <None Remove="icon_workshop.png" />
+    <None Remove="Items\Bombs\SnowBomb.png" />
+    <None Remove="Items\Bombs\StickySnowBomb.png" />
+    <None Remove="Items\ClayBomb.png" />
+    <None Remove="Items\ClayBombProjectile.png" />
+    <None Remove="Items\FossilBomb.png" />
+    <None Remove="Items\FossilBombProjectile.png" />
+    <None Remove="Items\MountItems\OatchiWhistle.png" />
+    <None Remove="Items\Placeable\AutoExtractor.png" />
+    <None Remove="Items\Placeable\AutoExtractorTier2.png" />
+    <None Remove="Items\Placeable\AutoExtractorTier3.png" />
+    <None Remove="Items\Placeable\AutoExtractorTier4.png" />
+    <None Remove="Items\Placeable\AutoExtractorTier5.png" />
+    <None Remove="Items\Placeable\CursedEarth_Item.png" />
+    <None Remove="Items\SandBomb.png" />
+    <None Remove="Items\SandBombProjectile.png" />
+    <None Remove="Items\StickyClayBomb.png" />
+    <None Remove="Items\StickyClayBombProjectile.png" />
+    <None Remove="Items\StickyFossilBomb.png" />
+    <None Remove="Items\StickyFossilBombProjectile.png" />
+    <None Remove="Items\StickySandBomb.png" />
+    <None Remove="Items\StickySandBombProjectile.png" />
+    <None Remove="Items\StickyStoneBomb.png" />
+    <None Remove="Items\StickyStoneBombProjectile.png" />
+    <None Remove="Items\StoneBomb.png" />
+    <None Remove="Items\StoneBombProjectile.png" />
+    <None Remove="Items\Tiles\RadioactiveOre.png" />
+    <None Remove="Items\Tiles\RadioactiveOreTile.png" />
+    <None Remove="Mounts\OatchiBuff.png" />
+    <None Remove="Mounts\Oatchi_Back.png" />
+    <None Remove="Mounts\Oatchi_Front.png" />
+    <None Remove="SkyblockWorldGen\icon.png" />
+    <None Remove="SkyblockWorldGen\VolcanicStone.png" />
+    <None Remove="SkyblockWorldGen\VolcanicStoneTile.png" />
+    <None Remove="Tiles\AutoExtractor.png" />
+    <None Remove="Tiles\AutoExtractor_Highlight.png" />
+    <None Remove="Tiles\Blocks\CursedEarth.png" />
+    <None Remove="Tiles\Blocks\CursedEarth_Tile.png" />
+    <None Remove="Tiles\Extractinators\AutoExtractorTier2Tile.png" />
+    <None Remove="Tiles\Extractinators\AutoExtractorTier3Tile.png" />
+    <None Remove="Tiles\Extractinators\AutoExtractorTier4Tile.png" />
+    <None Remove="Tiles\Extractinators\AutoExtractorTier5Tile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="StructureHelper">
+      <HintPath>..\ModAssemblies\StructureHelper_v2.3.2.dll</HintPath>
+    </Reference>
+    <Reference Include="TileFunctionLibrary">
+      <HintPath>..\ModAssemblies\TileFunctionLibrary_v1.0.1.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

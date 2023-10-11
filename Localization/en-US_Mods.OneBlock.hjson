@@ -1,0 +1,348 @@
+Configs: {
+	OneBlockModConfig: {
+		DisplayName: Gameplay Config
+
+		TeleportToTopOfWorldOnDeath: {
+			Label: Falling out of the world teleports you to the top
+			Tooltip: ""
+		}
+
+		StarterChestStyle: {
+			Label: Starter Chest Style
+			Tooltip:
+				'''
+				1: Classic - contains simple skyblock items such as a water bucket, a lava bucket, and some extra items that aid progression.
+				2: Simple - contains the very basic items, not much is given.
+				3: Luxurious - contains a lot of items that will significantly speed up progression.
+				4: None - there is no chest.
+				'''
+		}
+
+		DirtAndSandCanBeExtracted: {
+			Label: Dirt and Sand can be extracted for gems and ore
+			Tooltip: ""
+		}
+
+		Headers: {
+			Recipes: Recipes
+			General: General Changes
+			Islands: Islands
+			Music: Music
+		}
+
+		DecraftTombstones: {
+			Label: Allow decrafting tombstones into gold and stone
+			Tooltip: ""
+		}
+
+		IslandsStyle: {
+			Label: Choose the style of islands you want to generate
+			Tooltip:
+				'''
+				1: All Islands - includes: desert, both evil biomes, hallow, dungeon, glowing mushroom, hell, forest, snowy, jungle, and jungle temple.
+				2: Important Only - all other biome-specific islands are removed, only the dungeon and jungle temple islands remain.
+				'''
+		}
+
+		FastTrees: {
+			Label: Trees grow at an accelerated rate
+			Tooltip: ""
+		}
+
+		TreesDropMoreAcorns: {
+			Label: Trees drop much more acorns
+			Tooltip: ""
+		}
+
+		BurnZombiesDuringDaytime: {
+			Label: Zombies burn during the day
+			Tooltip: ""
+		}
+
+		SaplingsDropAcorns: {
+			Label: Saplings can be mined back into acorns (Don't question the logic)
+			Tooltip: ""
+		}
+
+		SmeltTinCans: {
+			Label: Tin cans can be smelted down
+			Tooltip: ""
+		}
+
+		CraftGelatinCrystals: {
+			Label: Craft Gelatin Crystals
+			Tooltip: ""
+		}
+
+		CraftExtractinator: {
+			Label: Craft Extractinator
+			Tooltip: ""
+		}
+
+		CraftRegrowthStaff: {
+			Label: Craft Staff of Regrowth
+			Tooltip: ""
+		}
+
+		MinecraftSoundtrack: {
+			Label: Replace Forest music with familiar soundtrack
+			Tooltip: ""
+		}
+
+		OWSoundtrack: {
+			Label: Replace various soundtracks with Otherworld sountracks
+			Tooltip: ""
+		}
+
+		SubwaySurfers: {
+			Label: Subway Surfers!!!
+			Tooltip: ""
+		}
+
+		SmallWorldWarning: {
+			Label: Warning text upon entering a world that is small
+			Tooltip: ""
+		}
+	}
+
+	RecipesConfig: {
+		DisplayName: Recipes Config
+
+		DecraftTombstones: {
+			Label: Allow decrafting tombstones into gold and stone
+			Tooltip: ""
+		}
+
+		CraftLifeCrystals: {
+			Label: Life Crystals Recipe
+			Tooltip: ""
+		}
+
+		SmeltTinCans: {
+			Label: Tin cans can be smelted down
+			Tooltip: ""
+		}
+
+		CraftGelatinCrystals: {
+			Label: Gelatin Crystals Recipe
+			Tooltip: ""
+		}
+
+		CraftExtractinator: {
+			Label: Extractinator Recipe
+			Tooltip: ""
+		}
+
+		CraftRegrowthStaff: {
+			Label: Staff of Regrowth Recipe
+			Tooltip: ""
+		}
+
+		Headers: {
+			Items: Items
+			Misc: Misc
+		}
+
+		CraftIceSkates: {
+			Label: Ice Skates Recipe
+			Tooltip: ""
+		}
+
+		CraftHermesBoots: {
+			Label: Hermes Boots Recipe
+			Tooltip: ""
+		}
+
+		CraftMagicMirror: {
+			Label: Magic Mirror Recipe
+			Tooltip: ""
+		}
+
+		CraftIceMirror: {
+			Label: Ice Mirror Recipe
+			Tooltip: ""
+		}
+
+		CraftRegenerationBand: {
+			Label: Craft Band of Regeneration
+			Tooltip: ""
+		}
+
+		CraftStepStool: {
+			Label: Craft Step Stool
+			Tooltip: ""
+		}
+
+		CraftFlurryBoots: {
+			Label: Flurry Boots Recipe
+			Tooltip: ""
+		}
+
+		CraftDuneriderBoots: {
+			Label: Dunerider Boots Recipe
+			Tooltip: ""
+		}
+
+		CraftAglet: {
+			Label: Aglet Recipe
+			Tooltip: ""
+		}
+	}
+}
+
+Items: {
+	VolcanicStone: {
+		Tooltip: Can be used in the creation of [c/FF3333:Cursed Earth]
+		DisplayName: Volcanic Stone
+	}
+
+	StoneBomb: {
+		DisplayName: Stone Bomb
+		Tooltip: A small explosion that will spread stone
+	}
+
+	StickyStoneBomb: {
+		DisplayName: Sticky Stone Bomb
+		Tooltip: A small explosion that will spread stone
+	}
+
+	SandBomb: {
+		DisplayName: Sand Bomb
+		Tooltip: A small explosion that will spread sand
+	}
+
+	StickySandBomb: {
+		DisplayName: Sticky Sand Bomb
+		Tooltip: A small explosion that will spread sand
+	}
+
+	ClayBomb: {
+		DisplayName: Clay Bomb
+		Tooltip: A small explosion that will spread clay
+	}
+
+	StickyClayBomb: {
+		DisplayName: Sticky Clay Bomb
+		Tooltip: A small explosion that will spread clay
+	}
+
+	FossilBomb: {
+		DisplayName: Fossil Bomb
+		Tooltip: A small explosion that will spread fossils
+	}
+
+	StickyFossilBomb: {
+		DisplayName: Sticky Fossil Bomb
+		Tooltip: A small explosion that will spread fossils
+	}
+
+	AutoExtractor: {
+		DisplayName: Automatic Extractor Tier 1
+		Tooltip:
+			'''
+			[c/4BEC76:Automatically extracts items every 2 seconds]
+			Placing certain items into the storage container allows it to [c/FFD47C:automatically extract the items]
+			Can be further upgraded into higher tiers, which increase speed and range of items
+			'''
+	}
+
+	AutoExtractorTier2: {
+		DisplayName: Auto Extractor Tier 2
+		Tooltip:
+			'''
+			[c/4BEC76:Automatically extracts items every 1.5 seconds]
+			[c/CF7AFF:Produces 2x output, while only consuming 1x input]
+			Placing certain items into the storage container allows it to [c/FFD47C:automatically extract the items]
+			Can be further upgraded into higher tiers, which increase speed and range of items
+			'''
+	}
+
+	AutoExtractorTier3: {
+		DisplayName: Auto Extractor Tier 3
+		Tooltip:
+			'''
+			[c/4BEC76:Automatically extracts items every second]
+			[c/CF7AFF:Produces 3x output, while only consuming 2x input]
+			Placing certain items into the storage container allows it to [c/FFD47C:automatically extract the items]
+			Can be further upgraded into higher tiers, which increase speed and range of items
+			'''
+	}
+
+	AutoExtractorTier4: {
+		DisplayName: Auto Extractor Tier 4
+		Tooltip:
+			'''
+			[c/4BEC76:Automatically extracts items every 0.5 seconds]
+			[c/CF7AFF:Produces 4x output, while only consuming 2x input]
+			Placing certain items into the storage container allows it to [c/FFD47C:automatically extract the items]
+			Can be further upgraded into higher tiers, which increase speed and range of items
+			'''
+	}
+
+	AutoExtractorTier5: {
+		DisplayName: Auto Extractor Tier 5
+		Tooltip:
+			'''
+			[c/4BEC76:Automatically extracts items every 0.3 seconds]
+			[c/E10643:Produces 8x output, while only consuming 4x input]
+			[c/86F0FF:Has a much higher chance to generate Platinum Coins]
+			Placing certain items into the storage container allows it to [c/FFD47C:automatically extract the items]
+			Cannot be upgraded further
+			'''
+	}
+
+	SnowBomb: {
+		DisplayName: Snow Bomb
+		Tooltip: A smalll explosion that will spread snow
+	}
+
+	StickySnowBomb: {
+		DisplayName: Sticky Snow Bomb
+		Tooltip: A small explosion that will spread snow
+	}
+
+	CursedEarth_Item: {
+		DisplayName: Cursed Earth
+		Tooltip:
+			'''
+			Soil that became corrupted and evil, harnessing the power to [c/b266ff:summon creatures]
+			"For all your auto-farm needs!"
+			[c/FF3333:Do not use with block swap]
+			'''
+	}
+
+	OatchiWhistle: {
+		DisplayName: Oatchi Whistle
+		Tooltip: ""
+	}
+}
+
+Projectiles: {
+	StoneBombProjectile.DisplayName: Stone Bomb Projectile
+	StickyStoneBombProjectile.DisplayName: Sticky Stone Bomb Projectile
+	SandBombProjectile.DisplayName: Sand Bomb Projectile
+	StickySandBombProjectile.DisplayName: Sticky Sand Bomb Projectile
+	ClayBombProjectile.DisplayName: Clay Bomb Projectile
+	StickyClayBombProjectile.DisplayName: Sticky Clay Bomb Projectile
+	FossilBombProjectile.DisplayName: Fossil Bomb Projectile
+	StickyFossilBombProjectile.DisplayName: Sticky Fossil Bomb Projectile
+	SnowBombProjectile.DisplayName: Snow Bomb Projectile
+	StickySnowBombProjectile.DisplayName: Sticky Snow Bomb Projectile
+}
+
+Tiles: {
+	AutoExtractorTile.MapEntry: Auto Extractor
+	AutoExtractor.MapEntry: Auto-Extractor
+	AutoExtractorTier1Tile.MapEntry: Auto Extractor Tier 1
+	AutoExtractorTier2Tile.MapEntry: Auto Extractor Tier 2
+	AutoExtractorTier3Tile.MapEntry: Auto Extractor Tier 3
+	AutoExtractorTier4Tile.MapEntry: Auto Extractor Tier 4
+	AutoExtractorTier5Tile.MapEntry: Auto Extractor Tier 5
+}
+
+Buffs: {
+	OatchiBuff: {
+		DisplayName: Oatchi Buff
+		Description: Mods.OneBlock.Buffs.OatchiBuff.Description
+	}
+}

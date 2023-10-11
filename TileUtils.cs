@@ -29,7 +29,6 @@ namespace OneBlock {
                     frameY = tile.TileFrameY % (size * data.Height) / size;
                 }
             }
-
             return new Point16(x - frameX, y - frameY);
         }
 

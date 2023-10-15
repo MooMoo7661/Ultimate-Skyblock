@@ -149,6 +149,7 @@ namespace OneBlock.SkyblockWorldGen
         }
         public override void SetStaticDefaults()
         {
+            
             Main.tileMerge[TileID.Hellstone][TileID.Ash] = true;
             Main.tileMerge[TileID.Hellstone][TileID.ReefBlock] = true;
             Main.tileMerge[TileID.Hellstone][TileID.Coralstone] = true;
@@ -168,6 +169,11 @@ namespace OneBlock.SkyblockWorldGen
             if (type == TileID.Saplings && !fail && tile.TileFrameY != 0 && ModContent.GetInstance<OneBlockModConfig>().SaplingsDropAcorns)
             {
                 Item.NewItem(GetItemSource_FromTileBreak(i, j), new Vector2(i * 16, j * 16), Vector2.Zero, ItemID.Acorn);
+            }
+
+            if (type == TileID.Crystals && !Main.hardMode)
+            {
+                noItem = true;
             }
         }
     }

@@ -103,6 +103,15 @@ Configs: {
 			Label: Warning text upon entering a world that is small
 			Tooltip: ""
 		}
+
+		StoneGenerator: {
+			Label: Stone Generator Logic
+			Tooltip:
+				'''
+				If lava and water are seperated by one block of air, it will generate stone in that spot, or obsidian if in the caverns.
+				It must be left -> right, or right -> left.
+				'''
+		}
 	}
 
 	RecipesConfig: {

@@ -102,9 +102,7 @@ namespace OneBlock.SkyblockWorldGen
             y = Main.maxTilesY / 2 - Main.maxTilesY / 3 - 25; // Recenters the Y coordinate due to islands spawning from the top left of the build
 
             Generator.GenerateStructure(WorldHelpers.forestPath + "Main", new Point16(x, y), Instance); // Generate the spawn island
-
-            if (config.IslandsStyle == 1)
-                GenForestIslands(new Point16(x, y + 50));
+            GenForestIslands(new Point16(x, y + 50));
 
             if (config.StarterChestStyle != 4) // Setting loot for starter chest
             {

@@ -14,6 +14,7 @@ namespace OneBlock
         {
             On_WorldGen.ShakeTree += On_WorldGen_ShakeTree;
             Instance = this;
+            OB_Liquid.Load();
         }
 
         public override void Unload()

@@ -12,12 +12,6 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using TileFunctionLibrary.API;
-using OneBlock.Items.Bombs;
-using static Terraria.ModLoader.PlayerDrawLayer;
-using Terraria.GameInput;
 
 namespace OneBlock.Tiles.Extractinators
 {
@@ -90,6 +84,7 @@ namespace OneBlock.Tiles.Extractinators
                 timer++;
                 if (timer >= Timer)
                 {
+                    int chest2 = Chest.FindChest(Position.X - 2, Position.Y);
                     for (int z = 0; z < ConsumeMultiplier; z++)
                     {
                         for (int i = 0; i < chest.item.Length; i++)
@@ -105,22 +100,8 @@ namespace OneBlock.Tiles.Extractinators
 
                                 Extract(ItemID.Sets.ExtractinatorMode[chest.item[i].type], out int type, out int stack);
 
-                                Chest chest2 = Main.chest[Chest.FindChest(Position.X - 2, Position.Y)];
+                                TryDepositToChest(type, stack * LootMultiplier);
 
-                                    if (chest2 != null && TryDepositToChest(Chest.FindChest(Position.X - 2, Position.Y), type, stack * LootMultiplier))
-                                    {
-
-                                    }
-                                    else
-                                    {
-                                        int number = Item.NewItem(null, (int)Position.ToWorldCoordinates().X, (int)Position.ToWorldCoordinates().Y, 1, 1, type, stack, noBroadcast: false, -1);
-
-                                        if (Main.netMode == NetmodeID.MultiplayerClient)
-                                        {
-                                            NetMessage.SendData(MessageID.SyncItem, -1, -1, null, number, 1f);
-                                        }
-                                    }
-                                
                                 break;
                             }
                         }
@@ -139,25 +120,59 @@ namespace OneBlock.Tiles.Extractinators
             }
 
         }
-        public static bool TryDepositToChest(int chest, int itemType, int stack)
-        {
-            Item item = new(itemType, stack);
-            Item[] inv = Main.chest[chest].item;
-            return Deposit(inv, ref item);
-        }
         public static bool NullOrAir(Item item) => item?.IsAir ?? true;
-        public static bool Deposit(Item[] inv, ref Item item)
+        public void TryDepositToChest(int itemType, int stack)
+        {
+            if (itemType <= ItemID.None)
+                return;
+
+            if (stack <= 0)
+                return;
+
+            int chest = Chest.FindChest(Position.X - 2, Position.Y);
+            Point extractorWordCoordinates = Position.ToWorldCoordinates().ToPoint();
+            Item[] inv = chest > 0 ? Main.chest[chest].item : null;
+            while (stack > 0)
+            {
+                Item item = new(itemType, stack);
+                int itemStack = stack;
+                if (item.stack > item.maxStack)
+                {
+                    itemStack = item.maxStack;
+                    itemStack -= item.maxStack;
+                }
+
+                if (!Deposit(inv, ref item, out int _))
+                {
+                    int number = Item.NewItem(null, extractorWordCoordinates.X, extractorWordCoordinates.Y, 1, 1, item.type, item.stack, noBroadcast: false, -1);
+
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                    {
+                        NetMessage.SendData(MessageID.SyncItem, -1, -1, null, number, 1f);
+                    }
+                }
+
+                stack -= itemStack - item.stack;
+            }
+        }
+        public static bool Deposit(Item[] inv, ref Item item, out int index)
         {
             if (NullOrAir(item))
+            {
+                index = inv.Length;
                 return false;
+            }
 
             if (item.favorited)
+            {
+                index = inv.Length;
                 return false;
+            }
 
-            if (Restock(inv, ref item))
+            if (Restock(inv, ref item, out index))
                 return true;
 
-            int index = 0;
+            index = 0;
             while (index < inv.Length && !inv[index].IsAir)
             {
                 index++;
@@ -167,11 +182,14 @@ namespace OneBlock.Tiles.Extractinators
                 return false;
 
             inv[index] = item.Clone();
+            if (item.stack == item.maxStack)
+                DoCoins(inv, index);
+
             item.TurnToAir();
 
             return true;
         }
-        public static bool Restock(Item[] inv, ref Item item)
+        public static bool Restock(Item[] inv, ref Item item, out int index)
         {
             for (int i = 0; i < inv.Length; i++)
             {
@@ -183,12 +201,52 @@ namespace OneBlock.Tiles.Extractinators
                         if (item.stack < 1)
                         {
                             item.TurnToAir();
+                            index = i;
+                            if (bagItem.stack == bagItem.maxStack)
+                                DoCoins(inv, i);
 
                             return true;
+                        }
+                        else
+                        {
+                            DoCoins(inv, i);
                         }
                     }
                 }
             }
+
+            index = inv.Length;
+            return false;
+        }
+
+        public static void DoCoins(Item[] inv, int slot)
+        {
+            Item item = inv[slot];
+            if (item.type < ItemID.CopperCoin || item.type > ItemID.GoldCoin)
+                return;
+
+            if (item.stack != 100)
+                return;
+
+            item.SetDefaults(item.type + 1);
+            for (int i = 0; i < inv.Length; i++)
+            {
+                Item coin = inv[i];
+                if (IsTheSameAs(item, coin) && i != slot && coin.stack < coin.maxStack)
+                {
+                    coin.stack++;
+                    item.TurnToAir(true);
+                    item.active = false;
+                    DoCoins(inv, i);
+
+                    break;
+                }
+            }
+        }
+        private static bool IsTheSameAs(Item item, Item compareItem)
+        {
+            if (item.netID == compareItem.netID)
+                return item.type == compareItem.type;
 
             return false;
         }

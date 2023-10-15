@@ -12,6 +12,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria;
 using Microsoft.Xna.Framework;
+using OneBlock.Utility;
 
 namespace OneBlock.Tiles.Extractinators
 {
@@ -64,192 +65,134 @@ namespace OneBlock.Tiles.Extractinators
 
         public override void Update()
         {
-            try
-            {
-                Tile tile = Framing.GetTileSafely(Position.X, Position.Y);
-                int left = Position.X;
-                int top = Position.Y;
-                if (tile.TileFrameX % 36 != 0)
-                {
-                    left--;
+			Tile tile = Framing.GetTileSafely(Position.X, Position.Y);
+			int left = Position.X;
+			int top = Position.Y;
+			if (tile.TileFrameX % 36 != 0) {
+				left--;
+			}
+
+			if (tile.TileFrameY != 0) {
+				top--;
+			}
+
+			int[] chestPositionXOffsets = new int[] { -2, 3 };
+			Item[][] storageChests = new Item[chestPositionXOffsets.Length][];
+			for (int i = 0; i < chestPositionXOffsets.Length; i++) {
+				int xOffset = chestPositionXOffsets[i];
+				int chest = Chest.FindChest(Position.X + xOffset, Position.Y);
+				storageChests[i] = chest >= 0 ? Main.chest[chest].item : null;
+			}
+
+			timer++;
+			if (timer >= Timer) {
+				Chest extractorChest = Main.chest[Chest.FindChest(left, top)];
+				Point extractorWordCoordinates = Position.ToWorldCoordinates().ToPoint();
+				int i = 0;
+				for (int z = 0; z < ConsumeMultiplier; z++) {
+					for (; i < extractorChest.item.Length; i++) {
+						if (extractorChest.item[i].type != ItemID.None && ItemID.Sets.ExtractinatorMode[extractorChest.item[i].type] != -1) {
+							if (extractorChest.item[i].stack > 0)
+								extractorChest.item[i].stack -= 1;
+
+							if (extractorChest.item[i].stack <= 0)
+								extractorChest.item[i].TurnToAir();
+
+							Extract(ItemID.Sets.ExtractinatorMode[extractorChest.item[i].type], out int type, out int stack);
+
+							TryDepositToChest(storageChests, type, stack * LootMultiplier, extractorWordCoordinates);
+
+							break;
+						}
+					}
+				}
+
+				timer = 0;
+			}
+
+			for (int i = 0; i < chestPositionXOffsets.Length; i++) {
+				Item[] inv = storageChests[i];
+				if (inv == null)
+					continue;
+
+				inv.PercentFull(out float stackPercentFull, out float slotsPercentFull);
+				int xOffset = chestPositionXOffsets[i];
+				Vector2 center = (Position + new Point16(1 + xOffset, 0)).ToWorldCoordinates(0f, 0f);
+				float dustRadius = 5f;
+				Vector2 velocity = Vector2.Zero;
+
+				Vector2 stackDustPostion = center + new Vector2(-dustRadius, 0f);
+				Color stackColor = GetChestDustColor(stackPercentFull, 1f);
+				Dust stackDust = Dust.NewDustPerfect(stackDustPostion, DustID.Marble, velocity, newColor: stackColor);
+				stackDust.noGravity = true;
+
+				Vector2 slotsDustPosition = center + new Vector2(dustRadius, 0f);
+				Color slotsColor = GetChestDustColor(slotsPercentFull, 1f);
+				Dust slotsDust = Dust.NewDustPerfect(slotsDustPosition, DustID.Marble, velocity, newColor: slotsColor);
+				slotsDust.noGravity = true;
+			}
+
+		}
+        private static Color GetChestDustColor(float percentFull, float alpha) {
+            float red;
+            float green;
+            if (percentFull < 0.5f) {
+                green = 1f;
+                red = percentFull * 2f;
+            }
+            else {
+				red = 1f;
+                if (percentFull == 1f) {
+                    green = 0f;
                 }
-
-                if (tile.TileFrameY != 0)
-                {
-                    top--;
+                else {
+                    green = 1f - (percentFull - 0.5f) * 1.6f + 0.2f;
                 }
+			}
 
-                Chest chest = Main.chest[Chest.FindChest(left, top)];
+            return new Color(red, green, 0f, alpha);
+		}
 
-                timer++;
-                if (timer >= Timer)
-                {
-                    int chest2 = Chest.FindChest(Position.X - 2, Position.Y);
-                    for (int z = 0; z < ConsumeMultiplier; z++)
-                    {
-                        for (int i = 0; i < chest.item.Length; i++)
-                        {
-                            if (chest.item[i].type != ItemID.None && ItemID.Sets.ExtractinatorMode[chest.item[i].type] != -1)
-                            {
-                                if (chest.item[i].stack > 0)
-                                    chest.item[i].stack -= 1;
+		public static void TryDepositToChest(IEnumerable<Item[]> inventories, int itemType, int stack, Point extractorWordCoordinates) {
+			if (itemType <= ItemID.None)
+				return;
 
+			if (stack <= 0)
+				return;
 
-                                if (chest.item[i].stack <= 0)
-                                    chest.item[i].TurnToAir();
+			while (stack > 0) {
+				Item item = new(itemType, stack);
+				int itemStack = stack;
+				if (item.stack > item.maxStack) {
+					item.stack = item.maxStack;
+                    itemStack = item.stack;
+				}
 
-                                Extract(ItemID.Sets.ExtractinatorMode[chest.item[i].type], out int type, out int stack);
+                bool deposited = false;
+                foreach (Item[] inv in inventories) {
+					if (inv == null)
+						continue;
 
-                                TryDepositToChest(type, stack * LootMultiplier);
+					if (inv.Deposit(ref item, out int _)) {
+						deposited = true;
+						break;
+					}
+				}
 
-                                break;
-                            }
-                        }
-                    }
+                if (!deposited) {
+					int number = Item.NewItem(null, extractorWordCoordinates.X, extractorWordCoordinates.Y, 1, 1, item.type, item.stack, noBroadcast: false, -1);
 
-                    timer = 0;
-                }
+					if (Main.netMode == NetmodeID.MultiplayerClient) {
+						NetMessage.SendData(MessageID.SyncItem, -1, -1, null, number, 1f);
+					}
 
-                Dust dust = Dust.NewDustPerfect(new Vector2(Position.X * 16 - 32, Position.Y * 16), DustID.GemSapphire);
-                dust.noGravity = true;
-                dust.velocity *= 0;
-            }
-            catch
-            {
+					item.stack = 0;
+				}
 
-            }
-
-        }
-        public static bool NullOrAir(Item item) => item?.IsAir ?? true;
-        public void TryDepositToChest(int itemType, int stack)
-        {
-            if (itemType <= ItemID.None)
-                return;
-
-            if (stack <= 0)
-                return;
-
-            int chest = Chest.FindChest(Position.X - 2, Position.Y);
-            Point extractorWordCoordinates = Position.ToWorldCoordinates().ToPoint();
-            Item[] inv = chest > 0 ? Main.chest[chest].item : null;
-            while (stack > 0)
-            {
-                Item item = new(itemType, stack);
-                int itemStack = stack;
-                if (item.stack > item.maxStack)
-                {
-                    itemStack = item.maxStack;
-                    itemStack -= item.maxStack;
-                }
-
-                if (!Deposit(inv, ref item, out int _))
-                {
-                    int number = Item.NewItem(null, extractorWordCoordinates.X, extractorWordCoordinates.Y, 1, 1, item.type, item.stack, noBroadcast: false, -1);
-
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                    {
-                        NetMessage.SendData(MessageID.SyncItem, -1, -1, null, number, 1f);
-                    }
-                }
-
-                stack -= itemStack - item.stack;
-            }
-        }
-        public static bool Deposit(Item[] inv, ref Item item, out int index)
-        {
-            if (NullOrAir(item))
-            {
-                index = inv.Length;
-                return false;
-            }
-
-            if (item.favorited)
-            {
-                index = inv.Length;
-                return false;
-            }
-
-            if (Restock(inv, ref item, out index))
-                return true;
-
-            index = 0;
-            while (index < inv.Length && !inv[index].IsAir)
-            {
-                index++;
-            }
-
-            if (index == inv.Length)
-                return false;
-
-            inv[index] = item.Clone();
-            if (item.stack == item.maxStack)
-                DoCoins(inv, index);
-
-            item.TurnToAir();
-
-            return true;
-        }
-        public static bool Restock(Item[] inv, ref Item item, out int index)
-        {
-            for (int i = 0; i < inv.Length; i++)
-            {
-                Item bagItem = inv[i];
-                if (!NullOrAir(bagItem) && bagItem.type == item.type && bagItem.stack < bagItem.maxStack)
-                {
-                    if (ItemLoader.TryStackItems(bagItem, item, out _))
-                    {
-                        if (item.stack < 1)
-                        {
-                            item.TurnToAir();
-                            index = i;
-                            if (bagItem.stack == bagItem.maxStack)
-                                DoCoins(inv, i);
-
-                            return true;
-                        }
-                        else
-                        {
-                            DoCoins(inv, i);
-                        }
-                    }
-                }
-            }
-
-            index = inv.Length;
-            return false;
-        }
-
-        public static void DoCoins(Item[] inv, int slot)
-        {
-            Item item = inv[slot];
-            if (item.type < ItemID.CopperCoin || item.type > ItemID.GoldCoin)
-                return;
-
-            if (item.stack != 100)
-                return;
-
-            item.SetDefaults(item.type + 1);
-            for (int i = 0; i < inv.Length; i++)
-            {
-                Item coin = inv[i];
-                if (IsTheSameAs(item, coin) && i != slot && coin.stack < coin.maxStack)
-                {
-                    coin.stack++;
-                    item.TurnToAir(true);
-                    item.active = false;
-                    DoCoins(inv, i);
-
-                    break;
-                }
-            }
-        }
-        private static bool IsTheSameAs(Item item, Item compareItem)
-        {
-            if (item.netID == compareItem.netID)
-                return item.type == compareItem.type;
-
-            return false;
-        }
+				stack -= itemStack - item.stack;
+			}
+		}
+		
         public void Extract(int extractType, out int type, out int stack)
         {
             // Stolen vanilla code lmao

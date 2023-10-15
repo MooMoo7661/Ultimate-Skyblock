@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.ObjectInteractions;
@@ -13,17 +9,13 @@ using Terraria.ObjectData;
 using Terraria;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
 using TileFunctionLibrary.API;
-using OneBlock.Items.Bombs;
-using static Terraria.ModLoader.PlayerDrawLayer;
-using Terraria.UI;
-using SteelSeries.GameSense.DeviceZone;
 
 namespace OneBlock.Tiles.Extractinators
 {
     public abstract class AutoExtractor_BaseTile : ModTile, IExtractinatorTile
     {
+        
         protected abstract string TilesheetPath { get; }
         protected abstract int ExtractorTile { get; }
         protected abstract ModTileEntity Entity { get; }

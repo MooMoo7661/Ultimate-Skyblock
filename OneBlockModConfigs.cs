@@ -13,49 +13,34 @@ namespace OneBlock
         [DefaultValue(true)]
         public bool TeleportToTopOfWorldOnDeath { get; set; }
 
-
+        [Label("Stone Generator Logic")]
+        [Tooltip("If lava and water are seperated by one block of air, it will generate stone in that spot, or obsidian if in the caverns.\nIt must be left -> right, or right -> left.")]
+        [DefaultValue(true)]
+        public bool StoneGenerator { get; set; }
 
         [Label("Trees grow at an accelerated rate")]
         [DefaultValue(true)]
         public bool FastTrees { get; set; }
 
-
-
         [Label("Trees drop much more acorns")]
         [DefaultValue(true)]
         public bool TreesDropMoreAcorns { get; set; }
-
-
 
         [Label("Saplings can be mined back into acorns (Don't question the logic)")]
         [DefaultValue(true)]
         public bool SaplingsDropAcorns { get; set; }
 
-
-
         [Label("Zombies burn during the day")]
         [DefaultValue(true)]
         public bool BurnZombiesDuringDaytime { get; set; }
-
-
 
         [Label("Dirt and Sand can be extracted for gems and ore")]
         [DefaultValue(true)]
         public bool DirtAndSandCanBeExtracted { get; set; }
 
-
         [Label("Warning text upon entering a world that is small")]
         [DefaultValue(true)]
         public bool SmallWorldWarning { get; set; }
-
-        [Header("Islands")]
-        [Label("IslandsStyle")]
-        [DefaultValue(1)]
-        [Slider]
-        [Increment(1)]
-        [Range(1, 2)]
-        [ReloadRequired]
-        public int IslandsStyle { get; set; }
 
         [Label("Starter Chest Style")]
         [Tooltip("1: Classic - contains simple skyblock items such as a water bucket, a lava bucket, and some extra items that aid progression.\n" +

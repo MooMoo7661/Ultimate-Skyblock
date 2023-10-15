@@ -102,17 +102,25 @@ namespace OneBlock.Tiles.Extractinators
 
                                 if (chest.item[i].stack <= 0)
                                     chest.item[i].TurnToAir();
-                                //switch (Main.rand.Next(3))
-                                //{
-                                //    case 0 or 1:
-                                //        SoundEngine.PlaySound(SoundID.Item22);
-                                //        break;
 
-                                //    case 2:
-                                //        SoundEngine.PlaySound(SoundID.Item23);
-                                //        break;
-                                //}
-                                Extract(ItemID.Sets.ExtractinatorMode[chest.item[i].type]);
+                                Extract(ItemID.Sets.ExtractinatorMode[chest.item[i].type], out int type, out int stack);
+
+                                Chest chest2 = Main.chest[Chest.FindChest(Position.X - 2, Position.Y)];
+
+                                    if (chest2 != null && TryDepositToChest(Chest.FindChest(Position.X - 2, Position.Y), type, stack * LootMultiplier))
+                                    {
+
+                                    }
+                                    else
+                                    {
+                                        int number = Item.NewItem(null, (int)Position.ToWorldCoordinates().X, (int)Position.ToWorldCoordinates().Y, 1, 1, type, stack, noBroadcast: false, -1);
+
+                                        if (Main.netMode == NetmodeID.MultiplayerClient)
+                                        {
+                                            NetMessage.SendData(MessageID.SyncItem, -1, -1, null, number, 1f);
+                                        }
+                                    }
+                                
                                 break;
                             }
                         }
@@ -121,7 +129,9 @@ namespace OneBlock.Tiles.Extractinators
                     timer = 0;
                 }
 
-                Dust.NewDust(new Vector2(left, top), 5, 5, DustID.SparksMech);
+                Dust dust = Dust.NewDustPerfect(new Vector2(Position.X * 16 - 32, Position.Y * 16), DustID.GemSapphire);
+                dust.noGravity = true;
+                dust.velocity *= 0;
             }
             catch
             {
@@ -129,8 +139,60 @@ namespace OneBlock.Tiles.Extractinators
             }
 
         }
+        public static bool TryDepositToChest(int chest, int itemType, int stack)
+        {
+            Item item = new(itemType, stack);
+            Item[] inv = Main.chest[chest].item;
+            return Deposit(inv, ref item);
+        }
+        public static bool NullOrAir(Item item) => item?.IsAir ?? true;
+        public static bool Deposit(Item[] inv, ref Item item)
+        {
+            if (NullOrAir(item))
+                return false;
 
-        public void Extract(int extractType)
+            if (item.favorited)
+                return false;
+
+            if (Restock(inv, ref item))
+                return true;
+
+            int index = 0;
+            while (index < inv.Length && !inv[index].IsAir)
+            {
+                index++;
+            }
+
+            if (index == inv.Length)
+                return false;
+
+            inv[index] = item.Clone();
+            item.TurnToAir();
+
+            return true;
+        }
+        public static bool Restock(Item[] inv, ref Item item)
+        {
+            for (int i = 0; i < inv.Length; i++)
+            {
+                Item bagItem = inv[i];
+                if (!NullOrAir(bagItem) && bagItem.type == item.type && bagItem.stack < bagItem.maxStack)
+                {
+                    if (ItemLoader.TryStackItems(bagItem, item, out _))
+                    {
+                        if (item.stack < 1)
+                        {
+                            item.TurnToAir();
+
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+        public void Extract(int extractType, out int type, out int stack)
         {
             // Stolen vanilla code lmao
 
@@ -440,17 +502,13 @@ namespace OneBlock.Tiles.Extractinators
 
             if (num5 > 0)
             {
-                for (int i = 0; i < LootMultiplier; i++)
-                {
-                    int number = Item.NewItem(null, (int)Position.ToWorldCoordinates().X, (int)Position.ToWorldCoordinates().Y, 1, 1, num5, num6, noBroadcast: false, -1);
-
-                    if (Main.netMode == 1)
-                    {
-                        NetMessage.SendData(21, -1, -1, null, number, 1f);
-                    }
-                }
+                type = num5;
+                stack = num6;
+                return;
             }
 
+            type = -1;
+            stack = 0;
         }
     }
 }

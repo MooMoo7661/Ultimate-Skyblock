@@ -121,12 +121,12 @@ namespace OneBlock.Tiles.Extractinators
 
 				Vector2 stackDustPostion = center + new Vector2(-dustRadius, 0f);
 				Color stackColor = GetChestDustColor(stackPercentFull, 1f);
-				Dust stackDust = Dust.NewDustPerfect(stackDustPostion, DustID.Marble, velocity, newColor: stackColor);
+				Dust stackDust = Dust.NewDustPerfect(stackDustPostion, ModContent.DustType<ExtractinatorDust>(), velocity, newColor: stackColor);
 				stackDust.noGravity = true;
 
 				Vector2 slotsDustPosition = center + new Vector2(dustRadius, 0f);
 				Color slotsColor = GetChestDustColor(slotsPercentFull, 1f);
-				Dust slotsDust = Dust.NewDustPerfect(slotsDustPosition, DustID.Marble, velocity, newColor: slotsColor);
+				Dust slotsDust = Dust.NewDustPerfect(slotsDustPosition, ModContent.DustType<ExtractinatorDust>(), velocity, newColor: slotsColor);
 				slotsDust.noGravity = true;
 			}
 
@@ -190,5 +190,26 @@ namespace OneBlock.Tiles.Extractinators
 				stack -= itemStack - item.stack;
 			}
 		}
+    }
+
+    public class ExtractinatorDust : ModDust
+    {
+        public int timer = 0;
+        public override bool Update(Dust dust)
+        {
+            timer++;
+            if (timer >= 30)
+            {
+                dust.active = false;
+            }
+            return true;
+        }
+
+        public override void OnSpawn(Dust dust)
+        {
+            dust.scale = 1f;
+            dust.noGravity = true;
+        }
+
     }
 }

@@ -11,16 +11,17 @@ using Terraria.ModLoader;
 
 namespace OneBlock.Tiles.Extractinators {
 	internal class ExtractionItem : GlobalItem {
-		public override void ExtractinatorUse(int extractType, int extractinatorBlockType, ref int resultType, ref int resultStack) {
-			if (resultType >= ItemID.CopperCoin && resultType <= ItemID.GoldCoin) {
-				if (extractinatorBlockType == ModContent.TileType<AutoExtractorTier5Tile>() && Main.rand.NextBool(40))
-					resultType = ItemID.PlatinumCoin;
-			}
-		}
+        public override void ExtractinatorUse(int extractType, int extractinatorBlockType, ref int resultType, ref int resultStack)
+        {
+            //if (resultType >= ItemID.CopperCoin && resultType <= ItemID.GoldCoin) {
+            //    if (extractinatorBlockType == ModContent.TileType<AutoExtractorTier5Tile>() && Main.rand.NextBool(40))
+            //        resultType = ItemID.PlatinumCoin;
+            //}
+        }
 
-		#region Detours and Reflection
+        #region Detours and Reflection
 
-		private static Hook extractinatorHook;
+        private static Hook extractinatorHook;
 		public override void Load() {
 			extractinatorHook = new Hook(ItemLoaderExtractinatorUse, ItemLoader_ExtractinatorUse_Detour);
 			extractinatorHook.Apply();

@@ -39,9 +39,16 @@ namespace OneBlock.Tiles.Extractinators
             // Names
             AddMapEntry(new Color(200, 200, 200), CreateMapEntryName(), MapChestName);
 
+            Func<int, int, int, int, int, int, int> postPlacementHook = (x, y, type, style, direction, alternate) => {
+                int location = Chest.AfterPlacement_Hook(x, y, type, style, direction, alternate);
+                Entity.Hook_AfterPlacement(x, y, type, style, direction, alternate);
+
+                return location;
+            };
+
             // Placement
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
-            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook((Func<int, int, int, int, int, int, int>)Delegate.Combine(Chest.AfterPlacement_Hook, Entity.Hook_AfterPlacement), -1, 0, false);
+            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(postPlacementHook, -1, 0, false);
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 18 };
             TileObjectData.newTile.UsesCustomCanPlace = true;
 

@@ -27,7 +27,6 @@ namespace OneBlock.Tiles.Extractinators
         protected override int ConsumeMultiplier => 1;
         protected override int LootMultiplier => 1;
         protected override int TileToBeValidOn => ModContent.TileType<AutoExtractorTier1Tile>();
-        protected override bool HighPlatinum => false;
     }
 
     public class AutoExtractorTier2Entity : AutoExtractor_BaseEntity
@@ -36,7 +35,6 @@ namespace OneBlock.Tiles.Extractinators
         protected override int ConsumeMultiplier => 1;
         protected override int LootMultiplier => 2;
         protected override int TileToBeValidOn => ModContent.TileType<AutoExtractorTier2Tile>();
-        protected override bool HighPlatinum => false;
     }
 
     public class AutoExtractorTier3Entity : AutoExtractor_BaseEntity
@@ -45,7 +43,6 @@ namespace OneBlock.Tiles.Extractinators
         protected override int ConsumeMultiplier => 2;
         protected override int LootMultiplier => 3;
         protected override int TileToBeValidOn => ModContent.TileType<AutoExtractorTier3Tile>();
-        protected override bool HighPlatinum => false;
     }
 
     public class AutoExtractorTier4Entity : AutoExtractor_BaseEntity
@@ -54,7 +51,6 @@ namespace OneBlock.Tiles.Extractinators
         protected override int ConsumeMultiplier => 2;
         protected override int LootMultiplier => 4;
         protected override int TileToBeValidOn => ModContent.TileType<AutoExtractorTier4Tile>();
-        protected override bool HighPlatinum => false;
     }
 
     public class AutoExtractorTier5Entity : AutoExtractor_BaseEntity
@@ -63,6 +59,5 @@ namespace OneBlock.Tiles.Extractinators
         protected override int ConsumeMultiplier => 3;
         protected override int LootMultiplier => 8;
         protected override int TileToBeValidOn => ModContent.TileType<AutoExtractorTier5Tile>();
-        protected override bool HighPlatinum => true;
     }
 }

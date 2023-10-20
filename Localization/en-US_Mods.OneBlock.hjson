@@ -252,6 +252,9 @@ Items: {
 			[c/4BEC76:Automatically extracts items every 2 seconds]
 			Placing certain items into the storage container allows it to [c/FFD47C:automatically extract the items]
 			Can be further upgraded into higher tiers, which increase speed and range of items
+			When a chest is placed to the right or left, it will automatically input items into these chests
+			Left is prioritized, then when left chest is full, it outputs to the right
+			Two dots will show above the chests, left one showing stack fullness, and right showing the chest's storage capacity.
 			'''
 	}
 
@@ -263,6 +266,9 @@ Items: {
 			[c/CF7AFF:Produces 2x output, while only consuming 1x input]
 			Placing certain items into the storage container allows it to [c/FFD47C:automatically extract the items]
 			Can be further upgraded into higher tiers, which increase speed and range of items
+			When a chest is placed to the right or left, it will automatically input items into these chests
+			Left is prioritized, then when left chest is full, it outputs to the right
+			Two dots will show above the chests, left one showing stack fullness, and right showing the chest's storage capacity.
 			'''
 	}
 
@@ -274,6 +280,9 @@ Items: {
 			[c/CF7AFF:Produces 3x output, while only consuming 2x input]
 			Placing certain items into the storage container allows it to [c/FFD47C:automatically extract the items]
 			Can be further upgraded into higher tiers, which increase speed and range of items
+			When a chest is placed to the right or left, it will automatically input items into these chests
+			Left is prioritized, then when left chest is full, it outputs to the right
+			Two dots will show above the chests, left one showing stack fullness, and right showing the chest's storage capacity.
 			'''
 	}
 
@@ -285,6 +294,9 @@ Items: {
 			[c/CF7AFF:Produces 4x output, while only consuming 2x input]
 			Placing certain items into the storage container allows it to [c/FFD47C:automatically extract the items]
 			Can be further upgraded into higher tiers, which increase speed and range of items
+			When a chest is placed to the right or left, it will automatically input items into these chests
+			Left is prioritized, then when left chest is full, it outputs to the right
+			Two dots will show above the chests, left one showing stack fullness, and right showing the chest's storage capacity.
 			'''
 	}
 
@@ -297,6 +309,9 @@ Items: {
 			[c/86F0FF:Has a much higher chance to generate Platinum Coins]
 			Placing certain items into the storage container allows it to [c/FFD47C:automatically extract the items]
 			Cannot be upgraded further
+			When a chest is placed to the right or left, it will automatically input items into these chests
+			Left is prioritized, then when left chest is full, it outputs to the right
+			Two dots will show above the chests, left one showing stack fullness, and right showing the chest's storage capacity.
 			'''
 	}
 

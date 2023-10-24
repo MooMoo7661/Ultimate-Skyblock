@@ -27,7 +27,7 @@ namespace OneBlock.Items.Bombs
             Projectile.height = DefaultWidthHeight;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
-            Projectile.aiStyle = 67;
+            Projectile.aiStyle = -1;
             // 5 second fuse.
             Projectile.timeLeft = 300;
 
@@ -64,67 +64,67 @@ namespace OneBlock.Items.Bombs
             return false;
         }
 
-        //public override void AI()
-        //{
+        public override void AI()
+        {
 
-        //    // The projectile is in the midst of exploding during the last 3 updates.
-        //    if (Projectile.owner == Main.myPlayer && Projectile.timeLeft <= 3)
-        //    {
-        //        Projectile.tileCollide = false;
-        //        // Set to transparent. This projectile technically lives as transparent for about 3 frames
-        //        Projectile.alpha = 255;
+            // The projectile is in the midst of exploding during the last 3 updates.
+            if (Projectile.owner == Main.myPlayer && Projectile.timeLeft <= 3)
+            {
+                Projectile.tileCollide = false;
+                // Set to transparent. This projectile technically lives as transparent for about 3 frames
+                Projectile.alpha = 255;
 
-        //        // change the hitbox size, centered about the original projectile center. This makes the projectile damage enemies during the explosion.
-        //        Projectile.Resize(ExplosionWidthHeight, ExplosionWidthHeight);
+                // change the hitbox size, centered about the original projectile center. This makes the projectile damage enemies during the explosion.
+                Projectile.Resize(ExplosionWidthHeight, ExplosionWidthHeight);
 
-        //        Projectile.damage = 250;
-        //        Projectile.knockBack = 10f;
-        //    }
-        //    else
-        //    {
-        //        // Smoke and fuse dust spawn. The position is calculated to spawn the dust directly on the fuse.
-        //        if (Main.rand.NextBool())
-        //        {
-        //            Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, 0f, 0f, 100, default, 1f);
-        //            dust.scale = 0.1f + Main.rand.Next(5) * 0.1f;
-        //            dust.fadeIn = 1.5f + Main.rand.Next(5) * 0.1f;
-        //            dust.noGravity = true;
-        //            dust.position = Projectile.Center + new Vector2(1, 0).RotatedBy(Projectile.rotation - 2.1f, default) * 10f;
+                Projectile.damage = 250;
+                Projectile.knockBack = 10f;
+            }
+            else
+            {
+                // Smoke and fuse dust spawn. The position is calculated to spawn the dust directly on the fuse.
+                if (Main.rand.NextBool())
+                {
+                    Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, 0f, 0f, 100, default, 1f);
+                    dust.scale = 0.1f + Main.rand.Next(5) * 0.1f;
+                    dust.fadeIn = 1.5f + Main.rand.Next(5) * 0.1f;
+                    dust.noGravity = true;
+                    dust.position = Projectile.Center + new Vector2(1, 0).RotatedBy(Projectile.rotation - 2.1f, default) * 10f;
 
-        //            dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 100, default, 1f);
-        //            dust.scale = 1f + Main.rand.Next(5) * 0.1f;
-        //            dust.noGravity = true;
-        //            dust.position = Projectile.Center + new Vector2(1, 0).RotatedBy(Projectile.rotation - 2.1f, default) * 10f;
-        //        }
-        //    }
+                    dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 100, default, 1f);
+                    dust.scale = 1f + Main.rand.Next(5) * 0.1f;
+                    dust.noGravity = true;
+                    dust.position = Projectile.Center + new Vector2(1, 0).RotatedBy(Projectile.rotation - 2.1f, default) * 10f;
+                }
+            }
 
-        //    Projectile.ai[0] += 1f;
-        //    if (Projectile.ai[0] > 10f)
-        //    {
-        //        Projectile.ai[0] = 10f;
-        //        // Roll speed dampening. 
-        //        if (Projectile.velocity.Y == 0f && Projectile.velocity.X != 0f)
-        //        {
-        //            Projectile.velocity.X = Projectile.velocity.X * 0.96f;
+            Projectile.ai[0] += 1f;
+            if (Projectile.ai[0] > 10f)
+            {
+                Projectile.ai[0] = 10f;
+                // Roll speed dampening. 
+                if (Projectile.velocity.Y == 0f && Projectile.velocity.X != 0f)
+                {
+                    Projectile.velocity.X = Projectile.velocity.X * 0.96f;
 
-        //            if (Projectile.velocity.X > -0.01 && Projectile.velocity.X < 0.01)
-        //            {
-        //                Projectile.velocity.X = 0f;
-        //                Projectile.netUpdate = true;
-        //            }
-        //        }
+                    if (Projectile.velocity.X > -0.01 && Projectile.velocity.X < 0.01)
+                    {
+                        Projectile.velocity.X = 0f;
+                        Projectile.netUpdate = true;
+                    }
+                }
 
-        //        Projectile.velocity.Y = Projectile.velocity.Y + 0.2f;
+                Projectile.velocity.Y = Projectile.velocity.Y + 0.2f;
 
-        //    }
+            }
 
-        //    if (Projectile.velocity.Y > 8f)
-        //    {
-        //        Projectile.velocity.Y = 8f;
-        //    }
+            if (Projectile.velocity.Y > 8f)
+            {
+                Projectile.velocity.Y = 8f;
+            }
 
-        //    Projectile.rotation += Projectile.velocity.X * 0.1f;
-        //}
+            Projectile.rotation += Projectile.velocity.X * 0.1f;
+        }
 
         public override void Kill(int timeLeft)
         {

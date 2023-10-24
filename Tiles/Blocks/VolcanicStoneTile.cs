@@ -1,5 +1,4 @@
-﻿using OneBlock.Items.Placeable;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +7,7 @@ using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using OneBlock.Items.Placeable;
 
 namespace OneBlock.Tiles.Blocks
 {

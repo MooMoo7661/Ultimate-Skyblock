@@ -10,7 +10,8 @@ using System.Text.RegularExpressions;
 using System;
 using OneBlock.Items.Placeable;
 
-namespace OneBlock.Tiles.Blocks {
+namespace OneBlock.Tiles.Blocks
+{
     public class CursedEarth_Item : ModItem {
 
         public override void SetStaticDefaults()

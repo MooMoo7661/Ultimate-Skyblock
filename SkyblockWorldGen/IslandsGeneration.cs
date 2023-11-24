@@ -24,11 +24,11 @@ namespace OneBlock.SkyblockWorldGen
     public partial class MainWorld : ModSystem
     {
         public static bool TempleGen_ = true;
-        public static int dungeonSide;
+        public static bool dungeonLeft;
 
         public override void PostWorldGen()
         {
-            Main.dungeonX = Main.maxTilesX / 20;
+            Main.dungeonX = dungeonLeft ? Main.maxTilesX / 20 : Main.maxTilesX - (Main.maxTilesX / 20);
 
             for (int i = 0; i < Main.maxTilesX; i++)
             {
@@ -46,14 +46,7 @@ namespace OneBlock.SkyblockWorldGen
             Main.spawnTileX = Main.maxTilesX / 2;
             Main.spawnTileY = Main.maxTilesY / 2 - Main.maxTilesY / 3; // Re-adjusting the spawn point to a constant value.
 
-            if (Main.dungeonX < Main.maxTilesX / 2)
-            {
-                dungeonSide = 0;
-            }
-            else
-            {
-                dungeonSide = 1;  
-            }
+            dungeonLeft = (Main.dungeonX < Main.maxTilesX / 2) ? true : false;
 
             GenStartingPlatform();
             GenDungeonPlatform();
@@ -64,6 +57,8 @@ namespace OneBlock.SkyblockWorldGen
             GenForestPlanetoids();
             GenSnowPlanetoids();
             GenEvilPlanetoids();
+            GenJungleIslands();
+            GenMushroomIsland();
 
             //PlaceTile(Main.dungeonX, Main.dungeonY, TileID.Adamantite, true, true); // Places tile at the spawn point for the Old Man and the Lunatic Cultists. For testing purposes.
         }
@@ -291,14 +286,7 @@ namespace OneBlock.SkyblockWorldGen
             // + 14 X
             // + 18 Y
 
-            // In the middle of : creating list to choose corrupt planetoids from
-
             Point16 HellPlacePoint = new Point16(Main.maxTilesX / 2 - 140, Main.UnderworldLayer + 50);
-            WorldHelpers.Hell = new Point16(Main.maxTilesX / 2, Main.UnderworldLayer + 50);
-            //Generator.GenerateStructure(WorldHelpers.hellPath + "Main", HellPlacePoint, Instance);
-
-            //WorldGen.PlaceChest(WorldHelpers.Hell.X + 14, WorldHelpers.Hell.Y + 18, 21, false, 4);
-
 
             for (int i = 2; i < 20; i++)
             {
@@ -426,8 +414,53 @@ namespace OneBlock.SkyblockWorldGen
             Generator.GenerateStructure(templePath, new Point16(Jungle.X, Jungle.Y + 100 + (int)(ScaleBasedOnWorldSizeY * 3)), Instance);
             TempleGen_ = false;
         }
-    }
 
+        public static void GenJungleIslands()
+        {
+            //17
+            //42
+
+            Point16 genPoint = new Point16(Jungle.X + 200 + (int)(ScaleBasedOnWorldSizeX * 1.85f), Jungle.Y - (int)(ScaleBasedOnWorldSizeY * 10f) + Main.rand.Next(-10, 30));
+            Generator.GenerateStructure(junglePath + "Cave", genPoint, Instance);
+            //PlaceTile(genPoint.X, genPoint.Y, TileID.Adamantite, true, true);
+            Generator.GenerateStructure("SkyblockWorldGen/Structures/LockedJungleChest", new Point16(genPoint.X + 17, genPoint.Y + 42), Instance);
+
+            List<string> islands = new List<string>
+            {
+                "Bridge",
+                "Small1",
+                "Small2",
+                "Small3",
+                "Small4"
+            };
+
+            for (int i = 0; i < 4; i++)
+            {
+                Point16 point = i switch
+                {
+                    0 => genPoint - new Point16((int)(ScaleBasedOnWorldSizeX * 3f) + 100, Main.rand.Next(-30, 50)),
+                    1 => genPoint + new Point16((int)(ScaleBasedOnWorldSizeX * 3f) + 100, Main.rand.Next(-30, 50)),
+                    2 => genPoint + new Point16((int)(ScaleBasedOnWorldSizeX * 2f) - 100, Main.rand.Next(-10, 15)),
+                    _ => genPoint - new Point16((int)(ScaleBasedOnWorldSizeX * 10f) + 100, Main.rand.Next(-30, 50))
+                };
+
+                int index = Main.rand.Next(islands.Count);
+                string islandToGenerate = islands[index];
+                islands.RemoveAt(index);
+                Generator.GenerateStructure(junglePath + islandToGenerate, point, Instance);
+            }
+        }
+
+        public static void GenMushroomIsland()
+        {
+            Point16 genPos = dungeonLeft ? new Point16(Main.maxTilesX - Main.maxTilesX / 20, (int)Main.rockLayer - 400 + (int)(ScaleBasedOnWorldSizeY * 2f)) : new Point16(Main.maxTilesX / 20, (int)Main.rockLayer - 400 + (int)(ScaleBasedOnWorldSizeY * 2f));
+            Mushroom.X = genPos.X;
+            Mushroom.Y = genPos.Y;
+
+            Generator.GenerateStructure("SkyblockWorldGen/Structures/MushroomIsland", genPos, Instance);
+        }
+    }
+        
     public class PlanteraTempleGeneration : GlobalNPC
     {
         public override bool AppliesToEntity(NPC entity, bool lateInstantiation) => entity.type == NPCID.Plantera;

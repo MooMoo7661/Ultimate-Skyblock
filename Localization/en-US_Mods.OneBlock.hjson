@@ -112,6 +112,11 @@ Configs: {
 				It must be left -> right, or right -> left.
 				'''
 		}
+
+		RenderFogCloudTiles: {
+			Label: Render Fog Cloud Tiles
+			Tooltip: ""
+		}
 	}
 
 	RecipesConfig: {
@@ -194,6 +199,52 @@ Configs: {
 
 		CraftAglet: {
 			Label: Aglet Recipe
+			Tooltip: ""
+		}
+	}
+
+	MapIconDrawConfig: {
+		DisplayName: Map Icon Drawing Config
+
+		DrawMapIcons: {
+			Tooltip: Enables/Disables drawing of all map icons added by this mod
+			Label: Draw Map Biome and Structure Icons
+		}
+
+		Headers.MapIcons: Map Icons Config
+
+		MapIconDungeon: {
+			Label: Dungeon
+			Tooltip: ""
+		}
+
+		MapIconForest: {
+			Label: Forest
+			Tooltip: ""
+		}
+
+		MapIconEvil: {
+			Label: Evil
+			Tooltip: ""
+		}
+
+		MapIconJungle: {
+			Label: Jungle
+			Tooltip: ""
+		}
+
+		MapIconSnow: {
+			Label: Snow
+			Tooltip: ""
+		}
+
+		Hell: {
+			Label: Hell
+			Tooltip: ""
+		}
+
+		Mushroom: {
+			Label: Mushroom
 			Tooltip: ""
 		}
 	}
@@ -338,6 +389,11 @@ Items: {
 	OatchiWhistle: {
 		DisplayName: Oatchi Whistle
 		Tooltip: ""
+	}
+
+	FogCloud1: {
+		DisplayName: Fog Cloud
+		Tooltip: Creates fog. Rendering of the tile can be enabled/disabled in the mod config
 	}
 }
 

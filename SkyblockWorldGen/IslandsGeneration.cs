@@ -453,9 +453,7 @@ namespace OneBlock.SkyblockWorldGen
 
         public static void GenMushroomIsland()
         {
-            Point16 genPos = dungeonLeft ? new Point16(Main.maxTilesX - Main.maxTilesX / 20, (int)Main.rockLayer - 400 + (int)(ScaleBasedOnWorldSizeY * 2f)) : new Point16(Main.maxTilesX / 20, (int)Main.rockLayer - 400 + (int)(ScaleBasedOnWorldSizeY * 2f));
-            Mushroom.X = genPos.X;
-            Mushroom.Y = genPos.Y;
+            Point16 genPos = new(Mushroom.X, Mushroom.Y);
 
             Generator.GenerateStructure("SkyblockWorldGen/Structures/MushroomIsland", genPos, Instance);
         }

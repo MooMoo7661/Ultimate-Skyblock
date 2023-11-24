@@ -18,7 +18,7 @@ internal static class WorldHelpers
 {
     public static Point16 Hell => new Point16(Main.maxTilesX / 2, Main.UnderworldLayer + 50);
     public static Point16 Hallow;
-    public static Vector2 Mushroom;
+    public static Point16 Mushroom => dungeonLeft ? new Point16(Main.maxTilesX - Main.maxTilesX / 20, (int)Main.rockLayer - 400 - (int)(ScaleBasedOnWorldSizeY * 2f)) : new Point16(Main.maxTilesX / 20, (int)Main.rockLayer - 400 - (int)(ScaleBasedOnWorldSizeY * 2f));
     public static Point16 Spawn => new(Main.maxTilesX / 2, Main.maxTilesY / 3); // Spawn point on the Spawn Island
     public static Point16 Jungle => new(Main.maxTilesX / 2 + Main.maxTilesX / 7 + (int)(ScaleBasedOnWorldSizeX * 2), Main.maxTilesY / 3); // Center of the main jungle island
     public static Point16 Evil => new(Main.maxTilesX / 2 - Main.maxTilesX / 7 + (int)(ScaleBasedOnWorldSizeX * 1.3f), 100); // Center to spawn evil islands at

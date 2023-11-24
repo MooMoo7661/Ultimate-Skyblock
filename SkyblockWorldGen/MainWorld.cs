@@ -116,27 +116,7 @@ namespace OneBlock.SkyblockWorldGen
                     GrowTree(i, j);
                 }
             }
-
-            Tile tile = Main.tile[i, j];
-
-           
         }
-
-        //public override void PostDraw(int i, int j, int type, SpriteBatch spriteBatch)
-        //{
-        //    if (Main.rand.NextBool(100))
-        //    {
-        //        if (type == TileID.Extractinator)
-        //        {
-        //            Point webPoint = new(Main.rand.Next(i - 5, i + 5), Main.rand.Next(j - 5, j + 5));
-
-        //            Tile tile = Main.tile[webPoint.X, webPoint.Y];
-
-        //            if (!tile.HasTile)
-        //            WorldGen.PlaceTile(webPoint.X, webPoint.Y, TileID.Cobweb, true, false);
-        //        }
-        //    }
-        //}
 
         public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged)
         {

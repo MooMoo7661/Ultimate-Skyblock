@@ -38,6 +38,10 @@ namespace OneBlock
         [DefaultValue(true)]
         public bool DirtAndSandCanBeExtracted { get; set; }
 
+        [Label("Render Fog Cloud Tiles")]
+        [DefaultValue(false)]
+        public bool RenderFogCloudTiles { get; set; }
+
         [Label("Warning text upon entering a world that is small")]
         [DefaultValue(true)]
         public bool SmallWorldWarning { get; set; }
@@ -130,5 +134,43 @@ namespace OneBlock
         [DefaultValue(true)]
         public bool CraftAglet { get; set; }
 
+    }
+
+    public class MapIconDrawConfig : ModConfig
+    {
+        public override ConfigScope Mode => ConfigScope.ClientSide;
+
+        [Label("Draw Map Biome and Structure Icons")]
+        [DefaultValue(true)]
+        public bool DrawMapIcons { get; set; }
+
+        [Header("MapIcons")]
+        [Label("Dungeon")]
+        [DefaultValue(true)]
+        public bool MapIconDungeon { get; set; }
+
+        [Label("Forest")]
+        [DefaultValue(true)]
+        public bool MapIconForest { get; set; }
+
+        [Label("Evil")]
+        [DefaultValue(true)]
+        public bool MapIconEvil { get; set; }
+
+        [Label("Jungle")]
+        [DefaultValue(true)]
+        public bool MapIconJungle { get; set; }
+
+        [Label("Snow")]
+        [DefaultValue(true)]
+        public bool MapIconSnow { get; set; }
+
+        [Label("Hell")]
+        [DefaultValue(true)]
+        public bool Hell { get; set; }
+
+        [Label("Mushroom")]
+        [DefaultValue(true)]
+        public bool Mushroom { get; set; }
     }
 }

@@ -18,6 +18,8 @@ namespace OneBlock.MapDrawing
 {
     public class MainMapLayer : ModMapLayer
     {
+        public override string Name => "Main Map Layer";
+        public static string path = "OneBlock/MapDrawing/Icons/";
         public override void Draw(ref MapOverlayDrawContext context, ref string text)
         {
             var config = ModContent.GetInstance<MapIconDrawConfig>();
@@ -26,8 +28,6 @@ namespace OneBlock.MapDrawing
 
             const float scaleIfNotSelected = 1f;
             const float scaleIfSelected = 1.5f;
-
-            string path = "OneBlock/MapDrawing/Icons/";
 
             var dungeonIcon = TextureAssets.NpcHeadBoss[19].Value;
             var corruptionIcon = WorldGen.crimson ? ModContent.Request<Texture2D>(path + "IconEvilCrimson").Value : ModContent.Request<Texture2D>(path + "IconEvilCorruption").Value;
@@ -82,7 +82,6 @@ namespace OneBlock.MapDrawing
                 var mushroom = context.Draw(mushroomIcon,new(WorldHelpers.Mushroom.X + 50, WorldHelpers.Mushroom.Y + 30), Color.White, new SpriteFrame(1, 1, 0, 0), scaleIfNotSelected, scaleIfSelected, Alignment.Center);
                 if (mushroom.IsMouseOver) { text = "Mushroom"; }
             }
-
         }
     }
 

@@ -23,6 +23,7 @@ internal static class WorldHelpers
     public static Point16 Jungle => new(Main.maxTilesX / 2 + Main.maxTilesX / 7 + (int)(ScaleBasedOnWorldSizeX * 2), Main.maxTilesY / 3); // Center of the main jungle island
     public static Point16 Evil => new(Main.maxTilesX / 2 - Main.maxTilesX / 7 + (int)(ScaleBasedOnWorldSizeX * 1.3f), 100); // Center to spawn evil islands at
     public static Point16 Snow => new(Main.maxTilesX / 2 + Main.maxTilesX / 4 + (int)(ScaleBasedOnWorldSizeX * 1.3f), Main.maxTilesY / 3);
+    public static List<Point16> ChlorophytePlanetoids => new List<Point16>();
 
     // All of these are for quick and easy worldgen code that is less cluttered (hopefully).
     public static readonly string path = "SkyblockWorldGen/Structures/";

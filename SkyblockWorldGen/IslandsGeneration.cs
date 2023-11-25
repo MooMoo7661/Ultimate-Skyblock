@@ -59,6 +59,7 @@ namespace OneBlock.SkyblockWorldGen
             GenEvilPlanetoids();
             GenJungleIslands();
             GenMushroomIsland();
+            GenMeteorites();
 
             //PlaceTile(Main.dungeonX, Main.dungeonY, TileID.Adamantite, true, true); // Places tile at the spawn point for the Old Man and the Lunatic Cultists. For testing purposes.
         }

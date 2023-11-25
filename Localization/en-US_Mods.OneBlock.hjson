@@ -202,52 +202,6 @@ Configs: {
 			Tooltip: ""
 		}
 	}
-
-	MapIconDrawConfig: {
-		DisplayName: Map Icon Drawing Config
-
-		DrawMapIcons: {
-			Tooltip: Enables/Disables drawing of all map icons added by this mod
-			Label: Draw Map Biome and Structure Icons
-		}
-
-		Headers.MapIcons: Map Icons Config
-
-		MapIconDungeon: {
-			Label: Dungeon
-			Tooltip: ""
-		}
-
-		MapIconForest: {
-			Label: Forest
-			Tooltip: ""
-		}
-
-		MapIconEvil: {
-			Label: Evil
-			Tooltip: ""
-		}
-
-		MapIconJungle: {
-			Label: Jungle
-			Tooltip: ""
-		}
-
-		MapIconSnow: {
-			Label: Snow
-			Tooltip: ""
-		}
-
-		Hell: {
-			Label: Hell
-			Tooltip: ""
-		}
-
-		Mushroom: {
-			Label: Mushroom
-			Tooltip: ""
-		}
-	}
 }
 
 Items: {
@@ -297,7 +251,7 @@ Items: {
 	}
 
 	AutoExtractor: {
-		DisplayName: Automatic Extractor Tier 1
+		DisplayName: Auto Extractor Tier 1
 		Tooltip:
 			'''
 			[c/4BEC76:Automatically extracts items every 2 seconds]
@@ -357,7 +311,6 @@ Items: {
 			'''
 			[c/4BEC76:Automatically extracts items every 0.3 seconds]
 			[c/E10643:Produces 8x output, while only consuming 4x input]
-			[c/86F0FF:Has a much higher chance to generate Platinum Coins]
 			Placing certain items into the storage container allows it to [c/FFD47C:automatically extract the items]
 			Cannot be upgraded further
 			When a chest is placed to the right or left, it will automatically input items into these chests

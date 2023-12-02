@@ -435,14 +435,12 @@ namespace OneBlock.SkyblockWorldGen
                 "Small4"
             };
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 2; i++)
             {
                 Point16 point = i switch
                 {
-                    0 => genPoint - new Point16((int)(ScaleBasedOnWorldSizeX * 3f) + 100, Main.rand.Next(-30, 50)),
-                    1 => genPoint + new Point16((int)(ScaleBasedOnWorldSizeX * 3f) + 100, Main.rand.Next(-30, 50)),
-                    2 => genPoint + new Point16((int)(ScaleBasedOnWorldSizeX * 2f) - 100, Main.rand.Next(-10, 15)),
-                    _ => genPoint - new Point16((int)(ScaleBasedOnWorldSizeX * 10f) + 100, Main.rand.Next(-30, 50))
+                    0 => genPoint - new Point16((int)(ScaleBasedOnWorldSizeX * 8f) + 100, -100 + Main.rand.Next(-20, -10)),
+                    1 => genPoint - new Point16((int)(ScaleBasedOnWorldSizeX * 3f) + 100, Main.rand.Next(-30, 50)),
                 };
 
                 int index = Main.rand.Next(islands.Count);

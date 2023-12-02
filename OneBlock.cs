@@ -4,10 +4,11 @@ using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
+using OneBlock.Configs;
 
 namespace OneBlock
 {
-	public class OneBlock : Mod
+    public class OneBlock : Mod
 	{
         public static OneBlock Instance;
         public override void Load()

@@ -17,47 +17,96 @@ namespace OneBlock.MapDrawing
 {
     public class MapIconToggleDrawing : ModMapLayer
     {
-        public static readonly string path = MainMapLayer.path;
-        
+        ToggleButton MainToggle;
 
+        ToggleButton DungeonToggle;
+        ToggleButton ForestToggle;
+        ToggleButton EvilToggle;
+        ToggleButton JungleToggle;
+        ToggleButton SnowToggle;
+        ToggleButton HellToggle;
+        ToggleButton MushroomToggle;
+
+        public readonly string path = "OneBlock/MapDrawing/Icons/";
         public override void Draw(ref MapOverlayDrawContext context, ref string text)
         {
-            ToggleButton DungeonToggle = new()
+            MainToggle ??= new()
             {
-                BesideTexture = ModContent.Request<Texture2D>(path + "IconMushroom").Value,
-                DrawPos = new Point(-200, -200)
+                BesideTexture = ModContent.Request<Texture2D>(path + "IconMain", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value,
+                distanceBetweenBesideAndToggle = 150,
+                tooltip = "All map icons\n",
             };
+            MainToggle.DrawPos = new Point(Main.maxTilesX / 2, -750);
+            MainToggle.Draw(ref context, ref text);
+            MapIconDrawBools.AllIcons = MainToggle.Toggled;
+
+            #region Column 1
+            DungeonToggle ??= new()
+            {
+                BesideTexture = TextureAssets.NpcHeadBoss[19].Value,
+                    distanceBetweenBesideAndToggle = 150,
+            };
+            DungeonToggle.DrawPos = new Point(Main.maxTilesX / 2 - 150, -600);
             DungeonToggle.Draw(ref context, ref text);
-        }
-    }
+            MapIconDrawBools.MapIconDungeon = DungeonToggle.Toggled;
 
-    public class ToggleButton 
-    {
-        public Texture2D BesideTexture = ModContent.Request<Texture2D>("OneBlock/MapDrawing/Icons/IconMushroom").Value;
+            ForestToggle ??= new()
+            {
+                    BesideTexture = ModContent.Request<Texture2D>(path + "IconForest", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value,
+                    distanceBetweenBesideAndToggle = 150,
+            };
+            ForestToggle.DrawPos = new Point(Main.maxTilesX / 2 - 150, -450);
+            ForestToggle.Draw(ref context, ref text);
+            MapIconDrawBools.MapIconForest = ForestToggle.Toggled;
 
-        public static bool enabled = true;
+            EvilToggle ??= new()
+            {
+                distanceBetweenBesideAndToggle = 150,
+            };
+            EvilToggle.DrawPos = new Point(Main.maxTilesX / 2 - 150, -300);
+            EvilToggle.BesideTexture = ModContent.Request<Texture2D>(path + (WorldGen.crimson ? "IconEvilCrimson" : "IconEvilCorruption"), ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            EvilToggle.Draw(ref context, ref text);
+            MapIconDrawBools.MapIconEvil = EvilToggle.Toggled;
 
-        string on = "Toggle off";
-        string off = "Toggle on";
+            JungleToggle ??= new()
+            {
+                distanceBetweenBesideAndToggle = 150,
+            };
+            JungleToggle.DrawPos = new Point(Main.maxTilesX / 2 - 150, -150);
+            JungleToggle.BesideTexture = ModContent.Request<Texture2D>(path + "IconJungle", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            JungleToggle.Draw(ref context, ref text);
+            MapIconDrawBools.MapIconJungle = JungleToggle.Toggled;
+            #endregion
 
-        public Point DrawPos = new(0, 0);
-        public static void Toggle() => enabled = !enabled;
+            #region Column 2
+            SnowToggle ??= new()
+            {
+                distanceBetweenBesideAndToggle = 150,
+            };
+            SnowToggle.DrawPos = new Point(Main.maxTilesX / 2 + 150, -600);
+            SnowToggle.BesideTexture = ModContent.Request<Texture2D>(path + "IconSnow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            SnowToggle.Draw(ref context, ref text);
+            MapIconDrawBools.MapIconSnow = SnowToggle.Toggled;
 
-        public static Texture2D GetToggleTexture()
-        {
-            return enabled ? ModContent.Request<Texture2D>("OneBlock/MapDrawing/Icons/IconToggleOn").Value : ModContent.Request<Texture2D>("OneBlock/MapDrawing/Icons/IconToggleOff").Value;
-        }
+            HellToggle ??= new()
+            {
+                distanceBetweenBesideAndToggle = 150,
+            };
+            HellToggle.DrawPos = new Point(Main.maxTilesX / 2 + 150, -450);
+            HellToggle.BesideTexture = ModContent.Request<Texture2D>(path + "IconHell", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            HellToggle.Draw(ref context, ref text);
+            MapIconDrawBools.Hell = HellToggle.Toggled;
 
-        public void Draw(ref MapOverlayDrawContext context, ref string text)
-        {
-            const float scaleIfNotSelected = 1f;
-            const float scaleIfSelected = 1.5f;
+            MushroomToggle ??= new()
+            {
+                distanceBetweenBesideAndToggle = 150,
+            };
+            MushroomToggle.DrawPos = new Point(Main.maxTilesX / 2 + 150, -300);
+            MushroomToggle.BesideTexture = ModContent.Request<Texture2D>(path + "IconMushroom", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            MushroomToggle.Draw(ref context, ref text);
+            MapIconDrawBools.Mushroom = MushroomToggle.Toggled;
 
-            var result = context.Draw(GetToggleTexture(), new Vector2(DrawPos.X, DrawPos.Y), Color.White, new SpriteFrame(1, 1, 0, 0), scaleIfNotSelected, scaleIfSelected, Alignment.Center);
-            context.Draw(BesideTexture, new Vector2(DrawPos.X - 50, DrawPos.Y), Color.White, new SpriteFrame(1, 1, 0, 0), 1f, 1f, Alignment.Center);
-
-            if (result.IsMouseOver) { text = enabled ? on : off; }
-            if (result.IsMouseOver && Main.mouseLeft && Main.mouseLeftRelease) { Toggle(); }
+            #endregion
         }
     }
 }

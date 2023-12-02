@@ -4,10 +4,11 @@ using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
+using OneBlock.Configs;
 
 namespace OneBlock
 {
-	public class OneBlockScenes_Minecraft : ModSceneEffect
+    public class OneBlockScenes_Minecraft : ModSceneEffect
 	{
         public override bool IsSceneEffectActive(Player player)
         {

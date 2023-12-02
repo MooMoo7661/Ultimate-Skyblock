@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
 using static OneBlock.SkyblockWorldGen.MainWorld;
+using OneBlock.Configs;
 
 namespace OneBlock
 {

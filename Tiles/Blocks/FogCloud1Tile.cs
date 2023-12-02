@@ -11,6 +11,7 @@ using System;
 using OneBlock.Items.Placeable;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Enums;
+using OneBlock.Configs;
 
 namespace OneBlock.Tiles.Blocks
 {

@@ -357,6 +357,11 @@ Items: {
 		DisplayName: Fog Cloud
 		Tooltip: Creates fog. Rendering of the tile can be enabled/disabled in the mod config
 	}
+
+	GuidebookItem: {
+		DisplayName: Guidebook Item
+		Tooltip: ""
+	}
 }
 
 Projectiles: {

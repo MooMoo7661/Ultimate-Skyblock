@@ -313,5 +313,29 @@ namespace OneBlock.SkyblockWorldGen
             WorldUtils.Gen(placePoint, new ModShapes.OuterOutline(shapeData, true), new Actions.SetTile(TileID.AshGrass));
             WorldUtils.Gen(placePoint, new ModShapes.OuterOutline(shapeData2, true), new Actions.SetTile(TileID.Ash));
         }
+
+        public static void GenMeteorites()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                Point genPoint = new Point(Snow.X + (635 + (int)(ScaleBasedOnWorldSizeX * 4f)) + (i * 120), 100 + Main.rand.Next(-10, 15));
+                if (InWorld(genPoint.X, genPoint.Y))
+                {
+                    int size = WorldGen.genRand.Next(14, 19);
+                    WorldUtils.Gen(genPoint, new Shapes.Circle(size, size), new Actions.SetTile(TileID.Stone));
+
+                    WorldGen.TileRunner(genPoint.X, genPoint.Y, 10f, 6, TileID.Meteorite, false, 0, 0, false);
+
+                    WorldGen.TileRunner(genPoint.X + Main.rand.Next(-2, 2), genPoint.Y + Main.rand.Next(-2, 2), 5f, 9, TileID.Meteorite, false, 0, 0, false);
+                    WorldGen.TileRunner(genPoint.X - Main.rand.Next(-2, 2), genPoint.Y - Main.rand.Next(-2, 2), 7f, 4, TileID.Meteorite, false, 0, 0, false);
+
+                    for (int j = 0; j < 6; j++)
+                    {
+                        WorldGen.TileRunner(genPoint.X - Main.rand.Next(-2, 2), genPoint.Y - Main.rand.Next(-2, 2), 4f, 15 + Main.rand.Next(0, 2), TileID.Meteorite, false, Main.rand.Next(-4, 4), Main.rand.Next(-4, 4), false);
+                        WorldGen.TileRunner(genPoint.X - Main.rand.Next(-2, 2), genPoint.Y - Main.rand.Next(-2, 2), 3f, 15 + Main.rand.Next(0, 4), TileID.Meteorite, false, Main.rand.Next(-4, 4), Main.rand.Next(-4, 4), false);
+                    }
+                }
+            }
+        }
     }
 }

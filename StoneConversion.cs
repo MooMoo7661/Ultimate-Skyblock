@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
+using OneBlock.Configs;
 using System;
 using System.Collections.Generic;
 using Terraria;

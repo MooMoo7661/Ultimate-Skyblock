@@ -16,6 +16,7 @@ using Microsoft.Xna.Framework.Graphics;
 using static WorldHelpers;
 using OneBlock.Items.Placeable;
 using OneBlock.Tiles.Blocks;
+using OneBlock.Configs;
 
 namespace OneBlock.SkyblockWorldGen
 {
@@ -35,6 +36,12 @@ namespace OneBlock.SkyblockWorldGen
             Small,
             Medium,
             Large
+        }
+        public enum ChestType
+        {
+            Classic,
+            Simple,
+            Luxury
         }
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
         {
@@ -116,27 +123,7 @@ namespace OneBlock.SkyblockWorldGen
                     GrowTree(i, j);
                 }
             }
-
-            Tile tile = Main.tile[i, j];
-
-           
         }
-
-        //public override void PostDraw(int i, int j, int type, SpriteBatch spriteBatch)
-        //{
-        //    if (Main.rand.NextBool(100))
-        //    {
-        //        if (type == TileID.Extractinator)
-        //        {
-        //            Point webPoint = new(Main.rand.Next(i - 5, i + 5), Main.rand.Next(j - 5, j + 5));
-
-        //            Tile tile = Main.tile[webPoint.X, webPoint.Y];
-
-        //            if (!tile.HasTile)
-        //            WorldGen.PlaceTile(webPoint.X, webPoint.Y, TileID.Cobweb, true, false);
-        //        }
-        //    }
-        //}
 
         public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged)
         {
@@ -174,6 +161,21 @@ namespace OneBlock.SkyblockWorldGen
             if (type == TileID.Crystals && !Main.hardMode)
             {
                 noItem = true;
+            }
+        }
+
+        public override void PostDraw(int i, int j, int type, SpriteBatch spriteBatch)
+        {
+            if (type != TileID.Stone && type != TileID.AccentSlab && type != TileID.Obsidian) { return; }
+            Tile tileLeft = Main.tile[i - 1, j];
+            Tile tileRight = Main.tile[i + 1, j];
+            if (tileLeft.LiquidAmount == 0 || tileRight.LiquidAmount == 0) { return; }
+
+            if ((tileLeft.LiquidType == LiquidID.Lava && tileRight.LiquidType == LiquidID.Water) || (tileLeft.LiquidType == LiquidID.Water && tileRight.LiquidType == LiquidID.Lava))
+            {
+                Dust dust = Dust.NewDustDirect(new Vector2(i, j) * 16, 20, 20, DustID.Torch);
+                dust.velocity *= 0.3f;
+                dust.scale = 0.5f;
             }
         }
     }

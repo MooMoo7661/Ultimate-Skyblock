@@ -24,11 +24,11 @@ namespace OneBlock.SkyblockWorldGen
     public partial class MainWorld : ModSystem
     {
         public static bool TempleGen_ = true;
-        public static int dungeonSide;
+        public static bool dungeonLeft;
 
         public override void PostWorldGen()
         {
-            Main.dungeonX = Main.maxTilesX / 20;
+            Main.dungeonX = dungeonLeft ? Main.maxTilesX / 20 : Main.maxTilesX - (Main.maxTilesX / 20);
 
             for (int i = 0; i < Main.maxTilesX; i++)
             {
@@ -46,14 +46,7 @@ namespace OneBlock.SkyblockWorldGen
             Main.spawnTileX = Main.maxTilesX / 2;
             Main.spawnTileY = Main.maxTilesY / 2 - Main.maxTilesY / 3; // Re-adjusting the spawn point to a constant value.
 
-            if (Main.dungeonX < Main.maxTilesX / 2)
-            {
-                dungeonSide = 0;
-            }
-            else
-            {
-                dungeonSide = 1;  
-            }
+            dungeonLeft = (Main.dungeonX < Main.maxTilesX / 2) ? true : false;
 
             GenStartingPlatform();
             GenDungeonPlatform();
@@ -64,6 +57,9 @@ namespace OneBlock.SkyblockWorldGen
             GenForestPlanetoids();
             GenSnowPlanetoids();
             GenEvilPlanetoids();
+            GenJungleIslands();
+            GenMushroomIsland();
+            GenMeteorites();
 
             //PlaceTile(Main.dungeonX, Main.dungeonY, TileID.Adamantite, true, true); // Places tile at the spawn point for the Old Man and the Lunatic Cultists. For testing purposes.
         }
@@ -106,76 +102,17 @@ namespace OneBlock.SkyblockWorldGen
 
             if (config.StarterChestStyle != 4) // Setting loot for starter chest
             {
-                try
+                int starterChest = PlaceChest(Main.maxTilesX / 2 - 22, Main.maxTilesY / 2 - Main.maxTilesY / 3 - 5, 21, false, chestType);
+                Chest chest = Main.chest[starterChest];
+                ChestType style = (ChestType)config.StarterChestStyle;
+
+                switch (style)
                 {
-                    int starterChest = PlaceChest(Main.maxTilesX / 2 - 22, Main.maxTilesY / 2 - Main.maxTilesY / 3 - 5, 21, false, chestType);
-
-
-                    switch (config.StarterChestStyle)
-                    {
-                        case 1: // Classic
-                            Main.chest[starterChest].item[0].SetDefaults(ItemID.WaterBucket);
-                            Main.chest[starterChest].item[1].SetDefaults(ItemID.LavaBucket);
-                            Main.chest[starterChest].item[2].SetDefaults(ItemID.DirtBlock);
-                            Main.chest[starterChest].item[2].stack = 10;
-                            Main.chest[starterChest].item[3].SetDefaults(ItemID.SandBlock);
-                            Main.chest[starterChest].item[3].stack = 15;
-                            Main.chest[starterChest].item[4].SetDefaults(ItemID.Torch);
-                            Main.chest[starterChest].item[4].stack = 5;
-                            Main.chest[starterChest].item[5].SetDefaults(ItemID.JungleGrassSeeds);
-                            Main.chest[starterChest].item[5].stack = 2;
-                            Main.chest[starterChest].item[6].SetDefaults(ItemID.GrassSeeds);
-                            Main.chest[starterChest].item[6].stack = 2;
-                            Main.chest[starterChest].item[7].SetDefaults(ItemID.Wood);
-                            Main.chest[starterChest].item[7].stack = 15;
-                            Main.chest[starterChest].item[8].SetDefaults(ItemID.Acorn);
-                            Main.chest[starterChest].item[8].stack = 5;
-                            break;
-
-                        case 2: // Simple
-                            Main.chest[starterChest].item[0].SetDefaults(ItemID.WaterBucket);
-                            Main.chest[starterChest].item[1].SetDefaults(ItemID.LavaBucket);
-                            Main.chest[starterChest].item[2].SetDefaults(ItemID.JungleGrassSeeds);
-                            Main.chest[starterChest].item[3].SetDefaults(ItemID.SandBlock);
-                            Main.chest[starterChest].item[3].stack = 5;
-                            break;
-
-                        case 3: // Luxury
-                            Main.chest[starterChest].item[0].SetDefaults(ItemID.WaterBucket);
-                            Main.chest[starterChest].item[1].SetDefaults(ItemID.LavaBucket);
-                            Main.chest[starterChest].item[2].SetDefaults(ItemID.DirtBlock);
-                            Main.chest[starterChest].item[2].stack = 25;
-                            Main.chest[starterChest].item[3].SetDefaults(ItemID.SandBlock);
-                            Main.chest[starterChest].item[3].stack = 30;
-                            Main.chest[starterChest].item[4].SetDefaults(ItemID.Torch);
-                            Main.chest[starterChest].item[4].stack = 20;
-                            Main.chest[starterChest].item[5].SetDefaults(ItemID.JungleGrassSeeds);
-                            Main.chest[starterChest].item[5].stack = 5;
-                            Main.chest[starterChest].item[6].SetDefaults(ItemID.GrassSeeds);
-                            Main.chest[starterChest].item[6].stack = 5;
-                            Main.chest[starterChest].item[7].SetDefaults(ItemID.CorruptSeeds);
-                            Main.chest[starterChest].item[7].stack = 5;
-                            Main.chest[starterChest].item[8].SetDefaults(ItemID.CrimsonSeeds);
-                            Main.chest[starterChest].item[8].stack = 5;
-                            Main.chest[starterChest].item[9].SetDefaults(ItemID.Wood);
-                            Main.chest[starterChest].item[9].stack = 30;
-                            Main.chest[starterChest].item[10].SetDefaults(ItemID.Acorn);
-                            Main.chest[starterChest].item[10].stack = 10;
-                            Main.chest[starterChest].item[11].SetDefaults(ItemID.Furnace);
-                            Main.chest[starterChest].item[12].SetDefaults(ItemID.CloudinaBottle);
-                            Main.chest[starterChest].item[13].SetDefaults(ItemID.Mushroom);
-                            Main.chest[starterChest].item[13].stack = 10;
-                            Main.chest[starterChest].item[14].SetDefaults(ItemID.StoneBlock);
-                            Main.chest[starterChest].item[14].stack = 50;
-                            Main.chest[starterChest].item[15].SetDefaults(ItemID.WoodYoyo);
-                            break;
-                    }
+                    case ChestType.Classic:
+                        chest.Add(new Item(ItemID.LavaBucket));
+                        chest.Add(new Item(ItemID.WaterBucket));
+                        break;
                 }
-                catch
-                {
-
-                }
-
             }
         }
 
@@ -291,14 +228,7 @@ namespace OneBlock.SkyblockWorldGen
             // + 14 X
             // + 18 Y
 
-            // In the middle of : creating list to choose corrupt planetoids from
-
             Point16 HellPlacePoint = new Point16(Main.maxTilesX / 2 - 140, Main.UnderworldLayer + 50);
-            WorldHelpers.Hell = new Point16(Main.maxTilesX / 2, Main.UnderworldLayer + 50);
-            //Generator.GenerateStructure(WorldHelpers.hellPath + "Main", HellPlacePoint, Instance);
-
-            //WorldGen.PlaceChest(WorldHelpers.Hell.X + 14, WorldHelpers.Hell.Y + 18, 21, false, 4);
-
 
             for (int i = 2; i < 20; i++)
             {
@@ -426,8 +356,49 @@ namespace OneBlock.SkyblockWorldGen
             Generator.GenerateStructure(templePath, new Point16(Jungle.X, Jungle.Y + 100 + (int)(ScaleBasedOnWorldSizeY * 3)), Instance);
             TempleGen_ = false;
         }
-    }
 
+        public static void GenJungleIslands()
+        {
+            //17
+            //42
+
+            Point16 genPoint = new Point16(Jungle.X + 200 + (int)(ScaleBasedOnWorldSizeX * 1.85f), Jungle.Y - (int)(ScaleBasedOnWorldSizeY * 10f) + Main.rand.Next(-10, 30));
+            Generator.GenerateStructure(junglePath + "Cave", genPoint, Instance);
+            //PlaceTile(genPoint.X, genPoint.Y, TileID.Adamantite, true, true);
+            Generator.GenerateStructure("SkyblockWorldGen/Structures/LockedJungleChest", new Point16(genPoint.X + 17, genPoint.Y + 42), Instance);
+
+            List<string> islands = new List<string>
+            {
+                "Bridge",
+                "Small1",
+                "Small2",
+                "Small3",
+                "Small4"
+            };
+
+            for (int i = 0; i < 2; i++)
+            {
+                Point16 point = i switch
+                {
+                    0 => genPoint - new Point16((int)(ScaleBasedOnWorldSizeX * 8f) + 100, -100 + Main.rand.Next(-20, -10)),
+                    1 => genPoint - new Point16((int)(ScaleBasedOnWorldSizeX * 3f) + 100, Main.rand.Next(-30, 50)),
+                };
+
+                int index = Main.rand.Next(islands.Count);
+                string islandToGenerate = islands[index];
+                islands.RemoveAt(index);
+                Generator.GenerateStructure(junglePath + islandToGenerate, point, Instance);
+            }
+        }
+
+        public static void GenMushroomIsland()
+        {
+            Point16 genPos = new(Mushroom.X, Mushroom.Y);
+
+            Generator.GenerateStructure("SkyblockWorldGen/Structures/MushroomIsland", genPos, Instance);
+        }
+    }
+        
     public class PlanteraTempleGeneration : GlobalNPC
     {
         public override bool AppliesToEntity(NPC entity, bool lateInstantiation) => entity.type == NPCID.Plantera;

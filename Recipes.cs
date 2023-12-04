@@ -1,4 +1,5 @@
 using Mono.CompilerServices.SymbolWriter;
+using OneBlock.Configs;
 using OneBlock.Items;
 using System.Security.Policy;
 using Terraria;
@@ -8,7 +9,7 @@ using Terraria.ModLoader;
 
 namespace OneBlock
 {
-	public class Recipes : ModSystem
+    public class Recipes : ModSystem
 	{
         public static RecipeGroup tombstoneRecipeGroup;
         public static RecipeGroup goldenTombstoneRecipeGroup;
@@ -168,6 +169,15 @@ namespace OneBlock
                 Recipe.Create(ItemID.SandBoots)
                    .AddRecipeGroup(RecipeGroupID.IronBar, 5)
                    .AddIngredient(ItemID.SwiftnessPotion)
+                   .AddTile(TileID.WorkBenches)
+                   .Register();
+            }
+
+            if (config.CraftLifeCrystals)
+            {
+                Recipe.Create(ItemID.LifeCrystal)
+                   .AddIngredient(ItemID.Ruby, 3)
+                   .AddIngredient(ItemID.LesserHealingPotion, 1)
                    .AddTile(TileID.WorkBenches)
                    .Register();
             }

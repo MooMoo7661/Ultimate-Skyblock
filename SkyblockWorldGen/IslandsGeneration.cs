@@ -102,76 +102,17 @@ namespace OneBlock.SkyblockWorldGen
 
             if (config.StarterChestStyle != 4) // Setting loot for starter chest
             {
-                try
+                int starterChest = PlaceChest(Main.maxTilesX / 2 - 22, Main.maxTilesY / 2 - Main.maxTilesY / 3 - 5, 21, false, chestType);
+                Chest chest = Main.chest[starterChest];
+                ChestType style = (ChestType)config.StarterChestStyle;
+
+                switch (style)
                 {
-                    int starterChest = PlaceChest(Main.maxTilesX / 2 - 22, Main.maxTilesY / 2 - Main.maxTilesY / 3 - 5, 21, false, chestType);
-
-
-                    switch (config.StarterChestStyle)
-                    {
-                        case 1: // Classic
-                            Main.chest[starterChest].item[0].SetDefaults(ItemID.WaterBucket);
-                            Main.chest[starterChest].item[1].SetDefaults(ItemID.LavaBucket);
-                            Main.chest[starterChest].item[2].SetDefaults(ItemID.DirtBlock);
-                            Main.chest[starterChest].item[2].stack = 10;
-                            Main.chest[starterChest].item[3].SetDefaults(ItemID.SandBlock);
-                            Main.chest[starterChest].item[3].stack = 15;
-                            Main.chest[starterChest].item[4].SetDefaults(ItemID.Torch);
-                            Main.chest[starterChest].item[4].stack = 5;
-                            Main.chest[starterChest].item[5].SetDefaults(ItemID.JungleGrassSeeds);
-                            Main.chest[starterChest].item[5].stack = 2;
-                            Main.chest[starterChest].item[6].SetDefaults(ItemID.GrassSeeds);
-                            Main.chest[starterChest].item[6].stack = 2;
-                            Main.chest[starterChest].item[7].SetDefaults(ItemID.Wood);
-                            Main.chest[starterChest].item[7].stack = 15;
-                            Main.chest[starterChest].item[8].SetDefaults(ItemID.Acorn);
-                            Main.chest[starterChest].item[8].stack = 5;
-                            break;
-
-                        case 2: // Simple
-                            Main.chest[starterChest].item[0].SetDefaults(ItemID.WaterBucket);
-                            Main.chest[starterChest].item[1].SetDefaults(ItemID.LavaBucket);
-                            Main.chest[starterChest].item[2].SetDefaults(ItemID.JungleGrassSeeds);
-                            Main.chest[starterChest].item[3].SetDefaults(ItemID.SandBlock);
-                            Main.chest[starterChest].item[3].stack = 5;
-                            break;
-
-                        case 3: // Luxury
-                            Main.chest[starterChest].item[0].SetDefaults(ItemID.WaterBucket);
-                            Main.chest[starterChest].item[1].SetDefaults(ItemID.LavaBucket);
-                            Main.chest[starterChest].item[2].SetDefaults(ItemID.DirtBlock);
-                            Main.chest[starterChest].item[2].stack = 25;
-                            Main.chest[starterChest].item[3].SetDefaults(ItemID.SandBlock);
-                            Main.chest[starterChest].item[3].stack = 30;
-                            Main.chest[starterChest].item[4].SetDefaults(ItemID.Torch);
-                            Main.chest[starterChest].item[4].stack = 20;
-                            Main.chest[starterChest].item[5].SetDefaults(ItemID.JungleGrassSeeds);
-                            Main.chest[starterChest].item[5].stack = 5;
-                            Main.chest[starterChest].item[6].SetDefaults(ItemID.GrassSeeds);
-                            Main.chest[starterChest].item[6].stack = 5;
-                            Main.chest[starterChest].item[7].SetDefaults(ItemID.CorruptSeeds);
-                            Main.chest[starterChest].item[7].stack = 5;
-                            Main.chest[starterChest].item[8].SetDefaults(ItemID.CrimsonSeeds);
-                            Main.chest[starterChest].item[8].stack = 5;
-                            Main.chest[starterChest].item[9].SetDefaults(ItemID.Wood);
-                            Main.chest[starterChest].item[9].stack = 30;
-                            Main.chest[starterChest].item[10].SetDefaults(ItemID.Acorn);
-                            Main.chest[starterChest].item[10].stack = 10;
-                            Main.chest[starterChest].item[11].SetDefaults(ItemID.Furnace);
-                            Main.chest[starterChest].item[12].SetDefaults(ItemID.CloudinaBottle);
-                            Main.chest[starterChest].item[13].SetDefaults(ItemID.Mushroom);
-                            Main.chest[starterChest].item[13].stack = 10;
-                            Main.chest[starterChest].item[14].SetDefaults(ItemID.StoneBlock);
-                            Main.chest[starterChest].item[14].stack = 50;
-                            Main.chest[starterChest].item[15].SetDefaults(ItemID.WoodYoyo);
-                            break;
-                    }
+                    case ChestType.Classic:
+                        chest.Add(new Item(ItemID.LavaBucket));
+                        chest.Add(new Item(ItemID.WaterBucket));
+                        break;
                 }
-                catch
-                {
-
-                }
-
             }
         }
 

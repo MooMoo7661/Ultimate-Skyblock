@@ -19,7 +19,7 @@ namespace OneBlock.MapDrawing
     public class MainMapLayer : ModMapLayer
     {
         public override string Name => "Main Map Layer";
-        public static string path = "OneBlock/MapDrawing/Icons/";
+        public static string path = "OneBlock/UI/MapDrawing/Icons/";
         public override void Draw(ref MapOverlayDrawContext context, ref string text)
         {
             if (!MapIconDrawBools.AllIcons) { return; }

@@ -27,7 +27,7 @@ namespace OneBlock.MapDrawing
         ToggleButton HellToggle;
         ToggleButton MushroomToggle;
 
-        public readonly string path = "OneBlock/MapDrawing/Icons/";
+        public readonly string path = "OneBlock/UI/MapDrawing/Icons/";
         public override void Draw(ref MapOverlayDrawContext context, ref string text)
         {
             MainToggle ??= new()

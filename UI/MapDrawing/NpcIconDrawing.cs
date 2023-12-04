@@ -15,7 +15,7 @@ namespace OneBlock.MapDrawing
 {
     public class NpcIconDrawing : ModMapLayer
     {
-        private static readonly string path = "OneBlock/MapDrawing/Icons/";
+        private static readonly string path = "OneBlock/UI/MapDrawing/Icons/";
         public Texture2D friendly = ModContent.Request<Texture2D>(path + "IconFriendly", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         public Texture2D hostile = ModContent.Request<Texture2D>(path + "IconHostile", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         public override void Draw(ref MapOverlayDrawContext context, ref string text)

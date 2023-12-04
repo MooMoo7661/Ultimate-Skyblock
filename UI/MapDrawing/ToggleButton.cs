@@ -17,7 +17,7 @@ namespace OneBlock.MapDrawing
 {
     public class ToggleButton
     {
-        public Texture2D BesideTexture = ModContent.Request<Texture2D>("OneBlock/MapDrawing/Icons/IconMushroom", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+        public Texture2D BesideTexture = ModContent.Request<Texture2D>("OneBlock/UI/MapDrawing/Icons/IconMushroom", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
         public bool enabled = true;
 
@@ -42,7 +42,7 @@ namespace OneBlock.MapDrawing
             SoundEngine.PlaySound(PlaySound);
         }
         public bool Toggled { get => enabled; }//changed
-        public Texture2D ToggleTexture { get => enabled ? ModContent.Request<Texture2D>("OneBlock/MapDrawing/Icons/IconToggleOn").Value : ModContent.Request<Texture2D>("OneBlock/MapDrawing/Icons/IconToggleOff").Value; }
+        public Texture2D ToggleTexture { get => enabled ? ModContent.Request<Texture2D>("OneBlock/UI/MapDrawing/Icons/IconToggleOn").Value : ModContent.Request<Texture2D>("OneBlock/MapDrawing/Icons/IconToggleOff").Value; }
         public void Draw(ref MapOverlayDrawContext context, ref string text)
         {
             var result = context.Draw(ToggleTexture, new Vector2(DrawPos.X, DrawPos.Y), toggleDrawColor, new SpriteFrame(1, 1, 0, 0), ScaleIfNotSelected, ScaleIfSelected, Alignment.Center);

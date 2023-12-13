@@ -11,7 +11,7 @@ using Terraria;
 
 namespace OneBlock.UI.GuideBook
 {
-    public class DragableUIPanel : UIPanel
+    public class DraggableUIPanel : UIPanel
     {
         private Vector2 offset;
         public bool dragging { get; set; }

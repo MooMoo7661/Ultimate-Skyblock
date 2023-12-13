@@ -8,206 +8,233 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
-using Terraria;
 using OneBlock.UI.Guidebook;
 using Microsoft.Xna.Framework;
-using OneBlock.Items.Guidebook;
 
 namespace OneBlock.UI.GuideBook
 {
     public class GuidebookUIState : UIState
     {
-        public DragableUIPanel SkyGuidePanel;
-        UITextButton TipsButton;
-        UIText TipsButtonText;
-        UIText IntroButtonText;
+        public DraggableUIPanel GuidebookPanel;
         UIText Title;
-        UIText Intro;
-        UIText Tips;
-        UITextButton EasyButton;
-        UITextButton HardButton;
-        UITextButton BrutalButton;
-        bool tipsPage;
+        UIText PageNumber;
+        UIText PageName;
+        UIText MainText;
+        UITextButton RightButton;
+        UITextButton LeftButton;
+
+        Color DefaultColor = new Color(44, 57, 105, 178); // Default color of standard terraria UI.
+
+        public int PageIndex = 0;
+        string MainPage = "";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+        /// <summary>
+        /// Used for storing pages. Each page is a string. 
+        /// Calculation for whether the book can be scrolled is done automatically.
+        /// </summary>
+        public static readonly Dictionary<int, string> Pages = new Dictionary<int, string>();
+        public static readonly Dictionary<int, string> PageNames = new Dictionary<int, string>();
+
+        /// <summary>
+        /// Used for determining what entry to get with TryGetEntry
+        /// </summary>
+        public enum StyleID
+        {
+            Page,
+            Name
+        } 
+
+        /// <summary>
+        /// Used to get either the current page name, or the text to display
+        /// </summary>
+        /// <param name="index">Index to search the dictionary for. Intended to have PageIndex passed in.</param>
+        /// <returns>Dictionary entry for the provided key, or null if not found</returns>
+        public static string TryGetEntry(int index, StyleID style)
+        {
+            switch (style)
+            {
+                case StyleID.Page:
+                    if (Pages.TryGetValue(index, out string page)) { return page; }
+                    break;
+
+                case StyleID.Name:
+                    if (PageNames.TryGetValue(index, out string name)) { return name; }
+                    break;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Adding the pages to the dictionary
+        /// </summary>
+        public static void AddPages()
+        {
+            string path = "Mods.OneBlock.LocalizedPages.";
+            Pages.Add(0, Language.GetTextValue(path + "IntroPage")); PageNames.Add(0, Language.GetTextValue(path + "PageNames.Intro"));
+            Pages.Add(1, Language.GetTextValue(path + "TableOfContents")); PageNames.Add(1, Language.GetTextValue(path + "PageNames.TableOfContents"));
+            Pages.Add(2, Language.GetTextValue(path + "Progression1")); PageNames.Add(2, Language.GetTextValue(path + "PageNames.Progression"));
+            Pages.Add(3, Language.GetTextValue(path + "Progression2")); PageNames.Add(3, Language.GetTextValue(path + "PageNames.Progression"));
+            Pages.Add(4, Language.GetTextValue(path + "Fishing")); PageNames.Add(4, Language.GetTextValue(path + "PageNames.Fishing"));
+        }
+
+        /// <summary>
+        /// Once created. Used to create the UI for the book, and assign sizes, colors, etc.
+        /// </summary>
         public override void OnInitialize()
         {
-            string tipsButtonText = "Tips";//Language.GetTextValue("Mods.SkyblockBrutalism.UI.TipsButton");
+            AddPages();
+
             string introButtonText = Language.GetTextValue("Mods.SkyblockBrutalism.UI.IntroButton");
-            string title = Language.GetTextValue("Mods.SkyblockBrutalism.UI.Title");
-            string introText = Language.GetTextValue("Mods.SkyblockBrutalism.UI.Intro");
-            string tipsText = Language.GetTextValue("Mods.SkyblockBrutalism.UI.Tips");
-            string easyButtonText = Language.GetTextValue("Mods.SkyblockBrutalism.UI.EasyButton");
-            string hardButtonText = Language.GetTextValue("Mods.SkyblockBrutalism.UI.HardButton");
-            string brutalButtonText = Language.GetTextValue("Mods.SkyblockBrutalism.UI.BrutalButton");
+            string title = "Skyblock Guidebook";
+            string rightButtonText = ">";
+            string leftButtonText = "<";
 
-            // Window
-            SkyGuidePanel = new DragableUIPanel();
-            SkyGuidePanel.SetPadding(0);
-            SkyGuidePanel.HAlign = 0.5f;
-            SkyGuidePanel.VAlign = 0.1f;
-            SkyGuidePanel.Width.Set(600f, 0f);
-            SkyGuidePanel.Height.Set(400f, 0f);
-            SkyGuidePanel.BackgroundColor = new Color(73, 94, 171);
-            Append(SkyGuidePanel);
+            GuidebookPanel = new DraggableUIPanel();
+            GuidebookPanel.SetPadding(0);
+            GuidebookPanel.HAlign = 0.5f;
+            GuidebookPanel.VAlign = 0.1f;
+            GuidebookPanel.Width.Set(900f, 0f);
+            GuidebookPanel.Height.Set(500f, 0f);
+            GuidebookPanel.BackgroundColor = new Color(73, 94, 171);
+            Append(GuidebookPanel);
 
-            //Hover displays localized text "Close"
             UITextButton close = new UITextButton("X", 0.975f, 0.025f, 40, 30, Language.GetTextValue("LegacyInterface.52"), SoundID.MenuClose);
             close.OnLeftClick += new MouseEvent(CloseClicked);
-            SkyGuidePanel.Append(close);
+            GuidebookPanel.Append(close);
 
-            //Title
             Title = new UIText(title);
             Title.HAlign = 0.5f;
             Title.MarginTop = 15;
-            SkyGuidePanel.Append(Title);
+            GuidebookPanel.Append(Title);
 
-            //Tips button with alternating Text
-            //Note this is the only "OnLeftMouseUp" used here.  DragableUIPanel gets glued to the mouse if dragging while hovering on a swapping element (the button text)
-            TipsButton = new UITextButton("", 0.5f, 0.975f, 80, 34, "", SoundID.MenuOpen);
-            TipsButton.OnLeftMouseUp += new MouseEvent(TipsButtonClicked);
-            SkyGuidePanel.Append(TipsButton);
+            PageNumber = new UIText("- " + (PageIndex + 1).ToString() + " -");
+            PageNumber.HAlign = 0.5f;
+            PageNumber.MarginTop = 450;
+            GuidebookPanel.Append(PageNumber);
 
-            //if I could just refresh the text element in the TipsButton, I wouldn't need either of these.
-            IntroButtonText = new UIText(introButtonText);
-            IntroButtonText.HAlign = 0.5f;
-            IntroButtonText.VAlign = 0.35f;
+            PageName = new UIText("Introduction");
+            PageName.HAlign = 0.5f;
+            PageName.MarginTop = 450;
+            GuidebookPanel.Append(PageName);
 
-            TipsButtonText = new UIText(tipsButtonText);
-            TipsButtonText.HAlign = 0.5f;
-            TipsButtonText.VAlign = 0.35f;
+            MainPage = Language.GetTextValue("Mods.OneBlock.LocalizedPages.IntroPage");
+            MainText = new UIText(MainPage, 1f);
+            MainText.MarginLeft = 15;
+            MainText.MarginTop = 50;
+            GuidebookPanel.Append(MainText);
 
-            //SkyGuide Starting Info
-            Intro = new UIText(introText, 1f);
-            Intro.MarginLeft = 15;
-            Intro.MarginTop = 50;
+            LeftButton = new UITextButton(leftButtonText, 0.05f, 0.95f, 130, 34, "", SoundID.MenuTick);
+            LeftButton.OnLeftClick += new MouseEvent(PageAdvancementLeft);
+            GuidebookPanel.Append(LeftButton);
 
-            //SkyGuide Tips
-            Tips = new UIText(tipsText, 1f);
-            Tips.MarginLeft = 15;
-            Tips.MarginTop = 50;
+            RightButton = new UITextButton(rightButtonText, 0.95f, 0.95f, 130, 34, "", SoundID.MenuTick);
+            RightButton.OnLeftClick += new MouseEvent(PageAdvancementRight);
+            GuidebookPanel.Append(RightButton);
+        }
 
-            //Conditional Intro Buttons.  This was the majority of my week of effort.
-            EasyButton = new UITextButton(easyButtonText, 0.05f, 0.85f, 130, 34, Language.GetTextValue("RandomWorldName_Adjective.Easy"), SoundID.Pixie);
-            EasyButton.OnLeftClick += new MouseEvent(EasyButtonClicked);
+        private void CloseClicked(UIMouseEvent evt, UIElement listeningElement) => ModContent.GetInstance<GuidebookSystem>().HideMyUI();
 
-            HardButton = new UITextButton(hardButtonText, 0.5f, 0.85f, 130, 34, Language.GetTextValue("Prefix.Hard"), SoundID.ZombieMoan);
-            HardButton.OnLeftClick += new MouseEvent(HardButtonClicked);
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            SafeguardIndex();
+            UpdateButtonColors();
+            UpdatePageName();
+        }
 
-            BrutalButton = new UITextButton(brutalButtonText, 0.95f, 0.85f, 130, 34, Language.GetTextValue("RandomWorldName_Adjective.Brutal"), SoundID.Zombie105);
-            BrutalButton.OnLeftClick += new MouseEvent(BrutalButtonClicked);
+        private void SafeguardIndex() { if (PageIndex < 0) PageIndex = 0; }
 
-            if (!tipsPage)
+        private void UpdatePageName()
+        {
+            string pageName = TryGetEntry(PageIndex, StyleID.Name);
+            if (pageName != null)
             {
-                SkyGuidePanel.Append(Intro);
-                SkyGuidePanel.Append(EasyButton);
-                SkyGuidePanel.Append(HardButton);
-                SkyGuidePanel.Append(BrutalButton);
-                TipsButton.Append(TipsButtonText);
+                GuidebookPanel.RemoveChild(PageName);
+                PageName = new UIText(pageName, 1f);
+                PageName.HAlign = 0.5f;
+                PageName.MarginTop = 420;
+                GuidebookPanel.Append(PageName);
+            }
+        }
+
+        /// <summary>
+        /// Used to handle graying the right and left arrow buttons depending on if index + 1 or - 1 is null
+        /// </summary>
+        private void UpdateButtonColors()
+        {
+            string page = TryGetEntry(PageIndex - 1, StyleID.Page);
+            if (page == null)
+            {
+                LeftButton.BackgroundColor = Color.Gray;
             }
             else
             {
-                SkyGuidePanel.Append(Tips);
-                TipsButton.Append(IntroButtonText);
+                LeftButton.BackgroundColor = DefaultColor;
             }
-        }
 
-        private void CloseClicked(UIMouseEvent evt, UIElement listeningElement)
-        {
-            ModContent.GetInstance<SkyUISystem>().HideMyUI();
-        }
-        //The last open page is remembered during the current session.  There are, IMO, several duplicate elements and variables I could delete if I just knew how to refresh an element with it's updated values on click rather simply removing and adding entire elements.
-        private void TipsButtonClicked(UIMouseEvent evt, UIElement listeningElement)
-        {
-            if (!tipsPage)
+            page = TryGetEntry(PageIndex + 1, StyleID.Page);
+            if (page == null)
             {
-                tipsPage = true;
-                SkyGuidePanel.RemoveChild(Intro);
-                SkyGuidePanel.RemoveChild(EasyButton);
-                SkyGuidePanel.RemoveChild(HardButton);
-                SkyGuidePanel.RemoveChild(BrutalButton);
-                TipsButton.RemoveChild(TipsButtonText);
-                SkyGuidePanel.Append(Tips);
-                TipsButton.Append(IntroButtonText);
-
+                RightButton.BackgroundColor = Color.Gray;
             }
             else
             {
-                tipsPage = false;
-                SkyGuidePanel.RemoveChild(Tips);
-                TipsButton.RemoveChild(IntroButtonText);
-                SkyGuidePanel.Append(Intro);
-                SkyGuidePanel.Append(EasyButton);
-                SkyGuidePanel.Append(HardButton);
-                SkyGuidePanel.Append(BrutalButton);
-                TipsButton.Append(TipsButtonText);
-            }
-        }
-        //function that exists just to pass the variable.
-        public void RecieveChoice(int ReadSkyChoice)
-        {
-            if (ReadSkyChoice != 0)
-            {
-                EasyButton.isSelected = false;
-                HardButton.isSelected = false;
-                BrutalButton.isSelected = false;
-                if (ReadSkyChoice == 1)
-                {
-                    EasyButton.isSelected = true;
-                }
-                else if (ReadSkyChoice == 2)
-                {
-                    HardButton.isSelected = true;
-                }
-                else if (ReadSkyChoice == 3)
-                {
-                    BrutalButton.isSelected = true;
-                }
-            }
-            else
-            {
-                EasyButton.isSelected = null;
-                HardButton.isSelected = null;
-                BrutalButton.isSelected = null;
+                RightButton.BackgroundColor = DefaultColor;
             }
         }
 
-        private bool LootSkyGuide(int writeSkyChoice)
+        /// <summary>
+        /// Increases PageIndex by 1, but only if the current index + 1 is found in the dictionary. Also sets MainText to the index page.
+        /// </summary>
+        private void PageAdvancementRight(UIMouseEvent evt, UIElement listeningElement)
         {
-            for (int i = 0; i < 58; i++)
+            string page = TryGetEntry(PageIndex + 1, StyleID.Page);
+            if (page != null)
             {
-                if (Main.LocalPlayer.inventory[i].type == ModContent.ItemType<GuidebookItem>() && Main.LocalPlayer.inventory[i].ModItem is GuidebookItem guide)
-                {
-                    if (guide.Choice == 0)
-                    {
-                        guide.Choice = writeSkyChoice;
-                        RecieveChoice(writeSkyChoice);
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-        //I didn't bother to figure out a fancy combined function for my choice buttons.
-        private void EasyButtonClicked(UIMouseEvent evt, UIElement listeningElement)
-        {
-            if (EasyButton.isSelected == null && LootSkyGuide(1))
-            {
-                Main.LocalPlayer.QuickSpawnItem(Main.LocalPlayer.GetSource_FromThis(), ItemID.BottomlessShimmerBucket);
-            }
-        }
-        private void HardButtonClicked(UIMouseEvent evt, UIElement listeningElement)
-        {
-            if (HardButton.isSelected == null && LootSkyGuide(2))
-            {
-                Main.LocalPlayer.QuickSpawnItem(Main.LocalPlayer.GetSource_FromThis(), ItemID.StoneBlock, 10);
+                PageIndex++;
+                GuidebookPanel.RemoveChild(MainText);
+                GuidebookPanel.RemoveChild(PageNumber);
+
+                MainPage = page;
+                MainText = new UIText(page, 1f);
+                MainText.MarginLeft = 15;
+                MainText.MarginTop = 50;
+
+                PageNumber = new UIText("- " + (PageIndex + 1).ToString() + " -", 1f);
+                PageNumber.HAlign = 0.5f;
+                PageNumber.MarginTop = 450;
+
+                GuidebookPanel.Append(MainText);
+                GuidebookPanel.Append(PageNumber);
             }
         }
-        private void BrutalButtonClicked(UIMouseEvent evt, UIElement listeningElement)
+
+        /// <summary>
+        /// Decreases PageIndex by 1, but only if the current index - 1 is found in the dictionary. Also sets MainText to the index page.
+        /// </summary>
+        private void PageAdvancementLeft(UIMouseEvent evt, UIElement listeningElement)
         {
-            if (BrutalButton.isSelected == null && LootSkyGuide(3))
+            string page = TryGetEntry(PageIndex - 1, 0);
+            if (page != null)
             {
-                Main.LocalPlayer.QuickSpawnItem(Main.LocalPlayer.GetSource_FromThis(), ItemID.AshBlock, 10);
+                PageIndex--;
+                GuidebookPanel.RemoveChild(MainText);
+                GuidebookPanel.RemoveChild(PageNumber);
+
+                MainPage = page;
+                MainText = new UIText(page, 1f);
+                MainText.MarginLeft = 15;
+                MainText.MarginTop = 50;
+
+                PageNumber = new UIText("- " + (PageIndex + 1).ToString() + " -", 1f);
+                PageNumber.HAlign = 0.5f;
+                PageNumber.MarginTop = 450;
+
+                GuidebookPanel.Append(MainText);
+                GuidebookPanel.Append(PageNumber);
             }
         }
+
     }
 }
 

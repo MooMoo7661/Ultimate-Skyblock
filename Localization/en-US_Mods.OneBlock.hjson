@@ -359,8 +359,12 @@ Items: {
 	}
 
 	GuidebookItem: {
-		DisplayName: Guidebook Item
-		Tooltip: ""
+		DisplayName: Skyblock Guidebook
+		Tooltip:
+			'''
+			A very large book
+			Provides tips on progression and info about this mod
+			'''
 	}
 }
 
@@ -392,4 +396,67 @@ Buffs: {
 		DisplayName: Oatchi Buff
 		Description: Mods.OneBlock.Buffs.OatchiBuff.Description
 	}
+}
+
+LocalizedPages: {
+	PageNames: {
+		Intro: Intro
+		TableOfContents: Table of Contents
+		Progression: Progression
+		Fishing: Fishing
+	}
+
+	IntroPage:
+		'''
+		[c/FFB23D:Welcome to Skyblock!]
+		This is a book to help you progress, as well as provide some tips for you.
+		To use the book, click the [c/FFABAB:Left (<)] or [c/FFABAB:Right (>)] arrows to scroll through pages.
+		You can purchase this book again from the Merchant at any time, in case you lose it.
+		'''
+	TableOfContents:
+		'''
+		 -=-= Table of Contents =-=-
+		 1 : Introduction
+		 2 : Table of Contents
+		 3 - 7 : Progression
+
+		'''
+	Progression1:
+		'''
+		To begin, you should chop some[i:9]wood. 
+		Trees will grow much faster now, meaning you will be able to gather a substantal amount of wood.
+		After you gather some wood, you should also get some[i:3]stone from the [c/ABCAFF:stone generator] on the left side of
+		the island. Mining the stone in between the lava and water will provide an infinite source of stone, since lava
+		and water will now generate stone if separated by one block.
+
+		Throughout the world, there are islands scattered, each with chests and life crystals.
+		In the sky, there are planetoids, that have rare stuff such as ores and demon hearts/shadow orbs.
+		You should try and find these islands and planetoids, as they will provide you with the loot necessary to
+		progress. If you find an[i:997]Extractinator, they will be very useful for getting gems, and processing raw
+		materials into new ones. A full page can be found later on about the new block conversions.
+		[c/FF9797:Don't forget that fishing will let you obtain tons of new loot that wouldn't be possible to get in skyblock]
+		[c/FF9797:normally.] There is a page later in the book that explains how to get certain items from fishing.
+		'''
+	Progression2:
+		'''
+		Once you have a decent supply of blocks, start bridging out to the left or the right.
+		Make sure to look above and below your platform for any islands that might be out of sight.
+		There are 4 other forest islands, each with a chest containing basic underground golden chest loot.
+		You can find useful stuff such as [i:50][c/FFC080:magic mirrors],[i:166][c/FFC080:bombs],[i:28][c/FFC080:potions], and [i:19][c/FFC080:bars.]
+		Additionally, each chest can have a random type of [c/A4FFB9:material bomb.]
+		Material bombs are bombs that explode and spread a certain type of block. This mod adds several new ones.
+		The benefit of these is that they create more blocks than are consumed in their creation, essentially
+		[c/9E80FF:duplicating blocks.] This can be done many times, as long as you have a source of bombs and enough coins.
+		A good place to look for [i:29][c/C8426B:life crystals] is on [c/92E67D:Jungle Islands] and the [c/5D4DEB:Mushroom Island.]
+		There is also a lot of golden chests on the Mushroom Island, making it a good spot to get some loot.
+		You can locate these islands on the map, since there are now icons for each island/important structure.
+		'''
+	Progression3: ""
+	Fishing:
+		'''
+		You can obtain many useful items from fishing, such as [i:365]ores, [i:706]bars, [i:2310]potion fish, [i:4406]crates, and more.
+		Crates are very important, as depending on the biome you are in, they will provide loot similar to what
+		you would get from a chest in that biome. For example, you can get [i:1579]flurry boots from a boreal wood crate.
+
+		'''
 }

@@ -16,7 +16,7 @@ namespace OneBlock.Items.Guidebook
     public class GuidebookItem : ModItem
     {
 
-        public int Choice;
+        public int Page;
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.ManaCrystal);
@@ -29,50 +29,42 @@ namespace OneBlock.Items.Guidebook
         }
         public override void SaveData(TagCompound tag)
         {
-            tag["SkyChoices"] = Choice;
+            tag["GuidebookPage"] = Page;
         }
         public override void LoadData(TagCompound tag)
         {
-            Choice = tag.Get<int>("SkyChoices");
+            Page = tag.Get<int>("GuidebookPage");
         }
         public override void NetSend(BinaryWriter writer)
         {
-            writer.Write(Choice);
+            writer.Write(Page);
         }
         public override void NetReceive(BinaryReader reader)
         {
-            Choice = reader.ReadInt32();
+            Page = reader.ReadInt32();
         }
-        // If the player using the item is the client
-        // (explicitly excluded serverside here)
+
         public override bool? UseItem(Player player)
         {
             if (player.whoAmI == Main.myPlayer)
             {
-                if (ModContent.GetInstance<SkyUISystem>().IsUIOpen())
+                if (ModContent.GetInstance<GuidebookSystem>().IsUIOpen())
                 {
                     SoundEngine.PlaySound(SoundID.MenuClose);
-                    ModContent.GetInstance<SkyUISystem>().HideMyUI();
+                    ModContent.GetInstance<GuidebookSystem>().HideMyUI();
                 }
                 else
                 {
                     SoundEngine.PlaySound(SoundID.MenuOpen);
-                    ModContent.GetInstance<SkyUISystem>().ShowMyUI(Choice);
+                    ModContent.GetInstance<GuidebookSystem>().ShowMyUI();
                 }
 
             }
 
             return true;
         }
-        public override void ModifyTooltips(List<TooltipLine> tooltips)
-        {
-            if (Choice == 0)
-            {
-                //tooltips.RemoveAt(2);
-            }
-        }
     }
-    //The book is given at the start of the game and otherwise unaquireable
+
     public class PlayerStartingItems : ModPlayer
     {
         public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath)

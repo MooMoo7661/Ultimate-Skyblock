@@ -3,8 +3,8 @@ using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
-using OneBlock.Configs;
+using OneBlock.Content.Configs;
+using OneBlock.Content.StoneGenerator;
 
 namespace OneBlock
 {

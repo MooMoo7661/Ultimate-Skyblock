@@ -7,17 +7,19 @@ using Terraria.UI;
 using Terraria;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using OneBlock.SkyblockWorldGen;
+using UltimateSkyblock.SkyblockWorldGen;
+using SubworldLibrary;
 
-namespace OneBlock.Content.UI.MapDrawing
+namespace UltimateSkyblock.Content.UI.MapDrawing
 {
     public class MainMapLayer : ModMapLayer
     {
         public override string Name => "Main Map Layer";
-        public static string path = "OneBlock/Content/UI/MapDrawing/Icons/";
+        public static string path = "UltimateSkyblock/Content/UI/MapDrawing/Icons/";
         public override void Draw(ref MapOverlayDrawContext context, ref string text)
         {
             if (!MapIconDrawBools.AllIcons) { return; }
+            if (SubworldSystem.Current != null) { return; }
 
             const float scaleIfNotSelected = 1f;
             const float scaleIfSelected = 1.5f;

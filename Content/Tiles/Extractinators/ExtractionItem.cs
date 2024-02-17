@@ -4,7 +4,7 @@ using System.Reflection;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace OneBlock.Content.Tiles.Extractinators
+namespace UltimateSkyblock.Content.Tiles.Extractinators
 {
     internal class ExtractionItem : GlobalItem
     {

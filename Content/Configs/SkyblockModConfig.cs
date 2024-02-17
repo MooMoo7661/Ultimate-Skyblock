@@ -2,9 +2,9 @@
 using System.ComponentModel;
 using Terraria.ModLoader.Config;
 
-namespace OneBlock.Content.Configs
+namespace UltimateSkyblock.Content.Configs
 {
-    public class OneBlockModConfig : ModConfig
+    public class SkyblockModConfig : ModConfig
     {
         public override ConfigScope Mode => ConfigScope.ServerSide;
 

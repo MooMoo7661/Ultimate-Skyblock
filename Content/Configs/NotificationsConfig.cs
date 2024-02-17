@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using Terraria.ModLoader.Config;
 
-namespace OneBlock.Content.Configs
+namespace UltimateSkyblock.Content.Configs
 {
     public class NotificationsConfig : ModConfig
     {

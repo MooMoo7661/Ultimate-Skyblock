@@ -4,9 +4,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria;
 using Microsoft.Xna.Framework;
-using OneBlock.Utils;
+using UltimateSkyblock.Content.Utils;
 
-namespace OneBlock.Content.Tiles.Extractinators
+namespace UltimateSkyblock.Content.Tiles.Extractinators
 {
     public abstract class AutoExtractor_BaseEntity : ModTileEntity
     {

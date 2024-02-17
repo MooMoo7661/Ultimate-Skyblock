@@ -5,12 +5,12 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static WorldHelpers;
-using static OneBlock.OneBlock;
+using static UltimateSkyblock.UltimateSkyblock;
 using static Terraria.WorldGen;
 using StructureHelper;
-using OneBlock.Utils;
+using UltimateSkyblock.Content.Utils;
 
-namespace OneBlock.SkyblockWorldGen
+namespace UltimateSkyblock.SkyblockWorldGen
 {
     public partial class MainWorld : ModSystem
     {
@@ -34,6 +34,8 @@ namespace OneBlock.SkyblockWorldGen
                 }
             }
 
+            Mod.Logger.Info("Successfully cleared world");
+
             Main.spawnTileX = Main.maxTilesX / 2;
             Main.spawnTileY = Main.maxTilesY / 2 - Main.maxTilesY / 3; // Re-adjusting the spawn point to a constant value.
 
@@ -48,7 +50,7 @@ namespace OneBlock.SkyblockWorldGen
             GenForestPlanetoids();
             GenSnowPlanetoids();
             GenEvilPlanetoids();
-            GenJungleIslands();
+            //GenJungleIslands();
             GenMushroomIsland();
             GenMeteorites();
 

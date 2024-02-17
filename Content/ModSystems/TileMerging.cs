@@ -1,9 +1,9 @@
 ﻿using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
-using OneBlock.Content.Tiles.Blocks;
+using UltimateSkyblock.Content.Tiles.Blocks;
 
-namespace OneBlock.Content.ModSystems
+namespace UltimateSkyblock.Content.ModSystems
 {
     public class TileMerging : ModSystem
     {

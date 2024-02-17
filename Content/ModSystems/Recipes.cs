@@ -1,9 +1,9 @@
-using OneBlock.Content.Configs;
+using UltimateSkyblock.Content.Configs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace OneBlock.Content.ModSystems
+namespace UltimateSkyblock.Content.ModSystems
 {
     public class Recipes : ModSystem
     {
@@ -182,19 +182,19 @@ namespace OneBlock.Content.ModSystems
         public override void AddRecipeGroups()
         {
             tombstoneRecipeGroup = new RecipeGroup(() => "Any Stone Gravestone", ItemID.Tombstone, ItemID.Headstone, ItemID.Gravestone, ItemID.Obelisk);
-            RecipeGroup.RegisterGroup("OneBlock:GravestonesDecraftToStone", tombstoneRecipeGroup);
+            RecipeGroup.RegisterGroup("UltimateSkyblock:GravestonesDecraftToStone", tombstoneRecipeGroup);
 
             goldenTombstoneRecipeGroup = new RecipeGroup(() => "Any Golden Gravestone", ItemID.RichGravestone1, ItemID.RichGravestone2, ItemID.RichGravestone3, ItemID.RichGravestone4, ItemID.RichGravestone5);
-            RecipeGroup.RegisterGroup("OneBlock:GoldenGravestonesDecraftToGold", goldenTombstoneRecipeGroup);
+            RecipeGroup.RegisterGroup("UltimateSkyblock:GoldenGravestonesDecraftToGold", goldenTombstoneRecipeGroup);
 
             evilBars = new RecipeGroup(() => "Any Evil Bar", ItemID.CrimtaneBar, ItemID.DemoniteBar);
-            RecipeGroup.RegisterGroup("OneBlock:AnyEvilBar", evilBars);
+            RecipeGroup.RegisterGroup("UltimateSkyblock:AnyEvilBar", evilBars);
 
             silverOrTungsten = new RecipeGroup(() => "Silver or Tungsten", ItemID.SilverBar, ItemID.TungstenBar);
-            RecipeGroup.RegisterGroup("OneBlock:SilverOrTungsten", silverOrTungsten);
+            RecipeGroup.RegisterGroup("UltimateSkyblock:SilverOrTungsten", silverOrTungsten);
 
             goldOrPlatinum = new RecipeGroup(() => "Gold or Platinum", ItemID.GoldBar, ItemID.PlatinumBar);
-            RecipeGroup.RegisterGroup("OneBlock:GoldOrPlatinum", goldOrPlatinum);
+            RecipeGroup.RegisterGroup("UltimateSkyblock:GoldOrPlatinum", goldOrPlatinum);
         }
     }
 }

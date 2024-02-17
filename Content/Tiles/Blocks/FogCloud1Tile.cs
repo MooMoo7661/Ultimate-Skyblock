@@ -5,10 +5,10 @@ using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using Terraria.ObjectData;
 using Microsoft.Xna.Framework.Graphics;
-using OneBlock.Content.Configs;
-using OneBlock.Content.Items.Placeable;
+using UltimateSkyblock.Content.Configs;
+using UltimateSkyblock.Content.Items.Placeable;
 
-namespace OneBlock.Content.Tiles.Blocks
+namespace UltimateSkyblock.Content.Tiles.Blocks
 {
     public class FogCloud1Tile : ModTile
     {
@@ -37,7 +37,7 @@ namespace OneBlock.Content.Tiles.Blocks
 
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            return ModContent.GetInstance<OneBlockModConfig>().RenderFogCloudTiles;
+            return ModContent.GetInstance<SkyblockModConfig>().RenderFogCloudTiles;
         }
     }
 

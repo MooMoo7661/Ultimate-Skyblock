@@ -8,11 +8,11 @@ using Microsoft.Xna.Framework;
 using Terraria.ID;
 using Terraria.Audio;
 
-namespace OneBlock.Content.UI.MapDrawing
+namespace UltimateSkyblock.Content.UI.MapDrawing
 {
     public class ToggleButton
     {
-        public Texture2D BesideTexture = ModContent.Request<Texture2D>("OneBlock/Content/UI/MapDrawing/Icons/IconMushroom", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+        public Texture2D BesideTexture = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/MapDrawing/Icons/IconMushroom", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
         public bool enabled = true;
 
@@ -37,7 +37,7 @@ namespace OneBlock.Content.UI.MapDrawing
             SoundEngine.PlaySound(PlaySound);
         }
         public bool Toggled { get => enabled; }//changed
-        public Texture2D ToggleTexture { get => enabled ? ModContent.Request<Texture2D>("OneBlock/Content/UI/MapDrawing/Icons/IconToggleOn").Value : ModContent.Request<Texture2D>("OneBlock/Content/UI/MapDrawing/Icons/IconToggleOff").Value; }
+        public Texture2D ToggleTexture { get => enabled ? ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/MapDrawing/Icons/IconToggleOn").Value : ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/MapDrawing/Icons/IconToggleOff").Value; }
 
         public void Draw(ref MapOverlayDrawContext context, ref string text)
         {

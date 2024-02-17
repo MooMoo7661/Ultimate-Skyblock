@@ -6,7 +6,7 @@ using Terraria.UI;
 using Terraria;
 using Microsoft.Xna.Framework;
 
-namespace OneBlock.Content.UI.Guidebook
+namespace UltimateSkyblock.Content.UI.Guidebook
 {
     public class UITextButton : UIPanel
     {

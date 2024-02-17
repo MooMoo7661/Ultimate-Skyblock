@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 
-namespace OneBlock.Content.Items.Bombs
+namespace UltimateSkyblock.Content.Items.Bombs
 {
     public abstract class BaseStickyBombProjectile : ModProjectile
     {

@@ -2,7 +2,7 @@
 using Terraria.DataStructures;
 using Terraria.ObjectData;
 
-namespace OneBlock.Content.StoneGenerator
+namespace UltimateSkyblock.Content.StoneGenerator
 {
     public static class TileUtils
     {

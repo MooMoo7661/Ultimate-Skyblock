@@ -1,33 +1,31 @@
 Configs: {
 	OneBlockModConfig: {
-		DisplayName: Gameplay Config
-
 		TeleportToTopOfWorldOnDeath: {
-			Label: Falling out of the world teleports you to the top
 			Tooltip: ""
+			Label: Falling out of the world teleports you to the top
 		}
 
 		StarterChestStyle: {
-			Label: Starter Chest Style
 			Tooltip:
 				'''
 				1: Classic - contains simple skyblock items such as a water bucket, a lava bucket, and some extra items that aid progression.
 				2: Simple - contains the very basic items, not much is given.
 				3: Luxurious - contains a lot of items that will significantly speed up progression.
-				4: None - there is no chest.
+				4: None - there is no chest. Only for those who want to experience the most pain and spend a long time grinding for rare drops.
 				'''
+			Label: Starter Chest Style
 		}
 
 		DirtAndSandCanBeExtracted: {
-			Label: Dirt and Sand can be extracted for gems and ore
 			Tooltip: ""
+			Label: Dirt and Sand can be extracted for gems and ore
 		}
 
 		Headers: {
 			Recipes: Recipes
-			General: General Changes
 			Islands: Islands
-			Music: Music
+			Music: Music Header
+			General: General Header
 		}
 
 		DecraftTombstones: {
@@ -45,23 +43,23 @@ Configs: {
 		}
 
 		FastTrees: {
-			Label: Trees grow at an accelerated rate
 			Tooltip: ""
+			Label: Trees grow at an accelerated rate
 		}
 
 		TreesDropMoreAcorns: {
-			Label: Trees drop much more acorns
 			Tooltip: ""
+			Label: Trees drop much more acorns
 		}
 
 		BurnZombiesDuringDaytime: {
-			Label: Zombies burn during the day
 			Tooltip: ""
+			Label: Zombies burn during the day
 		}
 
 		SaplingsDropAcorns: {
-			Label: Saplings can be mined back into acorns (Don't question the logic)
 			Tooltip: ""
+			Label: Saplings can be mined back into acorns (Don't question the logic)
 		}
 
 		SmeltTinCans: {
@@ -85,22 +83,150 @@ Configs: {
 		}
 
 		MinecraftSoundtrack: {
-			Label: Replace Forest music with familiar soundtrack
 			Tooltip: ""
+			Label: Replace Forest music with familiar soundtrack
 		}
 
 		OWSoundtrack: {
-			Label: Replace various soundtracks with Otherworld sountracks
 			Tooltip: ""
+			Label: Replace various soundtracks with Otherworld sountracks
 		}
 
 		SubwaySurfers: {
-			Label: Subway Surfers!!!
 			Tooltip: ""
+			Label: Subway Surfers!!!
 		}
 
 		SmallWorldWarning: {
+			Tooltip: ""
 			Label: Warning text upon entering a world that is small
+		}
+
+		StoneGenerator: {
+			Tooltip:
+				'''
+				If lava and water are seperated by one block of air, it will generate stone in that spot, or obsidian if in the caverns.
+				It must be left -> right, or right -> left.
+				'''
+			Label: Stone Generator Logic
+		}
+
+		RenderFogCloudTiles: {
+			Tooltip: ""
+			Label: Render Fog Cloud Tiles
+		}
+
+		DrawNPCIcons: {
+			Tooltip: ""
+			Label: Draw NPC Icons on the map
+		}
+
+		DisplayName: One Block Mod Config
+	}
+
+	RecipesConfig: {
+		DecraftTombstones: {
+			Tooltip: ""
+			Label: Allow decrafting tombstones into gold and stone
+		}
+
+		CraftLifeCrystals: {
+			Tooltip: ""
+			Label: Craft Life Crystals
+		}
+
+		SmeltTinCans: {
+			Tooltip: ""
+			Label: Tin cans can be smelted down
+		}
+
+		CraftGelatinCrystals: {
+			Tooltip: ""
+			Label: Craft Gelatin Crystals
+		}
+
+		CraftExtractinator: {
+			Tooltip: ""
+			Label: Craft Extractinator
+		}
+
+		CraftRegrowthStaff: {
+			Tooltip: ""
+			Label: Craft Staff of Regrowth
+		}
+
+		Headers: {
+			Items: Items Header
+			Misc: Misc Header
+		}
+
+		CraftIceSkates: {
+			Tooltip: ""
+			Label: Craft Ice Skates
+		}
+
+		CraftHermesBoots: {
+			Tooltip: ""
+			Label: Craft Hermes Boots
+		}
+
+		CraftMagicMirror: {
+			Tooltip: ""
+			Label: Craft Magic Mirror
+		}
+
+		CraftIceMirror: {
+			Tooltip: ""
+			Label: Craft Ice Mirror
+		}
+
+		CraftRegenerationBand: {
+			Tooltip: ""
+			Label: Craft Band of Regeneration
+		}
+
+		CraftStepStool: {
+			Tooltip: ""
+			Label: Craft Step Stool
+		}
+
+		CraftFlurryBoots: {
+			Tooltip: ""
+			Label: Flurry Boots Recipe
+		}
+
+		CraftDuneriderBoots: {
+			Tooltip: ""
+			Label: Dunerider Boots Recipe
+		}
+
+		CraftAglet: {
+			Tooltip: ""
+			Label: Aglet Recipe
+		}
+
+		DisplayName: Recipes Config
+	}
+
+	NotificationsConfig: {
+		EnabledNotifs: {
+			Tooltip: ""
+			Label: All Configs Enabled
+		}
+
+		DisplayName: Notifications Config
+	}
+
+	SkyblockModConfig: {
+		DisplayName: Skyblock Mod Config
+
+		Headers: {
+			General: General Header
+			Music: Music Header
+		}
+
+		TeleportToTopOfWorldOnDeath: {
+			Label: Falling out of the world teleports you to the top
 			Tooltip: ""
 		}
 
@@ -113,101 +239,69 @@ Configs: {
 				'''
 		}
 
+		FastTrees: {
+			Label: Trees grow at an accelerated rate
+			Tooltip: ""
+		}
+
+		TreesDropMoreAcorns: {
+			Label: Trees drop much more acorns
+			Tooltip: ""
+		}
+
+		SaplingsDropAcorns: {
+			Label: Saplings can be mined back into acorns (Don't question the logic)
+			Tooltip: ""
+		}
+
+		BurnZombiesDuringDaytime: {
+			Label: Zombies burn during the day
+			Tooltip: ""
+		}
+
+		DirtAndSandCanBeExtracted: {
+			Label: Dirt and Sand can be extracted for gems and ore
+			Tooltip: ""
+		}
+
 		RenderFogCloudTiles: {
 			Label: Render Fog Cloud Tiles
 			Tooltip: ""
 		}
-	}
 
-	RecipesConfig: {
-		DisplayName: Recipes Config
-
-		DecraftTombstones: {
-			Label: Allow decrafting tombstones into gold and stone
+		SmallWorldWarning: {
+			Label: Warning text upon entering a world that is small
 			Tooltip: ""
 		}
 
-		CraftLifeCrystals: {
-			Label: Life Crystals Recipe
+		StarterChestStyle: {
+			Label: Starter Chest Style
+			Tooltip:
+				'''
+				1: Classic - contains simple skyblock items such as a water bucket, a lava bucket, and some extra items that aid progression.
+				2: Simple - contains the very basic items, not much is given.
+				3: Luxurious - contains a lot of items that will significantly speed up progression.
+				4: None - there is no chest. Only for those who want to experience the most pain and spend a long time grinding for rare drops.
+				'''
+		}
+
+		DrawNPCIcons: {
+			Label: Draw NPC Icons on the map
 			Tooltip: ""
 		}
 
-		SmeltTinCans: {
-			Label: Tin cans can be smelted down
+		OWSoundtrack: {
+			Label: Replace various soundtracks with Otherworld sountracks
 			Tooltip: ""
 		}
 
-		CraftGelatinCrystals: {
-			Label: Gelatin Crystals Recipe
+		MinecraftSoundtrack: {
+			Label: Replace Forest music with familiar soundtrack
 			Tooltip: ""
 		}
 
-		CraftExtractinator: {
-			Label: Extractinator Recipe
-			Tooltip: ""
-		}
-
-		CraftRegrowthStaff: {
-			Label: Staff of Regrowth Recipe
-			Tooltip: ""
-		}
-
-		Headers: {
-			Items: Items
-			Misc: Misc
-		}
-
-		CraftIceSkates: {
-			Label: Ice Skates Recipe
-			Tooltip: ""
-		}
-
-		CraftHermesBoots: {
-			Label: Hermes Boots Recipe
-			Tooltip: ""
-		}
-
-		CraftMagicMirror: {
-			Label: Magic Mirror Recipe
-			Tooltip: ""
-		}
-
-		CraftIceMirror: {
-			Label: Ice Mirror Recipe
-			Tooltip: ""
-		}
-
-		CraftRegenerationBand: {
-			Label: Craft Band of Regeneration
-			Tooltip: ""
-		}
-
-		CraftStepStool: {
-			Label: Craft Step Stool
-			Tooltip: ""
-		}
-
-		CraftFlurryBoots: {
-			Label: Flurry Boots Recipe
-			Tooltip: ""
-		}
-
-		CraftDuneriderBoots: {
-			Label: Dunerider Boots Recipe
-			Tooltip: ""
-		}
-
-		CraftAglet: {
-			Label: Aglet Recipe
-			Tooltip: ""
-		}
-	}
-
-	NotificationsConfig: {
-		DisplayName: Notifications Config
-
-		EnabledNotifs: {
-			Label: All Notifications Enabled
+		SubwaySurfers: {
+			Label: Subway Surfers!!!
 			Tooltip: ""
 		}
 	}
@@ -215,186 +309,138 @@ Configs: {
 
 Items: {
 	VolcanicStone: {
-		Tooltip: Can be used in the creation of [c/FF3333:Cursed Earth]
+		Tooltip: ""
 		DisplayName: Volcanic Stone
 	}
 
 	StoneBomb: {
+		Tooltip: ""
 		DisplayName: Stone Bomb
-		Tooltip: A small explosion that will spread stone
 	}
 
 	StickyStoneBomb: {
+		Tooltip: ""
 		DisplayName: Sticky Stone Bomb
-		Tooltip: A small explosion that will spread stone
 	}
 
 	SandBomb: {
+		Tooltip: ""
 		DisplayName: Sand Bomb
-		Tooltip: A small explosion that will spread sand
 	}
 
 	StickySandBomb: {
+		Tooltip: ""
 		DisplayName: Sticky Sand Bomb
-		Tooltip: A small explosion that will spread sand
 	}
 
 	ClayBomb: {
+		Tooltip: ""
 		DisplayName: Clay Bomb
-		Tooltip: A small explosion that will spread clay
 	}
 
 	StickyClayBomb: {
+		Tooltip: ""
 		DisplayName: Sticky Clay Bomb
-		Tooltip: A small explosion that will spread clay
 	}
 
 	FossilBomb: {
+		Tooltip: ""
 		DisplayName: Fossil Bomb
-		Tooltip: A small explosion that will spread fossils
 	}
 
 	StickyFossilBomb: {
+		Tooltip: ""
 		DisplayName: Sticky Fossil Bomb
-		Tooltip: A small explosion that will spread fossils
 	}
 
 	AutoExtractor: {
-		DisplayName: Auto Extractor Tier 1
-		Tooltip:
-			'''
-			[c/4BEC76:Automatically extracts items every 2 seconds]
-			Placing certain items into the storage container allows it to [c/FFD47C:automatically extract the items]
-			Can be further upgraded into higher tiers, which increase speed and range of items
-			When a chest is placed to the right or left, it will automatically input items into these chests
-			Left is prioritized, then when left chest is full, it outputs to the right
-			Two dots will show above the chests, left one showing stack fullness, and right showing the chest's storage capacity.
-			'''
+		Tooltip: ""
+		DisplayName: Auto Extractor
 	}
 
 	AutoExtractorTier2: {
-		DisplayName: Auto Extractor Tier 2
-		Tooltip:
-			'''
-			[c/4BEC76:Automatically extracts items every 1.5 seconds]
-			[c/CF7AFF:Produces 2x output, while only consuming 1x input]
-			Placing certain items into the storage container allows it to [c/FFD47C:automatically extract the items]
-			Can be further upgraded into higher tiers, which increase speed and range of items
-			When a chest is placed to the right or left, it will automatically input items into these chests
-			Left is prioritized, then when left chest is full, it outputs to the right
-			Two dots will show above the chests, left one showing stack fullness, and right showing the chest's storage capacity.
-			'''
+		Tooltip: ""
+		DisplayName: Auto Extractor Tier2
 	}
 
 	AutoExtractorTier3: {
-		DisplayName: Auto Extractor Tier 3
-		Tooltip:
-			'''
-			[c/4BEC76:Automatically extracts items every second]
-			[c/CF7AFF:Produces 3x output, while only consuming 2x input]
-			Placing certain items into the storage container allows it to [c/FFD47C:automatically extract the items]
-			Can be further upgraded into higher tiers, which increase speed and range of items
-			When a chest is placed to the right or left, it will automatically input items into these chests
-			Left is prioritized, then when left chest is full, it outputs to the right
-			Two dots will show above the chests, left one showing stack fullness, and right showing the chest's storage capacity.
-			'''
+		Tooltip: ""
+		DisplayName: Auto Extractor Tier3
 	}
 
 	AutoExtractorTier4: {
-		DisplayName: Auto Extractor Tier 4
-		Tooltip:
-			'''
-			[c/4BEC76:Automatically extracts items every 0.5 seconds]
-			[c/CF7AFF:Produces 4x output, while only consuming 2x input]
-			Placing certain items into the storage container allows it to [c/FFD47C:automatically extract the items]
-			Can be further upgraded into higher tiers, which increase speed and range of items
-			When a chest is placed to the right or left, it will automatically input items into these chests
-			Left is prioritized, then when left chest is full, it outputs to the right
-			Two dots will show above the chests, left one showing stack fullness, and right showing the chest's storage capacity.
-			'''
+		Tooltip: ""
+		DisplayName: Auto Extractor Tier4
 	}
 
 	AutoExtractorTier5: {
-		DisplayName: Auto Extractor Tier 5
-		Tooltip:
-			'''
-			[c/4BEC76:Automatically extracts items every 0.3 seconds]
-			[c/E10643:Produces 8x output, while only consuming 4x input]
-			Placing certain items into the storage container allows it to [c/FFD47C:automatically extract the items]
-			Cannot be upgraded further
-			When a chest is placed to the right or left, it will automatically input items into these chests
-			Left is prioritized, then when left chest is full, it outputs to the right
-			Two dots will show above the chests, left one showing stack fullness, and right showing the chest's storage capacity.
-			'''
+		Tooltip: ""
+		DisplayName: Auto Extractor Tier5
 	}
 
 	SnowBomb: {
+		Tooltip: ""
 		DisplayName: Snow Bomb
-		Tooltip: A smalll explosion that will spread snow
 	}
 
 	StickySnowBomb: {
-		DisplayName: Sticky Snow Bomb
-		Tooltip: A small explosion that will spread snow
-	}
-
-	CursedEarth_Item: {
-		DisplayName: Cursed Earth
-		Tooltip:
-			'''
-			Soil that became corrupted and evil, harnessing the power to [c/b266ff:summon creatures]
-			"For all your auto-farm needs!"
-			[c/FF3333:Do not use with block swap]
-			'''
-	}
-
-	OatchiWhistle: {
-		DisplayName: Oatchi Whistle
 		Tooltip: ""
+		DisplayName: Sticky Snow Bomb
 	}
 
 	FogCloud1: {
-		DisplayName: Fog Cloud
-		Tooltip: Creates fog. Rendering of the tile can be enabled/disabled in the mod config
+		Tooltip: ""
+		DisplayName: Fog Cloud1
 	}
 
 	GuidebookItem: {
-		DisplayName: Skyblock Guidebook
-		Tooltip:
-			'''
-			A very large book
-			Provides tips on progression and info about this mod
-			'''
+		Tooltip: ""
+		DisplayName: Guidebook Item
+	}
+
+	PlanteraAltarItem: {
+		Tooltip: ""
+		DisplayName: Plantera Altar Item
+	}
+
+	Slate: {
+		DisplayName: Slate
+		Tooltip: ""
+	}
+
+	Deepstone: {
+		DisplayName: Deepstone
+		Tooltip: ""
 	}
 }
 
 Projectiles: {
 	StoneBombProjectile.DisplayName: Stone Bomb Projectile
 	StickyStoneBombProjectile.DisplayName: Sticky Stone Bomb Projectile
-	SandBombProjectile.DisplayName: Sand Bomb Projectile
-	StickySandBombProjectile.DisplayName: Sticky Sand Bomb Projectile
-	ClayBombProjectile.DisplayName: Clay Bomb Projectile
-	StickyClayBombProjectile.DisplayName: Sticky Clay Bomb Projectile
-	FossilBombProjectile.DisplayName: Fossil Bomb Projectile
-	StickyFossilBombProjectile.DisplayName: Sticky Fossil Bomb Projectile
-	SnowBombProjectile.DisplayName: Snow Bomb Projectile
 	StickySnowBombProjectile.DisplayName: Sticky Snow Bomb Projectile
+	StickySandBombProjectile.DisplayName: Sticky Sand Bomb Projectile
+	StickyFossilBombProjectile.DisplayName: Sticky Fossil Bomb Projectile
+	StickyClayBombProjectile.DisplayName: Sticky Clay Bomb Projectile
+	SnowBombProjectile.DisplayName: Snow Bomb Projectile
+	SandBombProjectile.DisplayName: Sand Bomb Projectile
+	FossilBombProjectile.DisplayName: Fossil Bomb Projectile
+	ClayBombProjectile.DisplayName: Clay Bomb Projectile
 }
 
 Tiles: {
 	AutoExtractorTile.MapEntry: Auto Extractor
 	AutoExtractor.MapEntry: Auto-Extractor
-	AutoExtractorTier1Tile.MapEntry: Auto Extractor Tier 1
-	AutoExtractorTier2Tile.MapEntry: Auto Extractor Tier 2
-	AutoExtractorTier3Tile.MapEntry: Auto Extractor Tier 3
-	AutoExtractorTier4Tile.MapEntry: Auto Extractor Tier 4
-	AutoExtractorTier5Tile.MapEntry: Auto Extractor Tier 5
+	AutoExtractorTier5Tile.MapEntry: Auto Extractor Tier5 Tile
+	AutoExtractorTier4Tile.MapEntry: Auto Extractor Tier4 Tile
+	AutoExtractorTier3Tile.MapEntry: Auto Extractor Tier3 Tile
+	AutoExtractorTier2Tile.MapEntry: Auto Extractor Tier2 Tile
+	AutoExtractorTier1Tile.MapEntry: Auto Extractor Tier1 Tile
 }
 
 Buffs: {
 	OatchiBuff: {
 		DisplayName: Oatchi Buff
-		Description: Mods.OneBlock.Buffs.OatchiBuff.Description
+		Description: Mods.UltimateSkyblock.Buffs.OatchiBuff.Description
 	}
 }
 
@@ -412,6 +458,9 @@ LocalizedPages: {
 		This is a book to help you progress, as well as provide some tips for you.
 		To use the book, click the [c/FFABAB:Left (<)] or [c/FFABAB:Right (>)] arrows to scroll through pages.
 		You can purchase this book again from the Merchant at any time, in case you lose it.
+
+		On the left is a list of buttons with icons. These buttons are for quickly switching to important or
+		notable pages.
 		'''
 	TableOfContents:
 		'''

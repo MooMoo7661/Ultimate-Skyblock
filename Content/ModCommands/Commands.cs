@@ -4,7 +4,7 @@ using Terraria.Chat;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace OneBlock.Content.ModCommands
+namespace UltimateSkyblock.Content.ModCommands
 {
     public class WorldSizeCommand : ModCommand
     {

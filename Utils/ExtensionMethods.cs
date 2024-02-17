@@ -5,7 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace OneBlock.Utils
+namespace UltimateSkyblock.Content.Utils
 {
     public static class ExtensionMethods
     {

@@ -2,7 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace OneBlock.Content.GlobalClasses
+namespace UltimateSkyblock.Content.GlobalClasses
 {
     public class EnemyModifications : GlobalNPC
     {

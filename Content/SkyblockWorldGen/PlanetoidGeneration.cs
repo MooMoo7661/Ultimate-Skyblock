@@ -7,10 +7,10 @@ using Terraria.ModLoader;
 using Terraria.WorldBuilding;
 using Microsoft.Xna.Framework;
 using static WorldHelpers;
-using static OneBlock.OneBlock;
+using static UltimateSkyblock.UltimateSkyblock;
 using static Terraria.WorldGen;
 
-namespace OneBlock.SkyblockWorldGen
+namespace UltimateSkyblock.SkyblockWorldGen
 {
     public partial class MainWorld : ModSystem
     {
@@ -285,7 +285,6 @@ namespace OneBlock.SkyblockWorldGen
         {
             // Weird math to account for different world sizes
             Point placePoint = new(x, y);
-            int oreRange = 9;
             int size = WorldGen.genRand.Next(14, 19);
             ShapeData shapeData = new ShapeData();
             ShapeData shapeData2 = new ShapeData();

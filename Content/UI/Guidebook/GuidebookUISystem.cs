@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
 
-namespace OneBlock.Content.UI.Guidebook
+namespace UltimateSkyblock.Content.UI.Guidebook
 {
     [Autoload(Side = ModSide.Client)]
     public class GuidebookSystem : ModSystem
@@ -44,7 +44,7 @@ namespace OneBlock.Content.UI.Guidebook
             if (mouseTextIndex != -1)
             {
                 layers.Insert(mouseTextIndex, new LegacyGameInterfaceLayer(
-                    "OneBlock: Guidebook",
+                    "UltimateSkyblock: Guidebook",
                     delegate
                     {
                         if (GuidebookUserInterface?.CurrentState != null)

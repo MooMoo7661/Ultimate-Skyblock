@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace OneBlock.Utils
+namespace UltimateSkyblock.Content.Utils
 {
     public class ReflectionHelper
     {

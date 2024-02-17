@@ -1,9 +1,9 @@
 ﻿using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria;
-using OneBlock.Content.Tiles.Blocks;
+using UltimateSkyblock.Content.Tiles.Blocks;
 
-namespace OneBlock.Content.Items.Placeable
+namespace UltimateSkyblock.Content.Items.Placeable
 {
     public class VolcanicStone : ModItem
     {

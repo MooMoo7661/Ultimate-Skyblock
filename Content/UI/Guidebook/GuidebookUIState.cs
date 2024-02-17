@@ -1,27 +1,40 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
+using System;
 using System.Collections.Generic;
+using Terraria;
+using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
+using UltimateSkyblock.Content.Utils;
 
-namespace OneBlock.Content.UI.Guidebook
+namespace UltimateSkyblock.Content.UI.Guidebook
 {
     public class GuidebookUIState : UIState
     {
         public DraggableUIPanel GuidebookPanel;
+
         UIText Title;
         UIText PageNumber;
         UIText PageName;
         UIText MainText;
         UITextButton RightButton;
         UITextButton LeftButton;
+        
+        public enum PageID
+        {
+            Main = 0,
+            Fishing = 4
+        }
 
         Color DefaultColor = new Color(44, 57, 105, 178); // Default color of standard terraria UI.
-
         public int PageIndex = 0;
         string MainPage = "";
+
         /// <summary>
         /// Used for storing pages. Each page is a string. 
         /// Calculation for whether the book can be scrolled is done automatically.
@@ -64,12 +77,13 @@ namespace OneBlock.Content.UI.Guidebook
         /// </summary>
         public static void AddPages()
         {
-            string path = "Mods.OneBlock.LocalizedPages.";
+            string path = "Mods.UltimateSkyblock.LocalizedPages.";
             Pages.Add(0, Language.GetTextValue(path + "IntroPage")); PageNames.Add(0, Language.GetTextValue(path + "PageNames.Intro"));
             Pages.Add(1, Language.GetTextValue(path + "TableOfContents")); PageNames.Add(1, Language.GetTextValue(path + "PageNames.TableOfContents"));
             Pages.Add(2, Language.GetTextValue(path + "Progression1")); PageNames.Add(2, Language.GetTextValue(path + "PageNames.Progression"));
             Pages.Add(3, Language.GetTextValue(path + "Progression2")); PageNames.Add(3, Language.GetTextValue(path + "PageNames.Progression"));
-            Pages.Add(4, Language.GetTextValue(path + "Fishing")); PageNames.Add(4, Language.GetTextValue(path + "PageNames.Fishing"));
+            Pages.Add(4, Language.GetTextValue(path + "Progression3")); PageNames.Add(4, Language.GetTextValue(path + "PageNames.Progression"));
+            Pages.Add(5, Language.GetTextValue(path + "Fishing")); PageNames.Add(5, Language.GetTextValue(path + "PageNames.Fishing"));
         }
 
         /// <summary>
@@ -79,28 +93,26 @@ namespace OneBlock.Content.UI.Guidebook
         {
             AddPages();
 
-            string introButtonText = Language.GetTextValue("Mods.SkyblockBrutalism.UI.IntroButton");
             string title = "Skyblock Guidebook";
-            string rightButtonText = ">";
-            string leftButtonText = "<";
 
             GuidebookPanel = new DraggableUIPanel();
             GuidebookPanel.SetPadding(0);
             GuidebookPanel.HAlign = 0.5f;
             GuidebookPanel.VAlign = 0.1f;
-            GuidebookPanel.Width.Set(900f, 0f);
+            GuidebookPanel.Width.Set(1000f, 0f);
             GuidebookPanel.Height.Set(500f, 0f);
             GuidebookPanel.BackgroundColor = new Color(73, 94, 171);
             Append(GuidebookPanel);
-
-            UITextButton close = new UITextButton("X", 0.975f, 0.025f, 40, 30, Language.GetTextValue("LegacyInterface.52"), SoundID.MenuClose);
-            close.OnLeftClick += new MouseEvent(CloseClicked);
-            GuidebookPanel.Append(close);
 
             Title = new UIText(title);
             Title.HAlign = 0.5f;
             Title.MarginTop = 15;
             GuidebookPanel.Append(Title);
+
+            UIText QuickPages = new UIText("Select", 0.9f);
+            QuickPages.MarginLeft = 15;
+            QuickPages.MarginTop = 30;
+            GuidebookPanel.Append(QuickPages);
 
             PageNumber = new UIText("- " + (PageIndex + 1).ToString() + " -");
             PageNumber.HAlign = 0.5f;
@@ -112,70 +124,112 @@ namespace OneBlock.Content.UI.Guidebook
             PageName.MarginTop = 450;
             GuidebookPanel.Append(PageName);
 
-            MainPage = Language.GetTextValue("Mods.OneBlock.LocalizedPages.IntroPage");
-            MainText = new UIText(MainPage, 1f);
-            MainText.MarginLeft = 15;
+            MainPage = Language.GetTextValue("Mods.UltimateSkyblock.LocalizedPages.IntroPage");
+            MainText = new UIText(MainPage, 0.95f);
+            MainText.MarginLeft = 75;
             MainText.MarginTop = 50;
             GuidebookPanel.Append(MainText);
 
-            LeftButton = new UITextButton(leftButtonText, 0.05f, 0.95f, 130, 34, "", SoundID.MenuTick);
+            InitializeButtons(); // General buttons, like left and right arrows, & close
+            InitializeQuickPages(); // Quick page select buttons
+        }
+
+        private void InitializeQuickPages()
+        {
+            UITextButton mainButton = new UITextButton("", 0, 0.05f, 40, 40, "Main", SoundID.MenuClose);
+            mainButton.OnLeftClick += new MouseEvent(HomeClicked);
+            mainButton.MarginLeft = 15;
+            mainButton.MarginTop = 45;
+            GuidebookPanel.Append(mainButton);
+
+            Asset<Texture2D> home = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/Guidebook/Assets/MainPage", AssetRequestMode.ImmediateLoad);
+            UIImage mainIcon = new UIImage(home);
+            mainIcon.HAlign = 0.5f;
+            mainIcon.VAlign = 0.5f;
+            mainIcon.ScaleToFit = true;
+            mainButton.Append(mainIcon);
+
+            UITextButton fishingButton = new UITextButton("", 0, 0.05f, 40, 40, "Fishing", SoundID.MenuClose);
+            fishingButton.OnLeftClick += new MouseEvent(FishingClicked);
+            fishingButton.MarginLeft = 15;
+            fishingButton.MarginTop = 90;
+            GuidebookPanel.Append(fishingButton);
+
+            Main.instance.LoadItem(ItemID.Goldfish);
+            Asset<Texture2D> fish = TextureAssets.Item[ItemID.Goldfish];
+            UIImage quickPage = new UIImage(fish);
+            quickPage.HAlign = 0.5f;
+            quickPage.VAlign = 0.5f;
+            quickPage.ScaleToFit = true;
+            fishingButton.Append(quickPage);
+        }
+
+        private void InitializeButtons()
+        {
+            UITextButton close = new UITextButton("X", 0.975f, 0.025f, 40, 30, Language.GetTextValue("LegacyInterface.52"), SoundID.MenuClose);
+            close.OnLeftClick += new MouseEvent(CloseClicked);
+            GuidebookPanel.Append(close);
+
+            LeftButton = new UITextButton("<", 0.05f, 0.95f, 130, 34, "", SoundID.MenuTick);
             LeftButton.OnLeftClick += new MouseEvent(PageAdvancementLeft);
             GuidebookPanel.Append(LeftButton);
 
-            RightButton = new UITextButton(rightButtonText, 0.95f, 0.95f, 130, 34, "", SoundID.MenuTick);
+            RightButton = new UITextButton(">", 0.95f, 0.95f, 130, 34, "", SoundID.MenuTick);
             RightButton.OnLeftClick += new MouseEvent(PageAdvancementRight);
             GuidebookPanel.Append(RightButton);
         }
 
         private void CloseClicked(UIMouseEvent evt, UIElement listeningElement) => ModContent.GetInstance<GuidebookSystem>().HideMyUI();
+        private void HomeClicked(UIMouseEvent evt, UIElement listeningElement) => PageIndex = (int)PageID.Main;
+        private void FishingClicked(UIMouseEvent evt, UIElement listeningElement) => PageIndex = (int)PageID.Fishing;
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
             SafeguardIndex();
-            UpdateButtonColors();
-            UpdatePageName();
+            UpdatePage();
         }
 
         private void SafeguardIndex() { if (PageIndex < 0) PageIndex = 0; }
 
-        private void UpdatePageName()
+        /// <summary>
+        /// Handles updating the page. Updates text, title, page number, and buttons colors.
+        /// </summary>
+        private void UpdatePage()
         {
+            string text = TryGetEntry(PageIndex, StyleID.Page);
+            if (text != null)
+            {
+                GuidebookPanel.RemoveChild(MainText);
+                MainText = new UIText(text, 1f);
+                MainText.MarginLeft = 75;
+                MainText.MarginTop = 50;
+                GuidebookPanel.Append(MainText);
+            }
+
             string pageName = TryGetEntry(PageIndex, StyleID.Name);
             if (pageName != null)
             {
+                Color color = Color.Lerp(Color.AliceBlue, Color.MediumPurple, (MathF.Sin(Main.GlobalTimeWrappedHourly * 2.9f) + 1) / 2f);
+
                 GuidebookPanel.RemoveChild(PageName);
-                PageName = new UIText(pageName, 1f);
+                PageName = new UIText(pageName.ToHexString(color), 1f);
                 PageName.HAlign = 0.5f;
                 PageName.MarginTop = 420;
                 GuidebookPanel.Append(PageName);
             }
-        }
 
-        /// <summary>
-        /// Used to handle graying the right and left arrow buttons depending on if index + 1 or - 1 is null
-        /// </summary>
-        private void UpdateButtonColors()
-        {
+            GuidebookPanel.RemoveChild(PageNumber);
+            PageNumber = new UIText("- " + (PageIndex + 1) + " -", 1f);
+            PageNumber.HAlign = 0.5f;
+            PageNumber.MarginTop = 450;
+            GuidebookPanel.Append(PageNumber);
+
             string page = TryGetEntry(PageIndex - 1, StyleID.Page);
-            if (page == null)
-            {
-                LeftButton.BackgroundColor = Color.Gray;
-            }
-            else
-            {
-                LeftButton.BackgroundColor = DefaultColor;
-            }
+            LeftButton.BackgroundColor = page == null ? Color.Gray : DefaultColor;
 
             page = TryGetEntry(PageIndex + 1, StyleID.Page);
-            if (page == null)
-            {
-                RightButton.BackgroundColor = Color.Gray;
-            }
-            else
-            {
-                RightButton.BackgroundColor = DefaultColor;
-            }
+            RightButton.BackgroundColor = page == null ? Color.Gray : DefaultColor;
         }
 
         /// <summary>
@@ -185,23 +239,7 @@ namespace OneBlock.Content.UI.Guidebook
         {
             string page = TryGetEntry(PageIndex + 1, StyleID.Page);
             if (page != null)
-            {
                 PageIndex++;
-                GuidebookPanel.RemoveChild(MainText);
-                GuidebookPanel.RemoveChild(PageNumber);
-
-                MainPage = page;
-                MainText = new UIText(page, 1f);
-                MainText.MarginLeft = 15;
-                MainText.MarginTop = 50;
-
-                PageNumber = new UIText("- " + PageIndex + 1 + " -", 1f);
-                PageNumber.HAlign = 0.5f;
-                PageNumber.MarginTop = 450;
-
-                GuidebookPanel.Append(MainText);
-                GuidebookPanel.Append(PageNumber);
-            }
         }
 
         /// <summary>
@@ -211,48 +249,8 @@ namespace OneBlock.Content.UI.Guidebook
         {
             string page = TryGetEntry(PageIndex - 1, 0);
             if (page != null)
-            {
                 PageIndex--;
-                GuidebookPanel.RemoveChild(MainText);
-                GuidebookPanel.RemoveChild(PageNumber);
-
-                MainPage = page;
-                MainText = new UIText(page, 1f);
-                MainText.MarginLeft = 15;
-                MainText.MarginTop = 50;
-
-                PageNumber = new UIText("- " + PageIndex + 1 + " -", 1f);
-                PageNumber.HAlign = 0.5f;
-                PageNumber.MarginTop = 450;
-
-                GuidebookPanel.Append(MainText);
-                GuidebookPanel.Append(PageNumber);
-            }
         }
-
-        public void PageAdvancement(UIMouseEvent evt, UIElement listeningElement, int direction)
-        {
-            string page = TryGetEntry(PageIndex + direction, 0);
-            if (page != null)
-            {
-                PageIndex += direction;
-                GuidebookPanel.RemoveChild(MainText);
-                GuidebookPanel.RemoveChild(PageNumber);
-
-                MainPage = page;
-                MainText = new UIText(page, 1f);
-                MainText.MarginLeft = 15;
-                MainText.MarginTop = 50;
-
-                PageNumber = new UIText("- " + PageIndex + 1 + " -", 1f);
-                PageNumber.HAlign = 0.5f;
-                PageNumber.MarginTop = 450;
-
-                GuidebookPanel.Append(MainText);
-                GuidebookPanel.Append(PageNumber);
-            }
-        }
-
     }
 }
 

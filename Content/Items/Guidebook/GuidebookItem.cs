@@ -5,9 +5,9 @@ using Terraria.ID;
 using Terraria.ModLoader.IO;
 using Terraria.ModLoader;
 using Terraria;
-using OneBlock.Content.UI.Guidebook;
+using UltimateSkyblock.Content.UI.Guidebook;
 
-namespace OneBlock.Content.Items.Guidebook
+namespace UltimateSkyblock.Content.Items.Guidebook
 {
     public class GuidebookItem : ModItem
     {

@@ -1,17 +1,17 @@
-﻿using OneBlock.Content.Configs;
+﻿using UltimateSkyblock.Content.Configs;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria;
 using Microsoft.Xna.Framework;
 using static Terraria.WorldGen;
 
-namespace OneBlock.Content.GlobalClasses
+namespace UltimateSkyblock.Content.GlobalClasses
 {
     public class GlobalSapling : GlobalTile
     {
         public override void RandomUpdate(int i, int j, int type)
         {
-            var config = ModContent.GetInstance<OneBlockModConfig>();
+            var config = ModContent.GetInstance<SkyblockModConfig>();
 
             if ((type == TileID.Saplings || type == TileID.GemSaplings) && config.FastTrees)
             {
@@ -26,7 +26,7 @@ namespace OneBlock.Content.GlobalClasses
         {
             Tile tile = Main.tile[i, j];
 
-            if (type == TileID.Saplings && !fail && tile.TileFrameY != 0 && ModContent.GetInstance<OneBlockModConfig>().SaplingsDropAcorns)
+            if (type == TileID.Saplings && !fail && tile.TileFrameY != 0 && ModContent.GetInstance<SkyblockModConfig>().SaplingsDropAcorns)
             {
                 Item.NewItem(GetItemSource_FromTileBreak(i, j), new Vector2(i * 16, j * 16), Vector2.Zero, ItemID.Acorn);
             }

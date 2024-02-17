@@ -3,9 +3,9 @@ using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using OneBlock.Utils;
+using UltimateSkyblock.Content.Utils;
 
-namespace OneBlock.Content.Items.Bombs
+namespace UltimateSkyblock.Content.Items.Bombs
 {
     public abstract class BaseBombProjectile : ModProjectile
     {

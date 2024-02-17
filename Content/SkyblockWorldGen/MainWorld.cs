@@ -4,9 +4,13 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
 using StructureHelper;
-using OneBlock.Content.Configs;
+using UltimateSkyblock.Content.Configs;
+using SDL2;
+using System;
+using UltimateSkyblock.Content.Utils;
+using Microsoft.Xna.Framework;
 
-namespace OneBlock.SkyblockWorldGen
+namespace UltimateSkyblock.SkyblockWorldGen
 {
     public partial class MainWorld : ModSystem
     {
@@ -18,12 +22,14 @@ namespace OneBlock.SkyblockWorldGen
         public static float ScaleBasedOnWorldSizeY;
         public static WorldSizes WorldSize;
 
-        public static OneBlockModConfig config = ModContent.GetInstance<OneBlockModConfig>();
+        public static SkyblockModConfig config = ModContent.GetInstance<SkyblockModConfig>();
+
         public enum WorldSizes
         {
             Small,
             Medium,
-            Large
+            Large,
+            Invalid
         }
         public enum ChestType
         {
@@ -31,6 +37,7 @@ namespace OneBlock.SkyblockWorldGen
             Simple,
             Luxury
         }
+
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
         {
             tasks.RemoveAll(task => task.Name == "Full Desert" || task.Name == "Buried Chests" || task.Name == "Mushroom Patches" ||
@@ -43,7 +50,8 @@ namespace OneBlock.SkyblockWorldGen
             {
                 0 => WorldSizes.Small,
                 1 => WorldSizes.Medium,
-                _ => WorldSizes.Large,
+                2 => WorldSizes.Large,
+                _ => WorldSizes.Invalid
             };
 
             ScaleBasedOnWorldSizeX = WorldGen.GetWorldSize() switch
@@ -51,8 +59,7 @@ namespace OneBlock.SkyblockWorldGen
                 0 => 1,
                 1 => 30,
                 2 => 60,
-                _ => 80,
-
+                _ => 80
             };
 
             ScaleBasedOnWorldSizeY = WorldGen.GetWorldSize() switch
@@ -73,11 +80,30 @@ namespace OneBlock.SkyblockWorldGen
                 _ => WorldSizes.Large,
             };
 
+            ScaleBasedOnWorldSizeX = WorldGen.GetWorldSize() switch
+            {
+                0 => 1,
+                1 => 30,
+                2 => 60,
+                _ => 80,
+
+            };
+
+            ScaleBasedOnWorldSizeY = WorldGen.GetWorldSize() switch
+            {
+                0 => 20,
+                1 => 30,
+                2 => 40,
+                _ => 50,
+            };
+
+            Mod.Logger.Info("World Size : " + WorldSize);
+            Mod.Logger.Info("World Size Scale X : " + ScaleBasedOnWorldSizeX);
+            Mod.Logger.Info("World Size Scale Y : " + ScaleBasedOnWorldSizeY);
+
             NPC.savedAngler = true;
             Main.townNPCCanSpawn[NPCID.Angler] = true;
         }
-
-        /// <summary>
         /// Overridden to prevent the "spreading evil" tasks, as they can completely ruin islands with stone on them. The hallow is manually generated in this as well.
         /// </summary>
         public override void ModifyHardmodeTasks(List<GenPass> list)
@@ -93,7 +119,7 @@ namespace OneBlock.SkyblockWorldGen
     {
         public override void SetStaticDefaults()
         {
-            if (ModContent.GetInstance<OneBlockModConfig>().DirtAndSandCanBeExtracted)
+            if (ModContent.GetInstance<SkyblockModConfig>().DirtAndSandCanBeExtracted)
             {
                 ItemID.Sets.ExtractinatorMode[ItemID.DirtBlock] = 0;
                 ItemID.Sets.ExtractinatorMode[ItemID.SandBlock] = 0;

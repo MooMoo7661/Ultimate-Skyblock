@@ -1,4 +1,4 @@
-﻿namespace OneBlock.Content.UI.MapDrawing
+﻿namespace UltimateSkyblock.Content.UI.MapDrawing
 {
     public class MapIconDrawBools
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using OneBlock.Content.Configs;
+using UltimateSkyblock.Content.Configs;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -8,18 +8,18 @@ using Terraria.Map;
 using Terraria.ModLoader;
 using Terraria.UI;
 
-namespace OneBlock.Content.UI.MapDrawing
+namespace UltimateSkyblock.Content.UI.MapDrawing
 {
     public class NpcIconDrawing : ModMapLayer
     {
-        private static readonly string path = "OneBlock/Content/UI/MapDrawing/Icons/";
+        private static readonly string path = "UltimateSkyblock/Content/UI/MapDrawing/Icons/";
         public Texture2D friendly = ModContent.Request<Texture2D>(path + "IconFriendly", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
         public Texture2D hostile = ModContent.Request<Texture2D>(path + "IconHostile", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
         public override void Draw(ref MapOverlayDrawContext context, ref string text)
         {
             // Hardcoded check for my other mod that does something similar.
-            if (ModLoader.TryGetMod("WorldMapExpansion", out Mod MapExpansion) || !ModContent.GetInstance<OneBlockModConfig>().DrawNPCIcons) { return; }
+            if (ModLoader.TryGetMod("WorldMapExpansion", out Mod MapExpansion) || !ModContent.GetInstance<SkyblockModConfig>().DrawNPCIcons) { return; }
 
             foreach (NPC npc in Main.npc.SkipLast(1)) //Last is a dummy npc, don't want to interact with it
             {

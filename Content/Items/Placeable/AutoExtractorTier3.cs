@@ -1,9 +1,10 @@
 ﻿using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria;
-using OneBlock.Content.Tiles.Extractinators;
+using UltimateSkyblock.Content.Tiles.Extractinators;
+using UltimateSkyblock.Content.Items.Placeable;
 
-namespace OneBlock.Content.Items.Placeable
+namespace UltimateSkyblock.Content.Items.Placeable
 {
     public class AutoExtractorTier3 : ModItem
     {

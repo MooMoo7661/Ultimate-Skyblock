@@ -4,8 +4,9 @@ using Terraria.Map;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent;
+using SubworldLibrary;
 
-namespace OneBlock.Content.UI.MapDrawing
+namespace UltimateSkyblock.Content.UI.MapDrawing
 {
     public class MapIconToggleDrawing : ModMapLayer
     {
@@ -19,9 +20,12 @@ namespace OneBlock.Content.UI.MapDrawing
         ToggleButton HellToggle;
         ToggleButton MushroomToggle;
 
-        private readonly string path = "OneBlock/Content/UI/MapDrawing/Icons/";
+        private readonly string path = "UltimateSkyblock/Content/UI/MapDrawing/Icons/";
         public override void Draw(ref MapOverlayDrawContext context, ref string text)
         {
+            if (SubworldSystem.Current != null)
+                return;
+
             MainToggle ??= new()
             {
                 BesideTexture = ModContent.Request<Texture2D>(path + "IconMain", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value,

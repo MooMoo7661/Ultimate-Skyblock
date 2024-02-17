@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 
-namespace OneBlock.Content.GlobalClasses
+namespace UltimateSkyblock.Content.GlobalClasses
 {
     public class StoneGeneratorDust : GlobalTile
     {

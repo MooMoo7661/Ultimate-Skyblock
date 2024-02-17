@@ -2,7 +2,7 @@
 using Terraria.ModLoader;
 using Terraria;
 
-namespace OneBlock.Content.Items.Bombs
+namespace UltimateSkyblock.Content.Items.Bombs
 {
     public class StickyClayBomb : ModItem
     {

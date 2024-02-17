@@ -1,9 +1,9 @@
-using OneBlock.Content.Items.Guidebook;
+using UltimateSkyblock.Content.Items.Guidebook;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace OneBlock.Content.GlobalClasses
+namespace UltimateSkyblock.Content.GlobalClasses
 {
     public class NPCShops : GlobalNPC
     {

@@ -2,9 +2,9 @@
 using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using OneBlock.Content.Items.Placeable;
+using UltimateSkyblock.Content.Items.Placeable;
 
-namespace OneBlock.Content.Tiles.Blocks
+namespace UltimateSkyblock.Content.Tiles.Blocks
 {
     public class VolcanicStoneTile : ModTile
     {

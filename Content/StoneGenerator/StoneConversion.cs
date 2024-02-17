@@ -1,14 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
-using OneBlock.Content.Configs;
+using UltimateSkyblock.Content.Configs;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace OneBlock.Content.StoneGenerator
+namespace UltimateSkyblock.Content.StoneGenerator
 {
     public static class OB_Liquid
     {
@@ -175,7 +175,7 @@ namespace OneBlock.Content.StoneGenerator
         /// <param name="canMoveVanilla">Passed in to allow forcing a liquid to move even if vanilla wouldn't allow it.</param>
         private static bool CanMove(int x, int y, int xMove, int yMove, ref bool canMoveVanilla)
         {
-            if (!ModContent.GetInstance<OneBlockModConfig>().StoneGenerator)
+            if (!ModContent.GetInstance<SkyblockModConfig>().StoneGenerator)
                 return canMoveVanilla;
 
             Tile tile = Main.tile[x, y];

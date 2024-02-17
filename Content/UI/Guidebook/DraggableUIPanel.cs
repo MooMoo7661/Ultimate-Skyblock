@@ -3,7 +3,7 @@ using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 using Terraria;
 
-namespace OneBlock.Content.UI.Guidebook
+namespace UltimateSkyblock.Content.UI.Guidebook
 {
     public class DraggableUIPanel : UIPanel
     {

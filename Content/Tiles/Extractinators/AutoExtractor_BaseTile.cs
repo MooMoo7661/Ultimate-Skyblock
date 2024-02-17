@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TileFunctionLibrary.API;
 
-namespace OneBlock.Content.Tiles.Extractinators
+namespace UltimateSkyblock.Content.Tiles.Extractinators
 {
     public abstract class AutoExtractor_BaseTile : ModTile, IExtractinatorTile
     {

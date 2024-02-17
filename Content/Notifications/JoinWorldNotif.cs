@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using OneBlock.Utils;
+using UltimateSkyblock.Content.Utils;
 using ReLogic.Content;
 using Terraria;
 using Terraria.GameContent;
@@ -8,7 +8,7 @@ using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.UI;
 
-namespace OneBlock.Notifications
+namespace UltimateSkyblock.Notifications
 {
     public class JoinWorldNotif : IInGameNotification
     {

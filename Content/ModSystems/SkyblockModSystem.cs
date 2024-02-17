@@ -1,9 +1,9 @@
-﻿using OneBlock.Content.StoneGenerator;
+﻿using UltimateSkyblock.Content.StoneGenerator;
 using Terraria.ModLoader;
 
-namespace OneBlock.Content.ModSystems
+namespace UltimateSkyblock.Content.ModSystems
 {
-    public class OneBlockModSystem : ModSystem
+    public class SkyblockModSystem : ModSystem
     {
         public override void PostUpdateEverything()
         {

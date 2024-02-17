@@ -1,9 +1,10 @@
 ﻿using Terraria;
 using Terraria.Audio;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace OneBlock.Content.GlobalClasses
+namespace UltimateSkyblock.Content.GlobalClasses
 {
     public class ExtractinatorRefinery : GlobalItem
     {

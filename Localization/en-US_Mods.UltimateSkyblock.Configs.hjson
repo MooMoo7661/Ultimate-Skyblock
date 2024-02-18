@@ -1,0 +1,249 @@
+Configs: {
+}
+
+SubworldConfig: {
+	FractalType: {
+		Tooltip:
+			'''
+			0: None
+			[c/75FFFF:1: FBm]
+			2: Ridged
+			3: Ping-Pong
+			4: Domain Warp Progressive
+			5: Domain Warp Independant
+
+			Default: FBm (1)
+			[c/FF7F7F:WARNING: Do not change these without knowledge of Perlin Noise.]
+			[c/FF7F7F:Modifying this will drastically change the world generation of the Mining Subworld.]
+			'''
+		Label: Fractal Type
+	}
+
+	PerlinNoiseType: {
+		Tooltip:
+			'''
+			0: OpenSimplex2
+			1: OpenSimplex2S
+			2: Cellular
+			[c/75FFFF:3: Perlin]
+			4: Value
+			5: Value Cubic
+
+			Default: Perlin (3)
+			[c/FF7F7F:WARNING: Do not change these without knowledge of Perlin Noise.]
+			[c/FF7F7F:Modifying this will drastically change the world generation of the Mining Subworld.]
+			'''
+		Label: Perlin Noise Type
+	}
+
+	Headers.ColorGuide:
+		'''
+		[c/FF7F7F: Red -> Very large changes. Do not modify on new playthroughs.]
+		[c/FFBB7F: Orange -> Large changes. Only modify if you are sure.]
+		[c/F7FF75: Yellow -> Will affect gameplay somewhat.]
+		[c/75FF75: Green -> Little to no gameplay affect]
+		'''
+	DisplayName: Subworld Config
+}
+
+SubworldClientConfig: {
+	ShowPerlinType: {
+		Tooltip: Shows the Perlin Noise type when generating the Mining Subworld
+		Label: Show Perlin Type
+	}
+
+	ShowFractalType: {
+		Tooltip: Shows the Fractal type when generating the Mining Subworld
+		Label: Show Fractal Type
+	}
+
+	ShowFastNoiseSeed: {
+		Tooltip: Shows the Fast Noise seed when generating the Mining Subworld
+		Label: Show Fast Noise Seed
+	}
+
+	Headers.WorldGenDebugInfo: World Gen Debug Info
+	DisplayName: Subworld Client Config
+}
+
+SkyblockModConfig: {
+	SubwaySurfers: {
+		Tooltip: ""
+		Label: Subway Surfers!!!
+	}
+
+	MinecraftSoundtrack: {
+		Tooltip: ""
+		Label: Replace Forest music with familiar soundtrack
+	}
+
+	OWSoundtrack: {
+		Tooltip: ""
+		Label: Replace various soundtracks with Otherworld sountracks
+	}
+
+	Headers: {
+		Music: Music
+		General: General
+	}
+
+	DrawNPCIcons: {
+		Tooltip: ""
+		Label: Draw NPC Icons on the map
+	}
+
+	StarterChestStyle: {
+		Tooltip:
+			'''
+			1: Classic - contains simple skyblock items such as a water bucket, a lava bucket, and some extra items that aid progression.
+			2: Simple - contains the very basic items, not much is given.
+			3: Luxurious - contains a lot of items that will significantly speed up progression.
+			4: None - there is no chest. Only for those who want to experience the most pain and spend a long time grinding for rare drops.
+			'''
+		Label: Starter Chest Style
+	}
+
+	SmallWorldWarning: {
+		Tooltip: ""
+		Label: Warning text upon entering a world that is small
+	}
+
+	RenderFogCloudTiles: {
+		Tooltip: ""
+		Label: Render Fog Cloud Tiles
+	}
+
+	DirtAndSandCanBeExtracted: {
+		Tooltip: ""
+		Label: Dirt and Sand can be extracted for gems and ore
+	}
+
+	BurnZombiesDuringDaytime: {
+		Tooltip: ""
+		Label: Zombies burn during the day
+	}
+
+	SaplingsDropAcorns: {
+		Tooltip: ""
+		Label: Saplings can be mined back into acorns (Don't question the logic)
+	}
+
+	TreesDropMoreAcorns: {
+		Tooltip: ""
+		Label: Trees drop much more acorns
+	}
+
+	FastTrees: {
+		Tooltip: ""
+		Label: Trees grow at an accelerated rate
+	}
+
+	StoneGenerator: {
+		Tooltip:
+			'''
+			If lava and water are seperated by one block of air, it will generate stone in that spot, or obsidian if in the caverns.
+			It must be left -> right, or right -> left.
+			'''
+		Label: Stone Generator Logic
+	}
+
+	TeleportToTopOfWorldOnDeath: {
+		Tooltip: ""
+		Label: Falling out of the world teleports you to the top
+	}
+
+	DisplayName: Skyblock Mod Config
+}
+
+RecipesConfig: {
+	CraftAglet: {
+		Tooltip: ""
+		Label: Aglet Recipe
+	}
+
+	CraftDuneriderBoots: {
+		Tooltip: ""
+		Label: Dunerider Boots Recipe
+	}
+
+	CraftFlurryBoots: {
+		Tooltip: ""
+		Label: Flurry Boots Recipe
+	}
+
+	CraftStepStool: {
+		Tooltip: ""
+		Label: Craft Step Stool
+	}
+
+	CraftRegenerationBand: {
+		Tooltip: ""
+		Label: Craft Band of Regeneration
+	}
+
+	CraftIceMirror: {
+		Tooltip: ""
+		Label: Craft Ice Mirror
+	}
+
+	CraftMagicMirror: {
+		Tooltip: ""
+		Label: Craft Magic Mirror
+	}
+
+	CraftHermesBoots: {
+		Tooltip: ""
+		Label: Craft Hermes Boots
+	}
+
+	CraftIceSkates: {
+		Tooltip: ""
+		Label: Craft Ice Skates
+	}
+
+	CraftGelatinCrystals: {
+		Tooltip: ""
+		Label: Craft Gelatin Crystals
+	}
+
+	CraftLifeCrystals: {
+		Tooltip: ""
+		Label: Craft Life Crystals
+	}
+
+	CraftExtractinator: {
+		Tooltip: ""
+		Label: Craft Extractinator
+	}
+
+	CraftRegrowthStaff: {
+		Tooltip: ""
+		Label: Craft Staff of Regrowth
+	}
+
+	Headers: {
+		Items: Items
+		Misc: Misc
+	}
+
+	SmeltTinCans: {
+		Tooltip: ""
+		Label: Tin cans can be smelted down
+	}
+
+	DecraftTombstones: {
+		Tooltip: ""
+		Label: Allow decrafting tombstones into gold and stone
+	}
+
+	DisplayName: Recipes Config
+}
+
+NotificationsConfig: {
+	EnabledNotifs: {
+		Tooltip: ""
+		Label: All Configs Enabled
+	}
+
+	DisplayName: Notifications Config
+}

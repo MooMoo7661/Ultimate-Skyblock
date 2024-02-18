@@ -1,0 +1,128 @@
+ClayBomb: {
+	DisplayName: Clay Bomb
+	Tooltip: ""
+}
+
+FossilBomb: {
+	DisplayName: Fossil Bomb
+	Tooltip: ""
+}
+
+SandBomb: {
+	DisplayName: Sand Bomb
+	Tooltip: ""
+}
+
+SnowBomb: {
+	DisplayName: Snow Bomb
+	Tooltip: ""
+}
+
+StickyClayBomb: {
+	DisplayName: Sticky Clay Bomb
+	Tooltip: ""
+}
+
+StickyFossilBomb: {
+	DisplayName: Sticky Fossil Bomb
+	Tooltip: ""
+}
+
+StickySandBomb: {
+	DisplayName: Sticky Sand Bomb
+	Tooltip: ""
+}
+
+StickySnowBomb: {
+	DisplayName: Sticky Snow Bomb
+	Tooltip: ""
+}
+
+StickyStoneBomb: {
+	DisplayName: Sticky Stone Bomb
+	Tooltip: ""
+}
+
+StoneBomb: {
+	DisplayName: Stone Bomb
+	Tooltip: ""
+}
+
+GuidebookItem: {
+	DisplayName: Guidebook Item
+	Tooltip: ""
+}
+
+AutoExtractor: {
+	DisplayName: Auto Extractor
+	Tooltip: ""
+}
+
+AutoExtractorTier2: {
+	DisplayName: Auto Extractor Tier2
+	Tooltip: ""
+}
+
+AutoExtractorTier3: {
+	DisplayName: Auto Extractor Tier3
+	Tooltip: ""
+}
+
+AutoExtractorTier4: {
+	DisplayName: Auto Extractor Tier4
+	Tooltip: ""
+}
+
+AutoExtractorTier5: {
+	DisplayName: Auto Extractor Tier5
+	Tooltip: ""
+}
+
+Deepstone: {
+	DisplayName: Deepstone
+	Tooltip: ""
+}
+
+DeepstoneBrick: {
+	DisplayName: Deepstone Brick
+	Tooltip: ""
+}
+
+DeepstoneChest: {
+	DisplayName: Deepstone Chest
+	Tooltip: ""
+}
+
+DeepstoneChestKey: {
+	DisplayName: Deepstone Key
+	Tooltip:
+		'''
+		A large, grimy key.
+		Can be used to open Locked Deepstone Chests
+		'''
+}
+
+DeepstoneGravel: {
+	DisplayName: Deepstone Gravel
+	Tooltip: ""
+}
+
+FogCloud1: {
+	DisplayName: Fog Cloud1
+	Tooltip: ""
+}
+
+Slate: {
+	DisplayName: Slate
+	Tooltip: ""
+}
+
+VolcanicStone: {
+	DisplayName: Volcanic Stone
+	Tooltip: ""
+}
+
+PlanteraAltarItem: {
+	DisplayName: Plantera Altar Item
+	Tooltip: ""
+}

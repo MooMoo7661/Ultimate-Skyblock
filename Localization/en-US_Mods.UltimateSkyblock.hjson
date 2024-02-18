@@ -1,419 +1,3 @@
-Configs: {
-	OneBlockModConfig: {
-		TeleportToTopOfWorldOnDeath: {
-			Tooltip: ""
-			Label: Falling out of the world teleports you to the top
-		}
-
-		StarterChestStyle: {
-			Tooltip:
-				'''
-				1: Classic - contains simple skyblock items such as a water bucket, a lava bucket, and some extra items that aid progression.
-				2: Simple - contains the very basic items, not much is given.
-				3: Luxurious - contains a lot of items that will significantly speed up progression.
-				4: None - there is no chest. Only for those who want to experience the most pain and spend a long time grinding for rare drops.
-				'''
-			Label: Starter Chest Style
-		}
-
-		DirtAndSandCanBeExtracted: {
-			Tooltip: ""
-			Label: Dirt and Sand can be extracted for gems and ore
-		}
-
-		Headers: {
-			Recipes: Recipes
-			Islands: Islands
-			Music: Music Header
-			General: General Header
-		}
-
-		DecraftTombstones: {
-			Label: Allow decrafting tombstones into gold and stone
-			Tooltip: ""
-		}
-
-		IslandsStyle: {
-			Label: Choose the style of islands you want to generate
-			Tooltip:
-				'''
-				1: All Islands - includes: desert, both evil biomes, hallow, dungeon, glowing mushroom, hell, forest, snowy, jungle, and jungle temple.
-				2: Important Only - all other biome-specific islands are removed, only the dungeon and jungle temple islands remain.
-				'''
-		}
-
-		FastTrees: {
-			Tooltip: ""
-			Label: Trees grow at an accelerated rate
-		}
-
-		TreesDropMoreAcorns: {
-			Tooltip: ""
-			Label: Trees drop much more acorns
-		}
-
-		BurnZombiesDuringDaytime: {
-			Tooltip: ""
-			Label: Zombies burn during the day
-		}
-
-		SaplingsDropAcorns: {
-			Tooltip: ""
-			Label: Saplings can be mined back into acorns (Don't question the logic)
-		}
-
-		SmeltTinCans: {
-			Label: Tin cans can be smelted down
-			Tooltip: ""
-		}
-
-		CraftGelatinCrystals: {
-			Label: Craft Gelatin Crystals
-			Tooltip: ""
-		}
-
-		CraftExtractinator: {
-			Label: Craft Extractinator
-			Tooltip: ""
-		}
-
-		CraftRegrowthStaff: {
-			Label: Craft Staff of Regrowth
-			Tooltip: ""
-		}
-
-		MinecraftSoundtrack: {
-			Tooltip: ""
-			Label: Replace Forest music with familiar soundtrack
-		}
-
-		OWSoundtrack: {
-			Tooltip: ""
-			Label: Replace various soundtracks with Otherworld sountracks
-		}
-
-		SubwaySurfers: {
-			Tooltip: ""
-			Label: Subway Surfers!!!
-		}
-
-		SmallWorldWarning: {
-			Tooltip: ""
-			Label: Warning text upon entering a world that is small
-		}
-
-		StoneGenerator: {
-			Tooltip:
-				'''
-				If lava and water are seperated by one block of air, it will generate stone in that spot, or obsidian if in the caverns.
-				It must be left -> right, or right -> left.
-				'''
-			Label: Stone Generator Logic
-		}
-
-		RenderFogCloudTiles: {
-			Tooltip: ""
-			Label: Render Fog Cloud Tiles
-		}
-
-		DrawNPCIcons: {
-			Tooltip: ""
-			Label: Draw NPC Icons on the map
-		}
-
-		DisplayName: One Block Mod Config
-	}
-
-	RecipesConfig: {
-		DecraftTombstones: {
-			Tooltip: ""
-			Label: Allow decrafting tombstones into gold and stone
-		}
-
-		CraftLifeCrystals: {
-			Tooltip: ""
-			Label: Craft Life Crystals
-		}
-
-		SmeltTinCans: {
-			Tooltip: ""
-			Label: Tin cans can be smelted down
-		}
-
-		CraftGelatinCrystals: {
-			Tooltip: ""
-			Label: Craft Gelatin Crystals
-		}
-
-		CraftExtractinator: {
-			Tooltip: ""
-			Label: Craft Extractinator
-		}
-
-		CraftRegrowthStaff: {
-			Tooltip: ""
-			Label: Craft Staff of Regrowth
-		}
-
-		Headers: {
-			Items: Items Header
-			Misc: Misc Header
-		}
-
-		CraftIceSkates: {
-			Tooltip: ""
-			Label: Craft Ice Skates
-		}
-
-		CraftHermesBoots: {
-			Tooltip: ""
-			Label: Craft Hermes Boots
-		}
-
-		CraftMagicMirror: {
-			Tooltip: ""
-			Label: Craft Magic Mirror
-		}
-
-		CraftIceMirror: {
-			Tooltip: ""
-			Label: Craft Ice Mirror
-		}
-
-		CraftRegenerationBand: {
-			Tooltip: ""
-			Label: Craft Band of Regeneration
-		}
-
-		CraftStepStool: {
-			Tooltip: ""
-			Label: Craft Step Stool
-		}
-
-		CraftFlurryBoots: {
-			Tooltip: ""
-			Label: Flurry Boots Recipe
-		}
-
-		CraftDuneriderBoots: {
-			Tooltip: ""
-			Label: Dunerider Boots Recipe
-		}
-
-		CraftAglet: {
-			Tooltip: ""
-			Label: Aglet Recipe
-		}
-
-		DisplayName: Recipes Config
-	}
-
-	NotificationsConfig: {
-		EnabledNotifs: {
-			Tooltip: ""
-			Label: All Configs Enabled
-		}
-
-		DisplayName: Notifications Config
-	}
-
-	SkyblockModConfig: {
-		DisplayName: Skyblock Mod Config
-
-		Headers: {
-			General: General Header
-			Music: Music Header
-		}
-
-		TeleportToTopOfWorldOnDeath: {
-			Label: Falling out of the world teleports you to the top
-			Tooltip: ""
-		}
-
-		StoneGenerator: {
-			Label: Stone Generator Logic
-			Tooltip:
-				'''
-				If lava and water are seperated by one block of air, it will generate stone in that spot, or obsidian if in the caverns.
-				It must be left -> right, or right -> left.
-				'''
-		}
-
-		FastTrees: {
-			Label: Trees grow at an accelerated rate
-			Tooltip: ""
-		}
-
-		TreesDropMoreAcorns: {
-			Label: Trees drop much more acorns
-			Tooltip: ""
-		}
-
-		SaplingsDropAcorns: {
-			Label: Saplings can be mined back into acorns (Don't question the logic)
-			Tooltip: ""
-		}
-
-		BurnZombiesDuringDaytime: {
-			Label: Zombies burn during the day
-			Tooltip: ""
-		}
-
-		DirtAndSandCanBeExtracted: {
-			Label: Dirt and Sand can be extracted for gems and ore
-			Tooltip: ""
-		}
-
-		RenderFogCloudTiles: {
-			Label: Render Fog Cloud Tiles
-			Tooltip: ""
-		}
-
-		SmallWorldWarning: {
-			Label: Warning text upon entering a world that is small
-			Tooltip: ""
-		}
-
-		StarterChestStyle: {
-			Label: Starter Chest Style
-			Tooltip:
-				'''
-				1: Classic - contains simple skyblock items such as a water bucket, a lava bucket, and some extra items that aid progression.
-				2: Simple - contains the very basic items, not much is given.
-				3: Luxurious - contains a lot of items that will significantly speed up progression.
-				4: None - there is no chest. Only for those who want to experience the most pain and spend a long time grinding for rare drops.
-				'''
-		}
-
-		DrawNPCIcons: {
-			Label: Draw NPC Icons on the map
-			Tooltip: ""
-		}
-
-		OWSoundtrack: {
-			Label: Replace various soundtracks with Otherworld sountracks
-			Tooltip: ""
-		}
-
-		MinecraftSoundtrack: {
-			Label: Replace Forest music with familiar soundtrack
-			Tooltip: ""
-		}
-
-		SubwaySurfers: {
-			Label: Subway Surfers!!!
-			Tooltip: ""
-		}
-	}
-}
-
-Items: {
-	VolcanicStone: {
-		Tooltip: ""
-		DisplayName: Volcanic Stone
-	}
-
-	StoneBomb: {
-		Tooltip: ""
-		DisplayName: Stone Bomb
-	}
-
-	StickyStoneBomb: {
-		Tooltip: ""
-		DisplayName: Sticky Stone Bomb
-	}
-
-	SandBomb: {
-		Tooltip: ""
-		DisplayName: Sand Bomb
-	}
-
-	StickySandBomb: {
-		Tooltip: ""
-		DisplayName: Sticky Sand Bomb
-	}
-
-	ClayBomb: {
-		Tooltip: ""
-		DisplayName: Clay Bomb
-	}
-
-	StickyClayBomb: {
-		Tooltip: ""
-		DisplayName: Sticky Clay Bomb
-	}
-
-	FossilBomb: {
-		Tooltip: ""
-		DisplayName: Fossil Bomb
-	}
-
-	StickyFossilBomb: {
-		Tooltip: ""
-		DisplayName: Sticky Fossil Bomb
-	}
-
-	AutoExtractor: {
-		Tooltip: ""
-		DisplayName: Auto Extractor
-	}
-
-	AutoExtractorTier2: {
-		Tooltip: ""
-		DisplayName: Auto Extractor Tier2
-	}
-
-	AutoExtractorTier3: {
-		Tooltip: ""
-		DisplayName: Auto Extractor Tier3
-	}
-
-	AutoExtractorTier4: {
-		Tooltip: ""
-		DisplayName: Auto Extractor Tier4
-	}
-
-	AutoExtractorTier5: {
-		Tooltip: ""
-		DisplayName: Auto Extractor Tier5
-	}
-
-	SnowBomb: {
-		Tooltip: ""
-		DisplayName: Snow Bomb
-	}
-
-	StickySnowBomb: {
-		Tooltip: ""
-		DisplayName: Sticky Snow Bomb
-	}
-
-	FogCloud1: {
-		Tooltip: ""
-		DisplayName: Fog Cloud1
-	}
-
-	GuidebookItem: {
-		Tooltip: ""
-		DisplayName: Guidebook Item
-	}
-
-	PlanteraAltarItem: {
-		Tooltip: ""
-		DisplayName: Plantera Altar Item
-	}
-
-	Slate: {
-		DisplayName: Slate
-		Tooltip: ""
-	}
-
-	Deepstone: {
-		DisplayName: Deepstone
-		Tooltip: ""
-	}
-}
-
 Projectiles: {
 	StoneBombProjectile.DisplayName: Stone Bomb Projectile
 	StickyStoneBombProjectile.DisplayName: Sticky Stone Bomb Projectile
@@ -425,16 +9,6 @@ Projectiles: {
 	SandBombProjectile.DisplayName: Sand Bomb Projectile
 	FossilBombProjectile.DisplayName: Fossil Bomb Projectile
 	ClayBombProjectile.DisplayName: Clay Bomb Projectile
-}
-
-Tiles: {
-	AutoExtractorTile.MapEntry: Auto Extractor
-	AutoExtractor.MapEntry: Auto-Extractor
-	AutoExtractorTier5Tile.MapEntry: Auto Extractor Tier5 Tile
-	AutoExtractorTier4Tile.MapEntry: Auto Extractor Tier4 Tile
-	AutoExtractorTier3Tile.MapEntry: Auto Extractor Tier3 Tile
-	AutoExtractorTier2Tile.MapEntry: Auto Extractor Tier2 Tile
-	AutoExtractorTier1Tile.MapEntry: Auto Extractor Tier1 Tile
 }
 
 Buffs: {
@@ -456,10 +30,10 @@ LocalizedPages: {
 		'''
 		[c/FFB23D:Welcome to Skyblock!]
 		This is a book to help you progress, as well as provide some tips for you.
-		To use the book, click the [c/FFABAB:Left (<)] or [c/FFABAB:Right (>)] arrows to scroll through pages.
+		To use the book, click the [c/FFABAB: (<)] or [c/FFABAB:Right (>)] arrows to scroll through pages.
 		You can purchase this book again from the Merchant at any time, in case you lose it.
 
-		On the left is a list of buttons with icons. These buttons are for quickly switching to important or
+		On the  is a list of buttons with icons. These buttons are for quickly switching to important or
 		notable pages.
 		'''
 	TableOfContents:
@@ -474,7 +48,7 @@ LocalizedPages: {
 		'''
 		To begin, you should chop some[i:9]wood. 
 		Trees will grow much faster now, meaning you will be able to gather a substantal amount of wood.
-		After you gather some wood, you should also get some[i:3]stone from the [c/ABCAFF:stone generator] on the left side of
+		After you gather some wood, you should also get some[i:3]stone from the [c/ABCAFF:stone generator] on the  side of
 		the island. Mining the stone in between the lava and water will provide an infinite source of stone, since lava
 		and water will now generate stone if separated by one block.
 
@@ -488,7 +62,7 @@ LocalizedPages: {
 		'''
 	Progression2:
 		'''
-		Once you have a decent supply of blocks, start bridging out to the left or the right.
+		Once you have a decent supply of blocks, start bridging out to the  or the right.
 		Make sure to look above and below your platform for any islands that might be out of sight.
 		There are 4 other forest islands, each with a chest containing basic underground golden chest loot.
 		You can find useful stuff such as [i:50][c/FFC080:magic mirrors],[i:166][c/FFC080:bombs],[i:28][c/FFC080:potions], and [i:19][c/FFC080:bars.]
@@ -509,3 +83,12 @@ LocalizedPages: {
 
 		'''
 }
+
+Biomes: {
+	DeepstoneBiome: {
+		DisplayName: Deepstone Biome
+		TownNPCDialogueName: the Deepstone Biome
+	}
+}
+
+NPCs.DeepstoneBat.DisplayName: Deepstone Bat

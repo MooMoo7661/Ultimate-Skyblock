@@ -1,4 +1,4 @@
-displayName = MooMoo's Ultimate Skyblock
+displayName = Skyblock: Subworlds
 author = MooMoo
 version = 0.1
 modReferences = StructureHelper, TileFunctionLibrary, SubworldLibrary

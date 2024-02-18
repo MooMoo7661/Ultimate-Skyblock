@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SubworldLibrary;
 using Terraria;
 using Terraria.Chat;
 using Terraria.Localization;
@@ -33,6 +34,7 @@ namespace UltimateSkyblock.Content.ModCommands
             ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral($"[c/32FF82:Coordinates: {Main.LocalPlayer.Center.ToTileCoordinates()}]"), Color.White);
         }
     }
+
     public class StructureFinder : ModCommand
     {
         public override CommandType Type
@@ -65,7 +67,7 @@ namespace UltimateSkyblock.Content.ModCommands
             };
 
             ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral($"{location}"), Color.White);
-            caller.Reply($"{location}");
+            //caller.Reply($"{location}");
         }
     }
 }

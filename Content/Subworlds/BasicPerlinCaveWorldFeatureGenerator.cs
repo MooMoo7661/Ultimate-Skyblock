@@ -7,16 +7,24 @@ using Terraria;
 using Terraria.WorldBuilding;
 using Terraria.IO;
 using Terraria.ID;
+using UltimateSkyblock.Content.Configs;
+using Terraria.ModLoader;
 
 namespace UltimateSkyblock.Content.Subworlds
 {
     class BasicPerlinCaveWorldFeatureGenerator : GenPass
     {
         private static FastNoise caveNoise;
+        private static int seed = 0;
+        private static FastNoise.FractalType fractalType = FastNoise.FractalType.FBm;
+        private static FastNoise.NoiseType noiseType = FastNoise.NoiseType.Perlin;
+
+        private static SubworldConfig config = ModContent.GetInstance<SubworldConfig>();
+        private static SubworldClientConfig clientConfig = ModContent.GetInstance<SubworldClientConfig>();
 
         public BasicPerlinCaveWorldFeatureGenerator(string name, double loadWeight) : base(name, loadWeight)
         {
-            int noiseSeed = Main.rand.Next(10000);
+            int noiseSeed = seed;
             caveNoise = new FastNoise(noiseSeed);
             UltimateSkyblock.Instance.Logger.Info("Noise Seed: " + noiseSeed);
             caveNoise.SetFrequency(0.02f); //0.02
@@ -26,13 +34,26 @@ namespace UltimateSkyblock.Content.Subworlds
             caveNoise.SetFractalWeightedStrength(1.3f); // 1.3f
             caveNoise.SetFractalWeightedStrength(1f); // 0
             //caveNoise.SetFractalPingPongStrength(4.9f);
-            caveNoise.SetFractalType(FastNoise.FractalType.FBm); //fbm
-            caveNoise.SetNoiseType(FastNoise.NoiseType.Perlin); //perlin
-            
+            caveNoise.SetFractalType(fractalType); //fbm
+            caveNoise.SetNoiseType(noiseType); //perlin
+
         }
 
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
+            seed = Main.rand.Next(1000) * (int)(((Main.time / 10 + 1) * (Main.GlobalTimeWrappedHourly / 25f) + 1) / 69);
+            fractalType = (FastNoise.FractalType)config.FractalType;
+            noiseType = (FastNoise.NoiseType)config.PerlinNoiseType;
+
+            string message = "\n\n\n\n";
+            if (clientConfig.ShowFastNoiseSeed)
+                message += "Seed: " + seed + "\n";
+            if (clientConfig.ShowFractalType)
+                message += "Fractal Type: " + fractalType + "\n";
+            if (clientConfig.ShowPerlinType)
+                message += "Noise Type: " + noiseType + "\n";
+
+            progress.Message = "Using Perlin Noise to generate caves" + message;
             int startingPositionX = Main.spawnTileX * Main.tile.Width;
             int startingPositionY = Main.spawnTileY * Main.tile.Height;
             for (int i = 0; i < Main.maxTilesX; i++)
@@ -44,6 +65,8 @@ namespace UltimateSkyblock.Content.Subworlds
                     {
                         WorldGen.KillTile(i, j, noItem: true);
                     }
+
+                    progress.Set((j + i * Main.maxTilesY) / (float)(Main.maxTilesX * Main.maxTilesY));
                 }
             }
         }

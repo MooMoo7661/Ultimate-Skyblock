@@ -16,18 +16,9 @@ namespace UltimateSkyblock.Content.ModPlayers
             SubworldSystem.Enter<MiningSubworld>();
         }
 
-        public override void PostUpdate()
-        {
-            if (SubworldSystem.IsActive<MiningSubworld>() || SubworldSystem.IsActive<PlanteraSubworld>())
-            {
-                Player.ZoneSkyHeight = false;
-                Player.ZoneBeach = false;
-            }
-        }
-
         public override void PreUpdate()
         {
-            if (SubworldSystem.IsActive<MiningSubworld>() || SubworldSystem.IsActive<PlanteraSubworld>())
+            if (SubworldSystem.AnyActive())
             {
                 Player.ZoneSkyHeight = false;
                 Player.ZoneBeach = false;

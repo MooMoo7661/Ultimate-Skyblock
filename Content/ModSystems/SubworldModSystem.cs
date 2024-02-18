@@ -25,7 +25,9 @@ namespace UltimateSkyblock.Content.ModSystems
         {
             if (SubworldSystem.IsActive<PlanteraSubworld>() || SubworldSystem.IsActive<MiningSubworld>())
             {
+                if (SubworldSystem.IsActive<PlanteraSubworld>())
                 SubworldSystem.hideUnderworld = true;
+
                 // Update mechanisms
                 Wiring.UpdateMech();
 

@@ -1,6 +1,11 @@
 ﻿using Terraria.ID;
 using Terraria;
 using System.Security.Cryptography;
+using Terraria.ModLoader;
+using UltimateSkyblock.Content.Items.Placeable;
+using UltimateSkyblock.Content.Tiles.Blocks;
+using System.Collections.Generic;
+using Terraria.WorldBuilding;
 
 namespace UltimateSkyblock.Content.Subworlds
 {
@@ -48,11 +53,10 @@ namespace UltimateSkyblock.Content.Subworlds
         /// </summary>
         /// <param name="genChance">Chance to generate tile patch. Returns 1 in X</param>
         /// <param name="type">Tile type to generate</param>
-        /// <param name="selectType">Tile to generate on- defaults to stone.</param>
         /// <param name="minHeightRequirement">Minimum height at which tiles can be generated at</param>
-        /// <param name="maxHeightRequirement">Maximum height at which tilec can be generated at</param>
+        /// <param name="maxHeightRequirement">Maximum height at which tilec can be generated at. If  alone, defaults to Main.MaxTilesY</param>
         /// <remarks>Use to quickly generate ore and other patches of tiles.</remarks>
-        public static void LoopWorldAndGenerateTiles(int genChance, int strength, int steps, int type, int selectType = TileID.Stone, int minHeightRequirement = 0, int maxHeightRequirement = 0)
+        public static void LoopWorldAndGenerateTiles(int genChance, int strength, int steps, int type, List<int> tilesThatCanBeGeneratedOn, int minHeightRequirement = 0, int maxHeightRequirement = 0)
         {
             for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 0.002); k++)
             {
@@ -66,7 +70,7 @@ namespace UltimateSkyblock.Content.Subworlds
                 }
 
                 Tile tile = Framing.GetTileSafely(x, y);
-                if (tile.HasTile && tile.TileType == selectType && Main.rand.NextBool(genChance) && (y >= minHeightRequirement && y <= maxHeightRequirement))
+                if (tile.HasTile && Main.rand.NextBool(genChance) && (y >= minHeightRequirement && y <= maxHeightRequirement) && tilesThatCanBeGeneratedOn.Contains(tile.TileType))
                 {
                     WorldGen.TileRunner(x, y, strength, steps, type);
                 }
@@ -81,9 +85,9 @@ namespace UltimateSkyblock.Content.Subworlds
         /// <param name="type">Type of tile to generate</param>
         /// <param name="levelToDisperse">Y level where the generation starts thinning out. Also allows deepType to take over as the tile being generated.</param>
         /// <param name="thinningChance">Chance of the generation to thin out past the given levelToDisperse.</param>
-        /// <param name="selectType">Tile the patches can only generate on.</param>
+        /// <param name="tilesThatCanBeGeneratedOn">Self explanatory. If all you want is stone, just pass in TileID.Stone</param>
         /// <param name="deepType">Type of tile to generate when deep enough. Defaults to the same tile as the given type.</param>
-        public static void LoopWorldAndGenerateTilesWithDepthModifiers(int genChance, int strength, int steps, int type, int levelToDisperse, bool canGenerateAfterLevel, int thinningChance = 100, int selectType = TileID.Stone, int deepType = -1)
+        public static void LoopWorldAndGenerateTilesWithDepthModifiers(int genChance, int strength, int steps, int type, List<int> tilesThatCanBeGeneratedOn, int levelToDisperse, bool canGenerateAfterLevel, int thinningChance = 100, int deepType = -1)
         {
             for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 0.002); k++)
             {
@@ -114,10 +118,9 @@ namespace UltimateSkyblock.Content.Subworlds
 
                 // UltimateSkyblock.Instance.Logger.Info(genChanceAtDepth);
 
-                if (tile.HasTile && tile.TileType == selectType && Main.rand.NextBool(genChanceAtDepth))
+                if (tile.HasTile && tilesThatCanBeGeneratedOn.Contains(tile.TileType) && Main.rand.NextBool(genChanceAtDepth))
                 {
-
-                    WorldGen.TileRunner(x, y, strength, steps, finalGenType);
+                        WorldGen.TileRunner(x, y, strength, steps, finalGenType);
                 }
             }
         }

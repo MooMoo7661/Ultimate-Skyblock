@@ -23,6 +23,7 @@ namespace UltimateSkyblock.Content.Tiles.Blocks
             Main.tileBlockLight[Type] = true;
             TileID.Sets.Stone[Type] = true;
             DustType = DustID.Stone;
+            MinPick = 45;
 
             HitSound = SoundID.Tink;
             RegisterItemDrop(ModContent.ItemType<Slate>());

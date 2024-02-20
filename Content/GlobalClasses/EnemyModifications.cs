@@ -44,6 +44,7 @@ namespace UltimateSkyblock.Content.GlobalClasses
                     pool.Clear();
                     pool.Add(NPCID.Ghost, 0.5f);
                     pool.Add(ModContent.NPCType<DeepstoneBat>(), 0.9f);
+                    pool.Add(ModContent.NPCType<Deepknight>(), 0.6f);
                     pool.Add(NPCID.ArmoredSkeleton, 0.3f);
                     pool.Add(NPCID.WallCreeper, 0.5f);
                     pool.Add(NPCID.Skeleton, 0.3f);

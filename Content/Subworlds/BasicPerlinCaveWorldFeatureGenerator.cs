@@ -9,6 +9,7 @@ using Terraria.IO;
 using Terraria.ID;
 using UltimateSkyblock.Content.Configs;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 
 namespace UltimateSkyblock.Content.Subworlds
 {
@@ -41,7 +42,7 @@ namespace UltimateSkyblock.Content.Subworlds
 
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
-            seed = Main.rand.Next(1000) * (int)(((Main.time / 10 + 1) * (Main.GlobalTimeWrappedHourly / 25f) + 1) / 69);
+            seed = new UnifiedRandom((int)DateTime.Now.Ticks).Next(1000) * (int)(((Main.time / 10 + 1) * (Main.GlobalTimeWrappedHourly / 25f) + 1) / 69);
             fractalType = (FastNoise.FractalType)config.FractalType;
             noiseType = (FastNoise.NoiseType)config.PerlinNoiseType;
 

@@ -91,4 +91,7 @@ Biomes: {
 	}
 }
 
-NPCs.DeepstoneBat.DisplayName: Deepstone Bat
+NPCs: {
+	DeepstoneBat.DisplayName: Deepstone Bat
+	Deepknight.DisplayName: Deepknight
+}

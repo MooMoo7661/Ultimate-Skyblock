@@ -20,11 +20,6 @@ namespace UltimateSkyblock.Content.Subworlds
             tileBottom = Framing.GetTileSafely(x, y + 1);
         }
 
-        public static void GetLeft(int x, int y, out Tile left) => left = Framing.GetTileSafely(x - 1, y);
-        public static void GetRight(int x, int y, out Tile right) => right = Framing.GetTileSafely(x + 1, y);
-        public static void GetTop(int x, int y, out Tile top) => top = Framing.GetTileSafely(x, y - 1);
-        public static void GetBottom(int x, int y, out Tile bottom) => bottom = Framing.GetTileSafely(x, y + 1);
-
         public static void ScanAreaForAir(int width, int height, int x, int y, out int numAir, out int numSolid)
         {
             numAir = 0;

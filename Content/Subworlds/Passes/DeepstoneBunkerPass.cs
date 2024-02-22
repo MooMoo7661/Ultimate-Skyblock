@@ -183,7 +183,7 @@ namespace UltimateSkyblock.Content.Subworlds.Passes
                     Tile tile = Framing.GetTileSafely(x, y);
                     if (!tile.HasTile && tile.WallType == WallID.None)
                     {
-                        if (GenUtils.TileLeft(x, y).WallType == WallID.AncientObsidianBrickWall && GenUtils.TileRight(x, y).WallType == WallID.AncientObsidianBrickWall)
+                        if (Framing.GetTileSafely(x - 1, y).WallType == WallID.AncientObsidianBrickWall && Framing.GetTileSafely(x + 1, y).WallType == WallID.AncientObsidianBrickWall)
                         {
                             WorldGen.PlaceWall(x, y, WallID.AncientObsidianBrickWall);
                             WorldGen.paintWall(x, y, PaintID.GrayPaint, true);

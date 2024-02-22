@@ -65,11 +65,16 @@ namespace UltimateSkyblock.Content.Tiles.Blocks
 
         public override void Update()
         {
+            int i = Position.X;
+            int j = Position.Y;
+            if (!Framing.GetTileSafely(i, j).HasTile)
+            {
+                Kill(i, j);
+            }
+
             timer++;
             if (timer >= 30)
             {
-                int i = Position.X;
-                int j = Position.Y;
 
                 Vector2 vector = new Point(i, j).ToWorldCoordinates();
                 int type = 1202;

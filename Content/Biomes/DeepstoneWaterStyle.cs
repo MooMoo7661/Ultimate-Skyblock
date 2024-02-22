@@ -21,7 +21,7 @@ namespace UltimateSkyblock.Content.Biomes
 
         public override int GetSplashDust()
         {
-            return Dust.dustWater();
+            return DustID.Water;
         }
 
         public override int GetDropletGore()

@@ -82,6 +82,15 @@ namespace UltimateSkyblock.Content.Subworlds.Passes
             BasementLeftFlooded1,
             BasementRightRuinedDropdown1,
             BasementRightRuinedDropdown2,
+
+            //BasementCatacombLeftRoom1,
+            BasementCatacombHallway1,
+            BasementCatacombHallway2,
+            BasementCatacombHallway3,
+            BasementCatacombHallway4,
+            //BasementCatacombHallwaySub1,
+            //BasementCatacombHallwaySub2,
+            BasementCatacombHallwayTrapped1,
         }
 
         public static List<RoomID> Hallways = new List<RoomID>
@@ -111,7 +120,7 @@ namespace UltimateSkyblock.Content.Subworlds.Passes
         };
 
         public static List<RoomID> LeftRooms = new List<RoomID>
-        { 
+        {
             RoomID.LeftAlchemyRoom1,
             RoomID.LeftAlchemyRoom2,
             RoomID.LeftBlacksmithRoom1,
@@ -126,7 +135,7 @@ namespace UltimateSkyblock.Content.Subworlds.Passes
         };
 
         public static List<RoomID> RightRooms = new List<RoomID>
-        { 
+        {
             RoomID.RightLibrary1,
             RoomID.RightLibrary2,
             RoomID.RightLibrary3,
@@ -155,10 +164,21 @@ namespace UltimateSkyblock.Content.Subworlds.Passes
             RoomID.BasementRightRuinedDropdown2,
         };
 
+        public static List<RoomID> BasementHallways = new List<RoomID>
+        {
+            RoomID.BasementCatacombHallway1,
+            RoomID.BasementCatacombHallway2,
+            RoomID.BasementCatacombHallway3,
+            RoomID.BasementCatacombHallway4,
+            //RoomID.BasementCatacombHallwaySub1,
+            //RoomID.BasementCatacombHallwaySub2,
+            RoomID.BasementCatacombHallwayTrapped1
+        };
+
         #endregion
 
         public static Dictionary<int, string> RoomsDictionary = new Dictionary<int, string>();
-            
+
         public DeepstoneBunkerPass(string name, double loadWeight) : base(name, loadWeight) { }
 
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
@@ -166,32 +186,35 @@ namespace UltimateSkyblock.Content.Subworlds.Passes
             foreach (RoomID room in Enum.GetValues(typeof(RoomID)))
             {
                 RoomsDictionary.TryAdd((int)room, room.ToString());
-                Modref.Logger.Info("Tried to add key " + room.ToString());
+                Modref.Logger.Info("Added key " + room.ToString() + " to RoomsDictionary.");
             }
 
-            Point16 placePoint = new(Main.maxTilesX / 2, Main.UnderworldLayer - 150);
-
-            Generator.GenerateStructure(path + "Tower", placePoint, Modref);
-            GenerateBasement(placePoint.X - 12, placePoint.Y + 44);
-            HallwayRunner(placePoint.X, placePoint.Y);
-
-            // Fixing previous right room structures that I forgot to place an extra layer of walls to connect hallways.
-            for (int x = 0; x < Main.maxTilesX; x++)
+            for (int i = 1; i < 3; i++)
             {
-                for (int y = Main.UnderworldLayer - 200;  y < Main.maxTilesY; y++)
+                Point16 placePoint = new((Main.maxTilesX / 3) * i, Main.UnderworldLayer - 150);
+
+                Generator.GenerateStructure(path + "Tower", placePoint, Modref);
+                GenerateBasement(placePoint.X - 12, placePoint.Y + 44);
+                HallwayRunner(placePoint.X, placePoint.Y);
+
+                // Fixing previous right room structures that I forgot to place an extra layer of walls to connect hallways.
+                for (int x = 0; x < Main.maxTilesX; x++)
                 {
-                    Tile tile = Framing.GetTileSafely(x, y);
-                    if (!tile.HasTile && tile.WallType == WallID.None)
+                    for (int y = Main.UnderworldLayer - 200; y < Main.maxTilesY; y++)
                     {
-                        if (Framing.GetTileSafely(x - 1, y).WallType == WallID.AncientObsidianBrickWall && Framing.GetTileSafely(x + 1, y).WallType == WallID.AncientObsidianBrickWall)
+                        Tile tile = Framing.GetTileSafely(x, y);
+                        if (!tile.HasTile && tile.WallType == WallID.None)
                         {
-                            WorldGen.PlaceWall(x, y, WallID.AncientObsidianBrickWall);
-                            WorldGen.paintWall(x, y, PaintID.GrayPaint, true);
+                            if (Framing.GetTileSafely(x - 1, y).WallType == WallID.AncientObsidianBrickWall && Framing.GetTileSafely(x + 1, y).WallType == WallID.AncientObsidianBrickWall)
+                            {
+                                WorldGen.PlaceWall(x, y, WallID.AncientObsidianBrickWall);
+                                WorldGen.paintWall(x, y, PaintID.GrayPaint, true);
+                            }
                         }
-                    } 
+                    }
                 }
             }
-            
+
         }
 
         public void HallwayRunner(int x, int y)
@@ -285,6 +308,8 @@ namespace UltimateSkyblock.Content.Subworlds.Passes
             Generator.GenerateStructure(path + RoomsDictionary[(int)RollBasementDropdownRoom(1)], new Point16(x + 42, y + 3), Modref);
             Generator.GenerateStructure(path + RoomID.BasementCatacombCenter.ToString(), new Point16(x, y + 13), Modref);
 
+            // 23
+            // -15
         }
     }
 }

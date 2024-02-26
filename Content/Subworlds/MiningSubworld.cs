@@ -74,12 +74,13 @@ namespace UltimateSkyblock.Content.Subworlds
             new HellPass("Hell", 100),
             new HellStructurePass("HellStructures", 90),
             new OreGenerationPass("OreGen", 80),
+            new DeepstoneFoliagePass("Foliage", 20),
             new TrapsPass("Traps", 30),
             new GeodePass("Geodes", 25),
             new DropletsPass("Droplets", 15),
             new SmoothPass("Smoothing", 15),
             new StalactitesPass("Stalactites", 30),
-            new DeepstoneBunkerPass("DeepstoneBunker", 100),
+            new DeepstoneBunkerPass("DeepstoneBunker", 40),
             new CleanupPass("Cleanup", 80),
 
             new SpawnPass("Setting up Spawn", 0.5f)

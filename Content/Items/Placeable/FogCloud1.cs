@@ -2,6 +2,7 @@
 using Terraria.ModLoader;
 using Terraria;
 using UltimateSkyblock.Content.Tiles.Blocks;
+using UltimateSkyblock.Content.Tiles.Environment;
 
 namespace UltimateSkyblock.Content.Items.Placeable
 {

@@ -2,6 +2,7 @@
 using Terraria.ModLoader;
 using Terraria;
 using UltimateSkyblock.Content.Tiles.Blocks;
+using UltimateSkyblock.Content.Tiles.Furniture;
 
 namespace UltimateSkyblock.Content.Items.Placeable
 {
@@ -9,8 +10,8 @@ namespace UltimateSkyblock.Content.Items.Placeable
     {
         public override void SetDefaults()
         {
-            Item.DefaultToPlaceableTile(ModContent.TileType<Tiles.Blocks.DeepstoneChestTile>());
-             Item.placeStyle = 1; // Use this to place the chest in its locked style
+            Item.DefaultToPlaceableTile(ModContent.TileType<DeepstoneChestTile>());
+            Item.placeStyle = 1; // Use this to place the chest in its locked style
             Item.width = 26;
             Item.height = 22;
             Item.value = 500;

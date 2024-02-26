@@ -20,6 +20,7 @@ namespace UltimateSkyblock.SkyblockWorldGen
         public override void PostWorldGen()
         {
             Main.dungeonX = dungeonLeft ? Main.maxTilesX / 20 : Main.maxTilesX - (Main.maxTilesX / 20);
+            Main.dungeonY = Main.maxTilesY / 2 - Main.maxTilesY / 5 + Main.rand.Next(-20, 20);
 
             for (int i = 0; i < Main.maxTilesX; i++)
             {
@@ -37,7 +38,7 @@ namespace UltimateSkyblock.SkyblockWorldGen
             Mod.Logger.Info("Successfully cleared world");
 
             Main.spawnTileX = Main.maxTilesX / 2;
-            Main.spawnTileY = Main.maxTilesY / 2 - Main.maxTilesY / 3; // Re-adjusting the spawn point to a constant value.
+            Main.spawnTileY = Main.maxTilesY / 2 - Main.maxTilesY / 5; // Re-adjusting the spawn point to a constant value.
 
             dungeonLeft = (Main.dungeonX < Main.maxTilesX / 2) ? true : false;
 
@@ -50,7 +51,7 @@ namespace UltimateSkyblock.SkyblockWorldGen
             GenForestPlanetoids();
             GenSnowPlanetoids();
             GenEvilPlanetoids();
-            //GenJungleIslands();
+            GenJungleIslands();
             GenMushroomIsland();
             GenMeteorites();
 
@@ -66,7 +67,7 @@ namespace UltimateSkyblock.SkyblockWorldGen
             // Y + 25
 
             int x = Main.maxTilesX / 2; // Get the X coordinate to spawn the island
-            int y = Main.maxTilesY / 2 - Main.maxTilesY / 3; // Get the Y coordinate to spawn the island
+            int y = Main.maxTilesY / 2 - Main.maxTilesY / 5; // Get the Y coordinate to spawn the island
 
             NPC.NewNPC(Entity.GetSource_NaturalSpawn(), x * 16, y * 16, NPCID.Guide); // Spawn the guide on the island
 
@@ -88,14 +89,14 @@ namespace UltimateSkyblock.SkyblockWorldGen
             }
 
             x = Main.maxTilesX / 2 - 38; // Recenters the X coordinate due to islands spawning from the top left of the build
-            y = Main.maxTilesY / 2 - Main.maxTilesY / 3 - 25; // Recenters the Y coordinate due to islands spawning from the top left of the build
+            y = Main.maxTilesY / 2 - Main.maxTilesY / 5 - 25; // Recenters the Y coordinate due to islands spawning from the top left of the build
 
             Generator.GenerateStructure(WorldHelpers.forestPath + "Main", new Point16(x, y), Instance); // Generate the spawn island
             GenForestIslands(new Point16(x, y + 50));
 
             if (config.StarterChestStyle != 4) // Setting loot for starter chest
             {
-                int starterChest = PlaceChest(Main.maxTilesX / 2 - 22, Main.maxTilesY / 2 - Main.maxTilesY / 3 - 5, 21, false, chestType);
+                int starterChest = PlaceChest(Main.maxTilesX / 2 - 22, Main.maxTilesY / 2 - Main.maxTilesY / 5 - 5, 21, false, chestType);
                 Chest chest = Main.chest[starterChest];
                 ChestType style = (ChestType)config.StarterChestStyle;
 
@@ -310,8 +311,8 @@ namespace UltimateSkyblock.SkyblockWorldGen
                 _ => 20
             };
 
-            Generator.GenerateStructure(WorldHelpers.snowPath + "Castle", new(Snow.X + 100 + (int)(ScaleBasedOnWorldSizeX * 5), Snow.Y - 200 - (int)(offset * 4)), Instance);
-            Point16 center = new Point16(Snow.X + 100 + (int)(ScaleBasedOnWorldSizeX * 5), Snow.Y - 200 - (int)(offset * 4));
+            Generator.GenerateStructure(WorldHelpers.snowPath + "Castle", Snow, Instance);
+            Point16 center = Snow;
 
             List<string> structures = new List<string>
             {
@@ -325,10 +326,10 @@ namespace UltimateSkyblock.SkyblockWorldGen
             {
                 Point16 genPoint = i switch
                 {
-                    0 => new Point16(center.X - 50 - (int)(ScaleBasedOnWorldSizeX * 2.5), center.Y - 10 - (int)(ScaleBasedOnWorldSizeY) + WorldGen.genRand.Next(-15, 15)),
-                    1 => new Point16(center.X + 100 + (int)(ScaleBasedOnWorldSizeX * 2.5), center.Y - 10 - (int)(ScaleBasedOnWorldSizeY)),
-                    2 => new Point16(center.X, center.Y - 10 - (int)(ScaleBasedOnWorldSizeY * 4) + WorldGen.genRand.Next(-15, 15) + WorldGen.genRand.Next(-15, 15)),
-                    _ => new Point16(center.X + 150, center.Y - 10 - (int)(ScaleBasedOnWorldSizeY * 4) + WorldGen.genRand.Next(-15, 15))
+                    0 => center,
+                    1 => Point16.Zero,
+                    2 => Point16.Zero,
+                    _ => Point16.Zero
                 };
 
                 int index = WorldGen.genRand.Next(structures.Count);
@@ -356,32 +357,9 @@ namespace UltimateSkyblock.SkyblockWorldGen
             //42
 
             Point16 genPoint = new Point16(Jungle.X + 200 + (int)(ScaleBasedOnWorldSizeX * 1.85f), Jungle.Y - (int)(ScaleBasedOnWorldSizeY * 10f) + Main.rand.Next(-10, 30));
-            Generator.GenerateStructure(junglePath + "Cave", genPoint, Instance);
+            Generator.GenerateStructure(junglePath + "Main", genPoint, Instance);
             //PlaceTile(genPoint.X, genPoint.Y, TileID.Adamantite, true, true);
-            Generator.GenerateStructure("Content/SkyblockWorldGen/Structures/LockedJungleChest", new Point16(genPoint.X + 17, genPoint.Y + 42), Instance);
-
-            List<string> islands = new List<string>
-            {
-                "Bridge",
-                "Small1",
-                "Small2",
-                "Small3",
-                "Small4"
-            };
-
-            for (int i = 0; i < 2; i++)
-            {
-                Point16 point = i switch
-                {
-                    0 => genPoint - new Point16((int)(ScaleBasedOnWorldSizeX * 8f) + 100, -100 + Main.rand.Next(-20, -10)),
-                    1 => genPoint - new Point16((int)(ScaleBasedOnWorldSizeX * 3f) + 100, Main.rand.Next(-30, 50)),
-                };
-
-                int index = Main.rand.Next(islands.Count);
-                string islandToGenerate = islands[index];
-                islands.RemoveAt(index);
-                Generator.GenerateStructure(junglePath + islandToGenerate, point, Instance);
-            }
+            Generator.GenerateStructure("Content/SkyblockWorldGen/Structures/LockedJungleChest", new Point16(genPoint.X + 13, genPoint.Y + 42), Instance);
         }
 
         public static void GenMushroomIsland()

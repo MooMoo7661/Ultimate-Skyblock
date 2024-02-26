@@ -44,34 +44,21 @@ namespace UltimateSkyblock.SkyblockWorldGen
             task.Name == "Micro Biomes" || task.Name == "Moss" || task.Name == "Guide");
         }
 
-        public override void PreWorldGen()
-        {           
-            WorldSize = WorldGen.GetWorldSize() switch
-            {
-                0 => WorldSizes.Small,
-                1 => WorldSizes.Medium,
-                2 => WorldSizes.Large,
-                _ => WorldSizes.Invalid
-            };
+        public override void OnWorldLoad()
+        {
+            SetWorldSizeVars();
+            LogInfo();
+            SetWorldLayerHeights();
+            SetExtractionTypes();
 
-            ScaleBasedOnWorldSizeX = WorldGen.GetWorldSize() switch
-            { 
-                0 => 1,
-                1 => 30,
-                2 => 60,
-                _ => 80
-            };
-
-            ScaleBasedOnWorldSizeY = WorldGen.GetWorldSize() switch
-            {
-                0 => 20,
-                1 => 30,
-                2 => 40,
-                _ => 50,
-            };
+            // Angler can move in at any time
+            NPC.savedAngler = true;
+            Main.townNPCCanSpawn[NPCID.Angler] = true;
         }
 
-        public override void OnWorldLoad()
+        public override void PreWorldGen() => SetWorldSizeVars();
+
+        private void SetWorldSizeVars()
         {
             WorldSize = WorldGen.GetWorldSize() switch
             {
@@ -96,14 +83,35 @@ namespace UltimateSkyblock.SkyblockWorldGen
                 2 => 40,
                 _ => 50,
             };
+        }
 
+        private void LogInfo()
+        {
             Mod.Logger.Info("World Size : " + WorldSize);
             Mod.Logger.Info("World Size Scale X : " + ScaleBasedOnWorldSizeX);
             Mod.Logger.Info("World Size Scale Y : " + ScaleBasedOnWorldSizeY);
-
-            NPC.savedAngler = true;
-            Main.townNPCCanSpawn[NPCID.Angler] = true;
+            Mod.Logger.Info("Dungeon Side : " + (dungeonLeft ? "Left" : "Right"));
         }
+
+        private void SetWorldLayerHeights()
+        {
+            Main.worldSurface = Main.maxTilesY / 2;
+            GenVars.worldSurfaceHigh = Main.maxTilesY / 2 - 200;
+            GenVars.worldSurfaceLow = Main.maxTilesY / 2 + 200;
+            Main.rockLayer = GenVars.worldSurfaceLow;
+            GenVars.rockLayerHigh = GenVars.worldSurfaceLow;
+            GenVars.rockLayerLow = GenVars.worldSurfaceLow + 200;
+        }
+
+        private void SetExtractionTypes()
+        {
+            if (ModContent.GetInstance<SkyblockModConfig>().DirtAndSandCanBeExtracted)
+            {
+                ItemID.Sets.ExtractinatorMode[ItemID.DirtBlock] = 0;
+                ItemID.Sets.ExtractinatorMode[ItemID.SandBlock] = 0;
+            }
+        }
+
         /// Overridden to prevent the "spreading evil" tasks, as they can completely ruin islands with stone on them. The hallow is manually generated in this as well.
         /// </summary>
         public override void ModifyHardmodeTasks(List<GenPass> list)
@@ -111,19 +119,6 @@ namespace UltimateSkyblock.SkyblockWorldGen
             list.RemoveAll(task => task.Name != "Hardmode Announcement");
 
             GenHallowedIslands();
-        }
-    }
-    
-
-    public class RefinableDirt : GlobalItem
-    {
-        public override void SetStaticDefaults()
-        {
-            if (ModContent.GetInstance<SkyblockModConfig>().DirtAndSandCanBeExtracted)
-            {
-                ItemID.Sets.ExtractinatorMode[ItemID.DirtBlock] = 0;
-                ItemID.Sets.ExtractinatorMode[ItemID.SandBlock] = 0;
-            }
         }
     }
 }

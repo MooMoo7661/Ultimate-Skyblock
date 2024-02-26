@@ -126,3 +126,23 @@ PlanteraAltarItem: {
 	DisplayName: Plantera Altar Item
 	Tooltip: ""
 }
+
+SplitRingstalkMushroom: {
+	DisplayName: Split Ringstalk Mushroom
+	Tooltip: ""
+}
+
+Glimmercap: {
+	DisplayName: Glimmercap
+	Tooltip:
+		'''
+		Shines brightly deep underground
+		Can be used to craft items for better vision
+		When brewed into a potion, the effects become more potent
+		'''
+}
+
+GlimmerTonic: {
+	DisplayName: Glimmer Tonic
+	Tooltip: ""
+}

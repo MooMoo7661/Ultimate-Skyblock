@@ -12,9 +12,9 @@ Projectiles: {
 }
 
 Buffs: {
-	OatchiBuff: {
-		DisplayName: Oatchi Buff
-		Description: Mods.UltimateSkyblock.Buffs.OatchiBuff.Description
+	GlimmerBuff: {
+		DisplayName: Glimmer Sight
+		Description: Prevents darkness from affecting you
 	}
 }
 

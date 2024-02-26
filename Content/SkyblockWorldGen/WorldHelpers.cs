@@ -9,12 +9,13 @@ internal static class WorldHelpers
     public static Point16 Hell => new Point16(Main.maxTilesX / 2, Main.UnderworldLayer + 50);
     public static Point16 Hallow;
     public static Point16 Mushroom => dungeonLeft ? new Point16(Main.maxTilesX - Main.maxTilesX / 20, (int)Main.rockLayer - 400 - (int)(ScaleBasedOnWorldSizeY * 2f)) : new Point16(Main.maxTilesX / 20, (int)Main.rockLayer - 400 - (int)(ScaleBasedOnWorldSizeY * 2f));
-    public static Point16 Spawn => new(Main.maxTilesX / 2, Main.maxTilesY / 3); // Spawn point on the Spawn Island
-    public static Point16 Jungle => new(Main.maxTilesX / 2 + Main.maxTilesX / 7 + (int)(ScaleBasedOnWorldSizeX * 2), Main.maxTilesY / 3); // Center of the main jungle island
+    public static Point16 Spawn => new(Main.maxTilesX / 2, Main.maxTilesY / 2 - Main.maxTilesY / 5); // Spawn point on the Spawn Island
+    public static Point16 Jungle => new(Main.maxTilesX / 2 + Main.maxTilesX / 7 + (int)(ScaleBasedOnWorldSizeX * 2), Main.maxTilesY / 2 - Main.maxTilesY / 5); // Center of the main jungle island
     public static Point16 Evil => new(Main.maxTilesX / 2 - Main.maxTilesX / 7 + (int)(ScaleBasedOnWorldSizeX * 1.3f), 100); // Center to spawn evil islands at
-    public static Point16 Snow => new(Main.maxTilesX / 2 + Main.maxTilesX / 4 + (int)(ScaleBasedOnWorldSizeX * 1.3f), Main.maxTilesY / 3);
 
-    // All of these are for quick and easy worldgen code that is less cluttered (hopefully).
+    public static Point16 Snow => new(Main.maxTilesX / 2 + Main.maxTilesX / 4 + (int) (ScaleBasedOnWorldSizeX* 1.3f), Main.maxTilesY / 2 - Main.maxTilesY / 5);
+
+    // Quick ref paths
     public static readonly string path = "Content/SkyblockWorldGen/Structures/";
     public static readonly string hellPath = path + "HellIsland";
     public static readonly string forestPath = path + "ForestIsland";

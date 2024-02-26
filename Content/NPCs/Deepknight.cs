@@ -10,6 +10,7 @@ using UltimateSkyblock.Content.Biomes;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ModLoader.Utilities;
 using Terraria.GameContent.Bestiary;
+using UltimateSkyblock.Content.Items.Placeable;
 
 namespace UltimateSkyblock.Content.NPCs
 {
@@ -49,6 +50,7 @@ namespace UltimateSkyblock.Content.NPCs
             foreach (var skeletonDropRule in skeletonDropRules)
             {
                 npcLoot.Add(skeletonDropRule);
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DeepstoneChestKey>(), 4));
             }
         }
 

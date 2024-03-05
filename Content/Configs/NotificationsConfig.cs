@@ -7,7 +7,6 @@ namespace UltimateSkyblock.Content.Configs
     {
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
-        [Label("All Configs Enabled")]
         [DefaultValue(true)]
         public bool EnabledNotifs { get; set; }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using Terraria.ModLoader.Config;
+using static UltimateSkyblock.Content.SkyblockWorldGen.MainWorld;
 
 namespace UltimateSkyblock.Content.Configs
 {
@@ -52,10 +53,10 @@ namespace UltimateSkyblock.Content.Configs
          "3: Luxurious - contains a lot of items that will significantly speed up progression.\n" +
          "4: None - there is no chest. Only for those who want to experience the most pain and spend a long time grinding for rare drops.")]
         [Slider]
-        [DefaultValue(1)]
+        [DefaultValue(0)]
         [Increment(1)]
-        [Range(1, 4)]
-        public int StarterChestStyle { get; set; }
+        [Range(0, 3)]
+        public ChestType StarterChestStyle { get; set; }
 
         [Label("Draw NPC Icons on the map")]
         [DefaultValue(true)]

@@ -4,13 +4,15 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static WorldHelpers;
-using static UltimateSkyblock.UltimateSkyblock;
-using static Terraria.WorldGen;
 using StructureHelper;
 using UltimateSkyblock.Content.Utils;
 
-namespace UltimateSkyblock.SkyblockWorldGen
+using static UltimateSkyblock.Content.SkyblockWorldGen.ChestLootHelpers;
+using static WorldHelpers;
+using static UltimateSkyblock.UltimateSkyblock;
+using static Terraria.WorldGen;
+
+namespace UltimateSkyblock.Content.SkyblockWorldGen
 {
     public partial class MainWorld : ModSystem
     {
@@ -81,10 +83,10 @@ namespace UltimateSkyblock.SkyblockWorldGen
 
             switch (config.StarterChestStyle)
             {
-                case 2:
+                case ChestType.Simple:
                     chestType = 1; break;
 
-                case 3:
+                case ChestType.Luxury:
                     chestType = 13; break;
             }
 
@@ -94,17 +96,34 @@ namespace UltimateSkyblock.SkyblockWorldGen
             Generator.GenerateStructure(WorldHelpers.forestPath + "Main", new Point16(x, y), Instance); // Generate the spawn island
             GenForestIslands(new Point16(x, y + 50));
 
-            if (config.StarterChestStyle != 4) // Setting loot for starter chest
+            var logger = UltimateSkyblock.Instance.Logger;
+
+            logger.Info("Starter chest style: " + config.StarterChestStyle);
+
+            if (config.StarterChestStyle != ChestType.None) // Setting loot for starter chest
             {
                 int starterChest = PlaceChest(Main.maxTilesX / 2 - 22, Main.maxTilesY / 2 - Main.maxTilesY / 5 - 5, 21, false, chestType);
                 Chest chest = Main.chest[starterChest];
-                ChestType style = (ChestType)config.StarterChestStyle;
+                ChestType style = config.StarterChestStyle;
+
+                List<Item> seedPool = new List<Item>
+                {
+                    new Item(ItemID.BlinkrootSeeds),
+                    new Item(ItemID.DaybloomSeeds),
+                    new Item(ItemID.DeathweedSeeds),
+                    new Item(ItemID.FireblossomSeeds),
+                    new Item(ItemID.JungleGrassSeeds),
+                };
 
                 switch (style)
                 {
                     case ChestType.Classic:
                         chest.Add(new Item(ItemID.LavaBucket));
                         chest.Add(new Item(ItemID.WaterBucket));
+                        chest.Add(new Rule().GetItem(seedPool));
+                        chest.Add(new Rule().GetItem(ItemID.BottledWater, 80));
+                        chest.Add(new Rule().GetItem(ItemID.BottledHoney, 40));
+                        chest.Add(new Rule().GetItem(ItemID.CrimsonKey, 20));
                         break;
                 }
             }
@@ -177,6 +196,7 @@ namespace UltimateSkyblock.SkyblockWorldGen
             int HallowedChest = PlaceChest(WorldHelpers.Hallow.X + 60, WorldHelpers.Hallow.Y + 6, 21, false, 26);
 
             Chest hallowChest = Main.chest[HallowedChest];
+
 
             hallowChest.item[0].SetDefaults(ItemID.RainbowGun);
             hallowChest.item[1].SetDefaults(ItemID.GreaterHealingPotion);

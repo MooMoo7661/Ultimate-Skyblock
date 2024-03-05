@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
-using static UltimateSkyblock.SkyblockWorldGen.MainWorld;
+using UltimateSkyblock.Content.Utils;
+using static UltimateSkyblock.Content.SkyblockWorldGen.MainWorld;
 
-internal static class WorldHelpers
+public static class WorldHelpers
 {
     public static Point16 Hell => new Point16(Main.maxTilesX / 2, Main.UnderworldLayer + 50);
     public static Point16 Hallow;
@@ -13,6 +14,7 @@ internal static class WorldHelpers
     public static Point16 Jungle => new(Main.maxTilesX / 2 + Main.maxTilesX / 7 + (int)(ScaleBasedOnWorldSizeX * 2), Main.maxTilesY / 2 - Main.maxTilesY / 5); // Center of the main jungle island
     public static Point16 Evil => new(Main.maxTilesX / 2 - Main.maxTilesX / 7 + (int)(ScaleBasedOnWorldSizeX * 1.3f), 100); // Center to spawn evil islands at
 
+    /// <summary>Bottom left of the Snow islands.</summary>
     public static Point16 Snow => new(Main.maxTilesX / 2 + Main.maxTilesX / 4 + (int) (ScaleBasedOnWorldSizeX* 1.3f), Main.maxTilesY / 2 - Main.maxTilesY / 5);
 
     // Quick ref paths

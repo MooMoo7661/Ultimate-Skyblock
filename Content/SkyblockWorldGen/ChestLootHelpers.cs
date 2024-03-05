@@ -17,6 +17,9 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
         /// </summary>
         public class Rule
         {
+            /// <summary>
+            /// Inputs an item, and has a chance to return nothing if a chance is given.
+            /// </summary>
             public Item GetItem(Item input, float chance = 100)
             {
                 if (Main.rand.Next(101) < chance)
@@ -27,6 +30,9 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
                 return new(ItemID.None);
             }
 
+            /// <summary>
+            /// Inputs an item, and has a chance to return nothing if a chance is given.
+            /// </summary>
             public Item GetItem(int type, float chance = 100, int stack = 1)
             {
                 int roll = (Main.rand.Next(101));
@@ -39,6 +45,34 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
                 return new(ItemID.None);
             }
 
+            /// <summary>
+            /// Pool rule, returns several items from the list.
+            /// </summary>
+            public List<Item> GetItem(List<Item> input, float chance, int count = 1)
+            {
+                if (Main.rand.Next(101) > chance)
+                {
+                    return new(ItemID.None);
+                }
+
+                List<Item> selection = new List<Item>();
+                List<Item> output = new List<Item>();
+                foreach (Item item in input)
+                    selection.Add(item);
+
+                for (int i = 0; i < count; i++)
+                {
+                    int index = Main.rand.Next(selection.Count);
+                    output.Add(selection[index]);
+                    selection.RemoveAt(index);
+                }
+
+                return output;
+            }
+
+            /// <summary>
+            /// Pool rule, returns one item from the list.
+            /// </summary>
             public Item GetItem(List<Item> input, float chance = 100)
             {
                 if (Main.rand.Next(101) > chance)

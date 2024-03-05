@@ -12,6 +12,9 @@ namespace UltimateSkyblock.Content.UI.MapDrawing
 {
     public class ToggleButton
     {
+        /// <summary>
+        /// The icon that draws beside the actual toggle
+        /// </summary>
         public Texture2D BesideTexture = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/MapDrawing/Icons/IconMushroom", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
         public bool enabled = true;

@@ -7,7 +7,7 @@ using Terraria.UI;
 using Terraria;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using UltimateSkyblock.SkyblockWorldGen;
+using UltimateSkyblock.Content.SkyblockWorldGen;
 using SubworldLibrary;
 
 namespace UltimateSkyblock.Content.UI.MapDrawing
@@ -16,10 +16,10 @@ namespace UltimateSkyblock.Content.UI.MapDrawing
     {
         public override string Name => "Main Map Layer";
         public static string path = "UltimateSkyblock/Content/UI/MapDrawing/Icons/";
+
         public override void Draw(ref MapOverlayDrawContext context, ref string text)
         {
-            if (!MapIconDrawBools.AllIcons) { return; }
-            if (SubworldSystem.Current != null) { return; }
+            if (!MapIconDrawBools.AllIcons || SubworldSystem.Current != null) { return; }
 
             const float scaleIfNotSelected = 1f;
             const float scaleIfSelected = 1.5f;

@@ -10,7 +10,7 @@ using static WorldHelpers;
 using static UltimateSkyblock.UltimateSkyblock;
 using static Terraria.WorldGen;
 
-namespace UltimateSkyblock.SkyblockWorldGen
+namespace UltimateSkyblock.Content.SkyblockWorldGen
 {
     public partial class MainWorld : ModSystem
     {

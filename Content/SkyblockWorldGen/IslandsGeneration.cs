@@ -11,6 +11,8 @@ using static UltimateSkyblock.Content.SkyblockWorldGen.ChestLootHelpers;
 using static WorldHelpers;
 using static UltimateSkyblock.UltimateSkyblock;
 using static Terraria.WorldGen;
+using UltimateSkyblock.Content.Items.Bombs;
+using UltimateSkyblock.Content.Items.Placeable;
 
 namespace UltimateSkyblock.Content.SkyblockWorldGen
 {
@@ -96,8 +98,7 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
             Generator.GenerateStructure(WorldHelpers.forestPath + "Main", new Point16(x, y), Instance); // Generate the spawn island
             GenForestIslands(new Point16(x, y + 50));
 
-            var logger = UltimateSkyblock.Instance.Logger;
-
+            var logger = Instance.Logger;
             logger.Info("Starter chest style: " + config.StarterChestStyle);
 
             if (config.StarterChestStyle != ChestType.None) // Setting loot for starter chest
@@ -106,13 +107,22 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
                 Chest chest = Main.chest[starterChest];
                 ChestType style = config.StarterChestStyle;
 
-                List<Item> seedPool = new List<Item>
+                List<Item> seeds = new List<Item>
                 {
-                    new Item(ItemID.BlinkrootSeeds),
-                    new Item(ItemID.DaybloomSeeds),
-                    new Item(ItemID.DeathweedSeeds),
-                    new Item(ItemID.FireblossomSeeds),
-                    new Item(ItemID.JungleGrassSeeds),
+                    new Item(ItemID.BlinkrootSeeds, 3),
+                    new Item(ItemID.DaybloomSeeds, 3),
+                    new Item(ItemID.WaterleafSeeds, 3),
+                    new Item(ItemID.ShiverthornSeeds, 3),
+                    new Item(ItemID.DeathweedSeeds, 3),
+                };
+                List<Item> planters = new List<Item>
+                {
+                    new Item(ItemID.BlinkrootPlanterBox, 10),
+                    new Item(ItemID.CorruptPlanterBox, 10),
+                    new Item(ItemID.CrimsonPlanterBox, 10),
+                    new Item(ItemID.DayBloomPlanterBox, 10),
+                    new Item(ItemID.FireBlossomPlanterBox, 10),
+                    new Item(ItemID.MoonglowPlanterBox, 10),
                 };
 
                 switch (style)
@@ -120,11 +130,46 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
                     case ChestType.Classic:
                         chest.Add(new Item(ItemID.LavaBucket));
                         chest.Add(new Item(ItemID.WaterBucket));
-                        chest.Add(new Rule().GetItem(seedPool));
-                        chest.Add(new Rule().GetItem(ItemID.BottledWater, 80));
-                        chest.Add(new Rule().GetItem(ItemID.BottledHoney, 40));
-                        chest.Add(new Rule().GetItem(ItemID.CrimsonKey, 20));
+                        chest.Add(new Item(ItemID.DirtStickyBomb, 5));
+                        chest.Add(new Item(ModContent.ItemType<StickyStoneBomb>(), 5));
+                        chest.Add(new Rule().GetItem(seeds));
+                        chest.Add(new Rule().GetItem(planters));
+                        chest.Add(new Item(ItemID.Acorn, Main.rand.Next(4, 9)));
+                        chest.Add(new Item(ItemID.SandBlock, 25));
                         break;
+
+                    case ChestType.Simple:
+                        chest.Add(ItemID.EmptyBucket);
+                        chest.Add(ItemID.SandBlock, 15);
+                        chest.Add(ItemID.Acorn, 2);
+                        break;
+
+                    case ChestType.Luxury:
+                        List<Item> potions = new List<Item> 
+                        {
+                            new Item(ItemID.IronskinPotion, Main.rand.Next(2, 4)), 
+                            new Item(ItemID.ShinePotion, Main.rand.Next(2, 4)),
+                            new Item(ItemID.NightOwlPotion, Main.rand.Next(2, 4)),
+                            new Item(ItemID.SwiftnessPotion, Main.rand.Next(2, 4)),
+                            new Item(ItemID.MiningPotion, Main.rand.Next(2, 4)),
+                            new Item(ItemID.BuilderPotion, Main.rand.Next(2, 4)),
+                        };
+
+                        chest.Add(new Item(ItemID.LavaBucket));
+                        chest.Add(new Item(ItemID.WaterBucket));
+                        chest.Add(new Item(ItemID.DirtStickyBomb, 10));
+                        chest.Add(new Item(ItemID.CloudinaBottle));
+                        chest.Add(new Item(ModContent.ItemType<StickyStoneBomb>(), 10));
+                        chest.Add(new Item(ModContent.ItemType<AutoExtractor>()));
+                        chest.Add(new Rule().GetItem(seeds));
+                        chest.Add(new Rule().GetItem(potions));
+                        chest.Add(new Rule().GetItem(planters));
+                        chest.Add(new Item(ItemID.Acorn, Main.rand.Next(9, 15)));
+                        chest.Add(new Item(ItemID.SandBlock, 50));
+                        chest.Add(new Item(ItemID.DirtBlock, 50));
+                        chest.Add(new Item(ItemID.StoneBlock, 50));
+                        break;
+
                 }
             }
         }

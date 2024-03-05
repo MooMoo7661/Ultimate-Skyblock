@@ -247,3 +247,11 @@ NotificationsConfig: {
 
 	DisplayName: Notifications Config
 }
+
+ChestType: {
+	Tooltip: ""
+	Classic.Label: Classic
+	Simple.Label: Simple
+	Luxury.Label: Luxury
+	None.Label: None
+}

@@ -10,7 +10,7 @@ namespace UltimateSkyblock.Content.ModCommands
     public class WorldSizeCommand : ModCommand
     {
         public override CommandType Type
-            => CommandType.World;
+            => CommandType.Chat;
 
         public override string Command
             => "worldsize";
@@ -38,7 +38,7 @@ namespace UltimateSkyblock.Content.ModCommands
     public class StructureFinder : ModCommand
     {
         public override CommandType Type
-            => CommandType.World;
+            => CommandType.Chat;
 
         public override string Command
             => "locate";

@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace UltimateSkyblock.Content.Utils
@@ -16,16 +18,14 @@ namespace UltimateSkyblock.Content.Utils
             return "[c/" + color.Hex3() + ":" + text + "]";
         }
 
-        public static void AddItemList(this List<Item> list, List<Item> input)
-        {
-            foreach(Item obj in input)
-                list.Add(obj);
-        }
-
+        /// <summary>
+        /// Tries to add items to the chest. Will find the next open air slot.<para>Does not combine item stacks, only for simple uses.</para>
+        /// </summary>
         public static void Add(this Chest chest, Item item)
         {
             for (int i = 0; i < chest.item.Length; i++)
             {
+                Item chestSlot = chest.item[i];
                 if (chest.item[i].NullOrAir()) // Gets the closest index of a chest that's empty
                 {
                     chest.item[i].SetDefaults(item.type);
@@ -35,6 +35,60 @@ namespace UltimateSkyblock.Content.Utils
             }
         }
 
+        /// <summary>
+        /// Tries to add items to the chest. Will find the next open air slot.<para>Does not combine item stacks, only for simple uses.</para>
+        /// </summary>
+        public static void Add(this Chest chest, int type)
+        {
+            for (int i = 0; i < chest.item.Length; i++)
+            {
+                if (chest.item[i].NullOrAir()) // Gets the closest index of a chest that's empty
+                {
+                    chest.item[i].SetDefaults(type);
+                    chest.item[i].stack = 1;
+                    return;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Tries to add items to the chest. Will find the next open air slot.<para>Does not combine item stacks, only for simple uses.</para>
+        /// </summary>
+        public static void Add(this Chest chest, int type, int stack)
+        {
+            for (int i = 0; i < chest.item.Length; i++)
+            {
+                if (chest.item[i].NullOrAir()) // Gets the closest index of a chest that's empty
+                {
+                    chest.item[i].SetDefaults(type);
+                    chest.item[i].stack = stack;
+                    return;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Tries to add items to the chest. Will find the next open air slot.<para>Does not combine item stacks, only for simple uses.</para>
+        /// </summary>
+        /// <returns>True, if the item was successfully added.<para>False, if the item could not be added.</para></returns>
+        public static bool TryAdd(this Chest chest, Item item)
+        {
+            for (int i = 0; i < chest.item.Length; i++)
+            {
+                if (chest.item[i].NullOrAir()) // Gets the closest index of a chest that's empty
+                {
+                    chest.item[i].SetDefaults(item.type);
+                    chest.item[i].stack = item.stack;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Tries to add items to the chest. Will find the next open air slot.<para>Does not combine item stacks, only for simple uses.</para>
+        /// </summary>
         public static void Add(this Chest chest, List<Item> ItemsList)
         {
             foreach (Item item in ItemsList)

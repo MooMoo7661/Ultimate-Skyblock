@@ -152,7 +152,7 @@ SkyblockModConfig: {
 		Label: Falling out of the world teleports you to the top
 	}
 
-	DisplayName: Skyblock Mod Config
+	DisplayName: General Changes
 }
 
 RecipesConfig: {

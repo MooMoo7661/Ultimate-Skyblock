@@ -3,7 +3,7 @@ using Terraria.DataStructures;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
-using static UltimateSkyblock.SkyblockWorldGen.MainWorld;
+using static UltimateSkyblock.Content.SkyblockWorldGen.MainWorld;
 using UltimateSkyblock.Content.Configs;
 using SubworldLibrary;
 
@@ -30,7 +30,7 @@ namespace UltimateSkyblock.Content.ModPlayers
         {
             if (WorldSize == WorldSizes.Small && ModContent.GetInstance<SkyblockModConfig>().SmallWorldWarning && SubworldSystem.Current == null)
             {
-                Main.NewText("[c/E136EE:It has been detected that this is a small world. For the best experience, please create a medium or large world, as the world generation will be extremely bad and limited.] \n[c/E136EE:TLDR: Create a medium or large world. Otherwise this mod will not work.]\n[c/E136EE:This message can be disabled at any time through the Gameplay Config.]");
+                Main.NewText("[c/E136EE:It has been detected that this is a small world. For the best experience, please create a medium or large world, as the world generation will be extremely bad and limited.]\n[c/E136EE:This message can be disabled at any time through the Gameplay Config.]");
             }
         }
     }

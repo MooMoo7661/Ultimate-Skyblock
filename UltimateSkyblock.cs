@@ -12,17 +12,19 @@ namespace UltimateSkyblock
 {
     public class UltimateSkyblock : Mod
 	{
-        public static UltimateSkyblock Instance;
+        public static UltimateSkyblock Instance { get; private set; }
         public override void Load()
         {
-            On_WorldGen.ShakeTree += On_WorldGen_ShakeTree;
             Instance = this;
+
+            On_WorldGen.ShakeTree += On_WorldGen_ShakeTree;
             OB_Liquid.Load();
         }
 
         public override void Unload()
         {
             On_WorldGen.ShakeTree -= On_WorldGen_ShakeTree;
+            Instance = null;
         }
 
         private void On_WorldGen_ShakeTree(On_WorldGen.orig_ShakeTree orig, int i, int j)
@@ -38,7 +40,7 @@ namespace UltimateSkyblock
 
             WorldGen.GetTreeBottom(i, j, out int x, out int y);
 
-            TreeTypes treeType = WorldGen.GetTreeType((int)Main.tile[x, y].TileType);
+            TreeTypes treeType = WorldGen.GetTreeType(Main.tile[x, y].TileType);
 
             if (treeType == TreeTypes.None)
             {
@@ -66,6 +68,7 @@ namespace UltimateSkyblock
 
         // Thank god SpritMod was open source
         // This code was "borrowed" from => https://github.com/GabeHasWon/SpiritMod/blob/367e1da73022ec8741673b4bfbc629c3798a04e4/SpiritMultiplayer.cs
+        // Purpose of this is to spawn a boss from right clicking a tile, which is called client side only.
 
         public override void HandlePacket(BinaryReader reader, int whoAmI)
         {

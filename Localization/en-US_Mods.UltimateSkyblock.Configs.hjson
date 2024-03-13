@@ -89,7 +89,7 @@ SkyblockModConfig: {
 
 	DrawNPCIcons: {
 		Tooltip: ""
-		Label: Draw NPC Icons on the map
+		Label: Draw NPC icons on the map
 	}
 
 	StarterChestStyle: {
@@ -98,7 +98,7 @@ SkyblockModConfig: {
 			1: Classic - contains simple skyblock items such as a water bucket, a lava bucket, and some extra items that aid progression.
 			2: Simple - contains the very basic items, not much is given.
 			3: Luxurious - contains a lot of items that will significantly speed up progression.
-			4: None - there is no chest. Only for those who want to experience the most pain and spend a long time grinding for rare drops.
+			4: None - there is no chest.
 			'''
 		Label: Starter Chest Style
 	}

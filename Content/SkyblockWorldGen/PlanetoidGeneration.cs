@@ -212,7 +212,7 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
         {
             for (int i = 0; i < 5; i++)
             {
-                Point placePoint = new(Jungle.X + i * (75 + (int)ScaleBasedOnWorldSizeX) + WorldGen.genRand.Next(-10, 10), (int)(Main.rockLayer));
+                Point placePoint = new(Jungle.X + i * (75 + (int)ScaleBasedOnWorldSizeX) + WorldGen.genRand.Next(-10, 10), Main.maxTilesY / 2 - Main.maxTilesY / 5 + Main.rand.Next(100, 120));
                 int size = WorldGen.genRand.Next(14, 21);
                 ShapeData shapeData = new ShapeData();
                 WorldUtils.Gen(placePoint, new Shapes.Circle(size, size), new Actions.SetTile(TileID.Mud));

@@ -15,7 +15,7 @@ public static class WorldHelpers
     public static Point16 Evil => new(Main.maxTilesX / 2 - Main.maxTilesX / 7 + (int)(ScaleBasedOnWorldSizeX * 1.3f), 100); // Center to spawn evil islands at
 
     /// <summary>Bottom left of the Snow islands.</summary>
-    public static Point16 Snow => new(Main.maxTilesX / 2 + Main.maxTilesX / 4 + (int) (ScaleBasedOnWorldSizeX* 1.3f), Main.maxTilesY / 2 - Main.maxTilesY / 5);
+    public static Point16 Snow => new(Main.maxTilesX / 2 + Main.maxTilesX / 4 + (int) (ScaleBasedOnWorldSizeX* 1.3f), Main.maxTilesY / 2 - Main.maxTilesY / 4);
 
     // Quick ref paths
     public static readonly string path = "Content/SkyblockWorldGen/Structures/";

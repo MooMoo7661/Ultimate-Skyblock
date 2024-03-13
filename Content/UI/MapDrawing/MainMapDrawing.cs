@@ -32,7 +32,7 @@ namespace UltimateSkyblock.Content.UI.MapDrawing
             var hellIcon = ModContent.Request<Texture2D>(path + "IconHell").Value;
             var mushroomIcon = ModContent.Request<Texture2D>(path + "IconMushroom").Value;
 
-            int universalY = WorldHelpers.Evil.Y + 200;
+            int universalY = Main.maxTilesY / 2 - Main.maxTilesY / 5;
 
             string evilText = WorldGen.crimson ? "Crimson" : "Corruption";
 

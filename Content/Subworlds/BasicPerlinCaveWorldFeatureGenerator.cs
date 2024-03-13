@@ -54,7 +54,7 @@ namespace UltimateSkyblock.Content.Subworlds
             if (clientConfig.ShowPerlinType)
                 message += "Noise Type: " + noiseType + "\n";
 
-            progress.Message = "Using Perlin Noise to generate caves" + message;
+            progress.Message = "Generating Noise Caves" + message;
             int startingPositionX = Main.spawnTileX * Main.tile.Width;
             int startingPositionY = Main.spawnTileY * Main.tile.Height;
             for (int i = 0; i < Main.maxTilesX; i++)

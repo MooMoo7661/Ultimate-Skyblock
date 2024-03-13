@@ -24,7 +24,7 @@ namespace UltimateSkyblock.Content.ModPlayers
                 Player.ZoneSkyHeight = false;
                 Player.ZoneBeach = false;
                 Main.oceanBG = 0;
-            }
+            }            
              
             // Commented code below is flashlight functionality
             //if (Player.HeldItem.type == ModContent.ItemType<Content.Items.Placeable.Glimmercap>() && !Framing.GetTileSafely(Main.MouseWorld.ToTileCoordinates().X, Main.MouseWorld.ToTileCoordinates().Y).HasTile)

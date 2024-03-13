@@ -26,6 +26,37 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
             Main.dungeonX = dungeonLeft ? Main.maxTilesX / 20 : Main.maxTilesX - (Main.maxTilesX / 20);
             Main.dungeonY = Main.maxTilesY / 2 - Main.maxTilesY / 5 + Main.rand.Next(-20, 20);
 
+            Mod.Logger.Info("Successfully cleared world");
+
+            Main.spawnTileX = Main.maxTilesX / 2;
+            Main.spawnTileY = Main.maxTilesY / 2 - Main.maxTilesY / 5; // Re-adjusting the spawn point to a constant value.
+
+            dungeonLeft = (Main.dungeonX < Main.maxTilesX / 2) ? true : false;
+
+            ClearWorld();
+
+            GenStartingPlatform();
+            GenDungeonPlatform();
+            GenUnderworldIslands();
+            GenSnowIslands();
+            GenJungleIslands();
+            GenMushroomIsland();
+
+            GenChlorophytePlanetoids();
+            GenHivePlanetoids();
+            GenForestPlanetoids();
+            GenSnowPlanetoids();
+            GenEvilPlanetoids();
+            GenMeteorites();
+
+            //PlaceTile(Main.dungeonX, Main.dungeonY, TileID.Adamantite, true, true); // Places tile at the spawn point for the Old Man and the Lunatic Cultists. For testing purposes.
+        }
+
+        /// <summary>
+        /// Clears the world.
+        /// </summary>
+        public new static void ClearWorld()
+        {
             for (int i = 0; i < Main.maxTilesX; i++)
             {
                 for (int j = 0; j < Main.maxTilesY; j++)
@@ -38,28 +69,6 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
                     tile.LiquidAmount = 0;
                 }
             }
-
-            Mod.Logger.Info("Successfully cleared world");
-
-            Main.spawnTileX = Main.maxTilesX / 2;
-            Main.spawnTileY = Main.maxTilesY / 2 - Main.maxTilesY / 5; // Re-adjusting the spawn point to a constant value.
-
-            dungeonLeft = (Main.dungeonX < Main.maxTilesX / 2) ? true : false;
-
-            GenStartingPlatform();
-            GenDungeonPlatform();
-            GenUnderworldIslands();
-            GenSnowIslands();
-            GenChlorophytePlanetoids();
-            GenHivePlanetoids();
-            GenForestPlanetoids();
-            GenSnowPlanetoids();
-            GenEvilPlanetoids();
-            GenJungleIslands();
-            GenMushroomIsland();
-            GenMeteorites();
-
-            //PlaceTile(Main.dungeonX, Main.dungeonY, TileID.Adamantite, true, true); // Places tile at the spawn point for the Old Man and the Lunatic Cultists. For testing purposes.
         }
 
         /// <summary>
@@ -370,16 +379,15 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
         /// </summary>
         public static void GenSnowIslands()
         {
-            int offset = WorldSize switch
-            {
-                WorldSizes.Large => 50,
-                _ => 20
-            };
+            //int offset = WorldSize switch
+            //{
+            //    WorldSizes.Large => 50,
+            //    _ => 20
+            //};
 
-            Generator.GenerateStructure(WorldHelpers.snowPath + "Castle", Snow, Instance);
-            Point16 center = Snow;
+            Generator.GenerateStructure(WorldHelpers.snowPath + "Castle", new Point16(Snow.X + (int)(200 + ScaleBasedOnWorldSizeX * 2), Snow.Y), Instance);
 
-            List<string> structures = new List<string>
+            List<string> structures = new()
             {
                 snowPath + "Cluster",
                 snowPath + "Igloo",
@@ -391,7 +399,7 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
             {
                 Point16 genPoint = i switch
                 {
-                    0 => center,
+                    0 => Point16.Zero,
                     1 => Point16.Zero,
                     2 => Point16.Zero,
                     _ => Point16.Zero
@@ -421,7 +429,7 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
             //17
             //42
 
-            Point16 genPoint = new Point16(Jungle.X + 200 + (int)(ScaleBasedOnWorldSizeX * 1.85f), Jungle.Y - (int)(ScaleBasedOnWorldSizeY * 10f) + Main.rand.Next(-10, 30));
+            Point16 genPoint = new Point16(Jungle.X + 200 + (int)(ScaleBasedOnWorldSizeX * 1.85f), Jungle.Y - 50 + Main.rand.Next(-5, 5));
             Generator.GenerateStructure(junglePath + "Main", genPoint, Instance);
             //PlaceTile(genPoint.X, genPoint.Y, TileID.Adamantite, true, true);
             Generator.GenerateStructure("Content/SkyblockWorldGen/Structures/LockedJungleChest", new Point16(genPoint.X + 13, genPoint.Y + 42), Instance);

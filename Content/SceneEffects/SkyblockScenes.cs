@@ -4,21 +4,11 @@ using UltimateSkyblock.Content.Configs;
 
 namespace UltimateSkyblock.Content.SceneEffects
 {
-    public class SkyblockScene_Minecraft : ModSceneEffect
-    {
-        public override bool IsSceneEffectActive(Player player)
-        {
-            return player.ZoneForest && ModContent.GetInstance<SkyblockModConfig>().MinecraftSoundtrack;
-        }
-        public override int Music => MusicLoader.GetMusicSlot(Mod, "Content/Sounds/Music/MinecraftSoundtrack");
-        public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
-    }
-
     public class SkyblockScene_OtherworldDay : ModSceneEffect
     {
         public override bool IsSceneEffectActive(Player player)
         {
-            return player.ZoneForest && ModContent.GetInstance<SkyblockModConfig>().OWSoundtrack;
+            return player.ZoneForest && ModContent.GetInstance<MainClientConfig>().OWSoundtrack;
         }
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Content/Sounds/Music/OWDay");
         public override SceneEffectPriority Priority => SceneEffectPriority.BiomeMedium;
@@ -28,19 +18,39 @@ namespace UltimateSkyblock.Content.SceneEffects
     {
         public override bool IsSceneEffectActive(Player player)
         {
-            return player.ZoneDesert && ModContent.GetInstance<SkyblockModConfig>().OWSoundtrack;
+            return player.ZoneDesert && ModContent.GetInstance<MainClientConfig>().OWSoundtrack;
         }
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Content/Sounds/Music/OWDesert");
         public override SceneEffectPriority Priority => SceneEffectPriority.BiomeMedium;
     }
 
-    public class SkyblockScene_SubwaySurfers : ModSceneEffect
+    public class SkyblockScene_Radio : ModSceneEffect
     {
+        public enum RadioID
+        {
+            None = -1,
+            SubwaySurfers,
+            PortalRadio
+        }
+
         public override bool IsSceneEffectActive(Player player)
         {
-            return ModContent.GetInstance<SkyblockModConfig>().SubwaySurfers;
+            return ModContent.GetInstance<MainClientConfig>().RadioSlider != RadioID.None;
         }
-        public override int Music => MusicLoader.GetMusicSlot(Mod, "Content/Sounds/Music/SubwaySurfers");
+
+        public override int Music
+        {
+            get
+            {
+                int result = (int)ModContent.GetInstance<MainClientConfig>().RadioSlider switch
+                {
+                    0 => MusicLoader.GetMusicSlot(Mod, "Content/Sounds/Music/SubwaySurfers"),
+                    1 => MusicLoader.GetMusicSlot(Mod, "Content/Sounds/Music/PortalRadio")
+                };
+
+                return result;
+            }
+        }
         public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
 
         public override float GetWeight(Player player)

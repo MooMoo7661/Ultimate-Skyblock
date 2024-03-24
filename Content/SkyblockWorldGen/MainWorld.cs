@@ -1,14 +1,5 @@
-using System.Collections.Generic;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Terraria.WorldBuilding;
-using StructureHelper;
+using SubworldLibrary;
 using UltimateSkyblock.Content.Configs;
-using SDL2;
-using System;
-using UltimateSkyblock.Content.Utils;
-using Microsoft.Xna.Framework;
 
 namespace UltimateSkyblock.Content.SkyblockWorldGen
 {
@@ -60,6 +51,7 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
         {
             SetWorldSizeVars();
             LogInfo();
+            if (!SubworldSystem.AnyActive())
             SetWorldLayerHeights();
             SetExtractionTypes();
 

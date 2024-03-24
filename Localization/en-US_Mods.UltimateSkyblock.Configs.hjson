@@ -43,7 +43,7 @@ SubworldConfig: {
 		[c/F7FF75: Yellow -> Will affect game play somewhat.]
 		[c/75FF75: Green -> Little to no game play affect]
 		'''
-	DisplayName: Subworld Config
+	DisplayName: Subworld
 }
 
 SubworldClientConfig: {
@@ -63,28 +63,13 @@ SubworldClientConfig: {
 	}
 
 	Headers.WorldGenDebugInfo: World Gen Debug Info
-	DisplayName: Subworld Client Config
+	DisplayName: Subworld Client
 }
 
 SkyblockModConfig: {
-	SubwaySurfers: {
-		Tooltip: ""
-		Label: Subway Surfers!!!
-	}
-
-	MinecraftSoundtrack: {
-		Tooltip: ""
-		Label: Replace Forest music with familiar soundtrack
-	}
-
-	OWSoundtrack: {
-		Tooltip: ""
-		Label: Replace various soundtracks with Otherworld soundtracks
-	}
-
 	Headers: {
-		Music: Music
 		General: General
+		Debug: Debug
 	}
 
 	DrawNPCIcons: {
@@ -139,11 +124,7 @@ SkyblockModConfig: {
 	}
 
 	StoneGenerator: {
-		Tooltip:
-			'''
-			If lava and water are separated by one block of air, it will generate stone in that spot, or obsidian if in the caverns.
-			It must be left -> right, or right -> left.
-			'''
+		Tooltip: If lava and water are separated by one block of air, it will generate stone in that spot, or obsidian if in the caverns.
 		Label: Stone Generator Logic
 	}
 
@@ -153,6 +134,11 @@ SkyblockModConfig: {
 	}
 
 	DisplayName: General Changes
+
+	RadioSlider: {
+		Tooltip: ""
+		Label: Radio
+	}
 }
 
 RecipesConfig: {
@@ -236,7 +222,7 @@ RecipesConfig: {
 		Label: Allow decrafting tombstones into gold and stone
 	}
 
-	DisplayName: Recipes Config
+	DisplayName: Recipes
 }
 
 NotificationsConfig: {
@@ -245,7 +231,7 @@ NotificationsConfig: {
 		Label: All Configs Enabled
 	}
 
-	DisplayName: Notifications Config
+	DisplayName: Notifications
 }
 
 ChestType: {
@@ -254,4 +240,26 @@ ChestType: {
 	Simple.Label: Simple
 	Luxury.Label: Luxury
 	None.Label: None
+}
+
+RadioID: {
+	Tooltip: ""
+	None.Label: None
+	SubwaySurfers.Label: Subway Surfers
+	PortalRadio.Label: Portal Radio
+}
+
+MainClientConfig: {
+	DisplayName: General Client
+	Headers.Music: Music
+
+	OWSoundtrack: {
+		Label: Overworld Soundtrack
+		Tooltip: ""
+	}
+
+	RadioSlider: {
+		Label: Radio Slider
+		Tooltip: ""
+	}
 }

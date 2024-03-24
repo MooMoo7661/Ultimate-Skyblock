@@ -1,18 +1,12 @@
-﻿using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using Terraria;
-using Terraria.DataStructures;
-using Terraria.ID;
-using Terraria.ModLoader;
-using StructureHelper;
-using UltimateSkyblock.Content.Utils;
-
-using static UltimateSkyblock.Content.SkyblockWorldGen.ChestLootHelpers;
-using static WorldHelpers;
-using static UltimateSkyblock.UltimateSkyblock;
-using static Terraria.WorldGen;
+﻿using Terraria.WorldBuilding;
 using UltimateSkyblock.Content.Items.Bombs;
 using UltimateSkyblock.Content.Items.Placeable;
+using UltimateSkyblock.Content.Tiles.Blocks;
+using UltimateSkyblock.Content.Utils;
+using static Terraria.WorldGen;
+using static UltimateSkyblock.Content.SkyblockWorldGen.ChestLootHelpers;
+using static UltimateSkyblock.UltimateSkyblock;
+using static WorldHelpers;
 
 namespace UltimateSkyblock.Content.SkyblockWorldGen
 {
@@ -41,6 +35,8 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
             GenSnowIslands();
             GenJungleIslands();
             GenMushroomIsland();
+            GenPlanteraArena();
+            GenDesertIslands();
 
             GenChlorophytePlanetoids();
             GenHivePlanetoids();
@@ -48,6 +44,7 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
             GenSnowPlanetoids();
             GenEvilPlanetoids();
             GenMeteorites();
+            GenDesertPlanetoids();
 
             //PlaceTile(Main.dungeonX, Main.dungeonY, TileID.Adamantite, true, true); // Places tile at the spawn point for the Old Man and the Lunatic Cultists. For testing purposes.
         }
@@ -101,8 +98,8 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
                     chestType = 13; break;
             }
 
-            x = Main.maxTilesX / 2 - 38; // Recenters the X coordinate due to islands spawning from the top left of the build
-            y = Main.maxTilesY / 2 - Main.maxTilesY / 5 - 25; // Recenters the Y coordinate due to islands spawning from the top left of the build
+            x = Main.maxTilesX / 2 - 38; // Re-centers the X coordinate due to islands spawning from the top left of the build
+            y = Main.maxTilesY / 2 - Main.maxTilesY / 5 - 25; // Re-centers the Y coordinate due to islands spawning from the top left of the build
 
             Generator.GenerateStructure(WorldHelpers.forestPath + "Main", new Point16(x, y), Instance); // Generate the spawn island
             GenForestIslands(new Point16(x, y + 50));
@@ -384,25 +381,27 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
             //    WorldSizes.Large => 50,
             //    _ => 20
             //};
-
-            Generator.GenerateStructure(WorldHelpers.snowPath + "Castle", new Point16(Snow.X + (int)(200 + ScaleBasedOnWorldSizeX * 2), Snow.Y), Instance);
+            Point16 center = new Point16(Snow.X + (int)(200 + ScaleBasedOnWorldSizeX * 2), Snow.Y);
+            Generator.GenerateStructure(WorldHelpers.snowPath + "Castle", center, Instance);
 
             List<string> structures = new()
             {
                 snowPath + "Cluster",
                 snowPath + "Igloo",
                 snowPath + "Pointy",
-                snowPath + "Tiny"
+                snowPath + "Tiny",
+                snowPath + "BiomeChest"
             };
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 5; i++)
             {
                 Point16 genPoint = i switch
                 {
-                    0 => Point16.Zero,
-                    1 => Point16.Zero,
-                    2 => Point16.Zero,
-                    _ => Point16.Zero
+                    0 => new(center.X - WorldGen.genRand.Next(180, 215), center.Y + WorldGen.genRand.Next(-10, 10)), // left
+                    1 => new(center.X - WorldGen.genRand.Next(-90, 10), center.Y - WorldGen.genRand.Next(120, 150)), // top left
+                    2 => new(center.X + WorldGen.genRand.Next(90, 130), center.Y - WorldGen.genRand.Next(120, 150)), // top right
+                    3 => new(center.X + WorldGen.genRand.Next(220, 245), center.Y + WorldGen.genRand.Next(-15, 15)), // right
+                    4 => new(center.X + WorldGen.genRand.Next(220, 245), center.Y + WorldGen.genRand.Next(120, 150)) // right
                 };
 
                 int index = WorldGen.genRand.Next(structures.Count);
@@ -429,10 +428,15 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
             //17
             //42
 
-            Point16 genPoint = new Point16(Jungle.X + 200 + (int)(ScaleBasedOnWorldSizeX * 1.85f), Jungle.Y - 50 + Main.rand.Next(-5, 5));
-            Generator.GenerateStructure(junglePath + "Main", genPoint, Instance);
-            //PlaceTile(genPoint.X, genPoint.Y, TileID.Adamantite, true, true);
-            Generator.GenerateStructure("Content/SkyblockWorldGen/Structures/LockedJungleChest", new Point16(genPoint.X + 13, genPoint.Y + 42), Instance);
+            Point16 mainPoint = new Point16(Jungle.X + 200 + (int)(ScaleBasedOnWorldSizeX * 1.85f), Jungle.Y - 50 + Main.rand.Next(-5, 5));
+            Point16 bridgePoint = new Point16(Jungle.X + genRand.Next(-20, 20) + (int)(ScaleBasedOnWorldSizeX * 1.85f), Jungle.Y - 50 - Main.rand.Next(-5, 20));
+            Point16 smallPoint = new Point16(Jungle.X + 150 + genRand.Next(-5, 5) + (int)(ScaleBasedOnWorldSizeX * 1.85f), Jungle.Y - 150 - Main.rand.Next(-5, 20));
+
+            Generator.GenerateStructure(junglePath + "Main", mainPoint, Instance);
+            Generator.GenerateStructure(junglePath + "Bridge", bridgePoint, Instance);
+            Generator.GenerateStructure(junglePath + "Small", smallPoint, Instance);
+
+            Generator.GenerateStructure("Content/SkyblockWorldGen/Structures/LockedJungleChest", new Point16(mainPoint.X + 13, mainPoint.Y + 42), Instance);
         }
 
         public static void GenMushroomIsland()
@@ -440,6 +444,119 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
             Point16 genPos = new(Mushroom.X, Mushroom.Y);
 
             Generator.GenerateStructure("Content/SkyblockWorldGen/Structures/MushroomIsland", genPos, Instance);
+        }
+
+        public static void GenDesertIslands()
+        {
+            List<string> islandsToGenerate = new List<string>
+            {
+                desertPath + "Camp",
+                desertPath + "House",
+                desertPath + "Tiny",
+                desertPath + "Ruins",
+            };
+
+            Generator.GenerateStructure(desertPath + "Pyramid", Desert, Instance);
+            Point16 center = Desert;
+
+            for (int i = 0; i < 4; i++)
+            {
+                Point16 genPoint = i switch
+                {
+                    0 => new(center.X - WorldGen.genRand.Next(100, 120), center.Y - WorldGen.genRand.Next(70, 90)),
+                    1 => new(center.X + WorldGen.genRand.Next(100, 120), center.Y - WorldGen.genRand.Next(70, 90)),
+                    2 => new(center.X - WorldGen.genRand.Next(100, 120), center.Y + WorldGen.genRand.Next(70, 90)),
+                    _ => new(center.X + WorldGen.genRand.Next(100, 120), center.Y + WorldGen.genRand.Next(70, 90))
+                };
+
+                int index = Main.rand.Next(islandsToGenerate.Count);
+                string island = islandsToGenerate[index];
+                islandsToGenerate.RemoveAt(index);
+
+                Generator.GenerateStructure(island, genPoint, Instance);
+            }
+        }
+
+        public static void GenPlanteraArena()
+        {
+            Point genPos = new(Jungle.X + Main.maxTilesX / 20, Main.maxTilesY / 2 + Main.maxTilesY / 5);
+
+            ShapeData shapeData = new ShapeData();
+            ShapeData shapeData2 = new ShapeData();
+            ShapeData shapeData3 = new ShapeData();
+            WorldUtils.Gen(genPos, new Shapes.Circle(95, 95), new Actions.SetTile(TileID.Mud));
+            WorldUtils.Gen(genPos, new Shapes.Circle(95, 95), new Actions.Blank().Output(shapeData));
+            WorldUtils.Gen(genPos, new Shapes.Circle(70, 70), new Actions.Clear());
+            WorldUtils.Gen(genPos, new Shapes.Circle(70, 70), new Actions.Blank().Output(shapeData2));
+            shapeData3 = shapeData2;
+            WorldUtils.Gen(genPos, new ModShapes.OuterOutline(shapeData), new Actions.SetTile(TileID.JungleGrass));
+            WorldUtils.Gen(genPos, new ModShapes.OuterOutline(shapeData2), new Actions.SetTile(TileID.JungleGrass));
+            WorldUtils.Gen(genPos, new ModShapes.OuterOutline(shapeData2), new Actions.Smooth(true));
+            WorldUtils.Gen(genPos, new ModShapes.OuterOutline(shapeData), new Actions.Smooth(true));
+
+            PlaceAltar(genPos.X, genPos.Y);
+            genPos.Y -= 70;
+            genPos.X -= 70;
+
+            PlaceTorchesAndPlatforms(genPos, new(genPos.X + 70, genPos.Y + 70), shapeData3);
+        }
+
+        public static void PlaceAltar(int x, int y)
+        {
+            y += 1;
+
+            ShapeData shapeData = new ShapeData();
+            WorldUtils.Gen(new(x, y), new Shapes.Circle(6, 6), new Actions.SetTile(TileID.Mud));
+            WorldUtils.Gen(new(x, y), new Shapes.Circle(6, 6), new Actions.Blank().Output(shapeData));
+            WorldUtils.Gen(new(x, y), new ModShapes.OuterOutline(shapeData), new Actions.SetTile(TileID.JungleGrass));
+            WorldGen.PlaceObject(x, y - 9, ModContent.TileType<PlanteraAltar>());
+
+            y -= 9;
+            for (int i = 0; i < 5; i++)
+            {
+                WorldGen.PlaceTile(x + 2 - i, y + 2, TileID.Mudstone, true, true);
+                if (i == 0 || i == 4)
+                    WorldGen.PlaceTile(x + 2 - i, y + 1, TileID.Torches, true, false);
+            }
+
+            WorldGen.PlaceTile(x, y - 6, TileID.Torches);
+        }
+
+        public static void PlaceTorchesAndPlatforms(Point genPos, Point wallPos, ShapeData wallData)
+        {   
+            WorldUtils.Gen(wallPos, new ModShapes.All(wallData), new Actions.PlaceWall(WallID.MudUnsafe));
+
+            for (int i = genPos.X - 1; i < genPos.X + 141; i++)
+            {
+                int torchCounter = 0;
+                for (int j = genPos.Y - 1; j < genPos.Y + 141; j++)
+                {
+                    Tile tile = Framing.GetTileSafely(i, j);
+                    if (!tile.HasTile)
+                    {
+                        if (i % 13 == 0)
+                        {
+                            torchCounter++;
+                            if (torchCounter == 10)
+                            {
+                                WorldGen.PlaceTile(i, j, TileID.Torches);
+                                torchCounter = 0;
+                            }
+                        }
+
+                        if (j % 13 == 0)
+                        {
+                            bool forced = false;
+                            if (Framing.GetTileSafely(i, j).TileType == TileID.Torches)
+                            {
+                                forced = true;
+                            }
+
+                            WorldGen.PlaceTile(i, j, TileID.Platforms, true, forced);
+                        }
+                    }
+                }
+            }
         }
     }
         

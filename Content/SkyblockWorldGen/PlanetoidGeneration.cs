@@ -1,14 +1,6 @@
-﻿using StructureHelper;
-using System.Collections.Generic;
-using Terraria.DataStructures;
-using Terraria.ID;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.WorldBuilding;
-using Microsoft.Xna.Framework;
-using static WorldHelpers;
+﻿using static Terraria.WorldGen;
 using static UltimateSkyblock.UltimateSkyblock;
-using static Terraria.WorldGen;
+using static WorldHelpers;
 
 namespace UltimateSkyblock.Content.SkyblockWorldGen
 {
@@ -44,7 +36,7 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
                 if (size >= 21) { planetoidSize = PlanetoidSizes.Large; }
 
                 // Causes larger planetoids to generate 2 more circles, both with a longer width and height to create different blob shapes.
-                // A somewhat sucessful attempt at making the planetoids appear less diamond-shaped.
+                // A somewhat successful attempt at making the planetoids appear less diamond-shaped.
                 if (size >= 16)
                 {
                     WorldUtils.Gen(placePoint, new Shapes.Circle(size + 1, size - 1), new Actions.SetTile(TileID.Dirt));
@@ -99,7 +91,7 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
         }
 
         /// <summary>
-        /// Handles generating the Hive Planetoids. Randomly picks from a string filepath list and generates the planetoid from that path.
+        /// Handles generating the Hive Planetoids. Randomly picks from a string file path list and generates the planetoid from that path.
         /// </summary>
         public static void GenHivePlanetoids()
         {
@@ -146,7 +138,7 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
 
 
                 // Causes larger planetoids to generate 2 more circles, both with a longer width and height to create different blob shapes.
-                // A somewhat sucessful attempt at making the planetoids appear less diamond-shaped.
+                // A somewhat successful attempt at making the planetoids appear less diamond-shaped.
                 if (size >= 16)
                 {
                     WorldUtils.Gen(placePoint, new Shapes.Circle(size + 1, size - 1), new Actions.SetTile(TileID.SnowBlock));
@@ -326,6 +318,41 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
                     {
                         WorldGen.TileRunner(genPoint.X - Main.rand.Next(-2, 2), genPoint.Y - Main.rand.Next(-2, 2), 4f, 15 + Main.rand.Next(0, 2), TileID.Meteorite, false, Main.rand.Next(-4, 4), Main.rand.Next(-4, 4), false);
                         WorldGen.TileRunner(genPoint.X - Main.rand.Next(-2, 2), genPoint.Y - Main.rand.Next(-2, 2), 3f, 15 + Main.rand.Next(0, 4), TileID.Meteorite, false, Main.rand.Next(-4, 4), Main.rand.Next(-4, 4), false);
+                    }
+                }
+            }
+        }
+
+        public static void GenDesertPlanetoids()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                Point genPoint = new Point(Desert.X + (350 - (int)(ScaleBasedOnWorldSizeX * 4f)) - (i * 120), 100 + Main.rand.Next(-10, 15));
+                if (InWorld(genPoint.X, genPoint.Y))
+                {
+                    int size = WorldGen.genRand.Next(14, 19);
+                    WorldUtils.Gen(genPoint, new Shapes.Circle(size + 3, size + 3), new Actions.SetTile(TileID.HardenedSand));
+                    WorldUtils.Gen(genPoint, new Shapes.Circle(size, size), new Actions.SetTile(TileID.Dirt));
+
+                    WorldGen.TileRunner(genPoint.X + Main.rand.Next(-2, 2), genPoint.Y + Main.rand.Next(-2, 2), 8f, 9, TileID.DesertFossil, false, 0, 0, false);
+                    WorldGen.TileRunner(genPoint.X - Main.rand.Next(-2, 2), genPoint.Y - Main.rand.Next(-2, 2), 12f, 8, TileID.HardenedSand, false, 0, 0, false);
+
+                    for (int j = 0; j < 6; j++)
+                    {
+                        WorldGen.TileRunner(genPoint.X - Main.rand.Next(-2, 2), genPoint.Y - Main.rand.Next(-2, 2), 6f, 15 + Main.rand.Next(0, 2), TileID.DesertFossil, false, Main.rand.Next(-4, 4), Main.rand.Next(-4, 4), false);
+                        WorldGen.TileRunner(genPoint.X - Main.rand.Next(-2, 2), genPoint.Y - Main.rand.Next(-2, 2), 5f, 15 + Main.rand.Next(0, 4), TileID.HardenedSand, false, Main.rand.Next(-4, 4), Main.rand.Next(-4, 4), false);
+                    }
+
+                    for (int Q = genPoint.X - size - 1; Q < genPoint.X + size + 1; Q++)
+                    {
+                        for (int R = genPoint.Y - size - 1; R < genPoint.Y + size + 1; R++)
+                        {
+                            Tile tile = Framing.GetTileSafely(Q, R);
+                            if (tile.HasTile && tile.TileType == TileID.Dirt)
+                            {
+                                WorldGen.PlaceTile(Q, R, TileID.Sand, forced: true);
+                            }
+                        }
                     }
                 }
             }

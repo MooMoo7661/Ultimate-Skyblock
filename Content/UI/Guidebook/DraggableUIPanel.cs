@@ -48,6 +48,11 @@ namespace UltimateSkyblock.Content.UI.Guidebook
                 Main.LocalPlayer.mouseInterface = true;
             }
 
+            if (!Main.mouseLeft)
+            {
+                dragging = false;
+            }
+
             if (dragging)
             {
                 Left.Set(Main.mouseX - offset.X, 0f);

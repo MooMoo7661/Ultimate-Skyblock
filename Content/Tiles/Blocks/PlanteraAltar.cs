@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.ID;
+﻿using System.IO;
 using Terraria.Localization;
-using Terraria;
-using Terraria.ModLoader;
+using Terraria.Map;
+using Terraria.ModLoader.Default;
 using Terraria.ObjectData;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using SubworldLibrary;
+using UltimateSkyblock.Content.Items.Placeable;
+using UltimateSkyblock.Content.Tiles.Environment;
+using UltimateSkyblock.Content.UI.MapDrawing;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace UltimateSkyblock.Content.Tiles.Blocks
 {
@@ -24,6 +20,8 @@ namespace UltimateSkyblock.Content.Tiles.Blocks
             Main.tileFrameImportant[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
             TileID.Sets.IgnoredByNpcStepUp[Type] = true;
+            TileID.Sets.PreventsSandfall[Type] = true;
+            TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
             DustType = DustID.Mud;
 
@@ -33,10 +31,12 @@ namespace UltimateSkyblock.Content.Tiles.Blocks
             TileObjectData.newTile.Height = 5;
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 16, 18 };
+            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<PlanteraAltarMapIconEntity>().Hook_AfterPlacement, -1, 0, false);
+            TileObjectData.newTile.UsesCustomCanPlace = true;
             TileObjectData.addTile(Type);
 
             // Etc
-            AddMapEntry(new Color(200, 200, 200), Language.GetText("MapObject.Table"));
+            AddMapEntry(new Color(255, 88, 255), Language.GetText("Mods.UltimateSkyblock.Tiles.PlanteraAltar.MapEntry"));
         }
 
         public override bool RightClick(int i, int j)
@@ -122,6 +122,62 @@ namespace UltimateSkyblock.Content.Tiles.Blocks
             player.cursorItemIconEnabled = true;
             player.cursorItemIconID = -1;
             player.cursorItemIconText = "Summon Plantera";
+        }
+    }
+
+    public class PlanteraAltarMapIconEntity : ModTileEntity
+    {
+        private MapIcon icon;
+
+        public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
+        {
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                int width = 3;
+                int height = 5;
+                NetMessage.SendTileSquare(Main.myPlayer, i, j, width, height);
+                NetMessage.SendData(MessageID.TileEntityPlacement, number: i, number2: j, number3: Type);
+            }
+
+            // ModTileEntity.Place() handles checking if the entity can be placed, then places it for you
+            // Set "tileOrigin" to the same value you set TileObjectData.newTile.Origin to in the ModTile
+            Point16 tileOrigin = new Point16(1, 1);
+            int placedEntity = Place(i - tileOrigin.X, j - tileOrigin.Y);
+            return placedEntity;
+        }
+
+        public override bool IsTileValidForEntity(int x, int y)
+        {
+            var tile = Main.tile[x, y];
+            return tile.HasTile && tile.TileType == ModContent.TileType<PlanteraAltar>();
+        }
+
+
+        public override void OnNetPlace()
+        {
+            if (Main.netMode == NetmodeID.Server)
+            {
+                NetMessage.SendData(MessageID.TileEntitySharing, number: ID, number2: Position.X, number3: Position.Y);
+            }
+        }
+
+        public override void Update()
+        {
+            int i = Position.X;
+            int j = Position.Y;
+            if (!Framing.GetTileSafely(i, j).HasTile)
+            {
+                Kill(i, j);
+            }
+
+            Texture2D plantera = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/Guidebook/Assets/PlanteraSWIcon").Value;
+            icon = new MapIcon(new(Position.X + 1.5f, Position.Y), plantera, Color.White, 1.1f, 0.8f, "Plantera Altar");
+            TileIconDrawing.icons.Add(icon);
+        }
+
+        public override void OnKill()
+        {
+            TileIconDrawing.icons.Remove(icon);
         }
     }
 }

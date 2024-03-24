@@ -49,8 +49,13 @@ StoneBomb: {
 }
 
 GuidebookItem: {
-	DisplayName: Guidebook Item
-	Tooltip: ""
+	DisplayName: Skyblock Guidebook
+	Tooltip:
+		'''
+		Left-click to use
+		Provides information about the various changes and additions from this mod.
+		If you are lost, take a look to see how to get back on track.
+		'''
 }
 
 AutoExtractor: {

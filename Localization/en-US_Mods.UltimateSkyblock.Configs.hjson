@@ -10,7 +10,7 @@ SubworldConfig: {
 			2: Ridged
 			3: Ping-Pong
 			4: Domain Warp Progressive
-			5: Domain Warp Independant
+			5: Domain Warp Independent
 
 			Default: FBm (1)
 			[c/FF7F7F:WARNING: Do not change these without knowledge of Perlin Noise.]
@@ -40,8 +40,8 @@ SubworldConfig: {
 		'''
 		[c/FF7F7F: Red -> Very large changes. Do not modify on new playthroughs.]
 		[c/FFBB7F: Orange -> Large changes. Only modify if you are sure.]
-		[c/F7FF75: Yellow -> Will affect gameplay somewhat.]
-		[c/75FF75: Green -> Little to no gameplay affect]
+		[c/F7FF75: Yellow -> Will affect game play somewhat.]
+		[c/75FF75: Green -> Little to no game play affect]
 		'''
 	DisplayName: Subworld Config
 }
@@ -79,7 +79,7 @@ SkyblockModConfig: {
 
 	OWSoundtrack: {
 		Tooltip: ""
-		Label: Replace various soundtracks with Otherworld sountracks
+		Label: Replace various soundtracks with Otherworld soundtracks
 	}
 
 	Headers: {
@@ -141,7 +141,7 @@ SkyblockModConfig: {
 	StoneGenerator: {
 		Tooltip:
 			'''
-			If lava and water are seperated by one block of air, it will generate stone in that spot, or obsidian if in the caverns.
+			If lava and water are separated by one block of air, it will generate stone in that spot, or obsidian if in the caverns.
 			It must be left -> right, or right -> left.
 			'''
 		Label: Stone Generator Logic

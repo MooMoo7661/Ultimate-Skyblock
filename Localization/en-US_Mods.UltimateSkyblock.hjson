@@ -24,30 +24,40 @@ LocalizedPages: {
 		TableOfContents: Table of Contents
 		Progression: Progression
 		Fishing: Fishing
+		Hardmode: Hardmode
+		MiningSubworld: Mining Dimension
+		PlanteraSubworld: Plantera Dimension
+		Shimmer: Shimmer
 	}
 
 	IntroPage:
 		'''
 		[c/FFB23D:Welcome to Skyblock!]
 		This is a book to help you progress, as well as provide some tips for you.
-		To use the book, click the [c/FFABAB: (<)] or [c/FFABAB:Right (>)] arrows to scroll through pages.
+		To use the book, click the [c/FFABAB:Left (<)] or [c/FFABAB:Right (>)] arrows to scroll through pages.
 		You can purchase this book again from the Merchant at any time, in case you lose it.
 
-		On the  is a list of buttons with icons. These buttons are for quickly switching to important or
+		On the left is a list of buttons with icons. These buttons are for quickly switching to important or
 		notable pages.
+		The book next to the left arrow will pull up an official wiki page related to the current page.
+		If it's grayed out, that means there's no wiki available.
 		'''
 	TableOfContents:
 		'''
 		 -=-= Table of Contents =-=-
 		 1 : Introduction
 		 2 : Table of Contents
-		 3 - 7 : Progression
-
+		 3 - 4 : Progression
+		 5 : Hardmode
+		 6 : Fishing
+		 7 : Mining Dimension
+		 8 : Plantera Dimension
+		 9 : Shimmer
 		'''
 	Progression1:
 		'''
 		To begin, you should chop some[i:9]wood. 
-		Trees will grow much faster now, meaning you will be able to gather a substantal amount of wood.
+		Trees will grow much faster now, meaning you will be able to gather a substantial amount of wood.
 		After you gather some wood, you should also get some[i:3]stone from the [c/ABCAFF:stone generator] on the  side of
 		the island. Mining the stone in between the lava and water will provide an infinite source of stone, since lava
 		and water will now generate stone if separated by one block.
@@ -58,11 +68,11 @@ LocalizedPages: {
 		progress. If you find an[i:997]Extractinator, they will be very useful for getting gems, and processing raw
 		materials into new ones. A full page can be found later on about the new block conversions.
 		[c/FF9797:Don't forget that fishing will let you obtain tons of new loot that wouldn't be possible to get in skyblock]
-		[c/FF9797:normally.] There is a page later in the book that explains how to get certain items from fishing.
+		There is a page later in the book that goes more in-depth about fishing.
 		'''
 	Progression2:
 		'''
-		Once you have a decent supply of blocks, start bridging out to the  or the right.
+		Once you have a decent supply of blocks, start building out to the left or the right.
 		Make sure to look above and below your platform for any islands that might be out of sight.
 		There are 4 other forest islands, each with a chest containing basic underground golden chest loot.
 		You can find useful stuff such as [i:50][c/FFC080:magic mirrors],[i:166][c/FFC080:bombs],[i:28][c/FFC080:potions], and [i:19][c/FFC080:bars.]
@@ -70,17 +80,81 @@ LocalizedPages: {
 		Material bombs are bombs that explode and spread a certain type of block. This mod adds several new ones.
 		The benefit of these is that they create more blocks than are consumed in their creation, essentially
 		[c/9E80FF:duplicating blocks.] This can be done many times, as long as you have a source of bombs and enough coins.
+
 		A good place to look for [i:29][c/C8426B:life crystals] is on [c/92E67D:Jungle Islands] and the [c/5D4DEB:Mushroom Island.]
 		There is also a lot of golden chests on the Mushroom Island, making it a good spot to get some loot.
 		You can locate these islands on the map, since there are now icons for each island/important structure.
 		'''
-	Progression3: ""
+	Hardmode:
+		'''
+		On entering hardmode, you may notice that the [c/94FFFF:Hallowed Islands] now spawn enemies, and crystals are breakable.
+		You should be notified of this by a message in chat.
+
+		If you haven't found them already, there are [c/36D22B:chlorophyte planetoids] below the jungle islands.
+		This is so you have a source of chlorophyte, since the entire world is now empty.
+
+		To defeat plantera easier, a "cave" is supplied in the main Jungle Island.
+		This will transport you to the [c/FF72F2:Plantera Subworld], which is essentially another dimension.
+		You can read more about this subworld later in the book.
+
+		For your convenience, an artificial temple is supplied. You may need to make your own temple biome
+		with some of the blocks provided in chests inside the temple to spawn some enemies to farm [i:1293]power cells.
+		The temple should be located below the chlorophyte planetoids, and will spawn after plantera is defeated.
+		'''
 	Fishing:
 		'''
 		You can obtain many useful items from fishing, such as [i:365]ores, [i:706]bars, [i:2310]potion fish, [i:4406]crates, and more.
 		Crates are very important, as depending on the biome you are in, they will provide loot similar to what
-		you would get from a chest in that biome. For example, you can get [i:1579]flurry boots from a boreal wood crate.
+		you would get from a chest in that biome.
 
+		Here are some small tips:
+		- [i:2339]Tin cans can be used at an extractinator, and will return very good early-game bait
+		- Lake size heavily affects loot obtained
+		- [i:4608]Chum buckets, which are dropped by blood moon enemies, will significantly boost your fishing power
+		- The angler is now able to move in at any time, since there isn't an ocean for him to spawn at
+
+		Water is easily duplicated to create large pools. It's recommended to do this to maximize your loot potential.
+		'''
+	MiningSubworld:
+		'''
+		This dimension is called a "subworld". Subworlds are like dimensions, except they also function as a new world.
+		Everything is independent from the main world, meaning boss kills and other similar things are not synced.
+		[c/FF5E5E:Do not kill any bosses in this subworld. The data will not be sent to the main world.]
+		[c/FF5E5E:This means progression unlocks will not trigger, and could cause many problems with other mods.]
+		The purpose of this subworld is to allow you to mine resources to use in skyblock. Things will be present here
+		that are either hard to get or impossible to obtain from the main world.
+		In the lower parts of the subworld, you will encounter a new biome, called the Deepstone.
+		It's very dark and dangerous in the Deepstone biome, however you can encounter a new structure called the
+		Deepstone Bunker. Useful loot is present in the chests here, such as potions, accessories, and more.
+
+		-The Darkness- 
+		While you are in the deepstone biome, you will be inflicted with darkness, making light sources less bright.
+		Glimmercap mushrooms can be found growing naturally on deepstone, and are able to be crafted into a potion.
+		'''
+	PlanteraSubworld:
+		'''
+		This dimension is also a subworld, meaning the same rules apply. 
+		[c/FF5E5E:Killing plantera WILL sync with the main world, but ONLY plantera.]
+		Any other boss or world event that occurs in this dimension will not be applied to the main world.
+
+		In the center of the arena, there is an altar. This altar will summon plantera infinitely, with no cost.
+		It will not spawn more than one plantera at a time.
+		Jungle enemies will still spawn, meaning you have an easy source of loot.
+
+		The subworld will not regenerate when leaving, so if you destroy the arena, it will stay broken.
+		To enter the dimension, look for the cave opening inside of the main jungle island.
+		Right click the entrance to go further.
+		'''
+	Shimmer:
+		'''
+		Here are some useful tips for items that can be shimmered
+		- Anvils, which can be bought from the merchant, can be shimmered into iron bars
+		- Cans of Worms can be shimmered into [i:3093]Herb Bags for more potion ingredients
+		- Shimmering Dynasty wood results in an infinite supply of normal wood, as long as you have money to buy it
+		- Any fruit will result in [i:5342]Ambrosia, which gives permanent boosts to mining, tile and wall placement speed
+
+		You should try and use the environment to your advantage.
+		Each island has a wide palette of blocks that can be de-crafted into various items.
 		'''
 }
 

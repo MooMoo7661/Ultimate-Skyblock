@@ -1,15 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
-using System;
-using System.Collections.Generic;
-using Terraria;
-using Terraria.GameContent;
-using Terraria.GameContent.UI.Elements;
-using Terraria.ID;
-using Terraria.Localization;
-using Terraria.ModLoader;
-using Terraria.UI;
+﻿using System;
 using UltimateSkyblock.Content.Utils;
 
 namespace UltimateSkyblock.Content.UI.Guidebook
@@ -19,28 +8,28 @@ namespace UltimateSkyblock.Content.UI.Guidebook
         public DraggableUIPanel GuidebookPanel;
 
         UIText Title;
-        UIText PageNumber;
         UIText PageName;
         UIText MainText;
+        UIText PageNumber;
+
         UITextButton RightButton;
         UITextButton LeftButton;
-        
-        public enum PageID
-        {
-            Main = 0,
-            Fishing = 4
-        }
+        UITextButton wikiPageButton;
+        UITextButton discordLinkButton;
+
+        UIImage wikiPageIcon;
+        UIImage discordLinkIcon;
 
         Color DefaultColor = new Color(44, 57, 105, 178); // Default color of standard terraria UI.
+
         public int PageIndex = 0;
         string MainPage = "";
 
         /// <summary>
-        /// Used for storing pages. Each page is a string. 
-        /// Calculation for whether the book can be scrolled is done automatically.
+        /// Used for storing pages.
+        /// Values can be quickly obtained through TryGetValue(), and the corresponding StyleID.
         /// </summary>
-        public static readonly Dictionary<int, string> Pages = new Dictionary<int, string>();
-        public static readonly Dictionary<int, string> PageNames = new Dictionary<int, string>();
+        public static readonly Dictionary<int, Page> Pages = new();
 
         /// <summary>
         /// Used for determining what entry to get with TryGetEntry
@@ -48,7 +37,21 @@ namespace UltimateSkyblock.Content.UI.Guidebook
         public enum StyleID
         {
             Page,
-            Name
+            Name,
+            WikiPage
+        }
+
+        /// <summary>
+        /// Used for quick referencing page numbers by name.
+        /// </summary>
+        public enum PageID
+        {
+            Main = 0,
+            Hardmode = 4,
+            Fishing = 5,
+            MiningSW = 6,
+            PlanteraSW = 7,
+            Shimmer = 8,
         }
 
         /// <summary>
@@ -58,17 +61,20 @@ namespace UltimateSkyblock.Content.UI.Guidebook
         /// <returns>Dictionary entry for the provided key, or null if not found</returns>
         public static string TryGetEntry(int index, StyleID style)
         {
-            switch (style)
+            if (Pages.TryGetValue(index, out Page page))
             {
-                case StyleID.Page:
-                    if (Pages.TryGetValue(index, out string page)) { return page; }
-                    break;
+                switch (style)
+                {
+                    case StyleID.Page:
+                        return page.Text;
 
-                case StyleID.Name:
-                    if (PageNames.TryGetValue(index, out string name)) { return name; }
-                    break;
+                    case StyleID.Name:
+                        return page.Title;
+
+                    case StyleID.WikiPage:
+                        return page.Wiki;
+                }
             }
-
             return null;
         }
 
@@ -78,12 +84,16 @@ namespace UltimateSkyblock.Content.UI.Guidebook
         public static void AddPages()
         {
             string path = "Mods.UltimateSkyblock.LocalizedPages.";
-            Pages.Add(0, Language.GetTextValue(path + "IntroPage")); PageNames.Add(0, Language.GetTextValue(path + "PageNames.Intro"));
-            Pages.Add(1, Language.GetTextValue(path + "TableOfContents")); PageNames.Add(1, Language.GetTextValue(path + "PageNames.TableOfContents"));
-            Pages.Add(2, Language.GetTextValue(path + "Progression1")); PageNames.Add(2, Language.GetTextValue(path + "PageNames.Progression"));
-            Pages.Add(3, Language.GetTextValue(path + "Progression2")); PageNames.Add(3, Language.GetTextValue(path + "PageNames.Progression"));
-            Pages.Add(4, Language.GetTextValue(path + "Progression3")); PageNames.Add(4, Language.GetTextValue(path + "PageNames.Progression"));
-            Pages.Add(5, Language.GetTextValue(path + "Fishing")); PageNames.Add(5, Language.GetTextValue(path + "PageNames.Fishing"));
+            Pages.TryAdd(0, new Page(Language.GetTextValue(path + "PageNames.Intro"), Language.GetTextValue(path + "IntroPage")));
+            Pages.TryAdd(1, new Page(Language.GetTextValue(path + "PageNames.TableOfContents"), Language.GetTextValue(path + "TableOfContents")));
+            Pages.TryAdd(2, new Page(Language.GetTextValue(path + "PageNames.Progression"), Language.GetTextValue(path + "Progression1")));
+            Pages.TryAdd(3, new Page(Language.GetTextValue(path + "PageNames.Progression"), Language.GetTextValue(path + "Progression2")));
+            Pages.TryAdd(4, new Page(Language.GetTextValue(path + "PageNames.Hardmode"), Language.GetTextValue(path + "Hardmode"), "https://terraria.wiki.gg/wiki/Hardmode"));
+            Pages.TryAdd(5, new Page(Language.GetTextValue(path + "PageNames.Fishing"), Language.GetTextValue(path + "Fishing"), "https://terraria.wiki.gg/wiki/Hardmode"));
+            Pages.TryAdd(6, new Page(Language.GetTextValue(path + "PageNames.MiningSubworld"), Language.GetTextValue(path + "MiningSubworld")));
+            Pages.TryAdd(7, new Page(Language.GetTextValue(path + "PageNames.PlanteraSubworld"), Language.GetTextValue(path + "PlanteraSubworld"), "https://terraria.wiki.gg/wiki/Plantera"));
+            Pages.TryAdd(8, new Page(Language.GetTextValue(path + "PageNames.Shimmer"), Language.GetTextValue(path + "Shimmer"), "https://terraria.wiki.gg/wiki/Shimmer"));
+      
         }
 
         /// <summary>
@@ -115,6 +125,7 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             GuidebookPanel.Append(QuickPages);
 
             PageNumber = new UIText("- " + (PageIndex + 1).ToString() + " -");
+
             PageNumber.HAlign = 0.5f;
             PageNumber.MarginTop = 450;
             GuidebookPanel.Append(PageNumber);
@@ -162,6 +173,32 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             quickPage.VAlign = 0.5f;
             quickPage.ScaleToFit = true;
             fishingButton.Append(quickPage);
+
+            UITextButton miningSWButton = new UITextButton("", 0, 0.05f, 40, 40, "Mining Subworld", SoundID.MenuClose);
+            miningSWButton.OnLeftClick += new MouseEvent(MiningClicked);
+            miningSWButton.MarginLeft = 15;
+            miningSWButton.MarginTop = 135;
+            GuidebookPanel.Append(miningSWButton);
+
+            Asset<Texture2D> mining = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/Guidebook/Assets/MiningSWIcon", AssetRequestMode.ImmediateLoad);
+            UIImage miningPage = new UIImage(mining);
+            miningPage.HAlign = 0.5f;
+            miningPage.VAlign = 0.5f;
+            miningPage.ScaleToFit = true;
+            miningSWButton.Append(miningPage);
+
+            UITextButton planteraSWButton = new UITextButton("", 0, 0.05f, 40, 40, "Plantera Subworld", SoundID.MenuClose);
+            planteraSWButton.OnLeftClick += new MouseEvent(PlanteraClicked);
+            planteraSWButton.MarginLeft = 15;
+            planteraSWButton.MarginTop = 180;
+            GuidebookPanel.Append(planteraSWButton);
+
+            Asset<Texture2D> plantera = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/Guidebook/Assets/PlanteraSWIcon", AssetRequestMode.ImmediateLoad);
+            UIImage planteraPage = new UIImage(plantera);
+            planteraPage.HAlign = 0.5f;
+            planteraPage.VAlign = 0.5f;
+            planteraPage.ScaleToFit = true;
+            planteraSWButton.Append(planteraPage);
         }
 
         private void InitializeButtons()
@@ -177,11 +214,67 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             RightButton = new UITextButton(">", 0.95f, 0.95f, 130, 34, "", SoundID.MenuTick);
             RightButton.OnLeftClick += new MouseEvent(PageAdvancementRight);
             GuidebookPanel.Append(RightButton);
+
+            wikiPageButton = new UITextButton("", 0, 0.05f, 40, 40, "", SoundID.MenuOpen);
+            wikiPageButton.OnLeftClick += new MouseEvent(WikiOpen);
+            wikiPageButton.HAlign = 0.2f;
+            wikiPageButton.VAlign = 0.95f;
+            GuidebookPanel.Append(wikiPageButton);
+
+            Main.instance.LoadItem(ItemID.Book);
+            Asset<Texture2D> book = TextureAssets.Item[ItemID.Book];
+            wikiPageIcon = new UIImage(book);
+            wikiPageIcon.HAlign = 0.5f;
+            wikiPageIcon.VAlign = 0.5f;
+            wikiPageIcon.ScaleToFit = true;
+            wikiPageButton.Append(wikiPageIcon);
+
+            discordLinkButton = new UITextButton("", 0, 0.05f, 40, 40, "", SoundID.MenuOpen);
+            discordLinkButton.OnLeftClick += new MouseEvent(DiscordClicked);
+            discordLinkButton.HAlign = 0.25f;
+            discordLinkButton.VAlign = 0.95f;
+            GuidebookPanel.Append(discordLinkButton);
+
+            Asset<Texture2D> discord = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/Guidebook/Assets/DiscordIcon", AssetRequestMode.ImmediateLoad);
+            discordLinkIcon = new UIImage(discord);
+            discordLinkIcon.HAlign = 0.5f;
+            discordLinkIcon.VAlign = 0.5f;
+            discordLinkIcon.ScaleToFit = false;
+            discordLinkButton.Append(discordLinkIcon);
+
+            UITextButton trello = new UITextButton("", 0, 0.05f, 40, 40, "", SoundID.MenuOpen);
+            trello.OnLeftClick += new MouseEvent(TrelloClicked);
+            trello.HAlign = 0.3f;
+            trello.VAlign = 0.95f;
+            GuidebookPanel.Append(trello);
+
+            Asset<Texture2D> trelloIcon = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/Guidebook/Assets/TrelloIcon", AssetRequestMode.ImmediateLoad);
+            UIImage trelloLinkIcon = new UIImage(trelloIcon);
+            trelloLinkIcon.HAlign = 0.5f;
+            trelloLinkIcon.VAlign = 0.5f;
+            //trelloLinkIcon.ScaleToFit = true;
+            trelloLinkIcon.ImageScale = 2f;
+            trello.Append(trelloLinkIcon);
         }
 
         private void CloseClicked(UIMouseEvent evt, UIElement listeningElement) => ModContent.GetInstance<GuidebookSystem>().HideMyUI();
         private void HomeClicked(UIMouseEvent evt, UIElement listeningElement) => PageIndex = (int)PageID.Main;
         private void FishingClicked(UIMouseEvent evt, UIElement listeningElement) => PageIndex = (int)PageID.Fishing;
+        private void MiningClicked(UIMouseEvent evt, UIElement listeningElement) => PageIndex = (int)PageID.MiningSW;
+        private void PlanteraClicked(UIMouseEvent evt, UIElement listeningElement) => PageIndex = (int)PageID.PlanteraSW;
+        private void DiscordClicked(UIMouseEvent evt, UIElement listeningElement) => Terraria.Utils.OpenToURL("https://discord.com/invite/G5cbT7tj9K");
+        private void TrelloClicked(UIMouseEvent evt, UIElement listeningElement) => Terraria.Utils.OpenToURL("https://trello.com/invite/b/Z5UV1Kji/ATTI97947e73d35995538596d6db7780e476427D47AF/ultimate-skyblock");
+
+        private void SafeguardIndex() { if (PageIndex < 0) PageIndex = 0; }
+
+        private void WikiOpen(UIMouseEvent evt, UIElement listeningElement)
+        {
+            string wikiLink = TryGetEntry(PageIndex, StyleID.WikiPage);
+            if (wikiLink != null)
+            {
+                Terraria.Utils.OpenToURL(wikiLink);
+            }
+        }
 
         public override void Update(GameTime gameTime)
         {
@@ -189,8 +282,6 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             SafeguardIndex();
             UpdatePage();
         }
-
-        private void SafeguardIndex() { if (PageIndex < 0) PageIndex = 0; }
 
         /// <summary>
         /// Handles updating the page. Updates text, title, page number, and buttons colors.
@@ -210,7 +301,7 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             string pageName = TryGetEntry(PageIndex, StyleID.Name);
             if (pageName != null)
             {
-                Color color = Color.Lerp(Color.AliceBlue, Color.MediumPurple, (MathF.Sin(Main.GlobalTimeWrappedHourly * 2.9f) + 1) / 2f);
+                Color color = Color.Lerp(Color.DodgerBlue, Color.MediumPurple, (MathF.Sin(Main.GlobalTimeWrappedHourly * 2.9f) + 1) / 2f);
 
                 GuidebookPanel.RemoveChild(PageName);
                 PageName = new UIText(pageName.ToHexString(color), 1f);
@@ -220,16 +311,20 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             }
 
             GuidebookPanel.RemoveChild(PageNumber);
-            PageNumber = new UIText("- " + (PageIndex + 1) + " -", 1f);
+            PageNumber = new UIText("- " + (PageIndex + 1).ToString() + " -");
             PageNumber.HAlign = 0.5f;
             PageNumber.MarginTop = 450;
             GuidebookPanel.Append(PageNumber);
 
+            //Updating button/icon colors
             string page = TryGetEntry(PageIndex - 1, StyleID.Page);
             LeftButton.BackgroundColor = page == null ? Color.Gray : DefaultColor;
 
             page = TryGetEntry(PageIndex + 1, StyleID.Page);
             RightButton.BackgroundColor = page == null ? Color.Gray : DefaultColor;
+
+            string wiki = TryGetEntry(PageIndex, StyleID.WikiPage);
+            wikiPageIcon.Color = wiki == null ? Color.Gray : Color.White;
         }
 
         /// <summary>

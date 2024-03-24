@@ -1,14 +1,9 @@
-﻿using Terraria.ID;
-using Terraria;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using UltimateSkyblock.Content.Items.Placeable;
-using Terraria.Audio;
-using Terraria.DataStructures;
+﻿using Terraria.Audio;
+using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.Localization;
 using Terraria.ObjectData;
-using Terraria.Enums;
+using UltimateSkyblock.Content.Items.Placeable;
 
 namespace UltimateSkyblock.Content.Tiles.Furniture
 {
@@ -87,10 +82,8 @@ namespace UltimateSkyblock.Content.Tiles.Furniture
         public override bool LockChest(int i, int j, ref short frameXAdjustment, ref bool manual)
         {
             int style = TileObjectData.GetTileStyle(Main.tile[i, j]);
-            // We need to return true only if the tile style is the unlocked variant of a chest that supports locking. 
             if (style == 0)
             {
-                // We can check other conditions as well, such as how biome chests can't be locked until Plantera is defeated
                 return true;
             }
             return false;

@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.Localization;
-using Terraria.ModLoader;
-
-namespace UltimateSkyblock.Content.Biomes
+﻿namespace UltimateSkyblock.Content.Biomes
 {
     public class DeepstoneUndergroundBackground : ModUndergroundBackgroundStyle
     {

@@ -1,24 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SubworldLibrary;
-using Terraria;
-using Terraria.DataStructures;
-using Terraria.ID;
-using Terraria.IO;
-using Terraria.WorldBuilding;
-using UltimateSkyblock.Content.Subworlds;
-using static UltimateSkyblock.Content.Subworlds.GenUtils;
-using Terraria.ModLoader;
-using UltimateSkyblock.Content.Items.Placeable;
-using UltimateSkyblock.Content.Tiles.Blocks;
-using Terraria.Localization;
+﻿using SubworldLibrary;
 using Terraria.GameContent.UI.States;
-using Terraria.GameContent.Generation;
 using UltimateSkyblock.Content.Subworlds.Passes;
+using UltimateSkyblock.Content.Tiles.Blocks;
+using static UltimateSkyblock.Content.Subworlds.GenUtils;
 
 namespace UltimateSkyblock.Content.Subworlds
 {

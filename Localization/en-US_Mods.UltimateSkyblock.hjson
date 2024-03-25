@@ -51,8 +51,7 @@ LocalizedPages: {
 		 5 : Hardmode
 		 6 : Fishing
 		 7 : Mining Dimension
-		 8 : Plantera Dimension
-		 9 : Shimmer
+		 8 : Shimmer
 		'''
 	Progression1:
 		'''
@@ -130,20 +129,6 @@ LocalizedPages: {
 		-The Darkness- 
 		While you are in the deepstone biome, you will be inflicted with darkness, making light sources less bright.
 		Glimmercap mushrooms can be found growing naturally on deepstone, and are able to be crafted into a potion.
-		'''
-	PlanteraSubworld:
-		'''
-		This dimension is also a subworld, meaning the same rules apply. 
-		[c/FF5E5E:Killing plantera WILL sync with the main world, but ONLY plantera.]
-		Any other boss or world event that occurs in this dimension will not be applied to the main world.
-
-		In the center of the arena, there is an altar. This altar will summon plantera infinitely, with no cost.
-		It will not spawn more than one plantera at a time.
-		Jungle enemies will still spawn, meaning you have an easy source of loot.
-
-		The subworld will not regenerate when leaving, so if you destroy the arena, it will stay broken.
-		To enter the dimension, look for the cave opening inside of the main jungle island.
-		Right click the entrance to go further.
 		'''
 	Shimmer:
 		'''

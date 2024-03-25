@@ -19,3 +19,7 @@ global using ReLogic.Content;
 
 global using StructureHelper;
 global using StructureHelper.Util;
+
+// Added this because the fucking thing keeps trying to use System.Numerics.Vector2.
+global using Vector2 = Microsoft.Xna.Framework.Vector2;
+global using Point = Microsoft.Xna.Framework.Point;

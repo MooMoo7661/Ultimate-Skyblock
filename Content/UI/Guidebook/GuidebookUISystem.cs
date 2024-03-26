@@ -1,10 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.UI;
-
-namespace UltimateSkyblock.Content.UI.Guidebook
+﻿namespace UltimateSkyblock.Content.UI.Guidebook
 {
     [Autoload(Side = ModSide.Client)]
     public class GuidebookSystem : ModSystem

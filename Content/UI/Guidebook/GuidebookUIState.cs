@@ -2,7 +2,7 @@
 using UltimateSkyblock.Content.Utils;
 
 namespace UltimateSkyblock.Content.UI.Guidebook
-{
+{   
     public class GuidebookUIState : UIState
     {
         public DraggableUIPanel GuidebookPanel;
@@ -12,6 +12,8 @@ namespace UltimateSkyblock.Content.UI.Guidebook
         UIText MainText;
         UIText PageNumber;
 
+        List<UIImage> PageImages;
+        
         UITextButton RightButton;
         UITextButton LeftButton;
         UITextButton wikiPageButton;
@@ -50,8 +52,7 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             Hardmode = 4,
             Fishing = 5,
             MiningSW = 6,
-            PlanteraSW = 7,
-            Shimmer = 8,
+            Shimmer = 7,
         }
 
         /// <summary>
@@ -89,11 +90,24 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             Pages.TryAdd(2, new Page(Language.GetTextValue(path + "PageNames.Progression"), Language.GetTextValue(path + "Progression1")));
             Pages.TryAdd(3, new Page(Language.GetTextValue(path + "PageNames.Progression"), Language.GetTextValue(path + "Progression2")));
             Pages.TryAdd(4, new Page(Language.GetTextValue(path + "PageNames.Hardmode"), Language.GetTextValue(path + "Hardmode"), "https://terraria.wiki.gg/wiki/Hardmode"));
-            Pages.TryAdd(5, new Page(Language.GetTextValue(path + "PageNames.Fishing"), Language.GetTextValue(path + "Fishing"), "https://terraria.wiki.gg/wiki/Hardmode"));
             Pages.TryAdd(6, new Page(Language.GetTextValue(path + "PageNames.MiningSubworld"), Language.GetTextValue(path + "MiningSubworld")));
-            Pages.TryAdd(7, new Page(Language.GetTextValue(path + "PageNames.PlanteraSubworld"), Language.GetTextValue(path + "PlanteraSubworld"), "https://terraria.wiki.gg/wiki/Plantera"));
-            Pages.TryAdd(8, new Page(Language.GetTextValue(path + "PageNames.Shimmer"), Language.GetTextValue(path + "Shimmer"), "https://terraria.wiki.gg/wiki/Shimmer"));
-      
+
+            AddDetailedPages();
+        }
+
+        public static void AddDetailedPages()
+        {
+            string path = "Mods.UltimateSkyblock.LocalizedPages.";
+
+            UIImage lakeDiagram = new Page().Image(ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/Guidebook/PageImages/FishingDimensions"), 0.55f, 0.515f);
+            Pages.TryAdd(5, new Page(Language.GetTextValue(path + "PageNames.Fishing"), Language.GetTextValue(path + "Fishing"), "https://terraria.wiki.gg/wiki/Fishing", new List<UIImage> { lakeDiagram }));
+
+            Main.instance.LoadItem(ItemID.AegisFruit);
+            UIImage walt = new Page().Image(TextureAssets.Item[ItemID.BottomlessShimmerBucket], 0.5f, 0.8f, 1.3f);
+            UIImage ambrosia = new Page().Image(TextureAssets.Item[ItemID.Ambrosia], 0.45f, 0.8f, 1.3f);
+            UIImage aegis = new Page().Image(TextureAssets.Item[ItemID.AegisFruit], 0.55f, 0.8f, 1.3f);
+            Page page = new Page(Language.GetTextValue(path + "PageNames.Shimmer"), Language.GetTextValue(path + "Shimmer"), "https://terraria.wiki.gg/wiki/Shimmer", new List<UIImage> { walt, ambrosia, aegis });
+            Pages.TryAdd(7, page);
         }
 
         /// <summary>
@@ -110,7 +124,7 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             GuidebookPanel.HAlign = 0.5f;
             GuidebookPanel.VAlign = 0.1f;
             GuidebookPanel.Width.Set(1000f, 0f);
-            GuidebookPanel.Height.Set(500f, 0f);
+            GuidebookPanel.Height.Set(650f, 0f);
             GuidebookPanel.BackgroundColor = new Color(73, 94, 171);
             Append(GuidebookPanel);
 
@@ -187,18 +201,16 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             miningPage.ScaleToFit = true;
             miningSWButton.Append(miningPage);
 
-            UITextButton planteraSWButton = new UITextButton("", 0, 0.05f, 40, 40, "Plantera Subworld", SoundID.MenuClose);
-            planteraSWButton.OnLeftClick += new MouseEvent(PlanteraClicked);
-            planteraSWButton.MarginLeft = 15;
-            planteraSWButton.MarginTop = 180;
-            GuidebookPanel.Append(planteraSWButton);
+            UITextButton shimmerButton = new UITextButton("", 0, 0.05f, 40, 40, "Shimmer", SoundID.MenuClose);
+            shimmerButton.OnLeftClick += new MouseEvent(ShimmerClicked);
+            shimmerButton.MarginLeft = 15;
+            shimmerButton.MarginTop = 180;
+            GuidebookPanel.Append(shimmerButton);
 
-            Asset<Texture2D> plantera = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/Guidebook/Assets/PlanteraSWIcon", AssetRequestMode.ImmediateLoad);
-            UIImage planteraPage = new UIImage(plantera);
-            planteraPage.HAlign = 0.5f;
-            planteraPage.VAlign = 0.5f;
-            planteraPage.ScaleToFit = true;
-            planteraSWButton.Append(planteraPage);
+            Main.instance.LoadItem(ItemID.BottomlessShimmerBucket);
+            Asset<Texture2D> shimmer = TextureAssets.Item[ItemID.BottomlessShimmerBucket];
+            UIImage shimmerIcon = new Page().Image(shimmer, 0.5f, 0.5f, ScaleToFit: true);
+            shimmerButton.Append(shimmerIcon);
         }
 
         private void InitializeButtons()
@@ -236,10 +248,7 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             GuidebookPanel.Append(discordLinkButton);
 
             Asset<Texture2D> discord = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/Guidebook/Assets/DiscordIcon", AssetRequestMode.ImmediateLoad);
-            discordLinkIcon = new UIImage(discord);
-            discordLinkIcon.HAlign = 0.5f;
-            discordLinkIcon.VAlign = 0.5f;
-            discordLinkIcon.ScaleToFit = false;
+            discordLinkIcon = new Page().Image(discord, 0.5f, 0.5f);
             discordLinkButton.Append(discordLinkIcon);
 
             UITextButton trello = new UITextButton("", 0, 0.05f, 40, 40, "", SoundID.MenuOpen);
@@ -249,19 +258,19 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             GuidebookPanel.Append(trello);
 
             Asset<Texture2D> trelloIcon = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/Guidebook/Assets/TrelloIcon", AssetRequestMode.ImmediateLoad);
-            UIImage trelloLinkIcon = new UIImage(trelloIcon);
-            trelloLinkIcon.HAlign = 0.5f;
-            trelloLinkIcon.VAlign = 0.5f;
-            //trelloLinkIcon.ScaleToFit = true;
-            trelloLinkIcon.ImageScale = 2f;
+            UIImage trelloLinkIcon = new Page().Image(trelloIcon, 0.5f, 0.5f, 2f);
             trello.Append(trelloLinkIcon);
         }
 
         private void CloseClicked(UIMouseEvent evt, UIElement listeningElement) => ModContent.GetInstance<GuidebookSystem>().HideMyUI();
+
+        // Quick Icons
         private void HomeClicked(UIMouseEvent evt, UIElement listeningElement) => PageIndex = (int)PageID.Main;
         private void FishingClicked(UIMouseEvent evt, UIElement listeningElement) => PageIndex = (int)PageID.Fishing;
         private void MiningClicked(UIMouseEvent evt, UIElement listeningElement) => PageIndex = (int)PageID.MiningSW;
-        private void PlanteraClicked(UIMouseEvent evt, UIElement listeningElement) => PageIndex = (int)PageID.PlanteraSW;
+        private void ShimmerClicked(UIMouseEvent evt, UIElement listeningElement) => PageIndex = (int)PageID.Shimmer;
+
+        // Secondary Icons (info / resources)
         private void DiscordClicked(UIMouseEvent evt, UIElement listeningElement) => Terraria.Utils.OpenToURL("https://discord.com/invite/G5cbT7tj9K");
         private void TrelloClicked(UIMouseEvent evt, UIElement listeningElement) => Terraria.Utils.OpenToURL("https://trello.com/invite/b/Z5UV1Kji/ATTI97947e73d35995538596d6db7780e476427D47AF/ultimate-skyblock");
 
@@ -298,6 +307,23 @@ namespace UltimateSkyblock.Content.UI.Guidebook
                 GuidebookPanel.Append(MainText);
             }
 
+            if (PageImages != null)
+            foreach(UIImage pageChild in PageImages)
+            {
+                if (GuidebookPanel.HasChild(pageChild))
+                    GuidebookPanel.RemoveChild(pageChild);
+            }
+
+            Pages.TryGetValue(PageIndex, out Page pageImageObject);
+            PageImages = pageImageObject.ListedImages;
+            if (PageImages != null)
+            {
+                foreach(UIImage pageImage in PageImages)
+                {
+                    GuidebookPanel.Append(pageImage);
+                }
+            }
+
             string pageName = TryGetEntry(PageIndex, StyleID.Name);
             if (pageName != null)
             {
@@ -306,14 +332,14 @@ namespace UltimateSkyblock.Content.UI.Guidebook
                 GuidebookPanel.RemoveChild(PageName);
                 PageName = new UIText(pageName.ToHexString(color), 1f);
                 PageName.HAlign = 0.5f;
-                PageName.MarginTop = 420;
+                PageName.VAlign = 0.9f;
                 GuidebookPanel.Append(PageName);
             }
 
             GuidebookPanel.RemoveChild(PageNumber);
             PageNumber = new UIText("- " + (PageIndex + 1).ToString() + " -");
             PageNumber.HAlign = 0.5f;
-            PageNumber.MarginTop = 450;
+            PageNumber.VAlign = 0.95f;
             GuidebookPanel.Append(PageNumber);
 
             //Updating button/icon colors

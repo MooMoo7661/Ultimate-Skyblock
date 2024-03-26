@@ -46,6 +46,8 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
             GenMeteorites();
             GenDesertPlanetoids();
 
+            GenTemple();
+
             //PlaceTile(Main.dungeonX, Main.dungeonY, TileID.Adamantite, true, true); // Places tile at the spawn point for the Old Man and the Lunatic Cultists. For testing purposes.
         }
 
@@ -412,15 +414,11 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
         }
 
         /// <summary>
-        /// Handles generating the Jungle Temple. Called upon killing Plantera, and sets a bool preventing it from being generated again.
+        /// Handles generating the Jungle Temple.
         /// </summary>
-        /// <param name="executeRegardlessOfRestrictions">Can be used to re-generate the jungle temple without having to reset the bool associated with it. If unsure, pass false.</param>
-        public static void GenTemple(bool executeRegardlessOfRestrictions)
+        public static void GenTemple()
         {
-            if (!TempleGen_ && !executeRegardlessOfRestrictions) { return; }
-
-            Generator.GenerateStructure(templePath, new Point16(Jungle.X, Jungle.Y + 100 + (int)(ScaleBasedOnWorldSizeY * 3)), Instance);
-            TempleGen_ = false;
+            Generator.GenerateStructure(templePath, new Point16(Jungle.X, Main.maxTilesY / 2 + Main.maxTilesY / 5), Instance);
         }
 
         public static void GenJungleIslands()
@@ -509,7 +507,9 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
             WorldUtils.Gen(new(x, y), new Shapes.Circle(6, 6), new Actions.SetTile(TileID.Mud));
             WorldUtils.Gen(new(x, y), new Shapes.Circle(6, 6), new Actions.Blank().Output(shapeData));
             WorldUtils.Gen(new(x, y), new ModShapes.OuterOutline(shapeData), new Actions.SetTile(TileID.JungleGrass));
-            WorldGen.PlaceObject(x, y - 9, ModContent.TileType<PlanteraAltar>());
+            // I use structure helper here instead of WorldGen.PlaceObject due to that method not also placing linked tile entities.
+            // It's needed for it to place the TE hooked to it due to it having a special map draw effect.
+            Generator.GenerateStructure(path + "PlanteraAltarStructure", new(x - 1, y - 12), Instance);
 
             y -= 9;
             for (int i = 0; i < 5; i++)
@@ -556,20 +556,6 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
                         }
                     }
                 }
-            }
-        }
-    }
-        
-    public class PlanteraTempleGeneration : GlobalNPC
-    {
-        public override bool AppliesToEntity(NPC entity, bool lateInstantiation) => entity.type == NPCID.Plantera;
-
-        public override void OnKill(NPC npc)
-        {
-            if (!NPC.downedPlantBoss)
-            {
-                MainWorld.GenTemple(false);
-                Main.NewText("A mysterious temple has emerged from the depths of the Jungle...");
             }
         }
     }

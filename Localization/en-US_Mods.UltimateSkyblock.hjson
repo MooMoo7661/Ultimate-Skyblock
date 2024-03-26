@@ -112,7 +112,14 @@ LocalizedPages: {
 		- [i:4608]Chum buckets, which are dropped by blood moon enemies, will significantly boost your fishing power
 		- The angler is now able to move in at any time, since there isn't an ocean for him to spawn at
 
-		Water is easily duplicated to create large pools. It's recommended to do this to maximize your loot potential.
+		Lake size is calculated by the width of the top row 
+		of liquid tiles, and everything below. Tiles nearby 
+		that aren't exposed to the surface won't count.
+		To create a good fishing area, 300 connected tiles
+		of water are needed, but 75 minimum will work. The
+		loot you get will be worse, but it will still let you fish.
+		To create an ocean, you need 1,001 tiles of water,
+		and it needs to be near the outer edge of the world.
 		'''
 	MiningSubworld:
 		'''

@@ -1,10 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Terraria.Audio;
-using Terraria.GameContent.UI.Elements;
-using Terraria.ID;
-using Terraria.UI;
-using Terraria;
-using Microsoft.Xna.Framework;
+﻿using Terraria.Audio;
 
 namespace UltimateSkyblock.Content.UI.Guidebook
 {

@@ -1,8 +1,4 @@
 ﻿using UltimateSkyblock.Content.Configs;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Terraria;
-using Microsoft.Xna.Framework;
 using static Terraria.WorldGen;
 
 namespace UltimateSkyblock.Content.GlobalClasses

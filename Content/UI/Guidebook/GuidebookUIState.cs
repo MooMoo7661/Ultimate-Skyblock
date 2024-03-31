@@ -1,4 +1,7 @@
 ﻿using System;
+using CombinationsMod.Content.Keybindings;
+using Terraria.Audio;
+using Terraria;
 using UltimateSkyblock.Content.Utils;
 
 namespace UltimateSkyblock.Content.UI.Guidebook
@@ -31,7 +34,7 @@ namespace UltimateSkyblock.Content.UI.Guidebook
         /// Used for storing pages.
         /// Values can be quickly obtained through TryGetValue(), and the corresponding StyleID.
         /// </summary>
-        public static readonly Dictionary<int, Page> Pages = new();
+        public static Dictionary<int, Page> Pages = new();
 
         /// <summary>
         /// Used for determining what entry to get with TryGetEntry
@@ -53,6 +56,7 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             Fishing = 5,
             MiningSW = 6,
             Shimmer = 7,
+            MapMarkers = 8
         }
 
         /// <summary>
@@ -90,7 +94,7 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             Pages.TryAdd(2, new Page(Language.GetTextValue(path + "PageNames.Progression"), Language.GetTextValue(path + "Progression1")));
             Pages.TryAdd(3, new Page(Language.GetTextValue(path + "PageNames.Progression"), Language.GetTextValue(path + "Progression2")));
             Pages.TryAdd(4, new Page(Language.GetTextValue(path + "PageNames.Hardmode"), Language.GetTextValue(path + "Hardmode"), "https://terraria.wiki.gg/wiki/Hardmode"));
-            Pages.TryAdd(6, new Page(Language.GetTextValue(path + "PageNames.MiningSubworld"), Language.GetTextValue(path + "MiningSubworld")));
+            Pages.TryAdd(8, new Page(Language.GetTextValue(path + "PageNames.MapMarkers"), Language.GetTextValue(path + "MapMarkers")));
 
             AddDetailedPages();
         }
@@ -98,14 +102,22 @@ namespace UltimateSkyblock.Content.UI.Guidebook
         public static void AddDetailedPages()
         {
             string path = "Mods.UltimateSkyblock.LocalizedPages.";
+            string texPath = "UltimateSkyblock/Content/UI/Guidebook/PageImages/";
 
-            UIImage lakeDiagram = new Page().Image(ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/Guidebook/PageImages/FishingDimensions"), 0.55f, 0.515f);
+            UIImage lakeDiagram = new Page().Image(ModContent.Request<Texture2D>(texPath + "FishingDimensions"), 0.55f, 0.515f);
             Pages.TryAdd(5, new Page(Language.GetTextValue(path + "PageNames.Fishing"), Language.GetTextValue(path + "Fishing"), "https://terraria.wiki.gg/wiki/Fishing", new List<UIImage> { lakeDiagram }));
 
+            UIImage glowcapDiagram = new Page().Image(ModContent.Request<Texture2D>(texPath + "GlowcapGuidebookImage"), 0.6f, 0.515f);
+            Pages.TryAdd(6, new Page(Language.GetTextValue(path + "PageNames.MiningSubworld"), Language.GetTextValue(path + "MiningSubworld"), null, new List<UIImage> { glowcapDiagram }));
+
             Main.instance.LoadItem(ItemID.AegisFruit);
-            UIImage walt = new Page().Image(TextureAssets.Item[ItemID.BottomlessShimmerBucket], 0.5f, 0.8f, 1.3f);
-            UIImage ambrosia = new Page().Image(TextureAssets.Item[ItemID.Ambrosia], 0.45f, 0.8f, 1.3f);
-            UIImage aegis = new Page().Image(TextureAssets.Item[ItemID.AegisFruit], 0.55f, 0.8f, 1.3f);
+            Main.instance.LoadItem(ItemID.BottomlessShimmerBucket);
+            Main.instance.LoadItem(ItemID.Ambrosia);
+
+            Asset<Texture2D> waltAsset = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/Guidebook/Assets/PageTest", AssetRequestMode.ImmediateLoad);
+            UIImage walt = new Page().Image(waltAsset, 0.5f, 0.8f, 1.3f);
+            UIImage ambrosia = new Page().Image(TextureAssets.Item[ItemID.Ambrosia], 0.3f, 0.8f, 1.3f);
+            UIImage aegis = new Page().Image(TextureAssets.Item[ItemID.AegisFruit], 0.7f, 0.8f, 1.3f);
             Page page = new Page(Language.GetTextValue(path + "PageNames.Shimmer"), Language.GetTextValue(path + "Shimmer"), "https://terraria.wiki.gg/wiki/Shimmer", new List<UIImage> { walt, ambrosia, aegis });
             Pages.TryAdd(7, page);
         }
@@ -211,6 +223,16 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             Asset<Texture2D> shimmer = TextureAssets.Item[ItemID.BottomlessShimmerBucket];
             UIImage shimmerIcon = new Page().Image(shimmer, 0.5f, 0.5f, ScaleToFit: true);
             shimmerButton.Append(shimmerIcon);
+
+            UITextButton mapMarkersButton = new UITextButton("", 0, 0.05f, 40, 40, "Map Markers", SoundID.MenuClose);
+            mapMarkersButton.OnLeftClick += new MouseEvent(MarkerClicked);
+            mapMarkersButton.MarginLeft = 15;
+            mapMarkersButton.MarginTop = 225;
+            GuidebookPanel.Append(mapMarkersButton);
+
+            Asset<Texture2D> marker = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/Guidebook/Assets/IconMarker", AssetRequestMode.ImmediateLoad);
+            UIImage markerIcon = new Page().Image(marker, 0.5f, 0.5f, ScaleToFit: true);
+            mapMarkersButton.Append(markerIcon);
         }
 
         private void InitializeButtons()
@@ -269,6 +291,7 @@ namespace UltimateSkyblock.Content.UI.Guidebook
         private void FishingClicked(UIMouseEvent evt, UIElement listeningElement) => PageIndex = (int)PageID.Fishing;
         private void MiningClicked(UIMouseEvent evt, UIElement listeningElement) => PageIndex = (int)PageID.MiningSW;
         private void ShimmerClicked(UIMouseEvent evt, UIElement listeningElement) => PageIndex = (int)PageID.Shimmer;
+        private void MarkerClicked(UIMouseEvent evt, UIElement listeningElement) => PageIndex = (int)PageID.MapMarkers;
 
         // Secondary Icons (info / resources)
         private void DiscordClicked(UIMouseEvent evt, UIElement listeningElement) => Terraria.Utils.OpenToURL("https://discord.com/invite/G5cbT7tj9K");
@@ -289,13 +312,45 @@ namespace UltimateSkyblock.Content.UI.Guidebook
         {
             base.Update(gameTime);
             SafeguardIndex();
-            UpdatePage();
+            UpdatePage(gameTime);
+            CheckKeybinds();
+        }
+
+        public void CheckKeybinds()
+        {
+            if (KeybindSystem.CloseBookKeybind.JustPressed)
+            {
+                ModContent.GetInstance<GuidebookSystem>().HideMyUI();
+            }
+
+            if (KeybindSystem.PageRightKeybind.JustPressed)
+            {
+                string page = TryGetEntry(PageIndex + 1, StyleID.Page);
+                if (page != null)
+                    PageIndex++;
+            }
+
+            if (KeybindSystem.PageLeftKeybind.JustPressed)
+            {
+                string page = TryGetEntry(PageIndex - 1, 0);
+                if (page != null)
+                    PageIndex--;
+            }
+
+            if (KeybindSystem.WikiPageKeybind.JustPressed)
+            {
+                string wikiLink = TryGetEntry(PageIndex, StyleID.WikiPage);
+                if (wikiLink != null)
+                {
+                    Terraria.Utils.OpenToURL(wikiLink);
+                }
+            }
         }
 
         /// <summary>
         /// Handles updating the page. Updates text, title, page number, and buttons colors.
         /// </summary>
-        private void UpdatePage()
+        private void UpdatePage(GameTime gameTime)
         {
             string text = TryGetEntry(PageIndex, StyleID.Page);
             if (text != null)

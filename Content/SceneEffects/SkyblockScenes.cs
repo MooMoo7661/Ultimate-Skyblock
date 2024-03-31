@@ -1,26 +1,41 @@
+using System;
 using Terraria;
 using Terraria.ModLoader;
+using UltimateSkyblock.Content.Biomes;
 using UltimateSkyblock.Content.Configs;
+using UltimateSkyblock.Content.Tiles.Blocks;
 
 namespace UltimateSkyblock.Content.SceneEffects
 {
-    public class SkyblockScene_OtherworldDay : ModSceneEffect
+    public class SkyblockScene_OtherworldTrackManager : ModSceneEffect
     {
         public override bool IsSceneEffectActive(Player player)
         {
-            return player.ZoneForest && ModContent.GetInstance<MainClientConfig>().OWSoundtrack;
+            return ModContent.GetInstance<MainClientConfig>().OWSoundtrack;
         }
-        public override int Music => MusicLoader.GetMusicSlot(Mod, "Content/Sounds/Music/OWDay");
-        public override SceneEffectPriority Priority => SceneEffectPriority.BiomeMedium;
-    }
+        public override int Music
+        {
+            get
+            {
+                Player player = Main.LocalPlayer;
 
-    public class SkyblockScene_OtherworldDesert : ModSceneEffect
-    {
-        public override bool IsSceneEffectActive(Player player)
-        {
-            return player.ZoneDesert && ModContent.GetInstance<MainClientConfig>().OWSoundtrack;
+                if (Main.dayTime && Main.LocalPlayer.ZoneForest)
+                 return MusicLoader.GetMusicSlot(Mod, "Content/Sounds/Music/OWDay");
+                 else if (!Main.dayTime && Main.LocalPlayer.ZoneForest)
+                    return MusicLoader.GetMusicSlot(Mod, "Content/Sounds/Music/OWNight");
+
+                if (player.ZoneHallow)
+                    return MusicLoader.GetMusicSlot(Mod, "Content/Sounds/Music/OWHallow");
+
+                if (player.ZoneDesert)
+                    return MusicLoader.GetMusicSlot(Mod, "Content/Sounds/Music/OWDesert");
+
+                if (player.ZoneUnderworldHeight)
+                    return MusicLoader.GetMusicSlot(Mod, "Content/Sounds/Music/OWHell");
+
+                return -1;
+            }
         }
-        public override int Music => MusicLoader.GetMusicSlot(Mod, "Content/Sounds/Music/OWDesert");
         public override SceneEffectPriority Priority => SceneEffectPriority.BiomeMedium;
     }
 

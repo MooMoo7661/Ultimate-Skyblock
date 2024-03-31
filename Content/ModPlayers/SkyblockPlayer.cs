@@ -7,6 +7,10 @@ using static UltimateSkyblock.Content.SkyblockWorldGen.MainWorld;
 using UltimateSkyblock.Content.Configs;
 using SubworldLibrary;
 using System.Threading;
+using Terraria.Audio;
+using UltimateSkyblock.Content.UI.Guidebook;
+using CombinationsMod.Content.Keybindings;
+using UltimateSkyblock.Content.Items.Generic;
 
 namespace UltimateSkyblock.Content.ModPlayers
 {
@@ -31,18 +35,11 @@ namespace UltimateSkyblock.Content.ModPlayers
                 else
                     joinTimer++;
             }
-            
-            //Handles teleporting the player to the top of the world when falling out of the bottom.
+
+            //Kills player when falling out
             if (Player.position.ToTileCoordinates().Y >= Main.maxTilesY - 45 && SubworldSystem.Current == null)
             {
-                if (ModContent.GetInstance<SkyblockModConfig>().TeleportToTopOfWorldOnDeath)
-                {
-                    Player.Teleport(new Vector2(Player.position.X, 200), TeleportationStyleID.ShellphoneSpawn);
-                }
-                else
-                {
-                    Player.KillMe(PlayerDeathReason.ByCustomReason(Player.name + " fell out of the world"), 0, 0, false);
-                }
+                Player.KillMe(PlayerDeathReason.ByCustomReason(Player.name + " fell out of the world"), 0, 0, false);
             }
         }
 
@@ -50,6 +47,37 @@ namespace UltimateSkyblock.Content.ModPlayers
         {
             locked = false;
             joinTimer = 0;
+
+            for (int i = 0; i < Player.inventory.Length; i++)
+            {
+                Item item = Player.inventory[i];
+                if (item.ModItem is Lantern lantern)
+                {
+                    lantern.locked = true;
+                    lantern.teleportTimer = 0;
+                    lantern.reuseTimer = 7200;
+                }
+            }
+
+        }
+    
+
+
+        public override void PostUpdate()
+        {
+            if (KeybindSystem.OpenBookKeybind.JustPressed)
+            {
+                if (ModContent.GetInstance<GuidebookSystem>().IsUIOpen())
+                {
+                    SoundEngine.PlaySound(SoundID.MenuClose);
+                    ModContent.GetInstance<GuidebookSystem>().HideMyUI();
+                }
+                else
+                {
+                    SoundEngine.PlaySound(SoundID.MenuOpen);
+                    ModContent.GetInstance<GuidebookSystem>().ShowMyUI();
+                }
+            }
         }
     }
 }

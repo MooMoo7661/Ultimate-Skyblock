@@ -13,8 +13,6 @@ namespace UltimateSkyblock.Content.Configs
         public override ConfigScope Mode => ConfigScope.ServerSide;
 
         [Header("General")]
-        [DefaultValue(true)]
-        public bool TeleportToTopOfWorldOnDeath { get; set; }
 
         [DefaultValue(true)]
         public bool StoneGenerator { get; set; }

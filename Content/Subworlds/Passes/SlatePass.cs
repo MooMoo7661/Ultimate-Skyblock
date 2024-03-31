@@ -22,7 +22,7 @@ namespace UltimateSkyblock.Content.Subworlds.Passes
 
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
-            LoopWorldAndGenerateTilesWithDepthModifiers(15, strength: Main.rand.Next(63, 75), steps: Main.rand.Next(80, 110), type: ModContent.TileType<SlateTile>(), new List<int> { TileID.Stone }, levelToDisperse: (int)Main.rockLayer + 100, canGenerateAfterLevel: true);
+            LoopWorldAndGenerateTilesWithDepthModifiers(15, strength: Main.rand.Next(40, 60), steps: Main.rand.Next(40, 70), type: ModContent.TileType<SlateTile>(), new List<int> { TileID.Stone }, levelToDisperse: (int)Main.rockLayer + 100, canGenerateAfterLevel: true);
         }
     }
 }

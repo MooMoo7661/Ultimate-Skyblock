@@ -1,5 +1,6 @@
 using SubworldLibrary;
 using UltimateSkyblock.Content.Configs;
+using static UltimateSkyblock.Content.SkyblockWorldGen.IslandHandler;
 
 namespace UltimateSkyblock.Content.SkyblockWorldGen
 {
@@ -14,7 +15,6 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
         //All of the subworld generation is split into a bunch of passes for better organization in Subworlds/Passes
 
         /// <summary> Used with RollHellIslands to pick an island that is not the same as the previous one.</summary>
-        public static string previousStructure;
 
         public static float ScaleBasedOnWorldSizeX;
         public static float ScaleBasedOnWorldSizeY;
@@ -94,7 +94,7 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
             Mod.Logger.Info("World Size : " + WorldSize);
             Mod.Logger.Info("World Size Scale X : " + ScaleBasedOnWorldSizeX);
             Mod.Logger.Info("World Size Scale Y : " + ScaleBasedOnWorldSizeY);
-            Mod.Logger.Info("Dungeon Side : " + (dungeonLeft ? "Left" : "Right"));
+            Mod.Logger.Info("Dungeon Side : " + (DungeonLeft ? "Left" : "Right"));
         }
 
         private void SetWorldLayerHeights()
@@ -121,8 +121,6 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
         public override void ModifyHardmodeTasks(List<GenPass> list)
         {
             list.RemoveAll(task => task.Name != "Hardmode Announcement");
-
-            GenHallowedIslands();
         }
     }
 }

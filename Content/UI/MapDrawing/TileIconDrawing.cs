@@ -17,8 +17,11 @@ namespace UltimateSkyblock.Content.UI.MapDrawing
 
             foreach (var icon in icons)
             {
-                var name = context.Draw(icon.Texture, icon.Position, icon.DrawColor, new SpriteFrame(1, 1, 0, 0), icon.DeselectedScale, icon.SelectedScale, Alignment.Center);
-                if (name.IsMouseOver) { text = icon.HoverName; }
+                if (icon.enabled)
+                {
+                    var name = context.Draw(icon.Texture, icon.Position, icon.DrawColor, new SpriteFrame(1, 1, 0, 0), icon.DeselectedScale, icon.SelectedScale, Alignment.Center);
+                    if (name.IsMouseOver) { text = icon.HoverName; }
+                }
             }
 
             icons.Clear();
@@ -33,6 +36,7 @@ namespace UltimateSkyblock.Content.UI.MapDrawing
         public float SelectedScale;
         public float DeselectedScale;
         public string HoverName;
+        public bool enabled;
 
         public MapIcon(Vector2 position, Texture2D texture, Color drawColor, float selectedScale, float deselectedScale, string hoverName)
         {
@@ -42,6 +46,10 @@ namespace UltimateSkyblock.Content.UI.MapDrawing
             SelectedScale = selectedScale;
             DeselectedScale = deselectedScale;
             HoverName = hoverName;
+
+            enabled = true;
         }
+
+        public void Toggle() => enabled = !enabled;
     }
 }

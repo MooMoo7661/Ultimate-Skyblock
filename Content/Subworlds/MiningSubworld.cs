@@ -10,7 +10,7 @@ namespace UltimateSkyblock.Content.Subworlds
     {
         public override int Width => 1000;
         public override int Height => 1000;
-        public override bool ShouldSave => false;
+        public override bool ShouldSave => true;
         public override string Name => "Mining Subworld";
 
         private UIWorldLoad _menu;
@@ -41,7 +41,6 @@ namespace UltimateSkyblock.Content.Subworlds
             GenVars.rockLayer = Main.maxTilesY / 2;
             GenVars.oceanWaterStartRandomMin = 0;
             GenVars.oceanWaterStartRandomMax = 0;
-
             DeepstoneLayer = Main.UnderworldLayer - 300;
         }
 
@@ -56,7 +55,6 @@ namespace UltimateSkyblock.Content.Subworlds
             new HellBarrierPass("HellBarrier", 30),
             new SlatePass("Slate", 30),
             new HellPass("Hell", 100),
-            new HellStructurePass("HellStructures", 90),
             new OreGenerationPass("OreGen", 80),
             new DeepstoneFoliagePass("Foliage", 20),
             new TrapsPass("Traps", 30),

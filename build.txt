@@ -1,4 +1,7 @@
-displayName = Skyblock: Subworlds
+displayName = Ultimate Skyblock
 author = MooMoo
-version = 0.1
+version = 0.1.0.23
 modReferences = StructureHelper, TileFunctionLibrary, SubworldLibrary
+hideCode = true
+hideResources = true
+includeSource = false

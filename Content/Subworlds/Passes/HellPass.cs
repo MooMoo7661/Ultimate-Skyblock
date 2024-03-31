@@ -10,7 +10,7 @@ using Terraria.WorldBuilding;
 using UltimateSkyblock.Content.Items.Placeable;
 using static UltimateSkyblock.Content.Subworlds.MiningSubworld;
 using static UltimateSkyblock.Content.Subworlds.GenUtils;
-
+using UltimateSkyblock.Content.Utils;
 
 namespace UltimateSkyblock.Content.Subworlds.Passes
 {
@@ -108,6 +108,7 @@ namespace UltimateSkyblock.Content.Subworlds.Passes
             }
 
             WorldGen.AddHellHouses();
+            WorldGen.AddHellHouses();
 
             for (int x = 50; x < Main.maxTilesX - 50; x++)
             {
@@ -124,7 +125,7 @@ namespace UltimateSkyblock.Content.Subworlds.Passes
 
                         if (!up.HasTile && !up2.HasTile && !upRight.HasTile && !upRight2.HasTile)
                         {
-                            
+                            Generator.GenerateStructure("Content/Subworlds/SubStructures/UnderworldChest", new Point16(x, y - 2), UltimateSkyblock.Instance);
                         }
                     }
                 }
@@ -179,7 +180,17 @@ namespace UltimateSkyblock.Content.Subworlds.Passes
             // Hellstone generation
             LoopWorldAndGenerateTiles(2, Main.rand.Next(6, 10), Main.rand.Next(6, 10), type: TileID.Hellstone, tilesThatCanBeGeneratedOn: new List<int> { TileID.Ash }, minHeightRequirement: Main.UnderworldLayer + 60);
 
-
+            for (int x = 100; x < Main.maxTilesX - 100; x++)
+            {
+                for (int y = Main.UnderworldLayer; y < Main.maxTilesY - 50; y++)
+                {
+                    Tile tile = Framing.GetTileSafely(x, y);
+                    if (WorldGen.genRand.NextBool(4) && (tile.TileType == TileID.HangingLanterns || tile.TileType == TileID.Chandeliers || tile.TileType == TileID.Lamps))
+                    {
+                        WorldGen.KillTile(x, y, noItem: true);
+                    }
+                }
+            }
         }
     }
 }

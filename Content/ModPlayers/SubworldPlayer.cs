@@ -12,11 +12,6 @@ namespace UltimateSkyblock.Content.ModPlayers
 {
     public class SubworldPlayer : ModPlayer
 	{
-        public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)
-        {
-            SubworldSystem.Enter<MiningSubworld>();
-        }
-
         public override void PreUpdate()
         {
             if (SubworldSystem.AnyActive())

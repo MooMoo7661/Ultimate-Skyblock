@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.Chat;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using UltimateSkyblock.Content.SkyblockWorldGen;
 
 namespace UltimateSkyblock.Content.ModCommands
 {

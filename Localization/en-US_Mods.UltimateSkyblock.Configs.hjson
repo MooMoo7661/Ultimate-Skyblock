@@ -128,11 +128,6 @@ SkyblockModConfig: {
 		Label: Stone Generator Logic
 	}
 
-	TeleportToTopOfWorldOnDeath: {
-		Tooltip: ""
-		Label: Falling out of the world teleports you to the top
-	}
-
 	DisplayName: General Changes
 
 	RadioSlider: {

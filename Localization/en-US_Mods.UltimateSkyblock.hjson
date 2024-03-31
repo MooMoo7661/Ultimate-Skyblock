@@ -18,6 +18,12 @@ Buffs: {
 	}
 }
 
+GenericLocalizedText: {
+	LanternCooldown: On cooldown: {0} seconds
+	LanternCooldownFinished: Cooldown finished
+	ReturnTooltip: Use to return to the main world
+}
+
 LocalizedPages: {
 	PageNames: {
 		Intro: Intro
@@ -28,6 +34,7 @@ LocalizedPages: {
 		MiningSubworld: Mining Dimension
 		PlanteraSubworld: Plantera Dimension
 		Shimmer: Shimmer
+		MapMarkers: Map Markers
 	}
 
 	IntroPage:
@@ -40,7 +47,16 @@ LocalizedPages: {
 		On the left is a list of buttons with icons. These buttons are for quickly switching to important or
 		notable pages.
 		The book next to the left arrow will pull up an official wiki page related to the current page.
-		If it's grayed out, that means there's no wiki available.
+		If it's grayed out, it means there's no wiki available.
+
+		[c/FF9191:This is the beta, meaning some things are missing. Current missing features include:]
+		[c/FF9191:Crimson/Corruption Islands]
+		[c/FF9191:Outer left planetoids]
+		[c/FF9191:Some QOL Items & Recipes]
+
+		At the moment, the Mysterious Lantern is in your inventory by default. This will be changed,
+		it's only there to let you preview the Mining Dimension.
+		This is by no means the final version of the mod. Things are subject to change or be improved.
 		'''
 	TableOfContents:
 		'''
@@ -52,6 +68,7 @@ LocalizedPages: {
 		 6 : Fishing
 		 7 : Mining Dimension
 		 8 : Shimmer
+		 9 : Map Markers
 		'''
 	Progression1:
 		'''
@@ -133,9 +150,14 @@ LocalizedPages: {
 		It's very dark and dangerous in the Deepstone biome, however you can encounter a new structure called the
 		Deepstone Bunker. Useful loot is present in the chests here, such as potions, accessories, and more.
 
-		-The Darkness- 
-		While you are in the deepstone biome, you will be inflicted with darkness, making light sources less bright.
-		Glimmercap mushrooms can be found growing naturally on deepstone, and are able to be crafted into a potion.
+		While you are in the deepstone biome, you will be affected
+		with blindness. To cure this, equip a blindfold, which can
+		be found in chests inside of the Deepstone Bunkers.
+		Alternatively, collect some of the mushrooms found naturally
+		and craft them into a Glimmer Tonic. You will get 8 minutes of
+		immunity against blindness, and will not be inflicted with it.
+		There are 2 bunkers, both randomly generated. There can be
+		some good loot, but also traps and a lot of stronger enemies.
 		'''
 	Shimmer:
 		'''
@@ -147,6 +169,13 @@ LocalizedPages: {
 
 		You should try and use the environment to your advantage.
 		Each island has a wide palette of blocks that can be de-crafted into various items.
+		'''
+	MapMarkers:
+		'''
+		You may notice some odd "statues" placed on some islands. These are map markers.
+		They generate an icon on the map, to allow you to know where to go to find things.
+
+		Currently, this feature & page is unfinished, due to this being a beta.
 		'''
 }
 
@@ -160,4 +189,15 @@ Biomes: {
 NPCs: {
 	DeepstoneBat.DisplayName: Deepstone Bat
 	Deepknight.DisplayName: Deepknight
+}
+
+Keybinds: {
+	CloseBook.DisplayName: Close Book
+	PageRightKeybind.DisplayName: Page Right Keybind
+	PageLeftKeybind.DisplayName: Page Left Keybind
+	"Open Wiki Page.DisplayName": Open  Wiki  Page
+	"Close Book.DisplayName": Close  Book
+	"Page Right.DisplayName": Page  Right
+	"Page Left.DisplayName": Page  Left
+	"Open Guidebook.DisplayName": Open  Guidebook
 }

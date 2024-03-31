@@ -151,3 +151,43 @@ GlimmerTonic: {
 	DisplayName: Glimmer Tonic
 	Tooltip: ""
 }
+
+MiningLantern: {
+	DisplayName: Mysterious Lantern
+	Tooltip: Said to transport you somewhere magical when held up
+}
+
+ForestBiomeMarkerItem: {
+	DisplayName: Forest Biome Marker
+	Tooltip: ""
+}
+
+JungleBiomeMarkerItem: {
+	DisplayName: Jungle Biome Marker
+	Tooltip: ""
+}
+
+CorruptBiomeMarkerItem: {
+	DisplayName: Corrupt Biome Marker
+	Tooltip: ""
+}
+
+MushroomBiomeMarkerItem: {
+	DisplayName: Mushroom Biome Marker
+	Tooltip: ""
+}
+
+SnowBiomeMarkerItem: {
+	DisplayName: Snow Biome Marker
+	Tooltip: ""
+}
+
+CrimsonBiomeMarkerItem: {
+	DisplayName: Crimson Biome Marker
+	Tooltip: ""
+}
+
+HallowBiomeMarkerItem: {
+	DisplayName: Hallow Biome Marker
+	Tooltip: ""
+}

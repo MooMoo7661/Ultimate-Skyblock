@@ -8,3 +8,10 @@ SplitRingstalkMushroomTile.MapEntry: Split Ringstalk Mushroom Tile
 GlimmercapTile.MapEntry: Glimmercap
 SplitGlimmercapTile.MapEntry: Split Glimmercap
 PlanteraAltar.MapEntry: Plantera Altar
+ForestMarker.MapEntry: Forest Map Marker
+JungleMarker.MapEntry: Jungle Map Marker
+SnowMarker.MapEntry: Snow Map Marker
+MushroomMarker.MapEntry: Mushroom Map Marker
+CorruptMarker.MapEntry: Corrupt Map Marker
+CrimsonMarker.MapEntry: Crimson Map Marker
+HallowMarker.MapEntry: Hallow Map Marker

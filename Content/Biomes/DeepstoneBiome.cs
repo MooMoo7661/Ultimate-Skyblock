@@ -10,7 +10,7 @@ namespace UltimateSkyblock.Content.Biomes
         public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.GetInstance<DeepstoneUndergroundBackground>();
         public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Normal;
 
-        public override int Music => MusicLoader.GetMusicSlot("UltimateSkyblock/Sounds/Music/DeepstoneBiome");
+        public override int Music => MusicLoader.GetMusicSlot("UltimateSkyblock/Content/Sounds/Music/DeepstoneBiome");
 
         public override int BiomeTorchItemType => ItemID.Torch;
         public override int BiomeCampfireItemType => ItemID.Campfire;

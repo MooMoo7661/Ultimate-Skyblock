@@ -13,8 +13,14 @@ namespace UltimateSkyblock.Content.UI.MapDrawing
     public class NpcIconDrawing : ModMapLayer
     {
         private static readonly string path = "UltimateSkyblock/Content/UI/MapDrawing/Icons/";
-        public Texture2D friendly = ModContent.Request<Texture2D>(path + "IconFriendly", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-        public Texture2D hostile = ModContent.Request<Texture2D>(path + "IconHostile", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+        public static Asset<Texture2D> friendly;
+        public static Asset<Texture2D> hostile;
+
+        public override void Load()
+        {
+            hostile = ModContent.Request<Texture2D>(path + "IconHostile");
+            friendly = ModContent.Request<Texture2D>(path + "IconFriendly");
+        }
 
         public override void Draw(ref MapOverlayDrawContext context, ref string text)
         {
@@ -23,7 +29,7 @@ namespace UltimateSkyblock.Content.UI.MapDrawing
 
             foreach (NPC npc in Main.npc.SkipLast(1)) //Last is a dummy npc, don't want to interact with it
             {
-                Texture2D iconToDraw = (npc.CanBeChasedBy() || npc.damage > 0) ? hostile : friendly;
+                Texture2D iconToDraw = (npc.CanBeChasedBy() || npc.damage > 0) ? hostile.Value : friendly.Value;
 
                 if (npc.active && npc.life > 0 && !npc.boss && !npc.townNPC)
                 {

@@ -43,6 +43,12 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
     public class CorruptBiomeMapMarkerEntity : ModTileEntity
     {
         private MapIcon icon;
+        private static Asset<Texture2D> corrupt;
+
+        public override void Load()
+        {
+            corrupt = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/MapDrawing/Icons/IconEvilCorruption");
+        }
 
         public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
         {
@@ -85,9 +91,34 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
                 Kill(i, j);
             }
 
-            Texture2D forest = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/MapDrawing/Icons/IconEvilCorruption").Value;
-            icon = new MapIcon(new(Position.X + 1.5f, Position.Y), forest, Color.White, 1.1f, 0.8f, "Corrupt Marker");
+            icon = new MapIcon(new(Position.X + 1.5f, Position.Y), corrupt.Value, Color.White, 1.1f, 0.8f, "Corrupt Marker");
             TileIconDrawing.icons.Add(icon);
+
+            if (Main.rand.NextBool(60))
+            {
+                int x = Position.X + Main.rand.Next(-8, 8);
+                int y = Position.Y + Main.rand.Next(-8, 8);
+                Tile tile = Framing.GetTileSafely(x, y);
+                if (tile.HasTile)
+                {
+                    int type = tile.TileType switch
+                    {
+                        TileID.Stone => TileID.Ebonstone,
+                        TileID.Grass => TileID.CorruptGrass,
+                        TileID.Sand => TileID.Ebonsand,
+                        TileID.Sandstone => TileID.CorruptSandstone,
+                        TileID.IceBlock => TileID.CorruptIce,
+                        TileID.JungleGrass => TileID.CorruptJungleGrass,
+                        TileID.HardenedSand => TileID.CorruptHardenedSand,
+                        _ => -1
+                    };
+
+                    if (type == -1)
+                        return;
+
+                    WorldGen.PlaceTile(x, y, type, true, true);
+                }
+            }
         }
 
         public override void OnKill()

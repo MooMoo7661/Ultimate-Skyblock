@@ -42,6 +42,12 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
     public class ForestMapMarkerEntity : ModTileEntity
     {
         private MapIcon icon;
+        private static Asset<Texture2D> forest;
+
+        public override void Load()
+        {
+            forest = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/MapDrawing/Icons/IconForest");
+        }
 
         public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
         {
@@ -84,8 +90,7 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
                 Kill(i, j);
             }
 
-            Texture2D forest = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/MapDrawing/Icons/IconForest").Value;
-            icon = new MapIcon(new(Position.X + 1.5f, Position.Y), forest, Color.White, 1.1f, 0.8f, "Forest Marker");
+            icon = new MapIcon(new(Position.X + 1.5f, Position.Y), forest.Value, Color.White, 1.1f, 0.8f, "Forest Marker");
             TileIconDrawing.icons.Add(icon);
         }
 

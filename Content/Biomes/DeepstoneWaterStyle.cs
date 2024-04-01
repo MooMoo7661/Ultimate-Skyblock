@@ -2,6 +2,13 @@
 {
     public class DeepstoneWaterStyle : ModWaterStyle
     {
+        private static Asset<Texture2D> rain;
+
+        public override void Load()
+        {
+            rain = ModContent.Request<Texture2D>("UltimateSkyblock/Content/Biomes/DeepstoneRain");
+        }
+
         public override int ChooseWaterfallStyle()
         {
             return ModContent.GetInstance<DeepstoneWaterfallStyle>().Slot;
@@ -36,7 +43,7 @@
 
         public override Asset<Texture2D> GetRainTexture()
         {
-            return ModContent.Request<Texture2D>("UltimateSkyblock/Content/Biomes/DeepstoneRain");
+            return rain;
         }
     }
 }

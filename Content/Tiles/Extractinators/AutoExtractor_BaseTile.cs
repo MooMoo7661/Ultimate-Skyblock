@@ -18,6 +18,7 @@ namespace UltimateSkyblock.Content.Tiles.Extractinators
         protected abstract string TilesheetPath { get; }
         protected abstract int ExtractorTile { get; }
         protected abstract ModTileEntity Entity { get; }
+
         public override void SetStaticDefaults()
         {
 

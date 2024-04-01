@@ -43,6 +43,12 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
     public class MushroomBiomeMapMarkerEntity : ModTileEntity
     {
         private MapIcon icon;
+        private static Asset<Texture2D> mushroom;
+
+        public override void Load()
+        {
+            mushroom = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/MapDrawing/Icons/IconMushroom");
+        }
 
         public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
         {
@@ -85,8 +91,7 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
                 Kill(i, j);
             }
 
-            Texture2D forest = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/MapDrawing/Icons/IconMushroom").Value;
-            icon = new MapIcon(new(Position.X + 1.5f, Position.Y), forest, Color.White, 1.1f, 0.8f, "Mushroom Marker");
+            icon = new MapIcon(new(Position.X + 1.5f, Position.Y), mushroom.Value, Color.White, 1.1f, 0.8f, "Mushroom Marker");
             TileIconDrawing.icons.Add(icon);
         }
 

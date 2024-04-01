@@ -21,6 +21,12 @@ namespace UltimateSkyblock.Content.GlobalClasses
     public class GolemAltarMapIconEntity : ModTileEntity
     {
         private MapIcon icon;
+        private static Asset<Texture2D> golem;
+
+        public override void Load()
+        {
+            golem = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/MapDrawing/Icons/IconGolemAltar");
+        }
 
         public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
         {
@@ -63,8 +69,7 @@ namespace UltimateSkyblock.Content.GlobalClasses
                 Kill(i, j);
             }
 
-            Texture2D golem = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/MapDrawing/Icons/IconGolemAltar").Value;
-            icon = new MapIcon(new(Position.X + 1.5f, Position.Y), golem, Color.White, 1.1f, 0.8f, "Lihzahrd Altar");
+            icon = new MapIcon(new(Position.X + 1.5f, Position.Y), golem.Value, Color.White, 1.1f, 0.8f, "Lihzahrd Altar");
             TileIconDrawing.icons.Add(icon);
         }
 

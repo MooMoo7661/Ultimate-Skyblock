@@ -128,6 +128,12 @@ namespace UltimateSkyblock.Content.Tiles.Blocks
     public class PlanteraAltarMapIconEntity : ModTileEntity
     {
         private MapIcon icon;
+        private static Asset<Texture2D> plantera;
+
+        public override void Load()
+        {
+            plantera = Mod.Assets.Request<Texture2D>("Content/UI/Guidebook/Assets/PlanteraSWIcon");
+        }
 
         public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
         {
@@ -170,8 +176,7 @@ namespace UltimateSkyblock.Content.Tiles.Blocks
                 Kill(i, j);
             }
 
-            Texture2D plantera = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/Guidebook/Assets/PlanteraSWIcon").Value;
-            icon = new MapIcon(new(Position.X + 1.5f, Position.Y), plantera, Color.White, 1.1f, 0.8f, "Plantera Altar");
+            icon = new MapIcon(new(Position.X + 1.5f, Position.Y), plantera.Value, Color.White, 1.1f, 0.8f, "Plantera Altar");
             TileIconDrawing.icons.Add(icon);
         }
 

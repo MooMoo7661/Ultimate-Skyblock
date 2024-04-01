@@ -43,6 +43,12 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
     public class HallowBiomeMapMarkerEntity : ModTileEntity
     {
         private MapIcon icon;
+        private static Asset<Texture2D> hallow;
+
+        public override void Load()
+        {
+            hallow = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/MapDrawing/Icons/IconHallow");
+        }
 
         public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
         {
@@ -54,8 +60,6 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
                 NetMessage.SendData(MessageID.TileEntityPlacement, number: i, number2: j, number3: Type);
             }
 
-            // ModTileEntity.Place() handles checking if the entity can be placed, then places it for you
-            // Set "tileOrigin" to the same value you set TileObjectData.newTile.Origin to in the ModTile
             Point16 tileOrigin = new Point16(1, 1);
             int placedEntity = Place(i - tileOrigin.X, j - tileOrigin.Y);
             return placedEntity;
@@ -85,8 +89,7 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
                 Kill(i, j);
             }
 
-            Texture2D forest = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/MapDrawing/Icons/IconHallow").Value;
-            icon = new MapIcon(new(Position.X + 1.5f, Position.Y), forest, Color.White, 1.1f, 0.8f, "Hallow Marker");
+            icon = new MapIcon(new(Position.X + 1.5f, Position.Y), hallow.Value, Color.White, 1.1f, 0.8f, "Hallow Marker");
             TileIconDrawing.icons.Add(icon);
         }
 

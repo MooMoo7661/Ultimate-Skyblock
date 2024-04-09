@@ -250,7 +250,7 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
         /// </remarks>
         public static void GenerateChlorophytePlanetoid(Slice slice, int x)
         {
-            Point placePoint = new(x, SliceGenerationTasks.IslandHeight + slice.Length / 4 + WorldGen.genRand.Next(-15, 15));
+            Point placePoint = new(x, SliceGenerationTasks.IslandHeight + 40 + slice.Length / 4 + WorldGen.genRand.Next(-15, 15));
             int size = WorldGen.genRand.Next(14, 21);
             ShapeData shapeData = new ShapeData();
             WorldUtils.Gen(placePoint, new Shapes.Circle(size, size), new Actions.SetTile(TileID.Mud));

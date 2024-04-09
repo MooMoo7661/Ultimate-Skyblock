@@ -17,7 +17,10 @@ namespace UltimateSkyblock.Content.Tiles.Environment
             Main.tileMerge[Type][Type] = true;
             Main.tileSolid[Type] = true;
             Main.tileMerge[Type][TileID.Stone] = true;
+            Main.tileMerge[Type][TileID.BlueDungeonBrick] = true;
             Main.tileMerge[TileID.Stone][Type] = true;
+            Main.tileMerge[TileID.BlueDungeonBrick][Type] = true;
+
             Main.tileLighted[Type] = false;
             Main.tileNoSunLight[Type] = false;
             Main.tileBlockLight[Type] = true;

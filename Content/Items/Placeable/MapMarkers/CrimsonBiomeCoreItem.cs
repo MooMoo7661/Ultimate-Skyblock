@@ -14,7 +14,7 @@ using UltimateSkyblock.Content.Tiles.Furniture.MapMarkers;
 
 namespace UltimateSkyblock.Content.Items.Placeable.MapMarkers
 {
-    public class ForestBiomeMarkerItem : ModItem
+    public class CrimsonBiomeCoreItem : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -34,7 +34,8 @@ namespace UltimateSkyblock.Content.Items.Placeable.MapMarkers
             Item.useTime = 10;
             Item.autoReuse = true;
             Item.consumable = true;
-            Item.createTile = ModContent.TileType<ForestBiomeMarker>();
+            Item.rare = ItemRarityID.Quest;
+            Item.createTile = ModContent.TileType<CrimsonBiomeCore>();
             Item.placeStyle = 0;
         }
     }

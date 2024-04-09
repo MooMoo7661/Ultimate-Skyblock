@@ -9,7 +9,7 @@ using UltimateSkyblock.Content.UI.MapDrawing;
 
 namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
 {
-    public class SnowBiomeMarker : ModTile
+    public class HallowBiomeCore : ModTile
     {
         public override void SetStaticDefaults()
         {
@@ -22,31 +22,32 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
             TileID.Sets.PreventsSandfall[Type] = true;
             TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
-            DustType = DustID.Grass;
+            DustType = DustID.HallowedPlants;
 
             // Placement
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
             TileObjectData.newTile.Width = 3;
             TileObjectData.newTile.Height = 3;
             TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.DrawYOffset = 6;
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 18 };
-            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<SnowBiomeMapMarkerEntity>().Hook_AfterPlacement, -1, 0, false);
+            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<HallowBiomeMapMarkerEntity>().Hook_AfterPlacement, -1, 0, false);
             TileObjectData.newTile.UsesCustomCanPlace = true;
             TileObjectData.addTile(Type);
 
             // Etc
-            AddMapEntry(new Color(179, 242, 233), Language.GetText("Mods.UltimateSkyblock.Tiles.SnowMarker.MapEntry"));
+            AddMapEntry(new Color(255, 0, 0), Language.GetText("Mods.UltimateSkyblock.Tiles.HallowMarker.MapEntry"));
         }
     }
 
-    public class SnowBiomeMapMarkerEntity : ModTileEntity
+    public class HallowBiomeMapMarkerEntity : ModTileEntity
     {
         private MapIcon icon;
-        private static Asset<Texture2D> snow;
+        private static Asset<Texture2D> hallow;
 
         public override void Load()
         {
-            snow = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/MapDrawing/Icons/IconSnow");
+            hallow = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/MapDrawing/Icons/IconHallow");
         }
 
         public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
@@ -59,8 +60,6 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
                 NetMessage.SendData(MessageID.TileEntityPlacement, number: i, number2: j, number3: Type);
             }
 
-            // ModTileEntity.Place() handles checking if the entity can be placed, then places it for you
-            // Set "tileOrigin" to the same value you set TileObjectData.newTile.Origin to in the ModTile
             Point16 tileOrigin = new Point16(1, 1);
             int placedEntity = Place(i - tileOrigin.X, j - tileOrigin.Y);
             return placedEntity;
@@ -69,7 +68,7 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
         public override bool IsTileValidForEntity(int x, int y)
         {
             var tile = Main.tile[x, y];
-            return tile.HasTile && tile.TileType == ModContent.TileType<SnowBiomeMarker>();
+            return tile.HasTile && tile.TileType == ModContent.TileType<HallowBiomeCore>();
         }
 
 
@@ -90,8 +89,34 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
                 Kill(i, j);
             }
 
-            icon = new MapIcon(new(Position.X + 1.5f, Position.Y), snow.Value, Color.White, 1.1f, 0.8f, "Snow Marker");
+            icon = new MapIcon(new(Position.X + 1.5f, Position.Y), hallow.Value, Color.White, 1.1f, 0.8f, "Hallow Marker");
             TileIconDrawing.icons.Add(icon);
+
+
+            if (Main.rand.NextBool(60))
+            {
+                int x = Position.X + Main.rand.Next(-8, 8);
+                int y = Position.Y + Main.rand.Next(-8, 8);
+                Tile tile = Framing.GetTileSafely(x, y);
+                if (tile.HasTile)
+                {
+                    int type = tile.TileType switch
+                    {
+                        TileID.Stone => TileID.Pearlstone,
+                        TileID.Grass => TileID.HallowedGrass,
+                        TileID.Sand => TileID.Pearlsand,
+                        TileID.Sandstone => TileID.HallowSandstone,
+                        TileID.IceBlock => TileID.HallowedIce,
+                        TileID.HardenedSand => TileID.HallowHardenedSand,
+                        _ => -1
+                    };
+
+                    if (type == -1)
+                        return;
+
+                    WorldGen.PlaceTile(x, y, type, true, true);
+                }
+            }
         }
 
         public override void OnKill()

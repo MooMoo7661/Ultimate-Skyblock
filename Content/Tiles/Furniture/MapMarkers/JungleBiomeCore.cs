@@ -9,7 +9,7 @@ using UltimateSkyblock.Content.UI.MapDrawing;
 
 namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
 {
-    public class ForestBiomeMarker : ModTile
+    public class JungleBiomeCore : ModTile
     {
         public override void SetStaticDefaults()
         {
@@ -30,23 +30,23 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
             TileObjectData.newTile.Height = 3;
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 18 };
-            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<ForestMapMarkerEntity>().Hook_AfterPlacement, -1, 0, false);
+            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<JungleBiomeMapMarkerEntity>().Hook_AfterPlacement, -1, 0, false);
             TileObjectData.newTile.UsesCustomCanPlace = true;
             TileObjectData.addTile(Type);
 
             // Etc
-            AddMapEntry(new Color(30, 94, 20), Language.GetText("Mods.UltimateSkyblock.Tiles.ForestMarker.MapEntry"));
+            AddMapEntry(new Color(255, 120, 230), Language.GetText("Mods.UltimateSkyblock.Tiles.JungleMarker.MapEntry"));
         }
     }
 
-    public class ForestMapMarkerEntity : ModTileEntity
+    public class JungleBiomeMapMarkerEntity : ModTileEntity
     {
         private MapIcon icon;
-        private static Asset<Texture2D> forest;
+        private static Asset<Texture2D> jungle;
 
         public override void Load()
         {
-            forest = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/MapDrawing/Icons/IconForest");
+            jungle = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/MapDrawing/Icons/IconJungle");
         }
 
         public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
@@ -69,7 +69,7 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
         public override bool IsTileValidForEntity(int x, int y)
         {
             var tile = Main.tile[x, y];
-            return tile.HasTile && tile.TileType == ModContent.TileType<ForestBiomeMarker>();
+            return tile.HasTile && tile.TileType == ModContent.TileType<JungleBiomeCore>();
         }
 
 
@@ -90,8 +90,32 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
                 Kill(i, j);
             }
 
-            icon = new MapIcon(new(Position.X + 1.5f, Position.Y), forest.Value, Color.White, 1.1f, 0.8f, "Forest Marker");
+            icon = new MapIcon(new(Position.X + 1.5f, Position.Y), jungle.Value, Color.White, 1.1f, 0.8f, "Jungle Marker");
             TileIconDrawing.icons.Add(icon);
+
+
+            if (Main.rand.NextBool(60))
+            {
+                int x = Position.X + Main.rand.Next(-8, 8);
+                int y = Position.Y + Main.rand.Next(-8, 8);
+                Tile tile = Framing.GetTileSafely(x, y);
+                if (tile.HasTile)
+                {
+                    int type = tile.TileType switch
+                    {
+                        TileID.Dirt => TileID.Mud,
+                        TileID.Sand => TileID.Mud,
+                        TileID.Grass => TileID.JungleGrass,
+                        TileID.Sandstone => TileID.Mudstone,
+                        _ => -1
+                    };
+
+                    if (type == -1)
+                        return;
+
+                    WorldGen.PlaceTile(x, y, type, true, true);
+                }
+            }
         }
 
         public override void OnKill()

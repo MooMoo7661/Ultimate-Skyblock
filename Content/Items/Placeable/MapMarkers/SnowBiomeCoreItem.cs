@@ -14,7 +14,7 @@ using UltimateSkyblock.Content.Tiles.Furniture.MapMarkers;
 
 namespace UltimateSkyblock.Content.Items.Placeable.MapMarkers
 {
-    public class SnowBiomeMarkerItem : ModItem
+    public class SnowBiomeCoreItem : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -34,7 +34,8 @@ namespace UltimateSkyblock.Content.Items.Placeable.MapMarkers
             Item.useTime = 10;
             Item.autoReuse = true;
             Item.consumable = true;
-            Item.createTile = ModContent.TileType<SnowBiomeMarker>();
+            Item.rare = ItemRarityID.Quest;
+            Item.createTile = ModContent.TileType<SnowBiomeCore>();
             Item.placeStyle = 0;
         }
     }

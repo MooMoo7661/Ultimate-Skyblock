@@ -14,7 +14,7 @@ using UltimateSkyblock.Content.Tiles.Furniture.MapMarkers;
 
 namespace UltimateSkyblock.Content.Items.Placeable.MapMarkers
 {
-    public class JungleBiomeMarkerItem : ModItem
+    public class JungleBiomeCoreItem : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -34,7 +34,8 @@ namespace UltimateSkyblock.Content.Items.Placeable.MapMarkers
             Item.useTime = 10;
             Item.autoReuse = true;
             Item.consumable = true;
-            Item.createTile = ModContent.TileType<JungleBiomeMarker>();
+            Item.rare = ItemRarityID.Quest;
+            Item.createTile = ModContent.TileType<JungleBiomeCore>();
             Item.placeStyle = 0;
         }
     }

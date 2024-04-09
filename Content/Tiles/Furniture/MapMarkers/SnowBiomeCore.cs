@@ -9,7 +9,7 @@ using UltimateSkyblock.Content.UI.MapDrawing;
 
 namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
 {
-    public class CrimsonBiomeMarker : ModTile
+    public class SnowBiomeCore : ModTile
     {
         public override void SetStaticDefaults()
         {
@@ -22,32 +22,31 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
             TileID.Sets.PreventsSandfall[Type] = true;
             TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
-            DustType = DustID.Crimson;
+            DustType = DustID.SnowBlock;
 
             // Placement
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
             TileObjectData.newTile.Width = 3;
             TileObjectData.newTile.Height = 3;
             TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.DrawYOffset = 6;
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 18 };
-            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<CrimsonBiomeMapMarkerEntity>().Hook_AfterPlacement, -1, 0, false);
+            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<SnowBiomeMapMarkerEntity>().Hook_AfterPlacement, -1, 0, false);
             TileObjectData.newTile.UsesCustomCanPlace = true;
             TileObjectData.addTile(Type);
 
             // Etc
-            AddMapEntry(new Color(247, 96, 142), Language.GetText("Mods.UltimateSkyblock.Tiles.CrimsonMarker.MapEntry"));
+            AddMapEntry(new Color(179, 242, 233), Language.GetText("Mods.UltimateSkyblock.Tiles.SnowMarker.MapEntry"));
         }
     }
 
-    public class CrimsonBiomeMapMarkerEntity : ModTileEntity
+    public class SnowBiomeMapMarkerEntity : ModTileEntity
     {
         private MapIcon icon;
-        private static Asset<Texture2D> crimson;
+        private static Asset<Texture2D> snow;
 
         public override void Load()
         {
-            crimson = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/MapDrawing/Icons/IconEvilCrimson");
+            snow = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/MapDrawing/Icons/IconSnow");
         }
 
         public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
@@ -70,7 +69,7 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
         public override bool IsTileValidForEntity(int x, int y)
         {
             var tile = Main.tile[x, y];
-            return tile.HasTile && tile.TileType == ModContent.TileType<CrimsonBiomeMarker>();
+            return tile.HasTile && tile.TileType == ModContent.TileType<SnowBiomeCore>();
         }
 
 
@@ -91,26 +90,21 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
                 Kill(i, j);
             }
 
-            icon = new MapIcon(new(Position.X + 1.5f, Position.Y), crimson.Value, Color.White, 1.1f, 0.8f, "Crimson Marker");
+            icon = new MapIcon(new(Position.X + 1.5f, Position.Y), snow.Value, Color.White, 1.1f, 0.8f, "Snow Marker");
             TileIconDrawing.icons.Add(icon);
-
 
             if (Main.rand.NextBool(60))
             {
                 int x = Position.X + Main.rand.Next(-8, 8);
                 int y = Position.Y + Main.rand.Next(-8, 8);
                 Tile tile = Framing.GetTileSafely(x, y);
+
                 if (tile.HasTile)
                 {
                     int type = tile.TileType switch
                     {
-                        TileID.Stone => TileID.Crimstone,
-                        TileID.Grass => TileID.CrimsonGrass,
-                        TileID.Sand => TileID.Crimsand,
-                        TileID.Sandstone => TileID.CrimsonSandstone,
-                        TileID.IceBlock => TileID.FleshIce,
-                        TileID.JungleGrass => TileID.CrimsonJungleGrass,
-                        TileID.HardenedSand => TileID.CrimsonHardenedSand,
+                        TileID.BreakableIce => TileID.IceBlock,
+                        TileID.Dirt => TileID.SnowBlock,
                         _ => -1
                     };
 
@@ -118,6 +112,11 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
                         return;
 
                     WorldGen.PlaceTile(x, y, type, true, true);
+                }
+                else if (tile.LiquidType == LiquidID.Water && tile.LiquidAmount >= 50)
+                {
+                    tile.LiquidAmount = 0;
+                    WorldGen.PlaceTile(x, y, TileID.BreakableIce, true, true);
                 }
             }
         }

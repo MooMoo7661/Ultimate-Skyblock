@@ -9,7 +9,7 @@ using UltimateSkyblock.Content.UI.MapDrawing;
 
 namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
 {
-    public class MushroomBiomeMarker : ModTile
+    public class ForestBiomeCore : ModTile
     {
         public override void SetStaticDefaults()
         {
@@ -22,32 +22,31 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
             TileID.Sets.PreventsSandfall[Type] = true;
             TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
-            DustType = DustID.GlowingMushroom;
+            DustType = DustID.Grass;
 
             // Placement
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
             TileObjectData.newTile.Width = 3;
             TileObjectData.newTile.Height = 3;
             TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.DrawYOffset = 2;
-            TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16 };
-            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<MushroomBiomeMapMarkerEntity>().Hook_AfterPlacement, -1, 0, false);
+            TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 18 };
+            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<ForestMapMarkerEntity>().Hook_AfterPlacement, -1, 0, false);
             TileObjectData.newTile.UsesCustomCanPlace = true;
             TileObjectData.addTile(Type);
 
             // Etc
-            AddMapEntry(new Color(5, 61, 181), Language.GetText("Mods.UltimateSkyblock.Tiles.MushroomMarker.MapEntry"));
+            AddMapEntry(new Color(30, 94, 20), Language.GetText("Mods.UltimateSkyblock.Tiles.ForestMarker.MapEntry"));
         }
     }
 
-    public class MushroomBiomeMapMarkerEntity : ModTileEntity
+    public class ForestMapMarkerEntity : ModTileEntity
     {
         private MapIcon icon;
-        private static Asset<Texture2D> mushroom;
+        private static Asset<Texture2D> forest;
 
         public override void Load()
         {
-            mushroom = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/MapDrawing/Icons/IconMushroom");
+            forest = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/MapDrawing/Icons/IconForest");
         }
 
         public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
@@ -70,7 +69,7 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
         public override bool IsTileValidForEntity(int x, int y)
         {
             var tile = Main.tile[x, y];
-            return tile.HasTile && tile.TileType == ModContent.TileType<MushroomBiomeMarker>();
+            return tile.HasTile && tile.TileType == ModContent.TileType<ForestBiomeCore>();
         }
 
 
@@ -91,8 +90,35 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
                 Kill(i, j);
             }
 
-            icon = new MapIcon(new(Position.X + 1.5f, Position.Y), mushroom.Value, Color.White, 1.1f, 0.8f, "Mushroom Marker");
+            icon = new MapIcon(new(Position.X + 1.5f, Position.Y), forest.Value, Color.White, 1.1f, 0.8f, "Forest Marker");
             TileIconDrawing.icons.Add(icon);
+
+
+            if (Main.rand.NextBool(20))
+            {
+                int x = Position.X + Main.rand.Next(-8, 8);
+                int y = Position.Y + Main.rand.Next(-8, 8);
+                Tile tile = Framing.GetTileSafely(x, y);
+                if (tile.HasTile)
+                {
+                    int type = tile.TileType switch
+                    {
+                        TileID.Crimstone or TileID.Ebonstone or TileID.Pearlstone => TileID.Stone,
+                        TileID.CorruptGrass or TileID.CrimsonGrass or TileID.HallowedGrass => TileID.Grass,
+                        TileID.Crimsand or TileID.Ebonsand or TileID.Pearlsand => TileID.Sand,
+                        TileID.CrimsonSandstone or TileID.CorruptSandstone or TileID.HallowSandstone => TileID.Sandstone,
+                        TileID.FleshIce or TileID.CorruptIce or TileID.HallowedIce => TileID.IceBlock,
+                        TileID.CrimsonJungleGrass or TileID.CorruptJungleGrass => TileID.JungleGrass,
+                        TileID.CrimsonHardenedSand or TileID.CorruptHardenedSand or TileID.HallowHardenedSand => TileID.HardenedSand,
+                        _ => -1
+                    };
+
+                    if (type == -1)
+                        return;
+
+                    WorldGen.PlaceTile(x, y, type, true, true);
+                }
+            }
         }
 
         public override void OnKill()

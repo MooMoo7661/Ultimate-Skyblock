@@ -9,7 +9,7 @@ using UltimateSkyblock.Content.UI.MapDrawing;
 
 namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
 {
-    public class CorruptBiomeMarker : ModTile
+    public class CorruptBiomeCore : ModTile
     {
         public override void SetStaticDefaults()
         {
@@ -70,7 +70,7 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
         public override bool IsTileValidForEntity(int x, int y)
         {
             var tile = Main.tile[x, y];
-            return tile.HasTile && tile.TileType == ModContent.TileType<CorruptBiomeMarker>();
+            return tile.HasTile && tile.TileType == ModContent.TileType<DungeonDoor>();
         }
 
 

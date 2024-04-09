@@ -14,7 +14,7 @@ using Terraria.ModLoader;
 using UltimateSkyblock.Content.Tiles.Blocks;
 using static UltimateSkyblock.Content.Subworlds.GenUtils;
 
-namespace UltimateSkyblock.Content.Subworlds.Passes
+namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 {
     public class SlatePass : GenPass
     {

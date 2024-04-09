@@ -11,7 +11,7 @@ using UltimateSkyblock.Content.Items.Placeable;
 using static UltimateSkyblock.Content.Subworlds.MiningSubworld;
 using static UltimateSkyblock.Content.Subworlds.GenUtils;
 
-namespace UltimateSkyblock.Content.Subworlds.Passes
+namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 {
     public class OreGenerationPass : GenPass
     {

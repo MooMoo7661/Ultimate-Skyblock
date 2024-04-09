@@ -12,7 +12,7 @@ using static UltimateSkyblock.Content.Subworlds.MiningSubworld;
 using static UltimateSkyblock.Content.Subworlds.GenUtils;
 using UltimateSkyblock.Content.Utils;
 
-namespace UltimateSkyblock.Content.Subworlds.Passes
+namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 {
     public class HellPass : GenPass
     {

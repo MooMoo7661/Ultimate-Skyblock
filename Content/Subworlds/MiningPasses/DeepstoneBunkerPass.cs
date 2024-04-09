@@ -15,7 +15,7 @@ using Terraria.DataStructures;
 using Terraria.Utilities;
 using Terraria.ModLoader;
 
-namespace UltimateSkyblock.Content.Subworlds.Passes
+namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 {
     public class DeepstoneBunkerPass : GenPass
     {

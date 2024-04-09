@@ -12,7 +12,7 @@ using static UltimateSkyblock.Content.Subworlds.MiningSubworld;
 using Terraria.ModLoader;
 using UltimateSkyblock.Content.Tiles.Blocks;
 
-namespace UltimateSkyblock.Content.Subworlds.Passes
+namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 {
     public class DeepstoneFoliagePass : GenPass
     {

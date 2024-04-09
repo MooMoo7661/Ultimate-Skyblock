@@ -59,15 +59,31 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
 
         public static void GenerateDungeon(Slice slice)
         {
-            // x - 29
-            // y - 10
+            // y - 44
+            // x - 86
 
-            Generator.GenerateStructure("Content/SkyblockWorldGen/Structures/DungeonIsland", new Point16(Main.dungeonX - 29, Main.dungeonY - 10), UltimateSkyblock.Instance);
+            // x - 169
+
+            int yOffset = 86;
+            int xOffset = 45;
+
+            string path = "Content/SkyblockWorldGen/Structures/DungeonCastle" + (WorldGen.crimson ? "Crimson" : "Corrupt");
+            if (slice.CenterInWorld < Main.maxTilesX / 2)
+            {
+                path += "Left";
+                xOffset = 166;
+            }
+
+            Point16 placePoint = new Point16(slice.CenterInWorld, IslandHeight + WorldGen.genRand.Next(-25, 25));
+
+            Generator.GenerateStructure(path, placePoint, UltimateSkyblock.Instance);
+            Main.dungeonX = placePoint.X + xOffset;
+            Main.dungeonY = placePoint.Y + yOffset;
         }
 
         public static void GenerateMushroom(Slice slice)
         {
-            Generator.GenerateStructure("Content/SkyblockWorldGen/Structures/MushroomIsland", new Point16(WorldGen.genRand.Next(slice.LengthMin + 30, slice.LengthMax - 30), IslandHeight + WorldGen.genRand.Next(-40, 40)), UltimateSkyblock.Instance);
+            Generator.GenerateStructure("Content/SkyblockWorldGen/Structures/MushroomIsland", new Point16(WorldGen.genRand.Next(slice.LengthMin + slice.Length / 4, slice.LengthMax - slice.Length / 4), IslandHeight + WorldGen.genRand.Next(-40, 40)), UltimateSkyblock.Instance);
         }
 
         public static void GenerateEvilIslands(Slice slice) { }
@@ -91,7 +107,6 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
                 1 => 12,
                 _ => 8,
             };
-
 
             switch (config.StarterChestStyle)
             {

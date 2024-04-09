@@ -149,7 +149,7 @@ Glimmercap: {
 
 GlimmerTonic: {
 	DisplayName: Glimmer Tonic
-	Tooltip: ""
+	Tooltip: Provides 8 minutes of blindness immunity
 }
 
 MiningLantern: {
@@ -157,37 +157,67 @@ MiningLantern: {
 	Tooltip: Said to transport you somewhere magical when held up
 }
 
-ForestBiomeMarkerItem: {
-	DisplayName: Forest Biome Marker
-	Tooltip: ""
+CorruptBiomeCoreItem: {
+	DisplayName: Corrupt Biome Core
+	Tooltip:
+		'''
+		Resembles a large, grotesque worm
+		Spreads the corruption to nearby blocks
+		'''
 }
 
-JungleBiomeMarkerItem: {
-	DisplayName: Jungle Biome Marker
-	Tooltip: ""
+CrimsonBiomeCoreItem: {
+	DisplayName: Crimson Biome Core
+	Tooltip:
+		'''
+		A meaty, pulsating organism that looks like a brain
+		Spreads the crimson to nearby blocks
+		'''
 }
 
-CorruptBiomeMarkerItem: {
-	DisplayName: Corrupt Biome Marker
-	Tooltip: ""
+ForestBiomeCoreItem: {
+	DisplayName: Forest Biome Core
+	Tooltip:
+		'''
+		"Smells like freshly cut grass"
+		Purifies surrounding blocks
+		'''
 }
 
-MushroomBiomeMarkerItem: {
-	DisplayName: Mushroom Biome Marker
-	Tooltip: ""
+HallowBiomeCoreItem: {
+	DisplayName: Hallow Biome Core
+	Tooltip:
+		'''
+		"You are my sunshine..."
+		Spreads the hallow to nearby blocks
+		'''
 }
 
-SnowBiomeMarkerItem: {
-	DisplayName: Snow Biome Marker
-	Tooltip: ""
+JungleBiomeCoreItem: {
+	DisplayName: Jungle Biome Core
+	Tooltip:
+		'''
+		Reminds you of a familiar looking plant..
+		Spreads the jungle to nearby blocks
+		'''
 }
 
-CrimsonBiomeMarkerItem: {
-	DisplayName: Crimson Biome Marker
-	Tooltip: ""
+MushroomBiomeCoreItem: {
+	DisplayName: Glowing Mushroom Biome Core
+	Tooltip:
+		'''
+		"There is a fungus amongus"
+		Turns nearby exposed mud into mushroom grass
+		Converts jungle grass into mushroom grass
+		'''
 }
 
-HallowBiomeMarkerItem: {
-	DisplayName: Hallow Biome Marker
-	Tooltip: ""
+SnowBiomeCoreItem: {
+	DisplayName: Snow Biome Core
+	Tooltip:
+		'''
+		Chills the air around you
+		Nearby water gets turned into thin ice, then later solid ice
+		Converts dirt into snow
+		'''
 }

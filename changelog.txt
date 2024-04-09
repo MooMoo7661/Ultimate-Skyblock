@@ -1,1 +1,3 @@
-walt
+Added some biome cores
+Added castle for the dungeon
+other small tweaks idk I forgot

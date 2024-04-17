@@ -108,7 +108,6 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
             }
 
             WorldGen.AddHellHouses();
-            WorldGen.AddHellHouses();
 
             for (int x = 50; x < Main.maxTilesX - 50; x++)
             {

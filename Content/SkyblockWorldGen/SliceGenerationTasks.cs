@@ -1,4 +1,5 @@
-﻿using tModPorter;
+﻿using Terraria.ModLoader.UI;
+using tModPorter;
 using UltimateSkyblock.Content.Items.Bombs;
 using UltimateSkyblock.Content.Items.Placeable;
 using UltimateSkyblock.Content.Tiles.Environment;
@@ -164,9 +165,9 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
                         break;
 
                     case ChestType.Simple:
-                        chest.Add(ItemID.EmptyBucket);
-                        chest.Add(ItemID.SandBlock, 15);
-                        chest.Add(ItemID.Acorn, 2);
+                        chest.Add(new Item(ItemID.EmptyBucket));
+                        chest.Add(new Item(ItemID.SandBlock, 15));
+                        chest.Add(new Item(ItemID.Acorn, 2));
                         break;
 
                     case ChestType.Luxury:
@@ -240,18 +241,19 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
         public static void GenerateHallowIslands(Slice slice)
         {
             Point16 center = new Point16(slice.CenterInWorld, IslandHeight);
-            Generator.GenerateStructure(WorldHelpers.hallowPath + "Big", center, UltimateSkyblock.Instance);
+            Generator.GenerateStructure(WorldHelpers.hallowPath + "Lake", center, UltimateSkyblock.Instance);
 
             List<string> structures = new()
             {
                 hallowPath + "Statue",
                 hallowPath + "Lamp",
                 hallowPath + "Campfire",
-                //hallowPath + "Cave",
-                //hallowPath + "Lamp"
+                hallowPath + "Tiny",
+                hallowPath + "Big",
+                hallowPath + "House"
             };
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 5; i++)
             {
                 Point16 genPoint = i switch
                 {
@@ -259,7 +261,8 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
                     1 => new Point16(slice.LengthMin + slice.Length / 6 + WorldGen.genRand.Next(-10, 30), IslandHeight + WorldGen.genRand.Next(-10, 30)), // left
                     2 => new Point16(slice.CenterInWorld + WorldGen.genRand.Next(-25, 25), IslandHeight - slice.Length / 5 + WorldGen.genRand.Next(-20, 20)), // top
                     3 => new Point16(slice.LengthMax - slice.Length / 7, IslandHeight + WorldGen.genRand.Next(-20, 20)), // right
-                    4 => new Point16(slice.CenterInWorld + WorldGen.genRand.Next(-50, 50), IslandHeight + slice.Length / 6 + WorldGen.genRand.Next(40)) // bottom
+                    4 => new Point16(slice.CenterInWorld + WorldGen.genRand.Next(-50, 50), IslandHeight + slice.Length / 6 + WorldGen.genRand.Next(40)), // bottom
+                    5 => new Point16(slice.CenterInWorld + WorldGen.genRand.Next(-slice.Length / 8, slice.Length / 8), IslandHeight - slice.Length / 6 -  140)
                 };
 
                 int index = WorldGen.genRand.Next(structures.Count);

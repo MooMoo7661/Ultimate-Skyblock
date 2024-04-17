@@ -26,8 +26,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
                 for (int y = 100; y < Main.maxTilesY - 100; y++)
                 {
                     Tile tile = Framing.GetTileSafely(x, y);
-                    Tile tileUp = Framing.GetTileSafely(x, y - 1);
-                    if (tile.HasTile && tile.LiquidAmount == 0 /*&& !tileUp.HasTile*/ && Main.rand.NextBool(15) && traps < 100)
+                    if (tile.HasTile && tile.LiquidAmount == 0 /*&& !tileUp.HasTile*/ && Main.rand.NextBool(30) && traps < 50)
                     {
                         if (WorldGen.placeTrap(x, y))
                         {

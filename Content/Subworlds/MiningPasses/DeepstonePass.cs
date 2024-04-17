@@ -9,6 +9,7 @@ using Terraria.IO;
 using Terraria.WorldBuilding;
 using UltimateSkyblock.Content.Items.Placeable;
 using static UltimateSkyblock.Content.Subworlds.MiningSubworld;
+using UltimateSkyblock.Content.Tiles.Blocks;
 
 namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 {
@@ -29,7 +30,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 
                 for (int y = Main.UnderworldLayer - 205; y < Main.maxTilesY; y++)
                 {
-                    if (Framing.GetTileSafely(x, y).TileType == TileID.Stone || Framing.GetTileSafely(x, y).TileType == MiningSubworld.Slate)
+                    if (Framing.GetTileSafely(x, y).TileType == TileID.Stone || Framing.GetTileSafely(x, y).TileType == ModContent.TileType<SlateTile>())
                     {
                         Framing.GetTileSafely(x, y).ClearTile();
                         WorldGen.PlaceTile(x, y, MiningSubworld.Deepstone, true);

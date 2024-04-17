@@ -23,7 +23,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
             LoopWorldAndGenerateTilesWithDepthModifiers(8, strength: Main.rand.Next(9, 18), steps: Main.rand.Next(8, 22), type: TileID.Sandstone, tilesThatCanBeGeneratedOn: new List<int> { MiningSubworld.Slate, TileID.Stone }, levelToDisperse: Main.UnderworldLayer, canGenerateAfterLevel: false);
 
             UltimateSkyblock.Instance.Logger.Info("Generating Dirt");
-            LoopWorldAndGenerateTilesWithDepthModifiers(3, Main.rand.Next(8, 13), Main.rand.Next(20, 34), type: TileID.Dirt, new List<int> { TileID.Stone, MiningSubworld.Slate }, Main.maxTilesY - (Main.maxTilesY / 4), false, 200);
+            LoopWorldAndGenerateTilesWithDepthModifiers(3, Main.rand.Next(8, 13), Main.rand.Next(14, 22), type: TileID.Dirt, new List<int> { TileID.Stone, MiningSubworld.Slate }, Main.maxTilesY - (Main.maxTilesY / 4), false, 200);
 
             UltimateSkyblock.Instance.Logger.Info("Generating Copper or Tin");
             LoopWorldAndGenerateTilesWithDepthModifiers(8, Main.rand.Next(6, 10), Main.rand.Next(22, 30), SubVars.copper, new List<int> { TileID.Stone, MiningSubworld.Slate }, Main.UnderworldLayer - 100, false, 100);

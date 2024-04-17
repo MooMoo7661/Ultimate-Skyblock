@@ -20,6 +20,7 @@ namespace UltimateSkyblock.Content.Tiles.Environment.Foliage
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
+            Main.tileWaterDeath[Type] = true;
             Main.tileObsidianKill[Type] = true;
             Main.tileCut[Type] = true;
             Main.tileLighted[Type] = true;
@@ -31,6 +32,7 @@ namespace UltimateSkyblock.Content.Tiles.Environment.Foliage
             RegisterItemDrop(ModContent.ItemType<Items.Placeable.Glimmercap>(), 1);
             RegisterItemDrop(ModContent.ItemType<Items.Placeable.Glimmercap>());
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
+            TileObjectData.newTile.WaterDeath = true;
             TileObjectData.newTile.AnchorValidTiles = new int[] { ModContent.TileType<DeepstoneTile>() };
             TileObjectData.addTile(Type);
 

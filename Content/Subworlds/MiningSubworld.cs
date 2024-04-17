@@ -46,37 +46,32 @@ namespace UltimateSkyblock.Content.Subworlds
             DeepstoneLayer = Main.UnderworldLayer - 300;
         }
 
-        public sealed override List<GenPass> Tasks
+        public override List<GenPass> Tasks => new List<GenPass>()
         {
-            get
-            {
-                List<GenPass> returnList = new List<GenPass>
-                {
-                    //Basic worldgen
-                    new InitialEarthPass("FillWorld", 200f),
-                    new BasicPerlinCaveWorldFeatureGenerator("Perlin", 237.4298f),
+            //Basic worldgen
+            new InitialEarthPass("FillWorld", 200f),
+            new BasicPerlinCaveWorldFeatureGenerator("Perlin", 237.4298f),
 
-                    //Detailed worldgen
-                    new DeepstonePass("Deepslate", 50),
-                    new HellBarrierPass("HellBarrier", 30),
-                    new SlatePass("Slate", 30),
-                    new HellPass("Hell", 100),
-                    new OreGenerationPass("OreGen", 80),
-                    new DeepstoneFoliagePass("Foliage", 20),
-                    new TrapsPass("Traps", 30),
-                    new GeodePass("Geodes", 25),
-                    new DropletsPass("Droplets", 15),
-                    new SmoothPass("Smoothing", 15),
-                    new StalactitesPass("Stalactites", 30),
-                    new DeepstoneBunkerPass("DeepstoneBunker", 40),
-                    new CleanupPass("Cleanup", 80),
+            //Detailed worldgen
+            new DeepstonePass("Deepslate", 50),
+            new HellBarrierPass("HellBarrier", 30),
+            new SlatePass("Slate", 30),
+            new HellPass("Hell", 100),
+            new WaterPass("WaterPockets", 50),
+            new OreGenerationPass("OreGen", 80),
+            new DeepstoneFoliagePass("Foliage", 20),
+            new TrapsPass("Traps", 30),
+            new GeodePass("Geodes", 25),
+            new MiningHousesPass("MiningHouses", 10),
+            new DropletsPass("Droplets", 15),
+            new SmoothPass("Smoothing", 15),
+            new StalactitesPass("Stalactites", 30),
+            new DeepstoneBunkerPass("DeepstoneBunker", 40),
+            new CaveFeaturesPass("CaveFeatures", 20),
+            new CleanupPass("Cleanup", 80),
 
-                    new SpawnPass("Setting up Spawn", 0.5f)
-                };
-
-                return returnList;
-            }
-        }
+            new SpawnPass("Setting up Spawn", 0.5f)
+        };
 
         public class InitialEarthPass : GenPass
         {

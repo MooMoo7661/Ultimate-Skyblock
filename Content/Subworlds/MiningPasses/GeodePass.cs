@@ -17,15 +17,14 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
             int geodesCount = 0;
             progress.Message = "Generating Geodes";
 
-            for (int q = 0; q < 30; q++)
+            for (int q = 0; q < 20; q++)
             {
-
-                int x = Main.rand.Next(100, Main.maxTilesX - 100);
-                int y = Main.rand.Next(100, Main.UnderworldLayer - 200);
+                int x = Main.rand.Next(60, Main.maxTilesX - 60);
+                int y = Main.rand.Next(60, Main.UnderworldLayer - 200);
 
                 Tile tile = Framing.GetTileSafely(x, y);
 
-                if (tile.HasTile && tile.TileType == TileID.Stone && WorldGen.InWorld(x, y) && geodesCount < 15)
+                if (tile.HasTile && GenUtils.MostlyAir(20, 20, x, y) && tile.TileType == TileID.Stone && WorldGen.InWorld(x, y) && geodesCount < 15)
                 {
                     Point placePoint = new Point(x, y);
                     ShapeData fullData = new ShapeData();
@@ -36,10 +35,8 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
                         int width = Main.rand.Next(7, 12);
                         int height = Main.rand.Next(7, 12);
 
-
                         WorldUtils.Gen(placePoint, new Shapes.Circle(width, height), new Actions.SetTile(TileID.Marble));
                         WorldUtils.Gen(placePoint, new Shapes.Circle(width, height), new Actions.Blank().Output(fullData));
-
                     }
 
                     for (int i = 0; i < 5; i++)

@@ -19,7 +19,6 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
             progress.Message = "Creating Hell Barrier";
-            // This is to help prevent gem caves from leaking into hell. Generates a long strip of stone to seperate hell from the caverns.
             for (int x = 0; x < Main.maxTilesX; x++)
             {
                 for (int y = Main.UnderworldLayer - 210; y < Main.UnderworldLayer - 200; y++)

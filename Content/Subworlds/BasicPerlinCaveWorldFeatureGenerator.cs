@@ -27,7 +27,6 @@ namespace UltimateSkyblock.Content.Subworlds
         {
             int noiseSeed = seed;
             caveNoise = new FastNoise(noiseSeed);
-            UltimateSkyblock.Instance.Logger.Info("Noise Seed: " + noiseSeed);
             caveNoise.SetFrequency(0.02f); //0.02
             caveNoise.SetFractalOctaves(2); // 2
             caveNoise.SetFractalGain(1.6f); // 1.6f
@@ -37,12 +36,13 @@ namespace UltimateSkyblock.Content.Subworlds
             //caveNoise.SetFractalPingPongStrength(4.9f);
             caveNoise.SetFractalType(fractalType); //fbm
             caveNoise.SetNoiseType(noiseType); //perlin
-
         }
 
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
-            seed = new UnifiedRandom((int)DateTime.Now.Ticks).Next(1000) * (int)(((Main.time / 10 + 1) * (Main.GlobalTimeWrappedHourly / 25f) + 1) / 69);
+            UltimateSkyblock.Instance.Logger.Info("Noise Seed: " + seed);
+
+            seed = Math.Clamp(new UnifiedRandom((int)DateTime.Now.Ticks).Next(1000) * (int)(((Main.time / 10 + 1) * (Main.GlobalTimeWrappedHourly / 25f) + 1) / 69), -int.MaxValue, int.MaxValue);
             fractalType = (FastNoise.FractalType)config.FractalType;
             noiseType = (FastNoise.NoiseType)config.PerlinNoiseType;
 

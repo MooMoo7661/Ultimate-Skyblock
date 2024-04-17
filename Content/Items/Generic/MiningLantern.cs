@@ -55,6 +55,13 @@ namespace UltimateSkyblock.Content.Items.Generic
             return true;
         }
 
+        //public override bool AltFunctionUse(Player player)
+        //{
+        //    locked = false;
+        //    reuseTimer = 0;
+        //    return true;
+        //}
+
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             if (reuseTimer > 0)

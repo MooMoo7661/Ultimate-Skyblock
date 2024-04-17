@@ -25,43 +25,10 @@ namespace UltimateSkyblock.Content.Utils
         {
             for (int i = 0; i < chest.item.Length; i++)
             {
-                Item chestSlot = chest.item[i];
                 if (chest.item[i].NullOrAir()) // Gets the closest index of a chest that's empty
                 {
                     chest.item[i].SetDefaults(item.type);
                     chest.item[i].stack = item.stack;
-                    return;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Tries to add items to the chest. Will find the next open air slot.<para>Does not combine item stacks, only for simple uses.</para>
-        /// </summary>
-        public static void Add(this Chest chest, int type)
-        {
-            for (int i = 0; i < chest.item.Length; i++)
-            {
-                if (chest.item[i].NullOrAir()) // Gets the closest index of a chest that's empty
-                {
-                    chest.item[i].SetDefaults(type);
-                    chest.item[i].stack = 1;
-                    return;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Tries to add items to the chest. Will find the next open air slot.<para>Does not combine item stacks, only for simple uses.</para>
-        /// </summary>
-        public static void Add(this Chest chest, int type, int stack)
-        {
-            for (int i = 0; i < chest.item.Length; i++)
-            {
-                if (chest.item[i].NullOrAir()) // Gets the closest index of a chest that's empty
-                {
-                    chest.item[i].SetDefaults(type);
-                    chest.item[i].stack = stack;
                     return;
                 }
             }
@@ -103,5 +70,7 @@ namespace UltimateSkyblock.Content.Utils
                 }
             }
         }
+
+        public static bool Valid(this Tile tile) => tile.HasTile && tile.Slope == SlopeType.Solid;
     }
 }

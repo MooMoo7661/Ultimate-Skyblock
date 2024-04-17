@@ -3,6 +3,7 @@ using CombinationsMod.Content.Keybindings;
 using Terraria.Audio;
 using Terraria;
 using UltimateSkyblock.Content.Utils;
+using Terraria.ModLoader.UI;
 
 namespace UltimateSkyblock.Content.UI.Guidebook
 {   
@@ -25,8 +26,7 @@ namespace UltimateSkyblock.Content.UI.Guidebook
         UIImage wikiPageIcon;
         UIImage discordLinkIcon;
 
-        Color DefaultColor = new Color(44, 57, 105, 178); // Default color of standard terraria UI.
-
+        Color DefaultColor = new(UICommon.MainPanelBackground.R, UICommon.MainPanelBackground.G, UICommon.MainPanelBackground.B, 222);
         public int PageIndex = 0;
         string MainPage = "";
 
@@ -114,10 +114,9 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             Main.instance.LoadItem(ItemID.BottomlessShimmerBucket);
             Main.instance.LoadItem(ItemID.Ambrosia);
 
-            Asset<Texture2D> waltAsset = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/Guidebook/Assets/PageTest", AssetRequestMode.ImmediateLoad);
-            UIImage walt = new Page().Image(waltAsset, 0.5f, 0.8f, 1.3f);
-            UIImage ambrosia = new Page().Image(TextureAssets.Item[ItemID.Ambrosia], 0.3f, 0.8f, 1.3f);
-            UIImage aegis = new Page().Image(TextureAssets.Item[ItemID.AegisFruit], 0.7f, 0.8f, 1.3f);
+            UIImage walt = new Page().Image(TextureAssets.Item[ItemID.BottomlessShimmerBucket], 0.5f, 0.8f, 1.3f);
+            UIImage ambrosia = new Page().Image(TextureAssets.Item[ItemID.Ambrosia], 0.425f, 0.8f, 1.3f);
+            UIImage aegis = new Page().Image(TextureAssets.Item[ItemID.AegisFruit], 0.575f, 0.8f, 1.3f);
             Page page = new Page(Language.GetTextValue(path + "PageNames.Shimmer"), Language.GetTextValue(path + "Shimmer"), "https://terraria.wiki.gg/wiki/Shimmer", new List<UIImage> { walt, ambrosia, aegis });
             Pages.TryAdd(7, page);
         }
@@ -129,18 +128,16 @@ namespace UltimateSkyblock.Content.UI.Guidebook
         {
             AddPages();
 
-            string title = "Skyblock Guidebook";
-
             GuidebookPanel = new DraggableUIPanel();
             GuidebookPanel.SetPadding(0);
             GuidebookPanel.HAlign = 0.5f;
             GuidebookPanel.VAlign = 0.1f;
             GuidebookPanel.Width.Set(1000f, 0f);
             GuidebookPanel.Height.Set(650f, 0f);
-            GuidebookPanel.BackgroundColor = new Color(73, 94, 171);
+            GuidebookPanel.BackgroundColor = DefaultColor;
             Append(GuidebookPanel);
 
-            Title = new UIText(title);
+            Title = new UIText("Skyblock Guidebook");
             Title.HAlign = 0.5f;
             Title.MarginTop = 15;
             GuidebookPanel.Append(Title);
@@ -151,7 +148,6 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             GuidebookPanel.Append(QuickPages);
 
             PageNumber = new UIText("- " + (PageIndex + 1).ToString() + " -");
-
             PageNumber.HAlign = 0.5f;
             PageNumber.MarginTop = 450;
             GuidebookPanel.Append(PageNumber);
@@ -179,13 +175,14 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             mainButton.MarginTop = 45;
             GuidebookPanel.Append(mainButton);
 
+            UIImageButton button;
+
             Asset<Texture2D> home = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/Guidebook/Assets/MainPage", AssetRequestMode.ImmediateLoad);
             UIImage mainIcon = new UIImage(home);
             mainIcon.HAlign = 0.5f;
             mainIcon.VAlign = 0.5f;
             mainIcon.ScaleToFit = true;
             mainButton.Append(mainIcon);
-
             UITextButton fishingButton = new UITextButton("", 0, 0.05f, 40, 40, "Fishing", SoundID.MenuClose);
             fishingButton.OnLeftClick += new MouseEvent(FishingClicked);
             fishingButton.MarginLeft = 15;
@@ -205,7 +202,6 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             miningSWButton.MarginLeft = 15;
             miningSWButton.MarginTop = 135;
             GuidebookPanel.Append(miningSWButton);
-
             Asset<Texture2D> mining = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/Guidebook/Assets/MiningSWIcon", AssetRequestMode.ImmediateLoad);
             UIImage miningPage = new UIImage(mining);
             miningPage.HAlign = 0.5f;
@@ -218,7 +214,6 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             shimmerButton.MarginLeft = 15;
             shimmerButton.MarginTop = 180;
             GuidebookPanel.Append(shimmerButton);
-
             Main.instance.LoadItem(ItemID.BottomlessShimmerBucket);
             Asset<Texture2D> shimmer = TextureAssets.Item[ItemID.BottomlessShimmerBucket];
             UIImage shimmerIcon = new Page().Image(shimmer, 0.5f, 0.5f, ScaleToFit: true);
@@ -229,7 +224,6 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             mapMarkersButton.MarginLeft = 15;
             mapMarkersButton.MarginTop = 225;
             GuidebookPanel.Append(mapMarkersButton);
-
             Asset<Texture2D> marker = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/Guidebook/Assets/IconMarker", AssetRequestMode.ImmediateLoad);
             UIImage markerIcon = new Page().Image(marker, 0.5f, 0.5f, ScaleToFit: true);
             mapMarkersButton.Append(markerIcon);
@@ -237,9 +231,11 @@ namespace UltimateSkyblock.Content.UI.Guidebook
 
         private void InitializeButtons()
         {
-            UITextButton close = new UITextButton("X", 0.975f, 0.025f, 40, 30, Language.GetTextValue("LegacyInterface.52"), SoundID.MenuClose);
-            close.OnLeftClick += new MouseEvent(CloseClicked);
-            GuidebookPanel.Append(close);
+            Asset<Texture2D> closeAsset = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/Guidebook/Assets/SearchCancel", AssetRequestMode.ImmediateLoad);
+            CloseButton closeButton = new CloseButton(closeAsset, "close");
+            closeButton.HAlign = 0.98f;
+            closeButton.VAlign = 0.02f;
+            GuidebookPanel.Append(closeButton);
 
             LeftButton = new UITextButton("<", 0.05f, 0.95f, 130, 34, "", SoundID.MenuTick);
             LeftButton.OnLeftClick += new MouseEvent(PageAdvancementLeft);
@@ -284,8 +280,6 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             trello.Append(trelloLinkIcon);
         }
 
-        private void CloseClicked(UIMouseEvent evt, UIElement listeningElement) => ModContent.GetInstance<GuidebookSystem>().HideMyUI();
-
         // Quick Icons
         private void HomeClicked(UIMouseEvent evt, UIElement listeningElement) => PageIndex = (int)PageID.Main;
         private void FishingClicked(UIMouseEvent evt, UIElement listeningElement) => PageIndex = (int)PageID.Fishing;
@@ -318,6 +312,9 @@ namespace UltimateSkyblock.Content.UI.Guidebook
 
         public void CheckKeybinds()
         {
+            if (Main.LocalPlayer.mouseInterface)
+                return;
+
             if (KeybindSystem.CloseBookKeybind.JustPressed)
             {
                 ModContent.GetInstance<GuidebookSystem>().HideMyUI();
@@ -399,10 +396,10 @@ namespace UltimateSkyblock.Content.UI.Guidebook
 
             //Updating button/icon colors
             string page = TryGetEntry(PageIndex - 1, StyleID.Page);
-            LeftButton.BackgroundColor = page == null ? Color.Gray : DefaultColor;
+            LeftButton.BackgroundColor = page == null ? new Color(60, 60, 60) : DefaultColor;
 
             page = TryGetEntry(PageIndex + 1, StyleID.Page);
-            RightButton.BackgroundColor = page == null ? Color.Gray : DefaultColor;
+            RightButton.BackgroundColor = page == null ? new Color(60, 60, 60) : DefaultColor;
 
             string wiki = TryGetEntry(PageIndex, StyleID.WikiPage);
             wikiPageIcon.Color = wiki == null ? Color.Gray : Color.White;

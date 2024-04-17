@@ -6,11 +6,19 @@ using UltimateSkyblock.Content.Items.Placeable;
 using UltimateSkyblock.Content.Tiles.Blocks;
 using System.Collections.Generic;
 using Terraria.WorldBuilding;
+using System;
+using UltimateSkyblock.Content.Utils;
 
 namespace UltimateSkyblock.Content.Subworlds
 {
     public class GenUtils
     {
+
+        public static bool SuitableFor2x2(int x, int y)  => 
+            Framing.GetTileSafely(x, y).Valid() && Framing.GetTileSafely(x + 1, y).Valid() &&
+            !Framing.GetTileSafely(x, y - 1).HasTile && !Framing.GetTileSafely(x + 1, y - 1).HasTile &&
+            !Framing.GetTileSafely(x + 1, y - 2).HasTile && !Framing.GetTileSafely(x + 2, y - 2).HasTile;
+
 
         public static void GetSurroundingTiles(int x, int y, out Tile tileLeft, out Tile tileRight, out Tile tileTop, out Tile tileBottom)
         {
@@ -40,6 +48,49 @@ namespace UltimateSkyblock.Content.Subworlds
                     }
                 }
             }
+        }
+
+        public static bool MostlyAir(int width, int height, int i, int j)
+        {
+            int numAir = 0;
+            int numSolid = 0;
+
+            for (int x = i - width; x < i + width; x++)
+            {
+                for (int y = j - width; y < j + height; y++)
+                {
+                    if (WorldGen.InWorld(x, y))
+                    {
+                        if (Framing.GetTileSafely(x, y).HasTile)
+                            numSolid++;
+                        else
+                            numAir++;
+                    }
+                }
+            }
+
+            return numAir > numSolid;
+        }
+
+        public static bool AreaContainsSensitiveTiles(List<int> tiles, int i, int j, int width, int height)
+        {
+            for (int x = i - width; x < i + width; x++)
+            {
+                for (int y = j - width; y < j + height; y++)
+                {
+                    if (WorldGen.InWorld(x, y))
+                    {
+                        Tile tile = Framing.GetTileSafely(x, y);
+                        if (tiles.Contains(tile.TileType))
+                        {
+                            UltimateSkyblock.Instance.Logger.Info("Found sensitive tile at " + new Point(x, y));
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
         }
 
 

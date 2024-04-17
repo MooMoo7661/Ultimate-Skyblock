@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using SubworldLibrary;
 using Terraria.GameContent.UI.States;
+using UltimateSkyblock.Content.Configs;
 using UltimateSkyblock.Content.Subworlds.DungeonPasses;
 using UltimateSkyblock.Content.Subworlds.MiningPasses;
 using UltimateSkyblock.Content.Tiles.Blocks;
@@ -12,7 +13,7 @@ namespace UltimateSkyblock.Content.Subworlds
     {
         public override int Width => 1000;
         public override int Height => 1000;
-        public override bool ShouldSave => true;
+        public override bool ShouldSave => ModContent.GetInstance<SubworldConfig>().SubworldSaving;
         public override string Name => "Mining Subworld";
 
         private UIWorldLoad _menu;

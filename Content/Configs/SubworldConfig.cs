@@ -23,5 +23,10 @@ namespace UltimateSkyblock.Content.Configs
         [Range(0, 5)]
         [ReloadRequired]
         public int FractalType { get; set; }
+
+        [DefaultValue(true)]
+        [BackgroundColor(255, 187, 127)]
+        [ReloadRequired]
+        public bool SubworldSaving { get; set; }
     }
 }

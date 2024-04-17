@@ -1,3 +1,33 @@
-Added some biome cores
-Added castle for the dungeon
-other small tweaks idk I forgot
+Update 0.2 is a small update to spice up the mining subworld a little, and a few other minor tweaks.
+
+You can change whether subworld save by default to experience the new generation.
+This will wipe the world upon each joining if set to false.
+
+*= Mining Subworld Tweaks =*
+
+Added:
+Mining houses
+Life crystals
+Pots & rubble generation
+Secret painting inside of mining houses
+Stalagmites (Stalactite -> ceiling, Stalagmite -> floor)
+
+Geode max count reduced from 30 -> 20
+Water now generates in medium sized pockets
+Guidebook UI tweaks: Background color changed & close button re-done
+Traps now generate with half of the previous chance
+Slate generation reduced significantly
+Dirt generation reduced slightly
+Hell houses are no longer generated twice. Previously, this caused houses to generate inside each other.
+
+Bug Fixes:
+Glimmercaps no longer are immune to water, and can no longer spawn in water
+Smoothing now only applies to stone, slate, and deepstone
+
+Current Known Bugs:
+Smoothing does apply to most structures, since the smoothing pass is done near the end.
+
+*= Main World Tweaks =*
+
+Added:
+3 new hallow islands

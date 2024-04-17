@@ -1,6 +1,6 @@
 displayName = Ultimate Skyblock
 author = MooMoo
-version = 1.1
+version = 1.2
 modReferences = StructureHelper, TileFunctionLibrary, SubworldLibrary
 hideCode = true
 hideResources = true

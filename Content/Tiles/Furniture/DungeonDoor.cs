@@ -51,7 +51,7 @@ namespace UltimateSkyblock.Content.Tiles.Furniture
         public override bool RightClick(int i, int j)
         {
             Main.NewText("Dungeon Subworld coming soon!", Color.IndianRed);
-            SubworldSystem.Enter<DungeonSubworld>();
+            //SubworldSystem.Enter<DungeonSubworld>();
             return true;
         }
 

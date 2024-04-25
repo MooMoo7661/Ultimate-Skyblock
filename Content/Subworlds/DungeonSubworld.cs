@@ -27,6 +27,21 @@ namespace UltimateSkyblock.Content.Subworlds
                 base.DrawMenu(gameTime);
         }
 
+        public override void OnEnter()
+        {
+            SubworldSystem.hideUnderworld = false;
+        }
+
+        public override void OnLoad()
+        {
+            Main.worldSurface = 0;
+            GenVars.worldSurfaceHigh = 0;
+            GenVars.worldSurfaceLow = 0;
+            GenVars.rockLayer = Main.maxTilesY / 2;
+            GenVars.oceanWaterStartRandomMin = 0;
+            GenVars.oceanWaterStartRandomMax = 0;
+        }
+
         public sealed override List<GenPass> Tasks
         {
             get
@@ -34,15 +49,11 @@ namespace UltimateSkyblock.Content.Subworlds
                 List<GenPass> returnList = new List<GenPass>
                 {
                     new BasicWorldGenPass("Setting world stats", 5f),
+                    new DungeonGenerationPass("Dungeon Generation", 300f)
                 };
 
                 return returnList;
             }
-        }
-
-        public override void OnEnter()
-        {
-            SubworldSystem.hideUnderworld = false;
         }
     }
 }

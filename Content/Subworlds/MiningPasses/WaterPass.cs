@@ -24,7 +24,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
                 for (int y = 0; y < Main.maxTilesY - 500; y++)
                 {
                     Tile tile = Framing.GetTileSafely(x, y);
-                    if (!tile.HasTile && WorldGen.genRand.NextBool(500) && !GenUtils.MostlyAir(22, 22, x, y))
+                    if (!tile.HasTile && WorldGen.genRand.NextBool(900) && !GenUtils.MostlyAir(22, 22, x, y))
                     {
                         int xOffset = WorldGen.genRand.Next(12, 16);
                         int yOffset = WorldGen.genRand.Next(12, 16);
@@ -74,11 +74,6 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
                     if (num538 == 1)
                     {
                         progress.Set(num541 / 3f + 0.33f);
-                    }
-                    int num542 = 10;
-                    if (num538 > num542)
-                    {
-                        num542 = num538;
                     }
                     Liquid.UpdateLiquid();
                 }

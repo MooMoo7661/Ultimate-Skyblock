@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ID;
-using Terraria.Localization;
-using Terraria.ModLoader;
-using UltimateSkyblock.Content.Buffs;
-using UltimateSkyblock.Content.Items.Placeable;
-
+﻿using UltimateSkyblock.Content.Buffs;
 namespace UltimateSkyblock.Content.Items.Generic
 {
     public class GlimmerTonic : ModItem

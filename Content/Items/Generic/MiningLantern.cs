@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using SubworldLibrary;
 using Terraria;
 using Terraria.Audio;
@@ -42,7 +43,7 @@ namespace UltimateSkyblock.Content.Items.Generic
             Item.maxStack = 1;
             Item.consumable = false;
             Item.rare = ItemRarityID.Orange;
-            Item.value = Terraria.Item.buyPrice(gold: 5);
+            Item.value = Item.buyPrice(gold: 5);
             Item.holdStyle = ItemHoldStyleID.HoldLamp;
         }
 
@@ -55,12 +56,12 @@ namespace UltimateSkyblock.Content.Items.Generic
             return true;
         }
 
-        //public override bool AltFunctionUse(Player player)
-        //{
-        //    locked = false;
-        //    reuseTimer = 0;
-        //    return true;
-        //}
+        public override bool AltFunctionUse(Player player)
+        {
+            locked = false;
+            reuseTimer = 0;
+            return true;
+        }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {

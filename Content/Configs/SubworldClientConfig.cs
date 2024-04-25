@@ -11,15 +11,12 @@ namespace UltimateSkyblock.Content.Configs
 
         [Header("WorldGenDebugInfo")]
         [DefaultValue(true)]
-        [BackgroundColor(0, 255, 0)]
         public bool ShowFastNoiseSeed { get; set; }
 
         [DefaultValue(false)]
-        [BackgroundColor(0, 255, 0)]
         public bool ShowFractalType { get; set; }
 
         [DefaultValue(false)]
-        [BackgroundColor(0, 255, 0)]
         public bool ShowPerlinType { get; set; }
     }
 }

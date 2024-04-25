@@ -11,6 +11,8 @@ Life crystals
 Pots & rubble generation
 Secret painting inside of mining houses
 Stalagmites (Stalactite -> ceiling, Stalagmite -> floor)
+Large, natural stalagtites/mites now spawn, composed only of solid blocks.
+Special world selection UI for skyblock worlds
 
 Geode max count reduced from 30 -> 20
 Water now generates in medium sized pockets
@@ -23,6 +25,7 @@ Hell houses are no longer generated twice. Previously, this caused houses to gen
 Bug Fixes:
 Glimmercaps no longer are immune to water, and can no longer spawn in water
 Smoothing now only applies to stone, slate, and deepstone
+Droplets will now no longer spawn as water droplets below the hell layer.
 
 Current Known Bugs:
 Smoothing does apply to most structures, since the smoothing pass is done near the end.

@@ -12,6 +12,7 @@ using Terraria.ObjectData;
 using Microsoft.Xna.Framework;
 using UltimateSkyblock.Content.Tiles.Blocks;
 using Terraria.DataStructures;
+using UltimateSkyblock.Content.Items.Generic;
 
 namespace UltimateSkyblock.Content.Tiles.Environment.Foliage
 {
@@ -29,8 +30,8 @@ namespace UltimateSkyblock.Content.Tiles.Environment.Foliage
             LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(121, 84, 229), name);
 
-            RegisterItemDrop(ModContent.ItemType<Items.Placeable.Glimmercap>(), 1);
-            RegisterItemDrop(ModContent.ItemType<Items.Placeable.Glimmercap>());
+            RegisterItemDrop(ModContent.ItemType<Glimmercap>(), 1);
+            RegisterItemDrop(ModContent.ItemType<Glimmercap>());
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
             TileObjectData.newTile.WaterDeath = true;
             TileObjectData.newTile.AnchorValidTiles = new int[] { ModContent.TileType<DeepstoneTile>() };

@@ -14,9 +14,9 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
-            int geodesCount = 0;
             progress.Message = "Generating Geodes";
 
+            int geodesCount = 0;
             for (int q = 0; q < 20; q++)
             {
                 int x = Main.rand.Next(60, Main.maxTilesX - 60);
@@ -24,7 +24,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 
                 Tile tile = Framing.GetTileSafely(x, y);
 
-                if (tile.HasTile && GenUtils.MostlyAir(20, 20, x, y) && tile.TileType == TileID.Stone && WorldGen.InWorld(x, y) && geodesCount < 15)
+                if (tile.HasTile && !GenUtils.AreaContainsSensitiveTiles(new List<int>{ TileID.Marble, TileID.WoodBlock, TileID.GrayBrick }, x, y, 9, 9) && GenUtils.MostlyAir(15, 15, x, y) && tile.TileType == TileID.Stone && WorldGen.InWorld(x, y) && geodesCount < 15)
                 {
                     Point placePoint = new Point(x, y);
                     ShapeData fullData = new ShapeData();

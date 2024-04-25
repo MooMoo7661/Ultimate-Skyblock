@@ -50,6 +50,7 @@ namespace UltimateSkyblock.Content.GlobalClasses
                     pool.Add(NPCID.Demon, 0.6f);
                     pool.Add(NPCID.LavaSlime, 0.8f);
                     pool.Add(NPCID.Worm, 0.4f);
+                    pool.Add(ModContent.NPCType<ReDead>(), 0.6f);
                 }    
             }
         }

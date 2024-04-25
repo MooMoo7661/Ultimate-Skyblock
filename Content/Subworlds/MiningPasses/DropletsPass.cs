@@ -33,7 +33,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
                         }
                         else if (tile.TileType == ModContent.TileType<DeepstoneTile>() && Main.rand.NextBool(17))
                         {
-                            WorldGen.PlaceTile(x, y + 1, Main.rand.NextBool() ? TileID.WaterDrip : TileID.LavaDrip, true);
+                            WorldGen.PlaceTile(x, y + 1, y >= Main.UnderworldLayer ? TileID.LavaDrip : (Main.rand.NextBool() ? TileID.WaterDrip : TileID.LavaDrip), true);
                         }
                     }
                 }

@@ -11,6 +11,7 @@ using UltimateSkyblock.Content.Items.Placeable;
 using static UltimateSkyblock.Content.Subworlds.MiningSubworld;
 using static UltimateSkyblock.Content.Subworlds.GenUtils;
 using UltimateSkyblock.Content.Utils;
+using UltimateSkyblock.Content.Tiles.Blocks;
 
 namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 {
@@ -22,18 +23,6 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
         {
             progress.Message = "Generating Hell";
 
-            //LoopWorldAndGenerateTiles(1, Main.rand.Next(40, 69), Main.rand.Next(30, 45), TileID.Ash, new List<int> { TileID.Stone, MiningSubworld.Deepstone, MiningSubworld.Slate }, Main.UnderworldLayer);
-
-            //Using a temporary block to later clear, in order to provide a smoother transition into hell
-            for (int x = 0; x < Main.maxTilesX; x++)
-            {
-                for (int y = Main.UnderworldLayer; y < Main.UnderworldLayer + 5; y++)
-                {
-                    if (Main.rand.NextBool(3))
-                        WorldGen.TileRunner(x, y, 15, 14, TileID.BoneBlock);
-                }
-            }
-
             //Clearing all blocks in the underworld
             for (int x = 0; x < Main.maxTilesX; x++)
             {
@@ -43,7 +32,17 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
                     tile.ClearTile();
                 }
             }
-            
+
+            // Adding a barrier between hell and the deepstone
+            for (int x = 0; x < Main.maxTilesX; x++)
+            {
+                for (int y = Main.UnderworldLayer - 6; y < Main.UnderworldLayer + 2; y++)
+                {
+                    if (Main.rand.NextBool(3))
+                        WorldGen.TileRunner(x, y, 7, 25, ModContent.TileType<DeepstoneTile>(), true);
+                }
+            }
+
             //Creating the ground for the ash
             for (int x = 0; x < Main.maxTilesX; x++)
             {
@@ -109,20 +108,17 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 
             WorldGen.AddHellHouses();
 
+            //Generates locked demon chests
+            //Scans an 8x8 area for other demon chests, if so - doesn't place.
             for (int x = 50; x < Main.maxTilesX - 50; x++)
             {
                 for (int y = Main.UnderworldLayer + 30; y < Main.maxTilesY; y++)
                 {
                     Tile tile = Framing.GetTileSafely(x, y);
                     Tile right = Framing.GetTileSafely(x + 1, y);
-                    if (Main.rand.NextBool(25) && tile.HasTile && tile.TileType == TileID.ObsidianBrick && right.HasTile && right.TileType == TileID.ObsidianBrick && tile.Slope == SlopeType.Solid && right.Slope == SlopeType.Solid)
+                    if (Main.rand.NextBool(15) && tile.HasTile && tile.TileType == TileID.ObsidianBrick && right.HasTile && right.TileType == TileID.ObsidianBrick && tile.Slope == SlopeType.Solid && right.Slope == SlopeType.Solid)
                     {
-                        Tile up = Framing.GetTileSafely(x, y - 1);
-                        Tile up2 = Framing.GetTileSafely(x, y - 2);
-                        Tile upRight = Framing.GetTileSafely(x + 1, y - 1);
-                        Tile upRight2 = Framing.GetTileSafely(x + 1, y - 2);
-
-                        if (!up.HasTile && !up2.HasTile && !upRight.HasTile && !upRight2.HasTile)
+                        if (GenUtils.SuitableFor2x2(x, y) && !GenUtils.AreaContainsSensitiveTiles(new List<int> { TileID.Containers }, x, y, 8, 8))
                         {
                             Generator.GenerateStructure("Content/Subworlds/SubStructures/UnderworldChest", new Point16(x, y - 2), UltimateSkyblock.Instance);
                         }
@@ -135,14 +131,13 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
             {
                 for (int y = Main.UnderworldLayer + 30; y < Main.maxTilesY; y++)
                 {
-                    Tile tile = Framing.GetTileSafely(x, y);
-                    if (WorldGen.InWorld(x, y) && Main.rand.NextBool(4))
+                    if (WorldGen.InWorld(x, y) && WorldGen.genRand.NextBool(4))
                         WorldGen.GrowTreeWithSettings(x, y, WorldGen.GrowTreeSettings.Profiles.Tree_Ash);
                 }
             }
 
             //This is handling generating a "platform" right below the bottom of the world, so lava doesn't fall out.
-            // TileRunner is run in a straight line, to provide a better variation and blending.
+            //TileRunner is run in a straight line, to provide a better variation and blending.
             for (int x = 0; x < Main.maxTilesX; x++)
             {
                 for (int y = Main.maxTilesY - 20; y < Main.maxTilesY; y++)
@@ -161,10 +156,10 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
                     Tile tile = Framing.GetTileSafely(x, y);
 
                     //Smooths the line between stone and ash generation
-                    if (tile.HasTile && (tile.TileType == TileID.Stone || tile.TileType == MiningSubworld.Deepstone))
-                    {
-                        WorldGen.TileRunner(x, y, 25, 10, TileID.Ash);
-                    }
+                    //if (tile.HasTile && (tile.TileType == TileID.Stone || tile.TileType == MiningSubworld.Deepstone))
+                    //{
+                    //    WorldGen.TileRunner(x, y, 25, 10, TileID.Ash);
+                    //}
 
                     //Places lava everywhere from the bottom of the world up by 100 on the edges
                     if (y >= Main.maxTilesY - 100 && !tile.HasTile && (x < 100 || x > Main.maxTilesX - 100))
@@ -179,6 +174,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
             // Hellstone generation
             LoopWorldAndGenerateTiles(2, Main.rand.Next(6, 10), Main.rand.Next(6, 10), type: TileID.Hellstone, tilesThatCanBeGeneratedOn: new List<int> { TileID.Ash }, minHeightRequirement: Main.UnderworldLayer + 60);
 
+            //Removing some of the unusually extra obsidian house furntiture
             for (int x = 100; x < Main.maxTilesX - 100; x++)
             {
                 for (int y = Main.UnderworldLayer; y < Main.maxTilesY - 50; y++)

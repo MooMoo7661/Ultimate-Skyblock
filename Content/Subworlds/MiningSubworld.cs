@@ -50,25 +50,27 @@ namespace UltimateSkyblock.Content.Subworlds
         public override List<GenPass> Tasks => new List<GenPass>()
         {
             //Basic worldgen
-            new InitialEarthPass("FillWorld", 200f),
-            new BasicPerlinCaveWorldFeatureGenerator("Perlin", 237.4298f),
+            new InitialEarthPass("FillWorld", 210f),
+            new BasicPerlinCaveWorldFeatureGenerator("Perlin", 177.4298f),
 
             //Detailed worldgen
-            new DeepstonePass("Deepslate", 50),
+            new DeepstonePass("Deepstone", 90),
+            new DeepstoneCaveFeaturesPass("DeepstoneCaveFeatures", 40f),
             new HellBarrierPass("HellBarrier", 30),
+            new CaveFeaturesPass("CaveFeatures", 20),
             new SlatePass("Slate", 30),
-            new HellPass("Hell", 100),
+            new HellPass("Hell", 130),
             new WaterPass("WaterPockets", 50),
-            new OreGenerationPass("OreGen", 80),
+            new OreGenerationPass("OreGen", 40),
+            new SmoothPass("Smoothing", 15),
             new DeepstoneFoliagePass("Foliage", 20),
             new TrapsPass("Traps", 30),
             new GeodePass("Geodes", 25),
-            new MiningHousesPass("MiningHouses", 10),
-            new DropletsPass("Droplets", 15),
-            new SmoothPass("Smoothing", 15),
+            new MiningHousesPass("MiningHouses", 20),
+            new DropletsPass("Droplets", 10),
             new StalactitesPass("Stalactites", 30),
             new DeepstoneBunkerPass("DeepstoneBunker", 40),
-            new CaveFeaturesPass("CaveFeatures", 20),
+            new CaveDecorationsPass("CaveDecorations", 20),
             new CleanupPass("Cleanup", 80),
 
             new SpawnPass("Setting up Spawn", 0.5f)

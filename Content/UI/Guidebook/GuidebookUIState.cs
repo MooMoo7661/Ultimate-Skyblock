@@ -394,12 +394,32 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             PageNumber.VAlign = 0.95f;
             GuidebookPanel.Append(PageNumber);
 
-            //Updating button/icon colors
+            //Updating button availability
             string page = TryGetEntry(PageIndex - 1, StyleID.Page);
-            LeftButton.BackgroundColor = page == null ? new Color(60, 60, 60) : DefaultColor;
+            if (page == null)
+                GuidebookPanel.RemoveChild(LeftButton);
+            else
+            {
+                if (!GuidebookPanel.HasChild(LeftButton))
+                {
+                    LeftButton = new UITextButton("<", 0.05f, 0.95f, 130, 34, "", SoundID.MenuTick);
+                    LeftButton.OnLeftClick += new MouseEvent(PageAdvancementLeft);
+                    GuidebookPanel.Append(LeftButton);
+                }
+            }
 
             page = TryGetEntry(PageIndex + 1, StyleID.Page);
-            RightButton.BackgroundColor = page == null ? new Color(60, 60, 60) : DefaultColor;
+            if (page == null)
+                GuidebookPanel.RemoveChild(RightButton);
+            else
+            {
+                if (!GuidebookPanel.HasChild(RightButton))
+                {
+                    RightButton = new UITextButton(">", 0.95f, 0.95f, 130, 34, "", SoundID.MenuTick);
+                    RightButton.OnLeftClick += new MouseEvent(PageAdvancementRight);
+                    GuidebookPanel.Append(RightButton);
+                }
+            }
 
             string wiki = TryGetEntry(PageIndex, StyleID.WikiPage);
             wikiPageIcon.Color = wiki == null ? Color.Gray : Color.White;

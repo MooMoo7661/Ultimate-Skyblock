@@ -16,6 +16,11 @@ Buffs: {
 		DisplayName: Glimmer Sight
 		Description: Prevents darkness from affecting you
 	}
+
+	Fear: {
+		DisplayName: Fear
+		Description: Mods.UltimateSkyblock.Buffs.Fear.Description
+	}
 }
 
 GenericLocalizedText: {
@@ -189,6 +194,7 @@ Biomes: {
 NPCs: {
 	DeepstoneBat.DisplayName: Deepstone Bat
 	Deepknight.DisplayName: Deepknight
+	ReDead.DisplayName: ReDead
 }
 
 Keybinds: {
@@ -200,4 +206,9 @@ Keybinds: {
 	"Page Right.DisplayName": Page  Right
 	"Page Left.DisplayName": Page  Left
 	"Open Guidebook.DisplayName": Open  Guidebook
+}
+
+Notifications: {
+	JoinWorldNotif: Welcome to Skyblock!
+	MiningSWNotif: Into Darkness
 }

@@ -44,6 +44,11 @@ SubworldConfig: {
 		[c/75FF75: Green -> Little to no game play affect]
 		'''
 	DisplayName: Subworld
+
+	SubworldSaving: {
+		Label: Subworld Saving
+		Tooltip: ""
+	}
 }
 
 SubworldClientConfig: {
@@ -246,7 +251,11 @@ RadioID: {
 
 MainClientConfig: {
 	DisplayName: General Client
-	Headers.Music: Music
+
+	Headers: {
+		Music: Music
+		WorldSelectMenu: World Select Menu
+	}
 
 	OWSoundtrack: {
 		Label: Overworld Soundtrack
@@ -256,5 +265,29 @@ MainClientConfig: {
 	RadioSlider: {
 		Label: Radio Slider
 		Tooltip: ""
+	}
+
+	WorldSelectTagIdentifier: {
+		Label: World Select Tag Identifier
+		Tooltip: Toggles the "Skyblock" text on skyblock worlds on the world select menu.
+	}
+
+	ToggleWorldSelectDetour: {
+		Label: Toggle World Select Detour
+		Tooltip:
+			'''
+			This toggles the detour which enables any modifications to the world select UI.
+			Turn this off if there's a conflict with other mods that do the same thing.
+			'''
+	}
+
+	WorldBorderColor: {
+		Label: World Border Color
+		Tooltip: Toggles the new border color on skyblock specific worlds.
+	}
+
+	WorldBackgroundColorLerp: {
+		Label: World Background Color Lerp
+		Tooltip: Toggles the "pulsating" background color for skyblock worlds on the world select menu.
 	}
 }

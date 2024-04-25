@@ -1,12 +1,6 @@
-﻿using Terraria.ID;
-using Terraria.ModLoader;
-using Terraria;
-using UltimateSkyblock.Content.Tiles.Blocks;
-using UltimateSkyblock.Content.Tiles.Environment.Foliage;
-using UltimateSkyblock.Content.Buffs;
-using Microsoft.Xna.Framework;
+﻿using UltimateSkyblock.Content.Buffs;
 
-namespace UltimateSkyblock.Content.Items.Placeable
+namespace UltimateSkyblock.Content.Items.Generic
 {
     public class Glimmercap : ModItem
     {

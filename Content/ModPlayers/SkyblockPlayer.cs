@@ -26,9 +26,9 @@ namespace UltimateSkyblock.Content.ModPlayers
             {
                 if (joinTimer == 360)
                 {
-                    if (WorldSize == WorldSizes.Small && ModContent.GetInstance<SkyblockModConfig>().SmallWorldWarning && SubworldSystem.Current == null)
+                    if ((WorldSize is WorldSizes.Small or WorldSizes.Medium) && ModContent.GetInstance<SkyblockModConfig>().SmallWorldWarning && SubworldSystem.Current == null)
                     {
-                        Main.NewText("----------" + "\nYou are currently on a small world\nFor the best experience, please create a large world, as the islands will be unnaturally close together\n[c/E136EE:This message can be disabled at any time through the Gameplay Config.]\n" + "----------");
+                        Main.NewText("----------" + "\nYou are currently on a " + WorldSize + " world\nFor the best experience, please create a large world, as the islands will be unnaturally close together\n[c/E136EE:This message can be disabled at any time through the Gameplay Config.]\n" + "----------");
                     }
                     locked = true;
                 }

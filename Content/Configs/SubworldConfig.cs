@@ -26,7 +26,6 @@ namespace UltimateSkyblock.Content.Configs
 
         [DefaultValue(true)]
         [BackgroundColor(255, 187, 127)]
-        [ReloadRequired]
         public bool SubworldSaving { get; set; }
     }
 }

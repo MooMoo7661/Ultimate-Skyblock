@@ -1,1 +1,22 @@
-[h1]Welcome to Skyblock![/h1]
+This mod re-imagines Skyblock, adding many new features to make it more enjoyable.
+From 30+ islands to themed planetoids, and even whole new dimensions, there is a lot to do!
+
+Special thanks to [url=https://www.youtube.com/c/tommytsunami]Tommy Tsunami[/url] for building all of the islands!
+
+[h3]Current features include:[/h3]
+[list]
+[*][b]2 subworlds[/b], a mining world and a dungeon world
+[*]Over 30 randomly placed islands
+[*]Tweaks to base game features to improve experience
+[/list]
+
+[b]Need help?[/b]
+You are provided with a guidebook that has information about the mod.
+Make sure to read through it when you are lost, or need help with something.
+
+[h3][b]This mod is multiplayer friendly![/b][/h3]
+You should be able to do this with other players, but there may still be some bugs.
+[u]Please report any issues to me on discord, and [b]not[/b] in the steam comments.[/u]
+
+[url=https://discord.gg/G5cbT7tj9K]Discord[/url]
+[url=https://trello.com/b/Z5UV1Kji/ultimate-skyblock]Trello[/url]

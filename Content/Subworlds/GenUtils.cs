@@ -72,20 +72,17 @@ namespace UltimateSkyblock.Content.Subworlds
             return numAir > numSolid;
         }
 
-        public static bool AreaContainsSensitiveTiles(List<int> tiles, int i, int j, int width, int height)
+        public static bool AreaContainsSensitiveTiles(List<int> tiles, int i, int j, int radiusWidth, int radiusHeight)
         {
-            for (int x = i - width; x < i + width; x++)
+            for (int x = i - radiusWidth; x < i + radiusWidth; x++)
             {
-                for (int y = j - width; y < j + height; y++)
+                for (int y = j - radiusHeight; y < j + radiusHeight; y++)
                 {
                     if (WorldGen.InWorld(x, y))
                     {
                         Tile tile = Framing.GetTileSafely(x, y);
                         if (tiles.Contains(tile.TileType))
-                        {
-                            UltimateSkyblock.Instance.Logger.Info("Found sensitive tile at " + new Point(x, y));
                             return true;
-                        }
                     }
                 }
             }

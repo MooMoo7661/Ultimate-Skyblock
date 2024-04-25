@@ -15,7 +15,22 @@ namespace UltimateSkyblock.Content.Configs
         [DefaultValue(-1)]
         [Slider]
         [Range(-1, 1)]
+        [DrawTicks]
         [Increment(1)]
         public RadioID RadioSlider { get; set; }
+
+        [Header("WorldSelectMenu")]
+        [DefaultValue(true)]
+        [ReloadRequired]
+        public bool ToggleWorldSelectDetour { get; set; }
+
+        [DefaultValue(true)]
+        public bool WorldSelectTagIdentifier { get; set; }
+
+        [DefaultValue(true)]
+        public bool WorldBackgroundColorLerp { get; set; }
+
+        [DefaultValue(true)]
+        public bool WorldBorderColor { get; set; }
     }
 }

@@ -252,8 +252,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 
             int Xoffset = 14 * dir; // Inverts the X offset if we are generating to the left. This is needed for the hallway to also generate to the left.
             int startingOffset = (dir == -1) ? -12 : 16; // Top left of the tower is the expected X and Y, meaning there is some offset for hallways since it's not centered.
-
-            Point16 genPos = new Point16(0, 0);
+            Point16 genPos;
 
             for (int i = 1; i < _hallways.Count; i++)
             {

@@ -20,9 +20,10 @@ namespace UltimateSkyblock.Content.Subworlds.DungeonPasses
         {
             for (int x = 0; x < Main.maxTilesX; x++)
             {
-                for (int y = Main.maxTilesY / 9; y < Main.maxTilesY; y++)
+                for (int y = 0; y < Main.maxTilesY; y++)
                 {
-                    WorldGen.PlaceTile(x, y, TileID.Dirt);
+                    WorldGen.PlaceTile(x, y, TileID.BlueDungeonBrick);
+                    WorldGen.PlaceWall(x, y, WallID.BlueDungeonUnsafe);
                     progress.Set((y + x * Main.maxTilesY) / (float)(Main.maxTilesX * Main.maxTilesY));
                 }
             }

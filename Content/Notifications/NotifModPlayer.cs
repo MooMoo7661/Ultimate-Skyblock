@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
 using SubworldLibrary;
+using UltimateSkyblock.Content.Subworlds;
 
 namespace UltimateSkyblock.Content.Notifications
 {
@@ -12,11 +13,10 @@ namespace UltimateSkyblock.Content.Notifications
         public override void OnEnterWorld()
         {
             var config = ModContent.GetInstance<NotificationsConfig>();
-            
+            if (!config.EnabledNotifs) { return; }
 
-            if (!config.EnabledNotifs || SubworldSystem.Current != null) { return; }
-
-            if (Player.whoAmI == Main.myPlayer) { InGameNotificationsTracker.AddNotification(new JoinWorldNotif()); }
+            if (Player.whoAmI == Main.myPlayer && SubworldSystem.Current == null) { InGameNotificationsTracker.AddNotification(new JoinWorldNotif()); }
+            if (Player.whoAmI == Main.myPlayer && SubworldSystem.Current == ModContent.GetInstance<MiningSubworld>()) { InGameNotificationsTracker.AddNotification(new MiningSubworldEnterNotification()); }
         }
     }
 }

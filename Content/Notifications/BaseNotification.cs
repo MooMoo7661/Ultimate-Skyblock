@@ -7,15 +7,24 @@ using Terraria.GameContent;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.UI;
+using Terraria.Audio;
+using UltimateSkyblock.Content.SkyblockWorldGen;
 
 namespace UltimateSkyblock.Notifications
 {
-    public class JoinWorldNotif : IInGameNotification
+    public abstract class BaseNotification : IInGameNotification
     {
-        public bool ShouldBeRemoved => timeLeft <= 0;
-        private int timeLeft = 5.ToSeconds();
+        protected abstract Asset<Texture2D> iconTexture { get; }
+        protected abstract bool ShouldDissapearOnClick { get; }
+        protected virtual SoundStyle? NotifSound { get => null; }
+        protected virtual Color BackgroundColor { get => new Color(64, 109, 164); }
 
-        private Asset<Texture2D> iconTexture = TextureAssets.Item[ItemID.DirtBlock];
+        /// <summary> Localization key for the notification name.</summary>
+        protected abstract string Title { get; }
+        public bool ShouldBeRemoved => timeLeft <= 0;
+        private int timeLeft = 300;
+
+        private bool locked = false;
 
         private float Scale
         {
@@ -48,8 +57,20 @@ namespace UltimateSkyblock.Notifications
             }
         }
 
+        public void OnCreation()
+        {
+            if (NotifSound != null)
+            SoundEngine.PlaySound(NotifSound);
+        }
+
         public void Update()
         {
+            if (!locked)
+            {
+                OnCreation();
+                locked = true;
+            }
+
             timeLeft--;
 
             if (timeLeft < 0)
@@ -65,42 +86,38 @@ namespace UltimateSkyblock.Notifications
                 return;
             }
 
-            string title = "Welcome to Skyblock!";
-
             float effectiveScale = Scale * 1.1f;
-            Vector2 size = (FontAssets.ItemStack.Value.MeasureString(title) + new Vector2(58f, 10f)) * effectiveScale;
-            Rectangle panelSize = Terraria.Utils.CenteredRectangle(bottomAnchorPosition + new Vector2(0f, (0f - size.Y) * 0.5f), size);
+            Vector2 size = (FontAssets.ItemStack.Value.MeasureString(Title) + new Vector2(58f, 10f)) * effectiveScale;
+            Rectangle panelSize = Utils.CenteredRectangle(bottomAnchorPosition + new Vector2(0f, (0f - size.Y) * 0.5f), size);
 
             bool hovering = panelSize.Contains(Main.MouseScreen.ToPoint());
 
-            Terraria.Utils.DrawInvBG(spriteBatch, panelSize, new Color(64, 109, 164) * (hovering ? 0.75f : 0.5f));
+            Utils.DrawInvBG(spriteBatch, panelSize, BackgroundColor * (hovering ? 0.75f : 0.5f));
             float iconScale = effectiveScale * 0.7f;
             Vector2 vector = panelSize.Right() - Vector2.UnitX * effectiveScale * (12f + iconScale * iconTexture.Width());
             spriteBatch.Draw(iconTexture.Value, vector, null, Color.White * Opacity, 0f, new Vector2(0f, iconTexture.Width() / 2f), iconScale, SpriteEffects.None, 0f);
-            Terraria.Utils.DrawBorderString(color: new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor / 5, Main.mouseTextColor) * Opacity, sb: spriteBatch, text: title, pos: vector - Vector2.UnitX * 10f, scale: effectiveScale * 0.9f, anchorx: 1f, anchory: 0.4f);
+            Utils.DrawBorderString(color: new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor / 5, Main.mouseTextColor) * Opacity, sb: spriteBatch, text: Title, pos: vector - Vector2.UnitX * 10f, scale: effectiveScale * 0.9f, anchorx: 1f, anchory: 0.4f);
 
             if (hovering)
             {
-                OnMouseOver();
+                if (!PlayerInput.IgnoreMouseInterface && (Main.mouseLeft || Main.mouseLeftRelease))
+                {
+                    OnMouseOver();
+                }
             }
+        }
+
+        public virtual void OnClick()
+        {
+            Main.LocalPlayer.mouseInterface = true;
+            Main.mouseLeftRelease = false;
+
+            if (ShouldDissapearOnClick && timeLeft > 30)
+                timeLeft = 30;
         }
 
         private void OnMouseOver()
         {
-            if (PlayerInput.IgnoreMouseInterface)
-            {
-                return;
-            }
-
-            Main.LocalPlayer.mouseInterface = true;
-
-            if (!Main.mouseLeft || !Main.mouseLeftRelease)
-            {
-                return;
-            }
-
-            Main.mouseLeftRelease = false;
-
             if (timeLeft > 30)
             {
                 timeLeft = 30;

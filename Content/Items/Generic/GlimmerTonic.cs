@@ -36,7 +36,7 @@ namespace UltimateSkyblock.Content.Items.Generic
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ModContent.ItemType<Glimmercap>())
+                .AddIngredient(ModContent.ItemType<Glimmercap>(), 2)
                 .AddIngredient(ItemID.BottledWater)
                 .AddTile(TileID.Bottles)
                 .Register();

@@ -16,4 +16,12 @@ namespace UltimateSkyblock.Content.Notifications
         protected override string Title => Language.GetTextValue("Mods.UltimateSkyblock.Notifications.MiningSWNotif");
         protected override Color BackgroundColor => Color.DarkSlateGray;
     }
+
+    public class DungeonSubworldEnterNotification : BaseNotification
+    {
+        protected override Asset<Texture2D> iconTexture => TextureAssets.NpcHeadBoss[19];
+        protected override bool ShouldDissapearOnClick => true;
+        protected override string Title => Language.GetTextValue("Mods.UltimateSkyblock.Notifications.DungeonSWNotif");
+        protected override Color BackgroundColor => Color.DarkSlateBlue;
+    }
 }

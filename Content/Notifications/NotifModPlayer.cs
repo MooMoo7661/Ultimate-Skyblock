@@ -15,8 +15,9 @@ namespace UltimateSkyblock.Content.Notifications
             var config = ModContent.GetInstance<NotificationsConfig>();
             if (!config.EnabledNotifs) { return; }
 
-            if (Player.whoAmI == Main.myPlayer && SubworldSystem.Current == null) { InGameNotificationsTracker.AddNotification(new JoinWorldNotif()); }
-            if (Player.whoAmI == Main.myPlayer && SubworldSystem.Current == ModContent.GetInstance<MiningSubworld>()) { InGameNotificationsTracker.AddNotification(new MiningSubworldEnterNotification()); }
+            if (Player.whoAmI == Main.myPlayer && SubworldSystem.Current == null && config.EnterWorldNotification) { InGameNotificationsTracker.AddNotification(new JoinWorldNotif()); }
+            if (Player.whoAmI == Main.myPlayer && SubworldSystem.Current == ModContent.GetInstance<MiningSubworld>() && config.EnterMiningSubworldNotification) { InGameNotificationsTracker.AddNotification(new MiningSubworldEnterNotification()); }
+            if (Player.whoAmI == Main.myPlayer && SubworldSystem.Current == ModContent.GetInstance<DungeonSubworld>() && config.EnterMiningSubworldNotification) { InGameNotificationsTracker.AddNotification(new DungeonSubworldEnterNotification()); }
         }
     }
 }

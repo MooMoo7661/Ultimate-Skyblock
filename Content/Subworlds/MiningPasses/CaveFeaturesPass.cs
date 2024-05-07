@@ -25,7 +25,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
             {
                 for (int y = 0; y < Main.maxTilesY; y++)
                 {
-                    if (WorldGen.genRand.NextBool(14) && !Framing.GetTileSafely(x, y - 1).HasTile && Framing.GetTileSafely(x - 1, y).HasTile && Framing.GetTileSafely(x + 1, y).HasTile && Framing.GetTileSafely(x, y).TileType == TileID.Stone)
+                    if (WorldGen.genRand.NextBool(14) && !Framing.GetTileSafely(x, y - 1).HasTile && Framing.GetTileSafely(x - 1, y).HasTile && Framing.GetTileSafely(x + 1, y).HasTile && Main.tile[x, y].TileType == TileID.Stone)
                     {
 
                         int height = WorldGen.genRand.Next(8, 15);
@@ -36,7 +36,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 
                             for (int i = 0; i < 13; i++)
                             {
-                                Tile tile = Framing.GetTileSafely(x, y);
+                                Tile tile = Framing.GetTileSafely(x, y + i);
                                 if (tile.HasTile)
                                 {
                                     scan = i;
@@ -70,7 +70,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
             {
                 for (int y = 0; y < Main.maxTilesY; y++)
                 {
-                    if (WorldGen.genRand.NextBool(17) && !Framing.GetTileSafely(x, y + 1).HasTile && Framing.GetTileSafely(x, y).TileType == TileID.Stone)
+                    if (WorldGen.genRand.NextBool(17) && !Framing.GetTileSafely(x, y + 1).HasTile && Main.tile[x, y].TileType == TileID.Stone)
                     {
                         int height = WorldGen.genRand.Next(8, 15);
                         for (int i = 1; i < height; i++)
@@ -86,7 +86,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
             {
                 for (int y = 0; y < Main.maxTilesY; y++)
                 {
-                    if (Framing.GetTileSafely(x, y).TileType == TileID.BoneBlock)
+                    if (Main.tile[x, y].TileType == TileID.BoneBlock)
                         WorldGen.PlaceTile(x, y, TileID.Stone, true, true);
                 }
             }

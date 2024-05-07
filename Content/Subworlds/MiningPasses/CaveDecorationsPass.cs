@@ -23,7 +23,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
             {
                 for (int y = 50; y < Main.maxTilesY - 50; y++)
                 {
-                    Tile tile = Framing.GetTileSafely(x, y);
+                    Tile tile = Main.tile[x, y];
                     Tile up = Framing.GetTileSafely(x, y - 1);
                     Tile upRight = Framing.GetTileSafely(x + 1, y - 1);
                     Tile right = Framing.GetTileSafely(x + 1, y);
@@ -55,7 +55,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
         public static bool PotMaker(int x, int y)
         {
             int type = WorldGen.genRand.Next(4);
-            int tileType = Framing.GetTileSafely(x, y).TileType;
+            int tileType = Main.tile[x, y].TileType;
 
             if (y > Main.UnderworldLayer - 200)
                 type = WorldGen.genRand.Next(13, 16);
@@ -67,7 +67,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 
         public static bool SmallRubbleMaker(int x, int y)
         {
-            int type = Framing.GetTileSafely(x, y).TileType; // This helps me type less cuz I'm lazy
+            int type = Main.tile[x, y].TileType; // This helps me type less cuz I'm lazy
             int rubbleType = -1;
 
             if (type == TileID.Dirt)
@@ -137,7 +137,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 
         public static bool MediumRubbleMaker(int x, int y)
         {
-            int type = Framing.GetTileSafely(x, y).TileType; // This helps me type less cuz I'm lazy
+            int type = Main.tile[x, y].TileType; // This helps me type less cuz I'm lazy
             int rubbleType = -1;
 
             if (type == TileID.Stone)

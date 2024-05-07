@@ -24,7 +24,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
             {
                 for (int y = 0; y < Main.maxTilesY; y++)
                 {
-                    Tile tile = Framing.GetTileSafely(x, y);
+                    Tile tile = Main.tile[x, y];
 
                     //Removing any extra water or lava droplets that may have generated on sloped tiles.
                     if (tile.HasTile && tile.Slope != SlopeType.Solid && (Framing.GetTileSafely(x, y + 1).TileType == TileID.WaterDrip || Framing.GetTileSafely(x, y + 1).TileType == TileID.LavaDrip))

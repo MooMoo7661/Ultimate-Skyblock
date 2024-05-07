@@ -58,7 +58,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
             {
                 for (int y = Main.maxTilesY - 100; y < Main.maxTilesY; y++)
                 {
-                    WorldGen.PlaceTile(x, y, TileID.Ash);
+                    WorldGen.PlaceTile(x, y, TileID.Ash, true);
                 }
             }
 
@@ -100,7 +100,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
                         GetSurroundingTiles(x, y, out Tile left, out Tile right, out Tile top, out Tile bottom);
                         if (!top.HasTile || !left.HasTile || !right.HasTile || !bottom.HasTile || !Framing.GetTileSafely(x - 1, y - 1).HasTile || !Framing.GetTileSafely(x + 1, y - 1).HasTile || !Framing.GetTileSafely(x + 1, y + 1).HasTile || !Framing.GetTileSafely(x - 1, y + 1).HasTile)
                         {
-                            WorldGen.PlaceTile(x, y, TileID.AshGrass);
+                            WorldGen.PlaceTile(x, y, TileID.AshGrass, true);
                         }
                     }
                 }
@@ -179,8 +179,8 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
             {
                 for (int y = Main.UnderworldLayer; y < Main.maxTilesY - 50; y++)
                 {
-                    Tile tile = Framing.GetTileSafely(x, y);
-                    if (WorldGen.genRand.NextBool(4) && (tile.TileType == TileID.HangingLanterns || tile.TileType == TileID.Chandeliers || tile.TileType == TileID.Lamps))
+                    Tile tile = Main.tile[x, y];
+                    if (WorldGen.genRand.NextBool(4) && (tile.TileType == TileID.HangingLanterns || tile.TileType == TileID.Chandeliers || tile.TileType == TileID.Lamps || tile.TileType == TileID.Banners))
                     {
                         WorldGen.KillTile(x, y, noItem: true);
                     }

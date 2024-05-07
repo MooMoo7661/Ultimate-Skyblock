@@ -202,7 +202,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
                 {
                     for (int y = Main.UnderworldLayer - 200; y < Main.maxTilesY; y++)
                     {
-                        Tile tile = Framing.GetTileSafely(x, y);
+                        Tile tile = Main.tile[x, y];
                         if (!tile.HasTile && tile.WallType == WallID.None)
                         {
                             if (Framing.GetTileSafely(x - 1, y).WallType == WallID.AncientObsidianBrickWall && Framing.GetTileSafely(x + 1, y).WallType == WallID.AncientObsidianBrickWall)

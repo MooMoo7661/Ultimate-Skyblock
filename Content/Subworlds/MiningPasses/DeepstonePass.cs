@@ -32,8 +32,8 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
                 {
                     if (Framing.GetTileSafely(x, y).TileType == TileID.Stone || Framing.GetTileSafely(x, y).TileType == ModContent.TileType<SlateTile>())
                     {
-                        Framing.GetTileSafely(x, y).ClearTile();
-                        WorldGen.PlaceTile(x, y, MiningSubworld.Deepstone, true);
+                        Tile tile = Main.tile[x, y];
+                        tile.TileType = (ushort)ModContent.TileType<DeepstoneTile>();
                     }
                     progress.Set((y + x * Main.maxTilesY) / (float)(Main.maxTilesX * Main.maxTilesY));
                 }

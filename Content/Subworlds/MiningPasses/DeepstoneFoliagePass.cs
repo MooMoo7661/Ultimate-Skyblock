@@ -36,7 +36,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
                     int type = GetPlantToPlace(x, y);
                     if (type != -1 && Main.rand.NextBool(20) && tile.LiquidAmount == 0)
                     {
-                        WorldGen.PlaceTile(x, y - 1, type);
+                        WorldGen.PlaceTile(x, y - 1, type, true);
                         progress.Set((y + x * Main.maxTilesY) / (float)(Main.maxTilesX * Main.maxTilesY));
                     }
                 }

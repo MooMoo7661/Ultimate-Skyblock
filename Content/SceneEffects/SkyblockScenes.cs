@@ -75,26 +75,4 @@ namespace UltimateSkyblock.Content.SceneEffects
             return 1f;
         }
     }
-
-    //public class SubworldLoadingRadioScene : ModSceneEffect
-    //{
-    //    public override bool IsSceneEffectActive(Player player)
-    //    {
-    //        return DungeonSubworld.Music;
-    //    }
-
-    //    public override int Music
-    //    {
-    //        get
-    //        {
-    //            return MusicLoader.GetMusicSlot(Mod, "Content/Sounds/Music/BubbleBobble");
-    //        }
-    //    }
-    //    public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
-
-    //    public override float GetWeight(Player player)
-    //    {
-    //        return 1f;
-    //    }
-    //}
 }

@@ -11,8 +11,132 @@ using UltimateSkyblock.Content.Utils;
 
 namespace UltimateSkyblock.Content.Subworlds
 {
-    public class GenUtils
+    public static class GenUtils
     {
+        public static Point16 ToPoint16(this Point point16) => new Point16(point16.X, point16.Y);
+        public static Point ToPoint(this Point16 point16) => new Point(point16.X, point16.Y);
+
+        public static void PlaceDungeonChest(int x, int y, string chest, bool platform, int chance = 1)
+        {
+            if (!platform)
+                Main.tile[x, y].TileType = TileID.BlueDungeonBrick;
+            else
+                WorldGen.PlaceTile(x, y, TileID.Platforms, true, true, style: 11);
+
+            if (WorldGen.genRand.NextBool(chance))
+                Generator.GenerateStructure("Content/Subworlds/DungeonStructures/" + chest, new Point16(x, y - 2), UltimateSkyblock.Instance);
+        }
+
+        public static void ShelfRunner(int x, int y, int shelfType, int dir = 0, int failChance = 5)
+        {
+            if (shelfType == TileID.TeamBlockPinkPlatform)
+            {
+                if (WorldGen.genRand.NextBool(5) && failChance != 0)
+                {
+                    Main.tile[x, y].Clear(TileDataType.Tile);
+                    return;
+                }
+
+                WorldGen.PlaceTile(x, y, TileID.Platforms, true, forced: true, style: 6);
+
+                for (int i = 1; i < 20; i++)
+                {
+                    Tile tile = Framing.GetTileSafely(x + i * dir, y);
+                    if (!tile.HasTile)
+                    {
+                        WorldGen.PlaceTile(x + i * dir, y, TileID.Platforms, true, style: 6);
+                    }
+                    else
+                        break;
+                }
+            }
+            else if (shelfType == TileID.TeamBlockRedPlatform)
+            {
+                if (WorldGen.genRand.NextBool(failChance) && failChance != 0)
+                {
+                    Main.tile[x, y].Clear(TileDataType.Tile);
+                    return;
+                }
+
+                int left = WorldGen.genRand.Next(2, 4);
+                int right = WorldGen.genRand.Next(2, 5);
+
+                WorldGen.PlaceTile(x, y, TileID.Platforms, true, forced: true, style: 6);
+
+                for (int i = -1; i > -left; i--)
+                {
+                    Tile tile = Framing.GetTileSafely(x + i, y);
+                    if (!tile.HasTile)
+                        WorldGen.PlaceTile(x + i, y, TileID.Platforms, true, style: 6);
+                    else
+                        break;
+                }
+
+                for (int i = 1; i < right; i++)
+                {
+                    Tile tile = Framing.GetTileSafely(x + i, y);
+                    if (!tile.HasTile)
+                        WorldGen.PlaceTile(x + i, y, TileID.Platforms, true, style: 6);
+                    else
+                        break;
+                }
+            }
+            else if (shelfType == TileID.TeamBlockRed)
+            {
+                if (WorldGen.genRand.NextBool(failChance) && failChance != 0)
+                {
+                    Main.tile[x, y].Clear(TileDataType.Tile);
+                    return;
+                }
+
+                int left = 20;
+                int right = 20;
+
+                WorldGen.PlaceTile(x, y, TileID.Platforms, true, forced: true, style: 6);
+
+                for (int i = -1; i > -left; i--)
+                {
+                    Tile tile = Framing.GetTileSafely(x + i, y);
+                    if (!tile.HasTile)
+                        WorldGen.PlaceTile(x + i, y, TileID.Platforms, true, style: 6);
+                    else
+                        break;
+                }
+
+                for (int i = 1; i < right; i++)
+                {
+                    Tile tile = Framing.GetTileSafely(x + i, y);
+                    if (!tile.HasTile)
+                        WorldGen.PlaceTile(x + i, y, TileID.Platforms, true, style: 6);
+                    else
+                        break;
+                }
+            }
+        }
+
+        public static bool HasTileType(int x, int y, int type)
+        {
+            Tile up = Framing.GetTileSafely(x, y - 1);
+            Tile down = Framing.GetTileSafely(x, y + 1);
+            Tile left = Framing.GetTileSafely(x - 1, y);
+            Tile right = Framing.GetTileSafely(x + 1, y);
+
+            return up.TileType == type || down.TileType == type ||
+                left.TileType == type || right.TileType == type;
+        }
+
+        public static bool TileHasAir(int x, int y)
+        {
+            Tile up = Framing.GetTileSafely(x, y - 1);
+            Tile down = Framing.GetTileSafely(x, y + 1);
+            Tile left = Framing.GetTileSafely(x - 1, y);
+            Tile right = Framing.GetTileSafely(x + 1, y);
+
+            if (!up.HasTile || !down.HasTile || !left.HasTile || !right.HasTile)
+                return true;
+
+            return false;
+        }
 
         public static bool SuitableFor2x2(int x, int y)  => 
             Framing.GetTileSafely(x, y).Valid() && Framing.GetTileSafely(x + 1, y).Valid() &&

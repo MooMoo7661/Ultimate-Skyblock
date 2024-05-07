@@ -9,12 +9,15 @@ using Terraria.IO;
 using Terraria.WorldBuilding;
 using UltimateSkyblock.Content.Items.Placeable;
 using static UltimateSkyblock.Content.Subworlds.MiningSubworld;
+using StructureHelper;
+using UltimateSkyblock.Content.Subworlds.DungeonRoomUtils;
+using System.Collections;
 
 namespace UltimateSkyblock.Content.Subworlds.DungeonPasses
 {
-    public class BasicWorldGenPass : GenPass
+    public class BannerPlacer : GenPass
     {
-        public BasicWorldGenPass(string name, double loadWeight) : base(name, loadWeight) { }
+        public BannerPlacer(string name, double loadWeight) : base(name, loadWeight) { }
 
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
@@ -22,8 +25,15 @@ namespace UltimateSkyblock.Content.Subworlds.DungeonPasses
             {
                 for (int y = 0; y < Main.maxTilesY; y++)
                 {
-                    WorldGen.PlaceTile(x, y, TileID.BlueDungeonBrick);
-                    WorldGen.PlaceWall(x, y, WallID.BlueDungeonUnsafe);
+                    Tile tile = Main.tile[x, y];
+                    if (WorldGen.genRand.NextBool(40) && tile.HasTile && tile.TileType == TileID.BlueDungeonBrick)
+                    {
+                        if (!Framing.GetTileSafely(x, y + 1).HasTile)
+                        {
+                            WorldGen.PlaceBanner(x, y + 1, TileID.Banners, WorldGen.genRand.NextBool() ? 12 : 13);
+                        }
+                    }
+
                     progress.Set((y + x * Main.maxTilesY) / (float)(Main.maxTilesX * Main.maxTilesY));
                 }
             }

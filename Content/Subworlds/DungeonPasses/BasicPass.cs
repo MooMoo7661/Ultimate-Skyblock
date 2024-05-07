@@ -19,7 +19,13 @@ namespace UltimateSkyblock.Content.Subworlds.DungeonPasses
 
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
-            
+            for (int x = 0; x < Main.maxTilesX; x++)
+            {
+                for (int y = 0; y  < Main.maxTilesY; y++)
+                {
+
+                }
+            }
         }
     }
 }

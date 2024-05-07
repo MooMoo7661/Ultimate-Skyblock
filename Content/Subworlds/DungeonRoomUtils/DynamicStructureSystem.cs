@@ -10,7 +10,8 @@ namespace UltimateSkyblock.Content.Subworlds.DungeonRoomUtils
 {
     public class DynamicStructureSystem
     {
-        //This exists because anything related to getting info about a structure file is internal in Structure Helper, which I may add, is incredibly annoying.
+        //This exists because anything related to getting info about a structure file is internal in Structure Helper,
+        //which I may add, is incredibly annoying.
         //So yeah I just copied and pasted everything I needed here.
 
         public static Dictionary<string, TagCompound> DynamicStructureDataCache = new Dictionary<string, TagCompound>();

@@ -1,8 +1,10 @@
 using System;
+using SubworldLibrary;
 using Terraria;
 using Terraria.ModLoader;
 using UltimateSkyblock.Content.Biomes;
 using UltimateSkyblock.Content.Configs;
+using UltimateSkyblock.Content.Subworlds;
 using UltimateSkyblock.Content.Tiles.Blocks;
 
 namespace UltimateSkyblock.Content.SceneEffects
@@ -59,8 +61,8 @@ namespace UltimateSkyblock.Content.SceneEffects
             {
                 int result = (int)ModContent.GetInstance<MainClientConfig>().RadioSlider switch
                 {
-                    0 => MusicLoader.GetMusicSlot(Mod, "Content/Sounds/Music/SubwaySurfers"),
-                    1 => MusicLoader.GetMusicSlot(Mod, "Content/Sounds/Music/PortalRadio")
+                    1 => MusicLoader.GetMusicSlot(Mod, "Content/Sounds/Music/PortalRadio"),
+                    _ => MusicLoader.GetMusicSlot(Mod, "Content/Sounds/Music/SubwaySurfers")
                 };
 
                 return result;
@@ -73,4 +75,26 @@ namespace UltimateSkyblock.Content.SceneEffects
             return 1f;
         }
     }
+
+    //public class SubworldLoadingRadioScene : ModSceneEffect
+    //{
+    //    public override bool IsSceneEffectActive(Player player)
+    //    {
+    //        return DungeonSubworld.Music;
+    //    }
+
+    //    public override int Music
+    //    {
+    //        get
+    //        {
+    //            return MusicLoader.GetMusicSlot(Mod, "Content/Sounds/Music/BubbleBobble");
+    //        }
+    //    }
+    //    public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
+
+    //    public override float GetWeight(Player player)
+    //    {
+    //        return 1f;
+    //    }
+    //}
 }

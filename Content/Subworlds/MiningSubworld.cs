@@ -18,10 +18,9 @@ namespace UltimateSkyblock.Content.Subworlds
 
         private UIWorldLoad _menu;
 
-        public static int DeepstoneLayer = Main.UnderworldLayer - 300;
-
-        public static int Slate = ModContent.TileType<SlateTile>();
-        public static int Deepstone = ModContent.TileType<DeepstoneTile>();
+        public static int Slate { get { return ModContent.TileType<SlateTile>(); } }
+        public static int Deepstone { get { return ModContent.TileType<DeepstoneTile>(); } }
+        public static int DeepstoneLayer { get { return Main.UnderworldLayer - 100; } }
 
         public override void DrawMenu(GameTime gameTime)
         {
@@ -44,7 +43,18 @@ namespace UltimateSkyblock.Content.Subworlds
             GenVars.rockLayer = Main.maxTilesY / 2;
             GenVars.oceanWaterStartRandomMin = 0;
             GenVars.oceanWaterStartRandomMax = 0;
-            DeepstoneLayer = Main.UnderworldLayer - 300;
+        }
+
+
+        public override bool ChangeAudio()
+        {
+            if (Main.gameMenu && ModContent.GetInstance<SubworldClientConfig>().SubworldLoadingMusic)
+            {
+                Main.newMusic = MusicLoader.GetMusicSlot("UltimateSkyblock/Content/Sounds/Music/BubbleBobble");
+                return true;
+            }
+
+            return false;
         }
 
         public override List<GenPass> Tasks => new List<GenPass>()
@@ -71,7 +81,7 @@ namespace UltimateSkyblock.Content.Subworlds
             new StalactitesPass("Stalactites", 30),
             new DeepstoneBunkerPass("DeepstoneBunker", 40),
             new CaveDecorationsPass("CaveDecorations", 20),
-            new CleanupPass("Cleanup", 80),
+            new MiningPasses.CleanupPass("Cleanup", 80),
 
             new SpawnPass("Setting up Spawn", 0.5f)
         };
@@ -90,8 +100,6 @@ namespace UltimateSkyblock.Content.Subworlds
 
             private static void SetGenVars()
             {
-                DeepstoneLayer = Main.UnderworldLayer - 100;
-
                 SubVars.copper = Main.rand.NextBool() ? TileID.Copper : TileID.Tin;
                 SubVars.iron = Main.rand.NextBool() ? TileID.Iron : TileID.Lead;
                 SubVars.silver = Main.rand.NextBool() ? TileID.Silver : TileID.Tungsten;
@@ -108,8 +116,9 @@ namespace UltimateSkyblock.Content.Subworlds
                 {
                     for (int y = 0; y < Main.maxTilesY; y++)
                     {
-                        if (WorldGen.InWorld(x, y))
-                            WorldGen.PlaceTile(x, y, TileID.Stone, true);
+                        Tile tile = Main.tile[x, y];
+                        tile.HasTile = true;
+                        Main.tile[x, y].TileType = TileID.Stone;
                         progress.Set((y + x * Main.maxTilesY) / (float)(Main.maxTilesX * Main.maxTilesY));
                     }
                 }
@@ -170,7 +179,7 @@ namespace UltimateSkyblock.Content.Subworlds
                 for (int i = -28; i < 28; i++)
                 {
                     if (i % 5 == 0)
-                        WorldGen.PlaceTile(Main.spawnTileX - i, Main.spawnTileY - 3, TileID.Torches);
+                        WorldGen.PlaceTile(Main.spawnTileX - i, Main.spawnTileY - 3, TileID.Torches, true);
                 }
             }
         }

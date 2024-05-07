@@ -18,5 +18,8 @@ namespace UltimateSkyblock.Content.Configs
 
         [DefaultValue(false)]
         public bool ShowPerlinType { get; set; }
+
+        [DefaultValue(true)]
+        public bool SubworldLoadingMusic { get; set; }
     }
 }

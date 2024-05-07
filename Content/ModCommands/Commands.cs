@@ -61,10 +61,10 @@ namespace UltimateSkyblock.Content.ModCommands
 
             string location = args[0].ToLower() switch
             {
-                "forest" => $"Forest Islands: {WorldHelpers.Spawn.X}, {WorldHelpers.Spawn.Y}",
-                "dungeon" => $"Dungeon Island: {Main.dungeonX}, {Main.dungeonY}",
-                "hell" => $"Main Hell Island: {WorldHelpers.Hell.X}, {WorldHelpers.Hell.Y}",
-                _ => $"[c/FF1919:No structure/biome found with the name \"{args[0]}\"]",
+                //"forest" => $"Forest Islands: {WorldHelpers.Spawn.X}, {WorldHelpers.Spawn.Y}",
+                //"dungeon" => $"Dungeon Island: {Main.dungeonX}, {Main.dungeonY}",
+                //"hell" => $"Main Hell Island: {WorldHelpers.Hell.X}, {WorldHelpers.Hell.Y}",
+                //_ => $"[c/FF1919:No structure/biome found with the name \"{args[0]}\"]",
             };
 
             ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral($"{location}"), Color.White);

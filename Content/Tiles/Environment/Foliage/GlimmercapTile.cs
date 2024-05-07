@@ -29,12 +29,15 @@ namespace UltimateSkyblock.Content.Tiles.Environment.Foliage
             Main.tileSpelunker[Type] = true;
             LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(121, 84, 229), name);
+            
 
             RegisterItemDrop(ModContent.ItemType<Glimmercap>(), 1);
+            
             RegisterItemDrop(ModContent.ItemType<Glimmercap>());
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
+            TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.WaterDeath = true;
-            TileObjectData.newTile.AnchorValidTiles = new int[] { ModContent.TileType<DeepstoneTile>() };
+            TileObjectData.newTile.AnchorValidTiles = new int[] { ModContent.TileType<DeepstoneTile>(), ModContent.TileType<DeepsoilTile>() };
             TileObjectData.addTile(Type);
 
             HitSound = SoundID.Grass;

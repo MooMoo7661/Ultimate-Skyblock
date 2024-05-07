@@ -24,7 +24,7 @@ namespace UltimateSkyblock.Content.Biomes
 
         public override bool IsBiomeActive(Player player)
         {
-            return ModContent.GetInstance<DeepstoneCount>().blockCount >= 40;
+            return ModContent.GetInstance<DeepstoneCount>().blockCount >= 60;
         }
 
         public override void OnInBiome(Player player)
@@ -39,7 +39,7 @@ namespace UltimateSkyblock.Content.Biomes
         
         public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts)
         {
-            blockCount = tileCounts[ModContent.TileType<DeepstoneTile>()] + tileCounts[ModContent.TileType<DeepstoneGravelTile>()];
+            blockCount = tileCounts[ModContent.TileType<DeepstoneTile>()];
         }
     }
 }

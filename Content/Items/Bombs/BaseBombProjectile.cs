@@ -120,7 +120,7 @@ namespace UltimateSkyblock.Content.Items.Bombs
             Projectile.rotation += Projectile.velocity.X * 0.1f;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             //// If we are the original projectile running on the owner, spawn the 5 child projectiles.
             //if (Projectile.owner == Main.myPlayer && Projectile.ai[1] == 0)
@@ -173,7 +173,7 @@ namespace UltimateSkyblock.Content.Items.Bombs
             }
 
 
-            if (WorldGen.PlaceTile(x, y, BlockID))
+            if (WorldGen.PlaceTile(x, y, BlockID, true))
             {
                 if (Main.netMode != 0)
                 {

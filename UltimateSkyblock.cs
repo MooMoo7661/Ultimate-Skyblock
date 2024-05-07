@@ -7,6 +7,8 @@ using UltimateSkyblock.Content.Configs;
 using UltimateSkyblock.Content.StoneGenerator;
 using static UltimateSkyblock.Content.Tiles.Blocks.PlanteraAltar;
 using System.IO;
+using SubworldLibrary;
+using UltimateSkyblock.Content.DaySystem;
 
 namespace UltimateSkyblock
 {
@@ -18,13 +20,29 @@ namespace UltimateSkyblock
             Instance = this;
 
             On_WorldGen.ShakeTree += On_WorldGen_ShakeTree;
+
+            if (ModContent.GetInstance<SubworldConfig>().PlacementDetours)
+            {
+                On_WorldGen.PlaceTile += On_WorldGen_PlaceTile;
+                On_WorldGen.PlaceObject += On_WorldGen_PlaceObject;
+            }
+
             OB_Liquid.Load();
         }
 
         public override void Unload()
         {
-            On_WorldGen.ShakeTree -= On_WorldGen_ShakeTree;
             Instance = null;
+        }
+
+        private bool On_WorldGen_PlaceObject(On_WorldGen.orig_PlaceObject orig, int x, int y, int type, bool mute, int style, int alternate, int random, int direction)
+        {
+            return orig(x, y, type, mute || Main.gameMenu, style, alternate, random, direction);
+        }
+
+        private bool On_WorldGen_PlaceTile(On_WorldGen.orig_PlaceTile orig, int i, int j, int Type, bool mute, bool forced, int plr, int style)
+        {
+            return orig(i, j, Type, mute || Main.gameMenu, forced, plr, style);
         }
 
         private void On_WorldGen_ShakeTree(On_WorldGen.orig_ShakeTree orig, int i, int j)

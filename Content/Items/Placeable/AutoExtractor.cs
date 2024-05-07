@@ -62,18 +62,5 @@ namespace UltimateSkyblock.Content.Items.Placeable
                 }
             }
         }
-
-        public override bool CreateDust(int i, int j, int type, ref int dustType)
-        {
-            if (ModLoader.TryGetMod("StructureHelper", out Mod structureHelper))
-            {
-                if (structureHelper.TryFind<ModTile>("NullBlock", out _))
-                {
-                    return false;
-                }
-            }
-
-            return base.CreateDust(i , j, type, ref dustType);
-        }
     }
 }

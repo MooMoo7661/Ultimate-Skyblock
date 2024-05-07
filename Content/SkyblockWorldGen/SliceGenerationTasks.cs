@@ -22,11 +22,7 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
                 for (int j = 0; j < Main.maxTilesY; j++)
                 {
                     Tile tile = Main.tile[i, j];
-                    if (tile == null) continue;
-
-                    tile.ClearTile();
-                    tile.WallType = WallID.None;
-                    tile.LiquidAmount = 0;
+                    tile.Clear(TileDataType.All);
                 }
             }
 
@@ -46,13 +42,16 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
                     Tile tile = Framing.GetTileSafely(x, y);
                     if (tile.HasTile && tile.TileType == TileID.HellstoneBrick && y < Main.maxTilesY / 2)
                     {
-                        WorldGen.PlaceTile(x, y, ModContent.TileType<CrenelatedStoneTile>(), forced: true);
+                        WorldGen.PlaceTile(x, y, ModContent.TileType<CrenelatedStoneTile>(), true, forced: true);
                     }
 
                     if (tile.WallType == WallID.HellstoneBrick && y < Main.maxTilesY / 2)
                     {
                         WorldGen.PlaceWall(x, y, ModContent.WallType<CrenelatedStoneWallTile>());
                     }
+
+                    if (tile.WallType == WallID.LihzahrdBrick)
+                        tile.WallType = WallID.LihzahrdBrickUnsafe;
 
                 }
             }
@@ -504,7 +503,7 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
                     WorldGen.PlaceTile(x + 2 - i, y + 1, TileID.Torches, true, false);
             }
 
-            WorldGen.PlaceTile(x, y - 6, TileID.Torches);
+            WorldGen.PlaceTile(x, y - 6, TileID.Torches, true);
         }
 
         public static void PlaceTorchesAndPlatforms(Point genPos, Point wallPos, ShapeData wallData)
@@ -524,7 +523,7 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
                             torchCounter++;
                             if (torchCounter == 10)
                             {
-                                WorldGen.PlaceTile(i, j, TileID.Torches);
+                                WorldGen.PlaceTile(i, j, TileID.Torches, true);
                                 torchCounter = 0;
                             }
                         }

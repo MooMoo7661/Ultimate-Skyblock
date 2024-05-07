@@ -334,7 +334,7 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
                         Tile tile = Framing.GetTileSafely(Q, R);
                         if (tile.HasTile && tile.TileType == TileID.HardenedSand)
                         {
-                            WorldGen.PlaceTile(Q, R, TileID.Dirt, forced: true);
+                            WorldGen.PlaceTile(Q, R, TileID.Dirt, true, forced: true);
                         }
                     }
                 }
@@ -368,7 +368,7 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
                         Tile tile = Framing.GetTileSafely(Q, R);
                         if (tile.HasTile && tile.TileType == TileID.Dirt)
                         {
-                            WorldGen.PlaceTile(Q, R, TileID.Sand, forced: true);
+                            WorldGen.PlaceTile(Q, R, TileID.Sand, true, forced: true);
                         }
                     }
                 }

@@ -3,6 +3,8 @@ using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using UltimateSkyblock.Content.Items.Placeable;
+using UltimateSkyblock.Content.Subworlds;
+using System.Diagnostics.CodeAnalysis;
 
 namespace UltimateSkyblock.Content.Tiles.Blocks
 {
@@ -16,12 +18,17 @@ namespace UltimateSkyblock.Content.Tiles.Blocks
             Main.tileMerge[TileID.Stone][Type] = true;
             Main.tileMerge[Type][TileID.Ash] = true;
             Main.tileMerge[TileID.Ash][Type] = true;
+
+            Main.tileMerge[ModContent.TileType<DeepstoneBrickTile>()][Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<DeepstoneBrickTile>()] = true;
+
             Main.tileLighted[Type] = false;
             Main.tileNoSunLight[Type] = false;
             Main.tileBlockLight[Type] = true;
             TileID.Sets.Stone[Type] = true;
             DustType = DustID.Stone;
-            MinPick = 70;
+            MinPick = 70;   
+            MineResist = 2f;
 
             HitSound = SoundID.Tink;
             RegisterItemDrop(ModContent.ItemType<Deepstone>());

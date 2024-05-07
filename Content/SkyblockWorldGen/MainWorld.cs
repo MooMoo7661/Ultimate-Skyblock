@@ -43,8 +43,14 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
             //The reason I don't just remove every pass is because many things, like the world layers, backgrounds, etc. rely on those passes being called.
             //An example of that is for some reason, Jungle Temple bricks become very messed up when the task isn't run.
 
-            tasks.RemoveAll(task => task.Name == "Full Desert" || task.Name == "Buried Chests" || task.Name == "Mushroom Patches" ||
-            task.Name == "Micro Biomes" || task.Name == "Moss" || task.Name == "Guide");
+            List<string> tasksToRemove = new List<string>
+            {
+                "Terrain",
+                "Jungle Temple",
+                "Temple"
+            };
+
+            tasks.RemoveAll(task => !tasksToRemove.Contains(task.Name));
         }
 
         public override void OnWorldLoad()

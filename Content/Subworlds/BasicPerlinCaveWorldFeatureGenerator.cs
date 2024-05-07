@@ -1,15 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
-using Terraria.WorldBuilding;
-using Terraria.IO;
-using Terraria.ID;
-using UltimateSkyblock.Content.Configs;
-using Terraria.ModLoader;
-using Terraria.Utilities;
+﻿using UltimateSkyblock.Content.Configs;
 
 namespace UltimateSkyblock.Content.Subworlds
 {
@@ -25,7 +14,8 @@ namespace UltimateSkyblock.Content.Subworlds
 
         public BasicPerlinCaveWorldFeatureGenerator(string name, double loadWeight) : base(name, loadWeight)
         {
-            int noiseSeed = seed;
+            int noiseSeed = new UnifiedRandom().Next(int.MaxValue);
+            seed = noiseSeed;
             caveNoise = new FastNoise(noiseSeed);
             caveNoise.SetFrequency(0.02f); //0.02
             caveNoise.SetFractalOctaves(2); // 2
@@ -42,7 +32,6 @@ namespace UltimateSkyblock.Content.Subworlds
         {
             UltimateSkyblock.Instance.Logger.Info("Noise Seed: " + seed);
 
-            seed = Math.Clamp(new UnifiedRandom((int)DateTime.Now.Ticks).Next(1000) * (int)(((Main.time / 10 + 1) * (Main.GlobalTimeWrappedHourly / 25f) + 1) / 69), -int.MaxValue, int.MaxValue);
             fractalType = (FastNoise.FractalType)config.FractalType;
             noiseType = (FastNoise.NoiseType)config.PerlinNoiseType;
 
@@ -55,16 +44,14 @@ namespace UltimateSkyblock.Content.Subworlds
                 message += "Noise Type: " + noiseType + "\n";
 
             progress.Message = "Generating Noise Caves" + message;
-            int startingPositionX = Main.spawnTileX * Main.tile.Width;
-            int startingPositionY = Main.spawnTileY * Main.tile.Height;
             for (int i = 0; i < Main.maxTilesX; i++)
             {
                 for (int j = 0; j < Main.maxTilesY; j++)
                 {
-                    float noiseValue = (float)(caveNoise.GetNoise((startingPositionX + i), (startingPositionY + j)) * 0.5f);
+                    float noiseValue = (float)(caveNoise.GetNoise(Main.spawnTileX * Main.tile.Width + i, Main.spawnTileY * Main.tile.Height + j) * 0.5f);
                     if (noiseValue >= 0.0095f)
                     {
-                        WorldGen.KillTile(i, j, noItem: true);
+                        Main.tile[i, j].Clear(TileDataType.All);
                     }
 
                     progress.Set((j + i * Main.maxTilesY) / (float)(Main.maxTilesX * Main.maxTilesY));
@@ -73,3 +60,4 @@ namespace UltimateSkyblock.Content.Subworlds
         }
     }
 }
+    

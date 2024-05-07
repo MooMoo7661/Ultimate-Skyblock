@@ -211,4 +211,6 @@ Keybinds: {
 Notifications: {
 	JoinWorldNotif: Welcome to Skyblock!
 	MiningSWNotif: Into Darkness
+	DayProgressNotification: Day {0}
+	DungeonSWNotif: Enter the Dungeon
 }

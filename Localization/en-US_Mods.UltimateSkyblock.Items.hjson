@@ -197,7 +197,7 @@ JungleBiomeCoreItem: {
 	DisplayName: Jungle Biome Core
 	Tooltip:
 		'''
-		Reminds you of a familiar looking plant..
+		Has an earthy fragrance
 		Spreads the jungle to nearby blocks
 		'''
 }
@@ -220,4 +220,9 @@ SnowBiomeCoreItem: {
 		Nearby water gets turned into thin ice, then later solid ice
 		Converts dirt into snow
 		'''
+}
+
+Deepsoil: {
+	DisplayName: Deepsoil
+	Tooltip: Can grow Glimmercaps
 }

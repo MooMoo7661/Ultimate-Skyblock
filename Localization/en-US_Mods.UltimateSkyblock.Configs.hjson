@@ -49,6 +49,16 @@ SubworldConfig: {
 		Label: Subworld Saving
 		Tooltip: ""
 	}
+
+	PlacementDetours: {
+		Label: Placement Detours
+		Tooltip:
+			'''
+			Toggles the detours that stop accidental loud placement noises during generation
+			Can also speed up generation significantly
+			Disable if this conflicts with another mod
+			'''
+	}
 }
 
 SubworldClientConfig: {
@@ -69,6 +79,11 @@ SubworldClientConfig: {
 
 	Headers.WorldGenDebugInfo: World Gen Debug Info
 	DisplayName: Subworld Client
+
+	SubworldLoadingMusic: {
+		Label: Subworld Loading Music
+		Tooltip: Toggles the loading music during subworld generation
+	}
 }
 
 SkyblockModConfig: {
@@ -232,6 +247,26 @@ NotificationsConfig: {
 	}
 
 	DisplayName: Notifications
+
+	EnterWorldNotification: {
+		Label: Enter World Notification
+		Tooltip: ""
+	}
+
+	EnterMiningSubworldNotification: {
+		Label: Enter Mining Subworld Notification
+		Tooltip: ""
+	}
+
+	EnterDungeonNotification: {
+		Label: Enter Dungeon Notification
+		Tooltip: ""
+	}
+
+	DayProgressNotification: {
+		Label: Day Progress Notification
+		Tooltip: ""
+	}
 }
 
 ChestType: {

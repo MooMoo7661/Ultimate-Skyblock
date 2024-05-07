@@ -9,6 +9,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.UI;
 using UltimateSkyblock.Content.Biomes;
 using UltimateSkyblock.Content.Buffs;
+using UltimateSkyblock.Content.Gores;
 
 namespace UltimateSkyblock.Content.NPCs
 {
@@ -48,10 +49,10 @@ namespace UltimateSkyblock.Content.NPCs
             NPC.damage = 80;
             NPC.defense = 8;
             NPC.lifeMax = 250;
-            NPC.HitSound = new SoundStyle("UltimateSkyblock/Content/Sounds/ReDeadHit");
+            NPC.HitSound = new SoundStyle("UltimateSkyblock/Content/Sounds/ReDeadHit") with { PitchVariance = 0.5f };
             NPC.DeathSound = new SoundStyle("UltimateSkyblock/Content/Sounds/ReDeadDie");
             NPC.value = 300;
-            NPC.knockBackResist = 5f;
+            NPC.knockBackResist = 0f;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<DeepstoneBiome>().Type };
         }
 
@@ -61,7 +62,6 @@ namespace UltimateSkyblock.Content.NPCs
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 
                 new FlavorTextBestiaryInfoElement("A tall, zombie-like monster. They frequently inhabit tombs and dungeons, acting like a statue until approached."),
-
                 new BestiaryPortraitBackgroundProviderPreferenceInfoElement(ModContent.GetInstance<DeepstoneBiome>().ModBiomeBestiaryInfoElement),
         });
         }
@@ -69,24 +69,15 @@ namespace UltimateSkyblock.Content.NPCs
         public override void OnSpawn(IEntitySource source)
         {
             NPCState = (int)State.Idle;
-        }
-
-        public override void HitEffect(NPC.HitInfo hit)
-        {
-            
+            NPC.dontTakeDamage = true;
+            NPC.frameCounter = 4;
         }
 
         public override void AI()
         {
             NPC.TargetClosest(false);
-           
-            Collision.StepUp(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, ref NPC.stepSpeed, ref NPC.gfxOffY);
 
-            NPCTimer++;
-            if (NPCTimer >= 50)
-            {
-                NPCTimer = 0;
-            }
+            Collision.StepUp(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, ref NPC.stepSpeed, ref NPC.gfxOffY);
 
             NPC.velocity.Y += 0.35f;
             
@@ -120,20 +111,49 @@ namespace UltimateSkyblock.Content.NPCs
         {
             NPCState = (int)State.Chasing;
 
-            if (NPCTimer <= 25)
-                NPC.velocity.X = NPC.velocity.DirectionTo(Main.player[NPC.target].Center).X * 0.8f * NPC.direction * -1;
+            Player player = Main.player[NPC.target];
 
-            NPC.direction = Main.player[NPC.target].Center.X < NPC.Center.X ? 1 : -1;
+            // Checks if the player is directly above / below the redead.
+            // If so, doesn't reset the velocity until it walks past the safeguard or the player moves.
+            // This is my attempt to fix rapid sprite flipping when the player is above/below it.
+            if (!(player.Center.X <= NPC.Center.X + 4 && player.Center.X >= NPC.Center.X - 4))
+            {
+                if ((NPC.frameCounter >= 30 && NPC.frameCounter <= 60) || (NPC.frameCounter >= 90 && NPC.frameCounter <= 120))
+                    NPC.velocity.X = Math.Clamp(Math.Abs(NPC.DirectionTo(player.Center).X * 0.8f), 0.7f, 0.8f) * -NPC.direction;
+                else
+                    NPC.velocity.X = NPC.DirectionTo(player.Center).X * 0.1f;
+            }
+
+            NPC.direction = player.Center.X < NPC.Center.X ? 1 : -1;
             NPC.spriteDirection = NPC.direction;
             detectionRange = 450;
 
             if (!scream && !locked)
             {
-                SoundEngine.PlaySound(new SoundStyle("UltimateSkyblock/Content/Sounds/ReDeadScream"));
-                Main.player[NPC.target].AddBuff(ModContent.BuffType<Fear>(), 300);
+                SoundStyle sound = new SoundStyle("UltimateSkyblock/Content/Sounds/ReDeadScream").WithPitchOffset(-Main.rand.NextFloat(1f, 2.6f) / 10);
+
+                SoundEngine.PlaySound(sound);
+                player.AddBuff(ModContent.BuffType<Fear>(), 300);
                 screamCooldown = 240;
                 locked = true;
+                NPC.dontTakeDamage = false;
             }
+        }
+
+        public override bool PreKill()
+        {
+            if (NPCState != (int)State.Idle)
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position, Main.rand.NextVector2Circular(2f, 2f), ModContent.GoreType<ReDeadGores_Head_Active>());
+            else
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position, Main.rand.NextVector2Circular(2f, 2f), ModContent.GoreType<ReDeadGores_Head_Inactive>());
+
+            Gore.NewGore(NPC.GetSource_Death(), new(NPC.position.X, NPC.position.Y + NPC.height / 2), Main.rand.NextVector2Circular(4f, 4f), ModContent.GoreType<ReDeadGores_Arm_Left>());
+            Gore.NewGore(NPC.GetSource_Death(), new(NPC.position.X + NPC.width, NPC.position.Y + NPC.height / 2), Main.rand.NextVector2Circular(4f, 4f), ModContent.GoreType<ReDeadGores_Arm_Right>());
+            Gore.NewGore(NPC.GetSource_Death(), new(NPC.position.X, NPC.position.Y + NPC.height - 6), Main.rand.NextVector2Circular(4f, 4f), ModContent.GoreType<ReDeadGores_Leg_Left>());
+            Gore.NewGore(NPC.GetSource_Death(), new(NPC.position.X + NPC.width, NPC.position.Y + NPC.height - 6), Main.rand.NextVector2Circular(4f, 4f), ModContent.GoreType<ReDeadGores_Leg_Right>());
+            Gore.NewGore(NPC.GetSource_Death(), NPC.Center, Main.rand.NextVector2Circular(4f, 4f), ModContent.GoreType<ReDeadGores_Chest>());
+
+            return true;
         }
 
         public override void FindFrame(int frameHeight)
@@ -153,17 +173,17 @@ namespace UltimateSkyblock.Content.NPCs
                         NPC.frame.Y = 6 + 92 * 2;
                     else if (NPC.frameCounter == 45)
                         NPC.frame.Y = 8 + 92 * 3;
-                    else if (NPC.frameCounter == 60)
-                        NPC.frame.Y = 10 + 92 * 4;
                     else if (NPC.frameCounter == 75)
-                        NPC.frame.Y = 12 + 92 * 5;
+                        NPC.frame.Y = 10 + 92 * 4;
                     else if (NPC.frameCounter == 90)
-                        NPC.frame.Y = 14 + 92 * 6;
+                        NPC.frame.Y = 12 + 92 * 5;
                     else if (NPC.frameCounter == 105)
-                        NPC.frame.Y = 16 + 92 * 7;
+                        NPC.frame.Y = 14 + 92 * 6;
                     else if (NPC.frameCounter == 120)
+                        NPC.frame.Y = 16 + 92 * 7;
+                    else if (NPC.frameCounter == 135)
                         NPC.frame.Y = 18 + 92 * 8;
-                    else if (NPC.frameCounter >= 120)
+                    else if (NPC.frameCounter >= 135)
                         NPC.frameCounter = 0;
                     break;
             }

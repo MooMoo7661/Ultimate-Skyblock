@@ -11,6 +11,8 @@ using Terraria.Audio;
 using UltimateSkyblock.Content.UI.Guidebook;
 using CombinationsMod.Content.Keybindings;
 using UltimateSkyblock.Content.Items.Generic;
+using UltimateSkyblock.Content.NPCs;
+using UltimateSkyblock.Content.Tiles.Walls;
 
 namespace UltimateSkyblock.Content.ModPlayers
 {
@@ -21,6 +23,7 @@ namespace UltimateSkyblock.Content.ModPlayers
 
         public override void PreUpdate()
         {
+
             //Join message to tell the player not to use small worlds.
             if (!locked)
             {
@@ -54,8 +57,6 @@ namespace UltimateSkyblock.Content.ModPlayers
             }
 
         }
-    
-
 
         public override void PostUpdate()
         {
@@ -74,7 +75,7 @@ namespace UltimateSkyblock.Content.ModPlayers
             }
 
             //Kills player when falling out
-            if (Player.position.ToTileCoordinates().Y >= Main.maxTilesY - 45 && SubworldSystem.Current == null)
+            if (Main.myPlayer == Player.whoAmI && Player.position.ToTileCoordinates().Y >= Main.maxTilesY - 45 && SubworldSystem.Current == null)
             {
                 Player.KillMe(PlayerDeathReason.ByCustomReason(Player.name + " fell out of the world"), 0, 0, false);
             }

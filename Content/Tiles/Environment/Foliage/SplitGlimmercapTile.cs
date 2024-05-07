@@ -37,8 +37,9 @@ namespace UltimateSkyblock.Content.Tiles.Environment.Foliage
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
             TileObjectData.newTile.Origin = new Point16(0, 1);
             TileObjectData.newTile.WaterDeath = true;
+            TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.CoordinateHeights = new int[2] { 16, 18 };
-            TileObjectData.newTile.AnchorValidTiles = new int[] { ModContent.TileType<DeepstoneTile>() };
+            TileObjectData.newTile.AnchorValidTiles = new int[] { ModContent.TileType<DeepstoneTile>(), ModContent.TileType<DeepsoilTile>() };
             TileObjectData.addTile(Type);
 
             HitSound = SoundID.Grass;

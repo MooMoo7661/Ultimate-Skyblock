@@ -17,7 +17,7 @@ namespace UltimateSkyblock.Content.Items.Guidebook
         {
             Item.CloneDefaults(ItemID.ManaCrystal);
             Item.consumable = false;
-            Item.ResearchUnlockCount = 3;
+            Item.ResearchUnlockCount = 1;
             Item.maxStack = 1;
             Item.value = 0;
             Item.rare = ItemRarityID.Cyan;

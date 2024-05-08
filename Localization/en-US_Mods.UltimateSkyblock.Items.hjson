@@ -226,3 +226,8 @@ Deepsoil: {
 	DisplayName: Deepsoil
 	Tooltip: Can grow Glimmercaps
 }
+
+HardenedDeepstone: {
+	DisplayName: Hardened Deepstone
+	Tooltip: ""
+}

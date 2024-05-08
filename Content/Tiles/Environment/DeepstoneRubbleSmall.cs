@@ -25,7 +25,7 @@ namespace UltimateSkyblock.Content.Tiles.Environment
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.addTile(Type);
 
-            AddMapEntry(new Color(152, 171, 198));
+            AddMapEntry(new Color(60, 60, 60));
         }
     }
 

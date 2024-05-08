@@ -54,6 +54,7 @@ using FNLfloat = System.Single;
 
 namespace UltimateSkyblock.Content.Subworlds
 {
+    #pragma warning disable IDE0066
     public class FastNoise
     {
         private const short INLINE = 256; // MethodImplOptions.AggressiveInlining;
@@ -149,6 +150,23 @@ namespace UltimateSkyblock.Content.Subworlds
         public FastNoise(int seed = 1337)
         {
             SetSeed(seed);
+        }
+        
+        /// <summary>
+        /// My own custom method of creating a basic noise.
+        /// Most of the stuff is defaulted, since the preset is generally good enough for what I need.
+        /// </summary>
+        public FastNoise(FractalType fractalType, NoiseType noiseType, float gain = 1.6f,  int seed = 1337)
+        {
+            SetSeed(seed);
+            SetFractalType(fractalType);
+            SetNoiseType(noiseType);
+            SetFractalGain(gain);
+
+            SetFrequency(0.02f);
+            SetFractalOctaves(2);
+            SetFractalLacunarity(1.6f);
+            SetFractalWeightedStrength(1.1f);
         }
 
         /// <summary>
@@ -2505,4 +2523,6 @@ namespace UltimateSkyblock.Content.Subworlds
             zr += vz * warpAmp;
         }
     }
+
+    #pragma warning restore IDE0066  
 }

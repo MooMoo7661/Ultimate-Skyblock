@@ -34,7 +34,7 @@ namespace UltimateSkyblock.Content.UI.Guidebook
         /// Used for storing pages.
         /// Values can be quickly obtained through TryGetValue(), and the corresponding StyleID.
         /// </summary>
-        public static Dictionary<int, Page> Pages = new();
+        public const Dictionary<int, Page> Pages = new();
 
         /// <summary>
         /// Used for determining what entry to get with TryGetEntry
@@ -137,30 +137,40 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             GuidebookPanel.BackgroundColor = DefaultColor;
             Append(GuidebookPanel);
 
-            Title = new UIText("Skyblock Guidebook");
-            Title.HAlign = 0.5f;
-            Title.MarginTop = 15;
+            Title = new UIText("Skyblock Guidebook")
+            {
+                HAlign = 0.5f,
+                MarginTop = 15
+            };
             GuidebookPanel.Append(Title);
 
-            UIText QuickPages = new UIText("Select", 0.9f);
-            QuickPages.MarginLeft = 15;
-            QuickPages.MarginTop = 30;
+            UIText QuickPages = new UIText("Select", 0.9f)
+            {
+                MarginLeft = 15,
+                MarginTop = 30
+            };
             GuidebookPanel.Append(QuickPages);
 
-            PageNumber = new UIText("- " + (PageIndex + 1).ToString() + " -");
-            PageNumber.HAlign = 0.5f;
-            PageNumber.MarginTop = 450;
+            PageNumber = new UIText("- " + (PageIndex + 1).ToString() + " -")
+            {
+                HAlign = 0.5f,
+                MarginTop = 450
+            };
             GuidebookPanel.Append(PageNumber);
 
-            PageName = new UIText("Introduction");
-            PageName.HAlign = 0.5f;
-            PageName.MarginTop = 450;
+            PageName = new UIText("Introduction")
+            {
+                HAlign = 0.5f,
+                MarginTop = 450
+            };
             GuidebookPanel.Append(PageName);
 
             MainPage = Language.GetTextValue("Mods.UltimateSkyblock.LocalizedPages.IntroPage");
-            MainText = new UIText(MainPage, 0.95f);
-            MainText.MarginLeft = 75;
-            MainText.MarginTop = 50;
+            MainText = new UIText(MainPage, 0.95f)
+            {
+                MarginLeft = 75,
+                MarginTop = 50
+            };
             GuidebookPanel.Append(MainText);
 
             InitializeButtons(); // General buttons, like left and right arrows, & close
@@ -175,13 +185,13 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             mainButton.MarginTop = 45;
             GuidebookPanel.Append(mainButton);
 
-            UIImageButton button;
-
             Asset<Texture2D> home = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/Guidebook/Assets/MainPage", AssetRequestMode.ImmediateLoad);
-            UIImage mainIcon = new UIImage(home);
-            mainIcon.HAlign = 0.5f;
-            mainIcon.VAlign = 0.5f;
-            mainIcon.ScaleToFit = true;
+            UIImage mainIcon = new UIImage(home)
+            {
+                HAlign = 0.5f,
+                VAlign = 0.5f,
+                ScaleToFit = true
+            };
             mainButton.Append(mainIcon);
             UITextButton fishingButton = new UITextButton("", 0, 0.05f, 40, 40, "Fishing", SoundID.MenuClose);
             fishingButton.OnLeftClick += new MouseEvent(FishingClicked);
@@ -191,10 +201,12 @@ namespace UltimateSkyblock.Content.UI.Guidebook
 
             Main.instance.LoadItem(ItemID.Goldfish);
             Asset<Texture2D> fish = TextureAssets.Item[ItemID.Goldfish];
-            UIImage quickPage = new UIImage(fish);
-            quickPage.HAlign = 0.5f;
-            quickPage.VAlign = 0.5f;
-            quickPage.ScaleToFit = true;
+            UIImage quickPage = new UIImage(fish)
+            {
+                HAlign = 0.5f,
+                VAlign = 0.5f,
+                ScaleToFit = true
+            };
             fishingButton.Append(quickPage);
 
             UITextButton miningSWButton = new UITextButton("", 0, 0.05f, 40, 40, "Mining Subworld", SoundID.MenuClose);
@@ -203,10 +215,12 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             miningSWButton.MarginTop = 135;
             GuidebookPanel.Append(miningSWButton);
             Asset<Texture2D> mining = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/Guidebook/Assets/MiningSWIcon", AssetRequestMode.ImmediateLoad);
-            UIImage miningPage = new UIImage(mining);
-            miningPage.HAlign = 0.5f;
-            miningPage.VAlign = 0.5f;
-            miningPage.ScaleToFit = true;
+            UIImage miningPage = new UIImage(mining)
+            {
+                HAlign = 0.5f,
+                VAlign = 0.5f,
+                ScaleToFit = true
+            };
             miningSWButton.Append(miningPage);
 
             UITextButton shimmerButton = new UITextButton("", 0, 0.05f, 40, 40, "Shimmer", SoundID.MenuClose);
@@ -232,9 +246,11 @@ namespace UltimateSkyblock.Content.UI.Guidebook
         private void InitializeButtons()
         {
             Asset<Texture2D> closeAsset = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/Guidebook/Assets/SearchCancel", AssetRequestMode.ImmediateLoad);
-            CloseButton closeButton = new CloseButton(closeAsset, "close");
-            closeButton.HAlign = 0.98f;
-            closeButton.VAlign = 0.02f;
+            CloseButton closeButton = new CloseButton(closeAsset, "close")
+            {
+                HAlign = 0.98f,
+                VAlign = 0.02f
+            };
             GuidebookPanel.Append(closeButton);
 
             LeftButton = new UITextButton("<", 0.05f, 0.95f, 130, 34, "", SoundID.MenuTick);
@@ -253,10 +269,12 @@ namespace UltimateSkyblock.Content.UI.Guidebook
 
             Main.instance.LoadItem(ItemID.Book);
             Asset<Texture2D> book = TextureAssets.Item[ItemID.Book];
-            wikiPageIcon = new UIImage(book);
-            wikiPageIcon.HAlign = 0.5f;
-            wikiPageIcon.VAlign = 0.5f;
-            wikiPageIcon.ScaleToFit = true;
+            wikiPageIcon = new UIImage(book)
+            {
+                HAlign = 0.5f,
+                VAlign = 0.5f,
+                ScaleToFit = true
+            };
             wikiPageButton.Append(wikiPageIcon);
 
             discordLinkButton = new UITextButton("", 0, 0.05f, 40, 40, "", SoundID.MenuOpen);
@@ -353,9 +371,11 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             if (text != null)
             {
                 GuidebookPanel.RemoveChild(MainText);
-                MainText = new UIText(text, 1f);
-                MainText.MarginLeft = 75;
-                MainText.MarginTop = 50;
+                MainText = new UIText(text, 1f)
+                {
+                    MarginLeft = 75,
+                    MarginTop = 50
+                };
                 GuidebookPanel.Append(MainText);
             }
 
@@ -382,16 +402,20 @@ namespace UltimateSkyblock.Content.UI.Guidebook
                 Color color = Color.Lerp(Color.DodgerBlue, Color.MediumPurple, (MathF.Sin(Main.GlobalTimeWrappedHourly * 2.9f) + 1) / 2f);
 
                 GuidebookPanel.RemoveChild(PageName);
-                PageName = new UIText(pageName.ToHexString(color), 1f);
-                PageName.HAlign = 0.5f;
-                PageName.VAlign = 0.9f;
+                PageName = new UIText(pageName.ToHexString(color), 1f)
+                {
+                    HAlign = 0.5f,
+                    VAlign = 0.9f
+                };
                 GuidebookPanel.Append(PageName);
             }
 
             GuidebookPanel.RemoveChild(PageNumber);
-            PageNumber = new UIText("- " + (PageIndex + 1).ToString() + " -");
-            PageNumber.HAlign = 0.5f;
-            PageNumber.VAlign = 0.95f;
+            PageNumber = new UIText("- " + (PageIndex + 1).ToString() + " -")
+            {
+                HAlign = 0.5f,
+                VAlign = 0.95f
+            };
             GuidebookPanel.Append(PageNumber);
 
             //Updating button availability

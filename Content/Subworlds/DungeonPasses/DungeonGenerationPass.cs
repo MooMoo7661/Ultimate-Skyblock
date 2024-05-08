@@ -196,18 +196,12 @@ namespace UltimateSkyblock.Content.Subworlds.DungeonPasses
             GenerateBasementHallway(x + offset, y + basementDims.Y - 27, dir, new Random().Next(3, 5) - floor, floor);
         }
 
-        public void GenerateMiddleHallway(int x, int y, int dir, int maxRooms)
-        { 
-        
-        }
-
         ///TODO: Accurate room tracking for other hallways than bottom. Currently it's messed up a little.
 
         public void GenerateTopHallway(int x, int y, int dir, int maxRooms, int floor, bool tower = true, int floorToTerminateAt = 3)
         {
             int offset = 0;
             previousRoom = -1;
-            int seed = DateTime.Now.Millisecond;
             int towerIndex = new Random().Next(maxRooms / 2, Math.Clamp(maxRooms - floor, maxRooms / 2 + 1, maxRooms));
             int roomIndex = 0;
 
@@ -271,7 +265,6 @@ namespace UltimateSkyblock.Content.Subworlds.DungeonPasses
         {
             TagCompound tag = DynamicStructureSystem.GetTag(prePath + roomType, UltimateSkyblock.Instance);
             List<TagCompound> list = (List<TagCompound>)tag.GetList<TagCompound>("Structures");
-            int seed = DateTime.Now.Millisecond + randIndex * iterations;
             int index = new Random().Next(list.Count);
 
             if (index == previousRoom)

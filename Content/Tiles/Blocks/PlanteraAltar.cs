@@ -41,8 +41,6 @@ namespace UltimateSkyblock.Content.Tiles.Blocks
 
         public override bool RightClick(int i, int j)
         {
-
-            Player player = Main.LocalPlayer;
             bool plantera = false;
             for (int k = 0; k < Main.maxNPCs; k++)
             {

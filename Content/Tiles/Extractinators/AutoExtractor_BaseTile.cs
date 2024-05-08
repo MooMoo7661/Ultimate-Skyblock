@@ -86,8 +86,6 @@ namespace UltimateSkyblock.Content.Tiles.Extractinators
             extraY = 0;
         }
 
-        int drawFrame;
-
         public override void AnimateTile(ref int frame, ref int frameCounter)
         {
             frame = Main.tileFrame[TileID.Extractinator];

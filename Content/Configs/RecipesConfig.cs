@@ -8,66 +8,75 @@ namespace UltimateSkyblock.Content.Configs
         public override ConfigScope Mode => ConfigScope.ServerSide;
 
         [Header("Misc")]
-        [Label("Allow decrafting tombstones into gold and stone")]
+        [BackgroundColor(237, 231, 238)]
         [DefaultValue(true)]
         public bool DecraftTombstones { get; set; }
 
-        [Label("Tin cans can be smelted down")]
         [DefaultValue(true)]
+        [BackgroundColor(227, 229, 229)]
         public bool SmeltTinCans { get; set; }
 
         [Header("Items")]
-        [Label("Craft Staff of Regrowth")]
         [DefaultValue(true)]
+        [BackgroundColor(222, 228, 225)]
         public bool CraftRegrowthStaff { get; set; }
 
-        [Label("Craft Extractinator")]
         [DefaultValue(true)]
+        [BackgroundColor(216, 226, 220)]
         public bool CraftExtractinator { get; set; }
 
-        [Label("Craft Life Crystals")]
         [DefaultValue(true)]
+        [BackgroundColor(236, 228, 219)]
         public bool CraftLifeCrystals { get; set; }
-
-        [Label("Craft Gelatin Crystals")]
+ 
         [DefaultValue(true)]
+        [BackgroundColor(246, 229, 218)]
         public bool CraftGelatinCrystals { get; set; }
 
-        [Label("Craft Ice Skates")]
         [DefaultValue(true)]
+        [BackgroundColor(255, 229, 217)]
         public bool CraftIceSkates { get; set; }
 
-        [Label("Craft Hermes Boots")]
         [DefaultValue(true)]
+        [BackgroundColor(255, 216, 215)]
         public bool CraftHermesBoots { get; set; }
 
-        [Label("Craft Magic Mirror")]
         [DefaultValue(true)]
+        [BackgroundColor(255, 209, 214)]
         public bool CraftMagicMirror { get; set; }
 
-        [Label("Craft Ice Mirror")]
         [DefaultValue(true)]
+        [BackgroundColor(255, 202, 212)]
         public bool CraftIceMirror { get; set; }
 
-        [Label("Craft Band of Regeneration")]
         [DefaultValue(true)]
+        [BackgroundColor(250, 187, 198)]
         public bool CraftRegenerationBand { get; set; }
 
-        [Label("Craft Step Stool")]
         [DefaultValue(true)]
+        [BackgroundColor(247, 180, 191)]
         public bool CraftStepStool { get; set; }
 
-        [Label("Flurry Boots Recipe")]
         [DefaultValue(true)]
+        [BackgroundColor(244, 172, 183)]
         public bool CraftFlurryBoots { get; set; }
 
-        [Label("Dunerider Boots Recipe")]
         [DefaultValue(true)]
+        [BackgroundColor(201, 151, 160)]
         public bool CraftDuneriderBoots { get; set; }
 
-        [Label("Aglet Recipe")]
         [DefaultValue(true)]
+        [BackgroundColor(179, 140, 149)]
         public bool CraftAglet { get; set; }
+
+        //157, 129, 137
+        //166, 140, 148
+        //174, 150, 158
+        //176, 153, 176
+        //177, 154, 185
+        //178, 155, 194
+        //180, 158, 212
+        //181, 160, 230
 
     }
 }

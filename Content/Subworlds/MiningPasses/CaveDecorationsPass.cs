@@ -10,6 +10,7 @@ using Terraria.WorldBuilding;
 using UltimateSkyblock.Content.Items.Placeable;
 using static UltimateSkyblock.Content.Subworlds.MiningSubworld;
 using UltimateSkyblock.Content.Tiles.Blocks;
+using UltimateSkyblock.Content.Tiles.Environment;
 
 namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 {
@@ -43,7 +44,15 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
                         }
                     }
 
-                    if (y < Main.UnderworldLayer && WorldGen.genRand.NextBool(50) && GenUtils.SuitableFor2x2(x, y) && !GenUtils.AreaContainsSensitiveTiles(new List<int> { TileID.Heart }, x, y, 8, 8))
+                    if (y > Main.UnderworldLayer - 300 && WorldGen.genRand.NextBool(5) && tile.TileType == ModContent.TileType<DeepstoneTile>())
+                    {
+                        if (!WorldGen.genRand.NextBool(3))
+                            WorldGen.PlaceTile(x, y - 1, ModContent.TileType<DeepstoneRubbleSmallNatural>(), mute: true, style: new UnifiedRandom().Next(6));
+                        else
+                            WorldGen.PlaceTile(x, y - 1, ModContent.TileType<DeepstoneRubbleMediumNatural>(), mute: true, style: new UnifiedRandom().Next(6));
+                    }
+
+                    if (y < Main.UnderworldLayer && WorldGen.genRand.NextBool(50) && GenUtils.SuitableFor2x2(x, y) && !GenUtils.AreaContainsSensitiveTiles(new List<int> { TileID.Heart }, x, y, 16, 16))
                     {
                         WorldGen.PlaceObject(x, y - 1, TileID.Heart, true);
                     }
@@ -191,7 +200,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
             if (rubbleType == -1)
                 return false;
 
-            return WorldGen.PlaceSmallPile(x, y - 1, rubbleType, 1);
+             return WorldGen.PlaceSmallPile(x, y - 1, rubbleType, 1);
         }
     }
 }

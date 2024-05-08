@@ -24,7 +24,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
             SplitGlowcap
         }
 
-        public int DeepstoneTile = ModContent.TileType<DeepstoneTile>();
+        public static bool[] validForGlowcap = TileID.Sets.Factory.CreateBoolSet(ModContent.TileType<DeepsoilTile>(), ModContent.TileType<DeepstoneTile>());
 
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
@@ -54,14 +54,14 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 
             if (type == PlantType.Glowcap)
             {
-                if (!up.HasTile && tile.TileType == DeepstoneTile)
+                if (!up.HasTile && validForGlowcap[tile.TileType])
                 {
                     return ModContent.TileType<Tiles.Environment.Foliage.GlimmercapTile>();
                 }
             }
             else if (type == PlantType.SplitGlowcap)
             {
-                if (!up.HasTile && !upRight.HasTile && tile.TileType == DeepstoneTile && right.TileType == DeepstoneTile)
+                if (!up.HasTile && !upRight.HasTile && validForGlowcap[tile.TileType] && validForGlowcap[right.TileType])
                 {
                     return ModContent.TileType<Tiles.Environment.Foliage.SplitGlimmercapTile>();
                 }

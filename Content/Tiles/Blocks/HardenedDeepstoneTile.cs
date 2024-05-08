@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace UltimateSkyblock.Content.Tiles.Blocks
 {
-    public class HardenedDeepstoneTile : ModTile
+    public class DeepstoneTile : ModTile
     {
         public override void SetStaticDefaults()
         {
@@ -19,8 +19,8 @@ namespace UltimateSkyblock.Content.Tiles.Blocks
             Main.tileMerge[Type][TileID.Ash] = true;
             Main.tileMerge[TileID.Ash][Type] = true;
 
-            Main.tileMerge[ModContent.TileType<DeepstoneBrickTile>()][Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<DeepstoneBrickTile>()] = true;
+            Main.tileMerge[ModContent.TileType<HardenedDeepstoneTile>()][Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<HardenedDeepstoneTile>()] = true;
 
             Main.tileLighted[Type] = false;
             Main.tileNoSunLight[Type] = false;
@@ -28,12 +28,12 @@ namespace UltimateSkyblock.Content.Tiles.Blocks
             TileID.Sets.Stone[Type] = true;
             DustType = DustID.Stone;
             MinPick = 70;   
-            MineResist = 2f;
+            MineResist = 2.4f;
 
             HitSound = SoundID.Tink;
-            RegisterItemDrop(ModContent.ItemType<Deepstone>());
+            RegisterItemDrop(ModContent.ItemType<HardenedDeepstone>());
 
-            AddMapEntry(new Color(33, 33, 33));
+            AddMapEntry(new Color(20, 20, 20));
         }
     }
 }

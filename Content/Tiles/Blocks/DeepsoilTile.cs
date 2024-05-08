@@ -29,7 +29,7 @@ namespace UltimateSkyblock.Content.Tiles.Blocks
             HitSound = SoundID.Dig;
             RegisterItemDrop(ModContent.ItemType<Deepsoil>());
 
-            AddMapEntry(new Color(27, 27, 27));
+            AddMapEntry(new Color(63, 31, 24));
         }
 
         public override void RandomUpdate(int x, int y)

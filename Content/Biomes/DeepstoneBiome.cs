@@ -1,4 +1,5 @@
 ﻿using System;
+using SubworldLibrary;
 using Terraria.Graphics.Capture;
 using UltimateSkyblock.Content.Tiles.Blocks;
 
@@ -24,13 +25,15 @@ namespace UltimateSkyblock.Content.Biomes
 
         public override bool IsBiomeActive(Player player)
         {
-            return ModContent.GetInstance<DeepstoneCount>().blockCount >= 60;
+            return ModContent.GetInstance<DeepstoneCount>().blockCount >= 120;
         }
 
         public override void OnInBiome(Player player)
         {
-            player.AddBuff(BuffID.Darkness, 301);
+            if (player.ZoneNormalCaverns) player.AddBuff(BuffID.Darkness, 301);
         }
+
+        public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => base.SurfaceBackgroundStyle;
     }
 
     public class DeepstoneCount : ModSystem

@@ -1,4 +1,5 @@
 using System;
+using log4net;
 using SubworldLibrary;
 using Terraria;
 using Terraria.ModLoader;
@@ -73,6 +74,36 @@ namespace UltimateSkyblock.Content.SceneEffects
         public override float GetWeight(Player player)
         {
             return 1f;
+        }
+    }
+
+    public class SkyblockScene_OceanRemover : ModSceneEffect
+    {
+        public override bool IsSceneEffectActive(Player player)
+        {
+            return player.ZoneBeach && SubworldSystem.Current == ModContent.GetInstance<MiningSubworld>();
+        }
+
+        public override int Music => MusicID.Underground;
+
+        public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.GetInstance<OceanRemoverBackground>();
+
+        public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
+
+        public override float GetWeight(Player player)
+        {
+            return 1f;
+        }
+    }
+
+    public class OceanRemoverBackground : ModUndergroundBackgroundStyle
+    {
+        public override void FillTextureArray(int[] textureSlots)
+        {
+            textureSlots[0] = BackgroundTextureLoader.GetBackgroundSlot(Mod, "Assets/Textures/Backgrounds/OceanRemover0");
+            textureSlots[1] = BackgroundTextureLoader.GetBackgroundSlot(Mod, "Assets/Textures/Backgrounds/OceanRemover1");
+            textureSlots[2] = BackgroundTextureLoader.GetBackgroundSlot(Mod, "Assets/Textures/Backgrounds/OceanRemover0");
+            textureSlots[3] = BackgroundTextureLoader.GetBackgroundSlot(Mod, "Assets/Textures/Backgrounds/OceanRemover1");
         }
     }
 }

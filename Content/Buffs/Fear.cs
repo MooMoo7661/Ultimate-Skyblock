@@ -16,6 +16,22 @@ namespace UltimateSkyblock.Content.Buffs
             player.controlRight = false;
             player.controlJump = false;
             player.controlUseItem = false;
+            player.controlInv = false;
+            player.controlMap = false;
+            player.controlMount = false;
+            player.controlUseTile = false;
+            player.controlThrow = false;
+            player.controlQuickMana = false;
+            player.controlSmart = false;
+            player.controlHook = false;
+        }
+
+        public override void SetStaticDefaults()
+        {
+            BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
+            BuffID.Sets.LongerExpertDebuff[Type] = true;
+            Main.buffNoSave[Type] = true;
+            Main.debuff[Type] = true;
         }
     }
 }

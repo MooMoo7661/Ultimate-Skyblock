@@ -39,7 +39,7 @@ namespace UltimateSkyblock.Content.GlobalClasses
                     pool.Add(NPCID.CaveBat, 1f);
                 }
 
-                if (spawnInfo.Player.InModBiome<DeepstoneBiome>())
+                if (spawnInfo.Player.InModBiome<DeepstoneBiome>() && spawnInfo.Player.position.Y >= GenVars.worldSurfaceLow)
                 {
                     pool.Clear();
                     pool.Add(NPCID.Ghost, 0.2f);

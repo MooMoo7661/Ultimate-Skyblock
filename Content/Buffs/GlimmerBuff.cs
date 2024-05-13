@@ -22,6 +22,9 @@ namespace UltimateSkyblock.Content.Buffs
                     dust.noLight = true;
                 }
             }
+
+            //Lighting.AddLight(player.Center, 1, 1, 1);
+            Lighting.AddLight(player.Center, Color.White.ToVector3() * 1.3f);
         }
     }
 }

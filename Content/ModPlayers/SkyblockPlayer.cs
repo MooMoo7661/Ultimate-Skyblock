@@ -13,6 +13,8 @@ using CombinationsMod.Content.Keybindings;
 using UltimateSkyblock.Content.Items.Generic;
 using UltimateSkyblock.Content.NPCs;
 using UltimateSkyblock.Content.Tiles.Walls;
+using System;
+using System.Net;
 
 namespace UltimateSkyblock.Content.ModPlayers
 {
@@ -23,39 +25,20 @@ namespace UltimateSkyblock.Content.ModPlayers
 
         public override void PreUpdate()
         {
-
             //Join message to tell the player not to use small worlds.
             if (!locked)
             {
                 if (joinTimer == 360)
                 {
-                    if ((WorldSize is WorldSizes.Small or WorldSizes.Medium) && ModContent.GetInstance<SkyblockModConfig>().SmallWorldWarning && SubworldSystem.Current == null)
+                    if ((WorldSize is WorldSizes.Small or WorldSizes.Large) && ModContent.GetInstance<SkyblockModConfig>().SmallWorldWarning && SubworldSystem.Current == null && UltimateSkyblock.IsSkyblock())
                     {
-                        Main.NewText("----------" + "\nYou are currently on a " + WorldSize + " world\nFor the best experience, please create a large world, as the islands will be unnaturally close together\n[c/E136EE:This message can be disabled at any time through the Gameplay Config.]\n" + "----------");
+                        Main.NewText("----------" + "\nYou are currently on a " + WorldSize.ToString().ToLower() + " world\nFor the best experience, please create a medium world, as the islands will be " + (WorldSize == WorldSizes.Small ? "too close together." : "too far apart.") + "\n[c/E136EE:This message can be disabled at any time through the Gameplay Config.]\n" + "----------");
                     }
                     locked = true;
                 }
                 else
                     joinTimer++;
             }
-        }
-
-        public override void OnEnterWorld()
-        {
-            locked = false;
-            joinTimer = 0;
-
-            for (int i = 0; i < Player.inventory.Length; i++)
-            {
-                Item item = Player.inventory[i];
-                if (item.ModItem is Lantern lantern)
-                {
-                    lantern.locked = true;
-                    lantern.teleportTimer = 0;
-                    lantern.reuseTimer = 7200;
-                }
-            }
-
         }
 
         public override void PostUpdate()

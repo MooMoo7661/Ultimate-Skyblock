@@ -10,9 +10,11 @@ namespace UltimateSkyblock.Content.Subworlds.DungeonRoomUtils
     {
         internal readonly static string modSource = "[UltimateSkyblock]: ";
 
-        public static void QuickLog(string message)
+        public static void QuickLog(object message)
         {
-            UltimateSkyblock.Instance.Logger.Info(message);
+            UltimateSkyblock.Instance.Logger.Info(message.ToString());
+
+            
         }
 
         //This exists so I can print logs that stand out, since it's hard for me to read the logs for a specific thing.

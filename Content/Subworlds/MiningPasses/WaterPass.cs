@@ -41,10 +41,32 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
                 }
             }
 
+            for (int x = 0; x < Main.maxTilesX; x++)
+            {
+                for (int y = Main.UnderworldLayer - 100; y < Main.UnderworldLayer; y++)
+                {
+                    Tile tile = Framing.GetTileSafely(x, y);
+                    if (!tile.HasTile && WorldGen.genRand.NextBool(900) && !GenUtils.MostlyAir(22, 22, x, y))
+                    {
+                        int xOffset = WorldGen.genRand.Next(12, 16);
+                        int yOffset = WorldGen.genRand.Next(12, 16);
+
+                        for (int x2 = x - xOffset; x2 < x + xOffset; x2++)
+                        {
+                            for (int y2 = y - yOffset; y2 < y + yOffset; y2++)
+                            {
+                                if (WorldGen.InWorld(x2, y2) && !Framing.GetTileSafely(x2, y2).HasTile)
+                                    WorldGen.PlaceLiquid(x2, y2, (byte)LiquidID.Lava, (byte)WorldGen.genRand.Next(150, 255));
+                            }
+                        }
+                    }
+                }
+            }
+
             SettleLiquids(ref progress);
         }
 
-        public void SettleLiquids(ref GenerationProgress progress)
+        public static void SettleLiquids(ref GenerationProgress progress)
         {
             Liquid.worldGenTilesIgnoreWater(ignoreSolids: true);
             Liquid.QuickWater(3);

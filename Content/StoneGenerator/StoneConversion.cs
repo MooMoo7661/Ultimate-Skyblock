@@ -43,7 +43,7 @@ namespace UltimateSkyblock.Content.StoneGenerator
 
             var label = c.DefineLabel();
             c.Emit(OpCodes.Br, label);
-
+                
             if (!c.TryGotoNext(MoveType.Before,
                 i => i.MatchLdloca(4),
                 i => i.MatchCall(out _),
@@ -132,7 +132,7 @@ namespace UltimateSkyblock.Content.StoneGenerator
                     num--;
 
                 byte newAmount = (byte)Math.Round(num / (1 + numLeft + numRight));
-                if (newAmount == byte.MaxValue - 1 && WorldGen.genRand.Next(30) == 0)
+                if (newAmount == byte.MaxValue - 1 && WorldGen.genRand.NextBool(30))
                     newAmount = byte.MaxValue;
 
                 bool anyUpdated = false;
@@ -175,7 +175,7 @@ namespace UltimateSkyblock.Content.StoneGenerator
         /// <param name="canMoveVanilla">Passed in to allow forcing a liquid to move even if vanilla wouldn't allow it.</param>
         private static bool CanMove(int x, int y, int xMove, int yMove, ref bool canMoveVanilla)
         {
-            if (!ModContent.GetInstance<SkyblockModConfig>().StoneGenerator)
+            if (!ModContent.GetInstance<SkyblockModConfig>().StoneGenerator || !UltimateSkyblock.IsSkyblock())
                 return canMoveVanilla;
 
             Tile tile = Main.tile[x, y];

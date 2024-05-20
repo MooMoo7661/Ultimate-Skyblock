@@ -10,7 +10,7 @@ namespace UltimateSkyblock.Content.GlobalClasses
     {
         public override void PostDraw(int i, int j, int type, SpriteBatch spriteBatch)
         {
-            if (type != TileID.Stone && type != TileID.AccentSlab && type != TileID.Obsidian) { return; }
+            if (!UltimateSkyblock.IsSkyblock() || type != TileID.Stone && type != TileID.AccentSlab && type != TileID.Obsidian) { return; }
 
             Tile tileLeft = Main.tile[i - 1, j];
             Tile tileRight = Main.tile[i + 1, j];

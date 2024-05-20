@@ -34,7 +34,7 @@ namespace UltimateSkyblock.Content.UI.Guidebook
         /// Used for storing pages.
         /// Values can be quickly obtained through TryGetValue(), and the corresponding StyleID.
         /// </summary>
-        public const Dictionary<int, Page> Pages = new();
+        public static Dictionary<int, Page> Pages = new();
 
         /// <summary>
         /// Used for determining what entry to get with TryGetEntry
@@ -56,7 +56,8 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             Fishing = 5,
             MiningSW = 6,
             Shimmer = 7,
-            MapMarkers = 8
+            MapMarkers = 8,
+            Liquids = 9,
         }
 
         /// <summary>
@@ -94,7 +95,7 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             Pages.TryAdd(2, new Page(Language.GetTextValue(path + "PageNames.Progression"), Language.GetTextValue(path + "Progression1")));
             Pages.TryAdd(3, new Page(Language.GetTextValue(path + "PageNames.Progression"), Language.GetTextValue(path + "Progression2")));
             Pages.TryAdd(4, new Page(Language.GetTextValue(path + "PageNames.Hardmode"), Language.GetTextValue(path + "Hardmode"), "https://terraria.wiki.gg/wiki/Hardmode"));
-            Pages.TryAdd(8, new Page(Language.GetTextValue(path + "PageNames.MapMarkers"), Language.GetTextValue(path + "MapMarkers")));
+            Pages.TryAdd(8, new Page(Language.GetTextValue(path + "PageNames.BiomeCores"), Language.GetTextValue(path + "BiomeCores")));
 
             AddDetailedPages();
         }
@@ -119,6 +120,10 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             UIImage aegis = new Page().Image(TextureAssets.Item[ItemID.AegisFruit], 0.575f, 0.8f, 1.3f);
             Page page = new Page(Language.GetTextValue(path + "PageNames.Shimmer"), Language.GetTextValue(path + "Shimmer"), "https://terraria.wiki.gg/wiki/Shimmer", new List<UIImage> { walt, ambrosia, aegis });
             Pages.TryAdd(7, page);
+
+            UIImage liquidDiagram = new Page().Image(ModContent.Request<Texture2D>(texPath + "LiquidDuplicationSetup"), HAlign:0.365f, VAlign:0.5f);
+            Page liquid = new Page(Language.GetTextValue(path + "PageNames.LiquidDuplication"), Language.GetTextValue(path + "LiquidDuplication"), "https://terraria.wiki.gg/wiki/Liquids", new List<UIImage> { liquidDiagram });
+            Pages.TryAdd(9, liquid);
         }
 
         /// <summary>
@@ -241,6 +246,16 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             Asset<Texture2D> marker = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/Guidebook/Assets/IconMarker", AssetRequestMode.ImmediateLoad);
             UIImage markerIcon = new Page().Image(marker, 0.5f, 0.5f, ScaleToFit: true);
             mapMarkersButton.Append(markerIcon);
+
+            UITextButton liquidsButton = new UITextButton("", 0, 0.05f, 40, 40, "Liquids", SoundID.MenuClose);
+            liquidsButton.OnLeftClick += new MouseEvent(LiquidsClicked);
+            liquidsButton.MarginLeft = 15;
+            liquidsButton.MarginTop = 270;
+            GuidebookPanel.Append(liquidsButton);
+            Main.instance.LoadItem(ItemID.WaterBucket);
+            Asset<Texture2D> liquid = TextureAssets.Item[ItemID.WaterBucket];
+            UIImage liquidIcon = new Page().Image(liquid, 0.5f, 0.5f, ScaleToFit: true);
+            liquidsButton.Append(liquidIcon);
         }
 
         private void InitializeButtons()
@@ -296,22 +311,23 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             Asset<Texture2D> trelloIcon = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/Guidebook/Assets/TrelloIcon", AssetRequestMode.ImmediateLoad);
             UIImage trelloLinkIcon = new Page().Image(trelloIcon, 0.5f, 0.5f, 2f);
             trello.Append(trelloLinkIcon);
+
+
         }
 
         // Quick Icons
-        private void HomeClicked(UIMouseEvent evt, UIElement listeningElement) => PageIndex = (int)PageID.Main;
-        private void FishingClicked(UIMouseEvent evt, UIElement listeningElement) => PageIndex = (int)PageID.Fishing;
-        private void MiningClicked(UIMouseEvent evt, UIElement listeningElement) => PageIndex = (int)PageID.MiningSW;
-        private void ShimmerClicked(UIMouseEvent evt, UIElement listeningElement) => PageIndex = (int)PageID.Shimmer;
-        private void MarkerClicked(UIMouseEvent evt, UIElement listeningElement) => PageIndex = (int)PageID.MapMarkers;
+        private void HomeClicked(UIMouseEvent _, UIElement __) => PageIndex = (int)PageID.Main;
+        private void FishingClicked(UIMouseEvent _, UIElement __) => PageIndex = (int)PageID.Fishing;
+        private void MiningClicked(UIMouseEvent _, UIElement __) => PageIndex = (int)PageID.MiningSW;
+        private void ShimmerClicked(UIMouseEvent _, UIElement __) => PageIndex = (int)PageID.Shimmer;
+        private void MarkerClicked(UIMouseEvent _, UIElement __) => PageIndex = (int)PageID.MapMarkers;
 
         // Secondary Icons (info / resources)
-        private void DiscordClicked(UIMouseEvent evt, UIElement listeningElement) => Terraria.Utils.OpenToURL("https://discord.com/invite/G5cbT7tj9K");
-        private void TrelloClicked(UIMouseEvent evt, UIElement listeningElement) => Terraria.Utils.OpenToURL("https://trello.com/invite/b/Z5UV1Kji/ATTI97947e73d35995538596d6db7780e476427D47AF/ultimate-skyblock");
+        private void DiscordClicked(UIMouseEvent _, UIElement __) => Terraria.Utils.OpenToURL("https://discord.com/invite/G5cbT7tj9K");
+        private void TrelloClicked(UIMouseEvent _, UIElement __) => Terraria.Utils.OpenToURL("https://trello.com/invite/b/Z5UV1Kji/ATTI97947e73d35995538596d6db7780e476427D47AF/ultimate-skyblock");
+        private void LiquidsClicked(UIMouseEvent _, UIElement __) => PageIndex = (int)PageID.Liquids;
 
-        private void SafeguardIndex() { if (PageIndex < 0) PageIndex = 0; }
-
-        private void WikiOpen(UIMouseEvent evt, UIElement listeningElement)
+        private void WikiOpen(UIMouseEvent _, UIElement __)
         {
             string wikiLink = TryGetEntry(PageIndex, StyleID.WikiPage);
             if (wikiLink != null)
@@ -327,6 +343,8 @@ namespace UltimateSkyblock.Content.UI.Guidebook
             UpdatePage(gameTime);
             CheckKeybinds();
         }
+
+        private void SafeguardIndex() { if (PageIndex < 0) PageIndex = 0; }
 
         public void CheckKeybinds()
         {
@@ -365,7 +383,7 @@ namespace UltimateSkyblock.Content.UI.Guidebook
         /// <summary>
         /// Handles updating the page. Updates text, title, page number, and buttons colors.
         /// </summary>
-        private void UpdatePage(GameTime gameTime)
+        private void UpdatePage(GameTime _)
         {
             string text = TryGetEntry(PageIndex, StyleID.Page);
             if (text != null)
@@ -452,7 +470,7 @@ namespace UltimateSkyblock.Content.UI.Guidebook
         /// <summary>
         /// Increases PageIndex by 1, but only if the current index + 1 is found in the dictionary. Also sets MainText to the index page.
         /// </summary>
-        private void PageAdvancementRight(UIMouseEvent evt, UIElement listeningElement)
+        private void PageAdvancementRight(UIMouseEvent _, UIElement __)
         {
             string page = TryGetEntry(PageIndex + 1, StyleID.Page);
             if (page != null)
@@ -462,7 +480,7 @@ namespace UltimateSkyblock.Content.UI.Guidebook
         /// <summary>
         /// Decreases PageIndex by 1, but only if the current index - 1 is found in the dictionary. Also sets MainText to the index page.
         /// </summary>
-        private void PageAdvancementLeft(UIMouseEvent evt, UIElement listeningElement)
+        private void PageAdvancementLeft(UIMouseEvent _, UIElement __)
         {
             string page = TryGetEntry(PageIndex - 1, 0);
             if (page != null)

@@ -25,7 +25,7 @@ namespace UltimateSkyblock.Content.UI.MapDrawing
         public override void Draw(ref MapOverlayDrawContext context, ref string text)
         {
             // Hardcoded check for my other mod that does something similar.
-            if (ModLoader.TryGetMod("WorldMapExpansion", out Mod MapExpansion) || !ModContent.GetInstance<SkyblockModConfig>().DrawNPCIcons) { return; }
+            if (ModLoader.TryGetMod("WorldMapExpansion", out Mod MapExpansion) || !ModContent.GetInstance<SkyblockModConfig>().DrawNPCIcons || !UltimateSkyblock.IsSkyblock()) { return; }
 
             foreach (NPC npc in Main.npc.SkipLast(1)) //Last is a dummy npc, don't want to interact with it
             {

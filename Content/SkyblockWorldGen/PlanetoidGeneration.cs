@@ -1,6 +1,7 @@
 ﻿using static UltimateSkyblock.Content.SkyblockWorldGen.MainWorld;
 using static UltimateSkyblock.UltimateSkyblock;
 using static UltimateSkyblock.Content.SkyblockWorldGen.WorldHelpers;
+using UltimateSkyblock.Content.Tiles.Blocks;
 
 namespace UltimateSkyblock.Content.SkyblockWorldGen
 {
@@ -13,17 +14,20 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
             Large
         }
 
-        public static int PlanetoidHeight = 100;
+        public static int PlanetoidHeight = 125;
 
         public static void PlanetoidRunner()
         {
-            for (int x = 50; x < Main.maxTilesX; x += 130 + WorldGen.genRand.Next(-10, 25))
+            for (int x = 50; x < Main.maxTilesX - 50; x += 130 + WorldGen.genRand.Next(-10, 25))
             {
+                if (!WorldGen.InWorld(x, PlanetoidHeight))
+                    continue;
+
                 Slice slice = Slice.GetIslandsFromCoordinate(x);
-                switch(slice.Name)
+                switch (slice.Name)
                 {
-                    case "Pending":
-                        GenerateForestPlanetoid(x);
+                    case "Deepstone":
+                        GenerateDeepstonePlanetoid(x);
                         break;
                     case "Mushroom" or "Dungeon":
                         GenerateMeteorPlanetoid(x);
@@ -274,8 +278,8 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
 
         public static void GenerateEvilPlanetoid(int x)
         {
-            string crimsonString = crimsonPath + "Planetoid";
-            string corruptString = corruptPath + "Planetoid";
+            string crimsonString = path + "Crimson" + "Planetoid";
+            string corruptString = path + "Corrupt" + "Planetoid";
 
             List<string> planetoids;
             List<string> crimsonPlanetoids = new List<string>
@@ -322,7 +326,6 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
 
                 for (int j = 0; j < 6; j++)
                 {
-                    WorldGen.TileRunner(genPoint.X - Main.rand.Next(-2, 2), genPoint.Y - Main.rand.Next(-2, 2), 6f, 15 + Main.rand.Next(0, 2), GenVars.silver, false, Main.rand.Next(-4, 4), Main.rand.Next(-4, 4), false);
                     WorldGen.TileRunner(genPoint.X - Main.rand.Next(-2, 2), genPoint.Y - Main.rand.Next(-2, 2), 5f, 15 + Main.rand.Next(0, 4), GenVars.iron, false, Main.rand.Next(-4, 4), Main.rand.Next(-4, 4), false);
                     WorldGen.TileRunner(genPoint.X - Main.rand.Next(-2, 2), genPoint.Y - Main.rand.Next(-2, 2), 5f, 15 + Main.rand.Next(0, 4), TileID.Pearlstone, false, Main.rand.Next(-4, 4), Main.rand.Next(-4, 4), false);
                 }
@@ -340,6 +343,38 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
                 }
 
                 WorldUtils.Gen(genPoint, new ModShapes.OuterOutline(data), new Actions.SetTile(TileID.HallowedGrass));
+            }
+        }
+
+        public static void GenerateDeepstonePlanetoid(int x)
+        {
+            Point genPoint = new Point(x, PlanetoidHeight + WorldGen.genRand.Next(-10, 10));
+            if (WorldGen.InWorld(genPoint.X, genPoint.Y))
+            {
+                int size = WorldGen.genRand.Next(14, 19);
+                WorldUtils.Gen(genPoint, new Shapes.Circle(size + 3, size + 3), new Actions.SetTile((ushort)ModContent.TileType<DeepstoneTile>()));
+                WorldUtils.Gen(genPoint, new Shapes.Circle(size, size), new Actions.SetTile(TileID.Dirt));
+
+                WorldGen.TileRunner(genPoint.X + Main.rand.Next(-2, 2), genPoint.Y + Main.rand.Next(-2, 2), 8f, 9, ModContent.TileType<DeepsoilTile>(), false, 0, 0, false);
+                WorldGen.TileRunner(genPoint.X - Main.rand.Next(-2, 2), genPoint.Y - Main.rand.Next(-2, 2), 12f, 8, ModContent.TileType<DeepsoilTile>(), false, 0, 0, false);
+
+                for (int j = 0; j < 6; j++)
+                {
+                    WorldGen.TileRunner(genPoint.X - Main.rand.Next(-2, 2), genPoint.Y - Main.rand.Next(-2, 2), 6f, 10 + Main.rand.Next(0, 2), ModContent.TileType<DeepsoilTile>(), false, Main.rand.Next(-4, 4), Main.rand.Next(-4, 4), false);
+                    WorldGen.TileRunner(genPoint.X - Main.rand.Next(-2, 2), genPoint.Y - Main.rand.Next(-2, 2), 5f, 10 + Main.rand.Next(0, 4), ModContent.TileType<DeepsoilTile>(), false, Main.rand.Next(-4, 4), Main.rand.Next(-4, 4), false);
+                }
+
+                for (int Q = genPoint.X - size - 1; Q < genPoint.X + size + 1; Q++)
+                {
+                    for (int R = genPoint.Y - size - 1; R < genPoint.Y + size + 1; R++)
+                    {
+                        Tile tile = Framing.GetTileSafely(Q, R);
+                        if (tile.HasTile && tile.TileType == TileID.Dirt)
+                        {
+                            WorldGen.PlaceTile(Q, R, (ushort)ModContent.TileType<HardenedDeepstoneTile>(), true, forced: true);
+                        }
+                    }
+                }
             }
         }
 

@@ -29,14 +29,7 @@ namespace UltimateSkyblock.Content.DaySystem
                 NetMessage.SendData(MessageID.WorldData); // Immediately inform clients of new world state.
             }
 
-            foreach (Player player in Main.player)
-            {
-                if (player.whoAmI == Main.myPlayer)
-                {
-                    InGameNotificationsTracker.AddNotification(new DayProgressNotification());
-                    break;
-                }   
-            }
+            InGameNotificationsTracker.AddNotification(new DayProgressNotification());
         }
 
         public override void SaveWorldData(TagCompound tag)

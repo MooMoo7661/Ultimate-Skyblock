@@ -97,25 +97,14 @@ namespace UltimateSkyblock.Content.ModSystems
                     .Register();
             }
 
-            if (config.CraftMagicMirror)
-            {
-                Recipe.Create(ItemID.MagicMirror)
-                    .AddRecipeGroup(silverOrTungsten, 15)
-                    .AddIngredient(ItemID.FallenStar, 10)
-                    .AddIngredient(ItemID.Glass, 5)
-                    .AddIngredient(ItemID.Diamond, 8)
-                    .AddTile(TileID.WorkBenches)
-                    .Register();
-            }
-
             if (config.CraftIceMirror)
             {
                 Recipe.Create(ItemID.IceMirror)
-                    .AddRecipeGroup(silverOrTungsten, 15)
-                    .AddIngredient(ItemID.IceBlock, 10)
-                    .AddIngredient(ItemID.Glass, 5)
-                    .AddIngredient(ItemID.Diamond, 8)
-                    .AddTile(TileID.WorkBenches)
+                    .AddRecipeGroup(goldOrPlatinum, 8)
+                    .AddIngredient(ItemID.IceBlock, 15)
+                    .AddIngredient(ItemID.Glass, 10)
+                    .AddIngredient(ItemID.Diamond, 3)
+                    .AddTile(TileID.Furnaces)
                     .Register();
             }
 
@@ -177,24 +166,55 @@ namespace UltimateSkyblock.Content.ModSystems
                    .AddTile(TileID.WorkBenches)
                    .Register();
             }
+
+            if (config.PotionPlantDecrafting)
+            {
+                Recipe.Create(ItemID.DaybloomSeeds)
+                    .AddIngredient(ItemID.Daybloom)
+                    .Register();
+
+                Recipe.Create(ItemID.BlinkrootSeeds)
+                   .AddIngredient(ItemID.Blinkroot)
+                   .Register();
+
+                Recipe.Create(ItemID.DeathweedSeeds)
+                   .AddIngredient(ItemID.Deathweed)
+                   .Register();
+
+                Recipe.Create(ItemID.FireblossomSeeds)
+                   .AddIngredient(ItemID.Fireblossom)
+                   .Register();
+
+                Recipe.Create(ItemID.MoonglowSeeds)
+                   .AddIngredient(ItemID.Moonglow)
+                   .Register();
+
+                Recipe.Create(ItemID.ShiverthornSeeds)
+                   .AddIngredient(ItemID.Shiverthorn)
+                   .Register();
+
+                Recipe.Create(ItemID.WaterleafSeeds)
+                   .AddIngredient(ItemID.Waterleaf)
+                   .Register();
+            }
         }
 
         public override void AddRecipeGroups()
         {
             tombstoneRecipeGroup = new RecipeGroup(() => "Any Stone Gravestone", ItemID.Tombstone, ItemID.Headstone, ItemID.Gravestone, ItemID.Obelisk);
-            RecipeGroup.RegisterGroup("UltimateSkyblock:GravestonesDecraftToStone", tombstoneRecipeGroup);
+            RecipeGroup.RegisterGroup($"{nameof(UltimateSkyblock)}:GravestonesDecraftToStone", tombstoneRecipeGroup);
 
             goldenTombstoneRecipeGroup = new RecipeGroup(() => "Any Golden Gravestone", ItemID.RichGravestone1, ItemID.RichGravestone2, ItemID.RichGravestone3, ItemID.RichGravestone4, ItemID.RichGravestone5);
-            RecipeGroup.RegisterGroup("UltimateSkyblock:GoldenGravestonesDecraftToGold", goldenTombstoneRecipeGroup);
+            RecipeGroup.RegisterGroup($"{nameof(UltimateSkyblock)}:GoldenGravestonesDecraftToGold", goldenTombstoneRecipeGroup);
 
             evilBars = new RecipeGroup(() => "Any Evil Bar", ItemID.CrimtaneBar, ItemID.DemoniteBar);
-            RecipeGroup.RegisterGroup("UltimateSkyblock:AnyEvilBar", evilBars);
+            RecipeGroup.RegisterGroup($"{nameof(UltimateSkyblock)}:AnyEvilBar", evilBars);
 
             silverOrTungsten = new RecipeGroup(() => "Silver or Tungsten", ItemID.SilverBar, ItemID.TungstenBar);
-            RecipeGroup.RegisterGroup("UltimateSkyblock:SilverOrTungsten", silverOrTungsten);
+            RecipeGroup.RegisterGroup($"{nameof(UltimateSkyblock)}:SilverOrTungsten", silverOrTungsten);
 
             goldOrPlatinum = new RecipeGroup(() => "Gold or Platinum", ItemID.GoldBar, ItemID.PlatinumBar);
-            RecipeGroup.RegisterGroup("UltimateSkyblock:GoldOrPlatinum", goldOrPlatinum);
+            RecipeGroup.RegisterGroup($"{nameof(UltimateSkyblock)}", goldOrPlatinum);
         }
     }
 }

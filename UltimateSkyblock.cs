@@ -5,16 +5,26 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using UltimateSkyblock.Content.Configs;
 using UltimateSkyblock.Content.StoneGenerator;
-using static UltimateSkyblock.Content.Tiles.Blocks.PlanteraAltar;
+using static UltimateSkyblock.Content.Tiles.Furniture.PlanteraAltar;
 using System.IO;
 using SubworldLibrary;
 using UltimateSkyblock.Content.DaySystem;
+using UltimateSkyblock.Content.ModSystems;
+using Terraria.ModLoader.IO;
 
 namespace UltimateSkyblock
 {
     public class UltimateSkyblock : Mod
-	{
+    {
         public static UltimateSkyblock Instance { get; private set; }
+
+        public static bool IsSkyblock()
+        {
+            Main.ActiveWorldFileData.TryGetHeaderData(ModContent.GetInstance<WorldSelectSkyblockIcon>(), out var data);
+
+            return Main.ActiveWorldFileData.IsValid || data.GetBool("GeneratedWithSkyblock");
+        }
+
         public override void Load()
         {
             Instance = this;
@@ -48,6 +58,8 @@ namespace UltimateSkyblock
         private void On_WorldGen_ShakeTree(On_WorldGen.orig_ShakeTree orig, int i, int j)
         {
             orig(i, j);
+            if (!IsSkyblock())
+                return;
 
             var config = ModContent.GetInstance<SkyblockModConfig>();
 
@@ -77,9 +89,9 @@ namespace UltimateSkyblock
                     return;
                 }
 
-                if (Main.rand.NextBool(8))
+                if (Main.rand.NextBool(16))
                 {
-                   Item.NewItem(WorldGen.GetItemSource_FromTileBreak(x, y), new Vector2(x * 16, y * 16), Vector2.Zero, ItemID.Acorn, Stack: 1);
+                    Item.NewItem(WorldGen.GetItemSource_FromTileBreak(x, y), new Vector2(x * 16, y * 16), Vector2.Zero, ItemID.Acorn, Stack: 1);
                 }
             }
         }
@@ -88,29 +100,29 @@ namespace UltimateSkyblock
         // This code was "borrowed" from => https://github.com/GabeHasWon/SpiritMod/blob/367e1da73022ec8741673b4bfbc629c3798a04e4/SpiritMultiplayer.cs
         // Purpose of this is to spawn a boss from right clicking a tile, which is called client side only.
 
-        public override void HandlePacket(BinaryReader reader, int whoAmI)
-        {
-            var id = (PacketID)reader.ReadByte();
-            byte player;
-            switch (id)
-            {
-                case PacketID.SpawnPlantera:
-                    if (Main.netMode == NetmodeID.Server)
-                    {
-                        player = reader.ReadByte();
-                        int bossType = reader.ReadInt32();
-                        int spawnX = reader.ReadInt32();
-                        int spawnY = reader.ReadInt32();
+        //public override void HandlePacket(BinaryReader reader, int whoAmI)
+        //{
+        //    var id = reader.ReadByte();
+        //    byte player;
+        //    switch (id)
+        //    {
+        //        case 0:
+        //            if (Main.netMode == NetmodeID.Server)
+        //            {
+        //                player = reader.ReadByte();
+        //                int bossType = reader.ReadInt32();
+        //                int spawnX = reader.ReadInt32();
+        //                int spawnY = reader.ReadInt32();
 
-                        if (NPC.AnyNPCs(bossType))
-                            return;
+        //                if (NPC.AnyNPCs(bossType))
+        //                    return;
 
-                        int npcID = NPC.NewNPC(NPC.GetSource_NaturalSpawn(), spawnX, spawnY, bossType);
-                        Main.npc[npcID].netUpdate2 = true;
-                    }
-                    break;
-            }
-        }
+        //                int npcID = NPC.NewNPC(NPC.GetSource_NaturalSpawn(), spawnX, spawnY, bossType);
+        //                Main.npc[npcID].netUpdate2 = true;
+        //            }
+        //            break;
+        //    }
+        //}
 
         public static ModPacket WriteToPacket(ModPacket packet, byte msg, params object[] param)
         {
@@ -135,6 +147,6 @@ namespace UltimateSkyblock
             return packet;
         }
 
-        public static void SpawnBossFromClient(byte whoAmI, int type, int x, int y) => WriteToPacket(Instance.GetPacket(), (byte)PacketID.SpawnPlantera, whoAmI, type, x, y).Send();
+        public static void SpawnBossFromClient(byte whoAmI, int type, int x, int y) => WriteToPacket(Instance.GetPacket(), 0, whoAmI, type, x, y).Send();
     }
 }

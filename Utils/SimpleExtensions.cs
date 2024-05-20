@@ -7,8 +7,19 @@ using Terraria.ModLoader;
 
 namespace UltimateSkyblock.Content.Utils
 {
+
     public static class SimpleExtensions
     {
+
+        public static NPCShop AddWithValue(this NPCShop shop, int itemType, int customValue, params Condition[] conditions)
+        {
+            var item = new Item(itemType)
+            {
+                shopCustomPrice = customValue
+            };
+            return shop.Add(item, conditions);
+        }
+
         public static int ToSeconds(this int seconds) => seconds * 60;
         public static float ToSeconds(this float seconds) => seconds * 60;
         public static Vector2 ToVector2(this Tile tile, int x, int y) => new Vector2(x, y);

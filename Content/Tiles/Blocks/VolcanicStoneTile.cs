@@ -2,7 +2,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using UltimateSkyblock.Content.Items.Placeable;
+using UltimateSkyblock.Content.Items.Placeable.Tiles;
 
 namespace UltimateSkyblock.Content.Tiles.Blocks
 {

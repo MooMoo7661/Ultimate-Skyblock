@@ -2,34 +2,34 @@
 using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using UltimateSkyblock.Content.Items.Placeable;
 using UltimateSkyblock.Content.Subworlds;
 using System.Diagnostics.CodeAnalysis;
+using UltimateSkyblock.Utils;
+using UltimateSkyblock.Content.Items.Placeable.Tiles;
 
 namespace UltimateSkyblock.Content.Tiles.Blocks
 {
-    public class HardenedDeepstoneTile : ModTile
+    public class DeepstoneTile : ModTile
     {
         public override void SetStaticDefaults()
         {
-            Main.tileMerge[Type][Type] = true;
             Main.tileSolid[Type] = true;
-            Main.tileMerge[Type][TileID.Stone] = true;
-            Main.tileMerge[TileID.Stone][Type] = true;
-            Main.tileMerge[Type][TileID.Ash] = true;
-            Main.tileMerge[TileID.Ash][Type] = true;
-
-            Main.tileMerge[ModContent.TileType<DeepstoneBrickTile>()][Type] = true;
-            Main.tileMerge[Type][ModContent.TileType<DeepstoneBrickTile>()] = true;
+ 
+            this.SetupTileMerge(Type);
+            this.SetupTileMerge(TileID.Stone);
+            this.SetupTileMerge(TileID.Ash);
+            this.SetupTileMerge(ModContent.GetInstance<HardenedDeepstoneTile>());
+            this.SetupTileMerge(ModContent.GetInstance<DeepsoilTile>());
 
             Main.tileLighted[Type] = false;
             Main.tileNoSunLight[Type] = false;
             Main.tileBlockLight[Type] = true;
+
             TileID.Sets.Stone[Type] = true;
+
             DustType = DustID.Stone;
             MinPick = 70;   
-            MineResist = 2f;
-
+            MineResist = 1.3f;
             HitSound = SoundID.Tink;
             RegisterItemDrop(ModContent.ItemType<Deepstone>());
 

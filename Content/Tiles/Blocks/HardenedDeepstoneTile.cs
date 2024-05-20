@@ -2,13 +2,13 @@
 using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using UltimateSkyblock.Content.Items.Placeable;
 using UltimateSkyblock.Content.Subworlds;
 using System.Diagnostics.CodeAnalysis;
+using UltimateSkyblock.Content.Items.Placeable.Tiles;
 
 namespace UltimateSkyblock.Content.Tiles.Blocks
 {
-    public class DeepstoneTile : ModTile
+    public class HardenedDeepstoneTile : ModTile
     {
         public override void SetStaticDefaults()
         {
@@ -28,7 +28,7 @@ namespace UltimateSkyblock.Content.Tiles.Blocks
             TileID.Sets.Stone[Type] = true;
             DustType = DustID.Stone;
             MinPick = 70;   
-            MineResist = 2.4f;
+            MineResist = 1.7f;
 
             HitSound = SoundID.Tink;
             RegisterItemDrop(ModContent.ItemType<HardenedDeepstone>());

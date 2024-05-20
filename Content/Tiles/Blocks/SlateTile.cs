@@ -6,7 +6,7 @@ using Terraria.DataStructures;
 using Terraria.ObjectData;
 using Microsoft.Xna.Framework.Graphics;
 using UltimateSkyblock.Content.Configs;
-using UltimateSkyblock.Content.Items.Placeable;
+using UltimateSkyblock.Content.Items.Placeable.Tiles;
 
 namespace UltimateSkyblock.Content.Tiles.Blocks
 {

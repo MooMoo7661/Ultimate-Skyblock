@@ -60,66 +60,98 @@ GuidebookItem: {
 
 AutoExtractor: {
 	DisplayName: Auto Extractor
-	Tooltip: ""
+	Tooltip:
+		'''
+		Automatically extracts items placed into its storage.
+		To open the inventory, right click the top left of the tile.
+		You can place chests next to the tile for it to deposit into.
+		'''
 }
 
 AutoExtractorTier2: {
-	DisplayName: Auto Extractor Tier2
-	Tooltip: ""
+	DisplayName: Auto Extractor Tier 2
+	Tooltip:
+		'''
+		Automatically extracts items placed into its storage.
+		Increased production speed by 20%
+		Produces 2x the output
+		To open the inventory, right click the top left of the tile.
+		You can place chests next to the tile for it to deposit into.
+		'''
 }
 
 AutoExtractorTier3: {
-	DisplayName: Auto Extractor Tier3
-	Tooltip: ""
+	DisplayName: Auto Extractor Tier 3
+	Tooltip:
+		'''
+		Automatically extracts items placed into its storage.
+		Increased production speed by 50%
+		Produces 3x the output
+		Uses 2x input per extraction
+		To open the inventory, right click the top left of the tile.
+		You can place chests next to the tile for it to deposit into.
+		'''
 }
 
 AutoExtractorTier4: {
-	DisplayName: Auto Extractor Tier4
-	Tooltip: ""
+	DisplayName: Auto Extractor Tier 4
+	Tooltip:
+		'''
+		Automatically extracts items placed into its storage.
+		Increased production speed by 75%
+		Produces 4x the output
+		Uses 2x input per extraction
+		To open the inventory, right click the top left of the tile.
+		You can place chests next to the tile for it to deposit into.
+		'''
 }
 
 AutoExtractorTier5: {
-	DisplayName: Auto Extractor Tier5
-	Tooltip: ""
+	DisplayName: Auto Extractor Tier 5
+	Tooltip:
+		'''
+		Automatically extracts items placed into its storage.
+		Increased production speed by 84%
+		Produces 8x the output
+		Uses 3x input per extraction
+		To open the inventory, right click the top left of the tile.
+		You can place chests next to the tile for it to deposit into.
+		"The peak of refinery"
+		'''
 }
 
 Deepstone: {
 	DisplayName: Deepstone
-	Tooltip: ""
+	Tooltip: A rough, cold stone found deep underground
 }
 
 DeepstoneBrick: {
 	DisplayName: Deepstone Brick
-	Tooltip: ""
+	Tooltip: Chiseled into a fine, reinforced chunk of deepstone
 }
 
 DeepstoneChest: {
 	DisplayName: Deepstone Chest
-	Tooltip: ""
+	Tooltip: An ornamented chest made from very solid deepstone
 }
 
 DeepstoneChestKey: {
 	DisplayName: Deepstone Key
 	Tooltip:
 		'''
-		A large, grimy key.
+		A large, gold-plated key
 		Can be used to open Locked Deepstone Chests
 		'''
 }
 
-DeepstoneGravel: {
-	DisplayName: Deepstone Gravel
-	Tooltip: ""
-}
-
 FogCloud1: {
 	DisplayName: Fog Cloud1
-	Tooltip: ""
+	Tooltip: "[Unobtainable] Produces fog. Used to be a replacement for echo painted fog machines"
 }
 
 Slate: {
 	DisplayName: Slate
-	Tooltip: ""
+	Tooltip: A hard, layered stone that becomes brittle over time
 }
 
 VolcanicStone: {
@@ -128,13 +160,8 @@ VolcanicStone: {
 }
 
 PlanteraAltarItem: {
-	DisplayName: Plantera Altar Item
-	Tooltip: ""
-}
-
-SplitRingstalkMushroom: {
-	DisplayName: Split Ringstalk Mushroom
-	Tooltip: ""
+	DisplayName: Plantera Altar
+	Tooltip: "[Unobtainable] Summons Plantera. Used in the Plantera arena"
 }
 
 Glimmercap: {
@@ -144,17 +171,26 @@ Glimmercap: {
 		Shines brightly deep underground
 		Can be used to craft items for better vision
 		When brewed into a potion, the effects become more potent
+		When consumed, causes the user to glow for a short period
 		'''
 }
 
 GlimmerTonic: {
 	DisplayName: Glimmer Tonic
-	Tooltip: Provides 8 minutes of blindness immunity
+	Tooltip:
+		'''
+		Provides 8 minutes of blindness immunity
+		The user will glow brightly for the duration of the potion
+		'''
 }
 
 MiningLantern: {
 	DisplayName: Mysterious Lantern
-	Tooltip: Said to transport you somewhere magical when held up
+	Tooltip:
+		'''
+		"Said to transport you somewhere magical when held up"
+		Can be re-purchased from the Merchant if currently being held
+		'''
 }
 
 CorruptBiomeCoreItem: {
@@ -229,5 +265,35 @@ Deepsoil: {
 
 HardenedDeepstone: {
 	DisplayName: Hardened Deepstone
+	Tooltip: A tougher form of deepstone that has been under extreme pressure
+}
+
+DeepstoneBrickWall: {
+	DisplayName: Deepstone Brick Wall
+	Tooltip: A strong brick wall made for fortresses
+}
+
+DeepstoneBrickBeam: {
+	DisplayName: Deepstone Brick Beam
 	Tooltip: ""
+}
+
+Coffin: {
+	DisplayName: Coffin
+	Tooltip: ""
+}
+
+DecorativeGlimmerTonic: {
+	DisplayName: Decorative Glimmer Tonic
+	Tooltip: ""
+}
+
+DesertBiomeCoreItem: {
+	DisplayName: Desert Biome Core Item
+	Tooltip: ""
+}
+
+SunshinePaintingItem: {
+	DisplayName: Sunshine
+	Tooltip: "'You are my sunshine...'"
 }

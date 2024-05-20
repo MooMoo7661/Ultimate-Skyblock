@@ -19,7 +19,7 @@ Buffs: {
 
 	Fear: {
 		DisplayName: Fear
-		Description: Mods.UltimateSkyblock.Buffs.Fear.Description
+		Description: You are frozen in fear
 	}
 }
 
@@ -28,6 +28,23 @@ GenericLocalizedText: {
 	LanternCooldownFinished: Cooldown finished
 	ReturnTooltip: Use to return to the main world
 }
+
+TranslationWarning:
+	'''
+	[DO NOT TRANSLATE THIS PART]
+	This is to any translators that may be reading this. (I didn't know how to do 'comments' in hjson.)
+	The following text is all specifically configured to work in the guidebook.
+	Due to laziness and lack of knowledge, I did not code it to use a new line when the text is too big.
+	The text is all just displayed on the page, and I hit new lines when it got too big.
+	If you want all the text to stay on the UI, you'll need to go in-game and test whenever you translate specific parts.
+	Different languages will have different lengths for the same things, so you will definitely need to change which text is on which line.
+	Try to stick to the original spacing. I make sure the text isn't too big, as not to cover up the UI on the bottom of the guidebook.
+	If things are getting too big to work with, try cutting some text out, rephrasing things, or moving it to a different page.
+	This means you probably shouldn't just translate the raw hjson itself, you should also make a temporary translation mod / pack
+	and test it in-game.
+
+	You can also just eyeball it, and attempt to make each line the same length, but this may be harder to do.
+	'''
 
 LocalizedPages: {
 	PageNames: {
@@ -39,7 +56,8 @@ LocalizedPages: {
 		MiningSubworld: Mining Dimension
 		PlanteraSubworld: Plantera Dimension
 		Shimmer: Shimmer
-		MapMarkers: Map Markers
+		BiomeCores: Biome Cores
+		LiquidDuplication: Liquid Duplication
 	}
 
 	IntroPage:
@@ -47,21 +65,21 @@ LocalizedPages: {
 		[c/FFB23D:Welcome to Skyblock!]
 		This is a book to help you progress, as well as provide some tips for you.
 		To use the book, click the [c/FFABAB:Left (<)] or [c/FFABAB:Right (>)] arrows to scroll through pages.
-		You can purchase this book again from the Merchant at any time, in case you lose it.
+		You can purchase this again from the Merchant at any time, in case you lose it.
 
-		On the left is a list of buttons with icons. These buttons are for quickly switching to important or
-		notable pages.
+		On the left is a list of buttons with icons. These buttons are for quickly switching to important pages.
 		The book next to the left arrow will pull up an official wiki page related to the current page.
 		If it's grayed out, it means there's no wiki available.
+		This book is also still in development, so I will be making it look nicer.
+		You can change the keybinds for opening/closing the book, and scrolling left & right from the controls menu.
+		They will be unbound by default, so if you want quick control, make sure to set them.
 
-		[c/FF9191:This is the beta, meaning some things are missing. Current missing features include:]
-		[c/FF9191:Crimson/Corruption Islands]
-		[c/FF9191:Outer left planetoids]
-		[c/FF9191:Some QOL Items & Recipes]
+		[c/A8577E: Special thanks to:]
+		[c/DB4D8F: TommyTsunami - Islands]                              [c/A8577E: andro951 - Stone Generator & Extraction logic]
+		[c/DB4D8F: otterly - Most spriting]
+		[c/A8577E: GabeHasWon - Slate & Hardened Deepstone]
 
-		At the moment, the Mysterious Lantern is in your inventory by default. This will be changed,
-		it's only there to let you preview the Mining Dimension.
-		This is by no means the final version of the mod. Things are subject to change or be improved.
+		[c/FF9191:This mod is still fairly new, meaning there may be some bugs or missing features.]
 		'''
 	TableOfContents:
 		'''
@@ -73,12 +91,13 @@ LocalizedPages: {
 		 6 : Fishing
 		 7 : Mining Dimension
 		 8 : Shimmer
-		 9 : Map Markers
+		 9 : Biome Cores
+		 10 : Liquids
 		'''
 	Progression1:
 		'''
 		To begin, you should chop some[i:9]wood. 
-		Trees will grow much faster now, meaning you will be able to gather a substantial amount of wood.
+		Trees will grow much faster, meaning you will be able to gather a substantial amount of wood.
 		After you gather some wood, you should also get some[i:3]stone from the [c/ABCAFF:stone generator] on the  side of
 		the island. Mining the stone in between the lava and water will provide an infinite source of stone, since lava
 		and water will now generate stone if separated by one block.
@@ -87,24 +106,34 @@ LocalizedPages: {
 		In the sky, there are planetoids that have rare stuff such as ores and demon hearts/shadow orbs.
 		You should try and find these islands and planetoids, as they will provide you with the loot necessary to
 		progress. If you find an[i:997]Extractinator, they will be very useful for getting gems, and processing raw
-		materials into new ones. A full page can be found later on about the new block conversions.
+		materials into new ones.
+
 		[c/FF9797:Don't forget that fishing will let you obtain tons of new loot that wouldn't be possible to get in skyblock]
 		There is a page later in the book that goes more in-depth about fishing.
+
+		Acorns will drop more frequently from trees, so you don't really need to worry about losing too many acorns.
+		You should be able to gain a very large amount of wood and acorns quickly.
 		'''
 	Progression2:
 		'''
-		Once you have a decent supply of blocks, start building out to the left or the right.
+		Once you have a decent supply of blocks, start moving out to the left and right.
 		Make sure to look above and below your platform for any islands that might be out of sight.
 		There are 4 other forest islands, each with a chest containing basic underground golden chest loot.
 		You can find useful stuff such as [i:50][c/FFC080:magic mirrors],[i:166][c/FFC080:bombs],[i:28][c/FFC080:potions], and [i:19][c/FFC080:bars.]
-		Additionally, each chest can have a random type of [c/A4FFB9:material bomb.]
-		Material bombs are bombs that explode and spread a certain type of block. This mod adds several new ones.
-		The benefit of these is that they create more blocks than are consumed in their creation, essentially
-		[c/9E80FF:duplicating blocks.] This can be done many times, as long as you have a source of bombs and enough coins.
 
 		A good place to look for [i:29][c/C8426B:life crystals] is on [c/92E67D:Jungle Islands] and the [c/5D4DEB:Mushroom Island.]
 		There is also a lot of golden chests on the Mushroom Island, making it a good spot to get some loot.
 		You can locate these islands on the map, since there are now icons for each island/important structure.
+
+		When fighting bosses such as King Slime or the Eater of Worlds, you will need some solid ground.
+		The Eater of Worlds will go into the void unless there are solid blocks, and King Slime will just despawn.
+		Many grounded bosses will require solid ground, or they will fall into the void and dissapear.
+
+		The dungeon is found on the far left or right of the map, and the mushroom island on the opposite side.
+		To access the dungeon, you must first defeat skeletron. You are then able to enter the big doors into
+		a subworld, where you can find similar loot to a natural dungeon.
+		The mechanic cannot be found here, and instead is able to move in once skeletron is defeated.
+		This is only temporary, due to some syncing issues with the subworld.
 		'''
 	Hardmode:
 		'''
@@ -114,13 +143,18 @@ LocalizedPages: {
 		If you haven't found them already, there are [c/36D22B:chlorophyte planetoids] below the jungle islands.
 		This is so you have a source of chlorophyte, since the entire world is now empty.
 
-		To defeat plantera easier, a "cave" is supplied in the main Jungle Island.
-		This will transport you to the [c/FF72F2:Plantera Subworld], which is essentially another dimension.
-		You can read more about this subworld later in the book.
+		Hardmode ores can be obtained through fishing, or from the Deepstone Biome in the Mining Subworld.
+
+		For the Destroyer, you don't need to have any solid ground to fight it on, unlike the Eater of Worlds.
+
+		To fight plantera, head to the large arena generated below the jungle. There should be an altar
+		in the middle, which will summon plantera when right-clicking.
+		You can use this as many times as you want, so there's no need to farm bulbs unless you want to.
 
 		For your convenience, an artificial temple is supplied. You may need to make your own temple biome
 		with some of the blocks provided in chests inside the temple to spawn some enemies to farm [i:1293]power cells.
-		The temple should be located below the chlorophyte planetoids, and will spawn after plantera is defeated.
+		The temple should be located below the chlorophyte planetoids, next to the Plantera arena.
+		Be careful with these blocks, as once they are placed, they cannot be destroyed.
 		'''
 	Fishing:
 		'''
@@ -130,8 +164,8 @@ LocalizedPages: {
 
 		Here are some small tips:
 		- [i:2339]Tin cans can be used at an extractinator, and will return very good early-game bait
-		- Lake size heavily affects loot obtained
 		- [i:4608]Chum buckets, which are dropped by blood moon enemies, will significantly boost your fishing power
+		- Lake size heavily affects loot obtained
 		- The angler is now able to move in at any time, since there isn't an ocean for him to spawn at
 
 		Lake size is calculated by the width of the top row 
@@ -146,23 +180,22 @@ LocalizedPages: {
 	MiningSubworld:
 		'''
 		This dimension is called a "subworld". Subworlds are like dimensions, except they also function as a new world.
-		Everything is independent from the main world, meaning boss kills and other similar things are not synced.
-		[c/FF5E5E:Do not kill any bosses in this subworld. The data will not be sent to the main world.]
-		[c/FF5E5E:This means progression unlocks will not trigger, and could cause many problems with other mods.]
+		Everything is independent from the main world, meaning events & other modded content might not sync.
+		[c/FF5E5E:You are also unable to spawn any bosses while in this subworld.]
 		The purpose of this subworld is to allow you to mine resources to use in skyblock. Things will be present here
 		that are either hard to get or impossible to obtain from the main world.
 		In the lower parts of the subworld, you will encounter a new biome, called the Deepstone.
 		It's very dark and dangerous in the Deepstone biome, however you can encounter a new structure called the
 		Deepstone Bunker. Useful loot is present in the chests here, such as potions, accessories, and more.
+		Hardmode ores, such as Adamantite and Titanium can be found down here. Because of this, there are harder
+		enemies, and the environment is more treacherous.
 
 		While you are in the deepstone biome, you will be affected
 		with blindness. To cure this, equip a blindfold, which can
 		be found in chests inside of the Deepstone Bunkers.
 		Alternatively, collect some of the mushrooms found naturally
-		and craft them into a Glimmer Tonic. You will get 8 minutes of
+		and craft them into a Glimmer Tonic. You will get 4 minutes of
 		immunity against blindness, and will not be inflicted with it.
-		There are 2 bunkers, both randomly generated. There can be
-		some good loot, but also traps and a lot of stronger enemies.
 		'''
 	Shimmer:
 		'''
@@ -171,16 +204,44 @@ LocalizedPages: {
 		- Cans of Worms can be shimmered into [i:3093]Herb Bags for more potion ingredients
 		- Shimmering Dynasty wood results in an infinite supply of normal wood, as long as you have money to buy it
 		- Any fruit will result in [i:5342]Ambrosia, which gives permanent boosts to mining, tile and wall placement speed
+		- You can interchange water, lava, and honey buckets
+		- Gem critters can be turned into 
 
 		You should try and use the environment to your advantage.
 		Each island has a wide palette of blocks that can be de-crafted into various items.
-		'''
-	MapMarkers:
-		'''
-		You may notice some odd "statues" placed on some islands. These are map markers.
-		They generate an icon on the map, to allow you to know where to go to find things.
 
-		Currently, this feature & page is unfinished, due to this being a beta.
+		Shimmer can be found on the Hallowed Islands, which spawn on the same side as the dungeon.
+		You can find them by looking on the map for the Hallow Marker, which indicates the main island.
+		There is a limited amount of shimmer, so don't let it all drain into the void!
+		'''
+	BiomeCores:
+		'''
+		Biome cores are large objects that appear on one of the islands for each biome.
+		They create a marker on the map, to help you find the different islands.
+		[c/EE5252:Currently, this part does not work in multiplayer, but I am looking to fix it.]
+		Each biome core has different attributes, listed as the following:
+
+		Forest - Purifies nearby blocks
+		Hallow - Spreads hallow
+		Corruption/Crimson - Spreads corruption/crimson
+		Snow - Turns nearby water into ice & converts dirt into snow
+		Jungle - Spreads the jungle
+		Glowing Mushroom - Turns grass/exposed mud into mushroom grass
+		Desert - Turns dirt into sand, and stone into sandstone
+
+		[c/A21526:These are not re-obtainable, so do not lose them!]
+		'''
+	LiquidDuplication:
+		'''
+		Liquids are very useful, and can be utilized in many ways.
+		Water, honey, and lava can be used for fishing, and shimmer can be used for decrafting.
+
+		All liquids except for shimmer can be duplicated with just a bucket.
+		To do this, all you need to do is place the liquid above a hammered tile, then pick it back up after a bit.
+		With water, you can just hold left click and it will duplicate it and constantly give it back to you.
+		For lava and honey, you need to time it, with lava being after about 3 seconds, and honey being 5.
+		This can be utilized to get any type of honey, create large fishing pools, and more.
+		You can automate this process with some simple wiring and pumps.
 		'''
 }
 
@@ -195,6 +256,21 @@ NPCs: {
 	DeepstoneBat.DisplayName: Deepstone Bat
 	Deepknight.DisplayName: Deepknight
 	ReDead.DisplayName: ReDead
+
+	ColtColossal: {
+		DisplayName: Colt Colossal
+
+		TownNPCMood: {
+			Content: I am content.
+			NoHome: I hate not having a home.
+			FarFromHome: I am too far from home.
+			LoveSpace: I love having so much space.
+			DislikeCrowded: I dislike how crowded I am.
+			HateCrowded: I hate how crowded I am.
+			LikeNPC_Princess: I like {NPCName}.
+			Princess_LovesNPC: I like {NPCName}.
+		}
+	}
 }
 
 Keybinds: {

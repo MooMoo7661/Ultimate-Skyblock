@@ -187,11 +187,6 @@ RecipesConfig: {
 		Label: Craft Ice Mirror
 	}
 
-	CraftMagicMirror: {
-		Tooltip: ""
-		Label: Craft Magic Mirror
-	}
-
 	CraftHermesBoots: {
 		Tooltip: ""
 		Label: Craft Hermes Boots
@@ -238,6 +233,11 @@ RecipesConfig: {
 	}
 
 	DisplayName: Recipes
+
+	PotionPlantDecrafting: {
+		Label: Potion Plant Decrafting
+		Tooltip: ""
+	}
 }
 
 NotificationsConfig: {

@@ -31,7 +31,7 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.DrawYOffset = 6;
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 18 };
-            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<CorruptBiomeMapMarkerEntity>().Hook_AfterPlacement, -1, 0, false);
+            //TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<CorruptBiomeMapMarkerEntity>().Hook_AfterPlacement, -1, 0, false);
             TileObjectData.newTile.UsesCustomCanPlace = true;
             TileObjectData.addTile(Type);
 
@@ -70,7 +70,7 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
         public override bool IsTileValidForEntity(int x, int y)
         {
             var tile = Main.tile[x, y];
-            return tile.HasTile && tile.TileType == ModContent.TileType<DungeonDoor>();
+            return tile.HasTile && tile.TileType == ModContent.TileType<CorruptBiomeCore>();
         }
 
 

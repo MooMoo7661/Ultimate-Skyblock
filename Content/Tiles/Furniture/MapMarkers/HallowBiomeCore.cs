@@ -1,9 +1,13 @@
-﻿using Terraria.Audio;
+﻿using System.Linq;
+using Terraria.Audio;
 using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.Localization;
+using Terraria.ModLoader.Default;
 using Terraria.ObjectData;
 using UltimateSkyblock.Content.Items.Placeable;
+using UltimateSkyblock.Content.Items.Placeable.MapMarkers;
+using UltimateSkyblock.Content.Items.Placeable.Objects;
 using UltimateSkyblock.Content.Tiles.Blocks;
 using UltimateSkyblock.Content.UI.MapDrawing;
 
@@ -24,21 +28,24 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
 
             DustType = DustID.HallowedPlants;
 
+
+            RegisterItemDrop(ModContent.ItemType<HallowBiomeCoreItem>(), 1);
+            RegisterItemDrop(ModContent.ItemType<HallowBiomeCoreItem>());
+
             // Placement
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
-            TileObjectData.newTile.Width = 3;
-            TileObjectData.newTile.Height = 3;
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.DrawYOffset = 6;
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16 };
-            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<HallowBiomeMapMarkerEntity>().Hook_AfterPlacement, -1, 0, false);
+            //TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<HallowBiomeMapMarkerEntity>().Hook_AfterPlacement, -1, 0, false);
             TileObjectData.newTile.UsesCustomCanPlace = true;
             TileObjectData.addTile(Type);
 
             // Etc
             AddMapEntry(new Color(255, 0, 0), Language.GetText("Mods.UltimateSkyblock.Tiles.HallowMarker.MapEntry"));
-        }
+        } 
     }
+
 
     public class HallowBiomeMapMarkerEntity : ModTileEntity
     {
@@ -52,17 +59,14 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
 
         public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
         {
+            // i - 1 and j - 2 come from the fact that the origin of the tile is "new Point16(1, 2);", so we need to pass the coordinates back to the top left tile. If using a vanilla TileObjectData.Style, make sure you know the origin value.
             if (Main.netMode == NetmodeID.MultiplayerClient)
             {
-                int width = 3;
-                int height = 3;
-                NetMessage.SendTileSquare(Main.myPlayer, i, j, width, height);
-                NetMessage.SendData(MessageID.TileEntityPlacement, number: i, number2: j, number3: Type);
+                NetMessage.SendTileSquare(Main.myPlayer, i, j, 1); // this is -1, -1, however, because -1, -1 places the 3 diameter square over all the tiles, which are sent to other clients as an update.
+                NetMessage.SendData(MessageID.TileEntityPlacement, -1, -1, null, i, j, Type, 0f, 0, 0, 0);
+                return -1;
             }
-
-            Point16 tileOrigin = new Point16(1, 1);
-            int placedEntity = Place(i - tileOrigin.X, j - tileOrigin.Y);
-            return placedEntity;
+            return Place(i, j);
         }
 
         public override bool IsTileValidForEntity(int x, int y)

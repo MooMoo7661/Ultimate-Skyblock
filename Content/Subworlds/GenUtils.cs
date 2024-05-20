@@ -214,6 +214,24 @@ namespace UltimateSkyblock.Content.Subworlds
             return false;
         }
 
+        public static bool AreaContainsSensitiveTile(int tile, int i, int j, int radiusWidth, int radiusHeight)
+        {
+            for (int x = i - radiusWidth; x < i + radiusWidth; x++)
+            {
+                for (int y = j - radiusHeight; y < j + radiusHeight; y++)
+                {
+                    if (WorldGen.InWorld(x, y))
+                    {
+                        Tile tileCheck = Framing.GetTileSafely(x, y);
+                        if (tile == tileCheck.TileType)
+                            return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
 
         /// <summary>
         /// Loops through the world and generates the specified tile type with the given size/steps.
@@ -254,9 +272,10 @@ namespace UltimateSkyblock.Content.Subworlds
         /// <param name="thinningChance">Chance of the generation to thin out past the given levelToDisperse.</param>
         /// <param name="tilesThatCanBeGeneratedOn">Self explanatory. If all you want is stone, just pass in TileID.Stone</param>
         /// <param name="deepType">Type of tile to generate when deep enough. Defaults to the same tile as the given type.</param>
-        public static void LoopWorldAndGenerateTilesWithDepthModifiers(int genChance, int strength, int steps, int type, List<int> tilesThatCanBeGeneratedOn, int levelToDisperse, bool canGenerateAfterLevel, int thinningChance = 100, int deepType = -1)
+        /// <param name="tilePercent">% to multiply Main.maxTilesX * Main.maxTilesY by. Higher number = more iterations, lower = less.</param>
+        public static void LoopWorldAndGenerateTilesWithDepthModifiers(int genChance, int strength, int steps, int type, List<int> tilesThatCanBeGeneratedOn, int levelToDisperse, bool canGenerateAfterLevel, int thinningChance = 100, int deepType = -1, float tilePercent = 0.002f)
         {
-            for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 0.002); k++)
+            for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * tilePercent); k++)
             {
                 int x = Main.rand.Next(0, Main.maxTilesX);
 

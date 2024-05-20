@@ -27,7 +27,7 @@ namespace UltimateSkyblock.Content.Subworlds.DungeonPasses
                     if (Main.tile[x, y].TileType == TileID.Spikes)
                         continue;
 
-                    if ((!tileUp.HasTile && WorldGen.genRand.NextBool(18)) || (Main.tile[x, y].TileType == TileID.Platforms && WorldGen.genRand.NextBool(3)) && !GenUtils.AreaContainsSensitiveTiles(new List<int> { TileID.Pots }, x, y, 3, 3))
+                    if ((!tileUp.HasTile && WorldGen.genRand.NextBool(18)) || (Main.tile[x, y].TileType == TileID.Platforms && WorldGen.genRand.NextBool(3)) && !GenUtils.AreaContainsSensitiveTiles(new List<int>{ TileID.Pots, TileID.ClosedDoor }, x, y, 3, 3))
                         WorldGen.PlacePot(x, y, style: !WorldGen.genRand.NextBool(4) ? WorldGen.genRand.Next(10, 13) : WorldGen.genRand.Next(4));
 
                     progress.Set((y + x * Main.maxTilesY) / (float)(Main.maxTilesX * Main.maxTilesY));

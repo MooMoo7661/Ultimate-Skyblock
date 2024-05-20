@@ -1,4 +1,5 @@
 ﻿using UltimateSkyblock.Content.Buffs;
+using UltimateSkyblock.Content.Tiles.Furniture;
 namespace UltimateSkyblock.Content.Items.Generic
 {
     public class GlimmerTonic : ModItem
@@ -30,7 +31,7 @@ namespace UltimateSkyblock.Content.Items.Generic
             Item.value = Terraria.Item.buyPrice(gold: 1);
 
             Item.buffType = ModContent.BuffType<GlimmerBuff>();
-            Item.buffTime = 8 * 60 * 60; // too lazy for math
+            Item.buffTime = 4 * 60 * 60; // too lazy for math
         }
 
         public override void AddRecipes()

@@ -14,19 +14,15 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using UltimateSkyblock.Content.Buffs;
 using UltimateSkyblock.Content.Items.Placeable;
+using UltimateSkyblock.Content.ModPlayers;
 using UltimateSkyblock.Content.Subworlds;
 
 namespace UltimateSkyblock.Content.Items.Generic
 {
-    public abstract class Lantern : ModItem
+    public class MiningLantern : ModItem
     {
-        public int reuseTimer = 7200;
         public int teleportTimer = 0;
-        public bool locked = true;
-    }
-
-    public class MiningLantern : Lantern
-    {
+        public bool locked = true;  
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
@@ -49,27 +45,12 @@ namespace UltimateSkyblock.Content.Items.Generic
 
         public override bool? UseItem(Player player)
         {
-            if (reuseTimer > 0)
-                return false;
-
             locked = false;
-            return true;
-        }
-
-        public override bool AltFunctionUse(Player player)
-        {
-            locked = false;
-            reuseTimer = 0;
             return true;
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            if (reuseTimer > 0)
-            tooltips.Add(new TooltipLine(UltimateSkyblock.Instance, "CooldownInfo", Language.GetText("Mods.UltimateSkyblock.GenericLocalizedText.LanternCooldown").WithFormatArgs(reuseTimer / 60).Value));
-            else
-                tooltips.Add(new TooltipLine(UltimateSkyblock.Instance, "CooldownInfo", Language.GetText("Mods.UltimateSkyblock.GenericLocalizedText.LanternCooldownFinished").WithFormatArgs(reuseTimer / 60).Value));
-
             if (SubworldSystem.IsActive<MiningSubworld>())
                 tooltips.Add(new TooltipLine(UltimateSkyblock.Instance, "ReturnTooltip", Language.GetTextValue("Mods.UltimateSkyblock.GenericLocalizedText.ReturnTooltip")));
         }
@@ -85,21 +66,20 @@ namespace UltimateSkyblock.Content.Items.Generic
 
         public override void UpdateInventory(Player player)
         {
-            if (reuseTimer > 0)
-            reuseTimer--;
-
             if (!locked)
             {
                 teleportTimer++;
                 if (teleportTimer >= 45)
                 {
-                    reuseTimer = 7200;
                     locked = true;
                     teleportTimer = 0;
-                    if (!SubworldSystem.AnyActive())
-                        SubworldSystem.Enter<MiningSubworld>();
-                    else
-                        SubworldSystem.Exit();
+                    if (player == Main.LocalPlayer)
+                    {
+                        if (!SubworldSystem.AnyActive())
+                            SubworldSystem.Enter<MiningSubworld>();
+                        else
+                            SubworldSystem.Exit();
+                    }
                 }
                 else if (teleportTimer == 5)
                 {

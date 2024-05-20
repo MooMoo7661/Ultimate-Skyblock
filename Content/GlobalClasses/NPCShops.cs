@@ -19,6 +19,8 @@ namespace UltimateSkyblock.Content.GlobalClasses
                 shop.AddWithValue(ModContent.ItemType<GuidebookItem>(), Item.buyPrice(0, 0, 15, 0));
 
                 shop.AddWithValue(ModContent.ItemType<MiningLantern>(), Item.buyPrice(0, 0, 35, 0), Condition.PlayerCarriesItem(ModContent.ItemType<MiningLantern>()));
+
+                shop.AddWithValue(ItemID.RecallPotion, Item.buyPrice(0, 0, 8, 23));
             }
         }
     }

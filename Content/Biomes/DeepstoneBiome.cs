@@ -25,7 +25,7 @@ namespace UltimateSkyblock.Content.Biomes
 
         public override bool IsBiomeActive(Player player)
         {
-            return ModContent.GetInstance<DeepstoneCount>().blockCount >= 120;
+            return ModContent.GetInstance<DeepstoneCount>().blockCount >= 120 && !player.ZoneUnderworldHeight;
         }
 
         public override void OnInBiome(Player player)

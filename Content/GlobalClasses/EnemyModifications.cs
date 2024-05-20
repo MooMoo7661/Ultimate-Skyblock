@@ -12,20 +12,27 @@ namespace UltimateSkyblock.Content.GlobalClasses
     public class EnemyModifications : GlobalNPC
     {
         public override bool InstancePerEntity => true;
-        public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
-        {
-
-            return NPCID.Sets.Zombies[entity.type];
-        }
         public override void PostAI(NPC npc)
         {
-            if (Main.dayTime && !npc.HasBuff(BuffID.Wet))
+            if (!UltimateSkyblock.IsSkyblock() || !(NPCID.Sets.Zombies[npc.type] || NPCID.Sets.DemonEyes[npc.type]))
+                return;
+
+            if (Main.dayTime && !npc.wet)
                 npc.AddBuff(BuffID.OnFire3, 60);
 
-            if ((npc.HasBuff(BuffID.OnFire) || npc.HasBuff(BuffID.OnFire3)) && npc.HasBuff(BuffID.Wet))
+            if ((npc.HasBuff(BuffID.OnFire) || npc.HasBuff(BuffID.OnFire3)) && npc.wet)
             {
                 npc.RequestBuffRemoval(BuffID.OnFire);
                 npc.RequestBuffRemoval(BuffID.OnFire3);
+            }
+        }
+
+        public override void OnKill(NPC npc)
+        {
+            if (npc.type == NPCID.SkeletronHead)
+            {
+                NPC.savedMech = true;
+                Main.townNPCCanSpawn[NPCID.Mechanic] = true;
             }
         }
 

@@ -23,7 +23,7 @@ namespace UltimateSkyblock.Content.Subworlds.DungeonPasses
             {
                 for (int y = 0; y  < Main.maxTilesY; y++)
                 {
-                    if (WorldGen.genRand.NextBool(80) && Main.tile[x, y].HasTile && Main.tile[x, y].TileType == TileID.BlueDungeonBrick && !GenUtils.AreaContainsSensitiveTiles(new List<int> { TileID.OpenDoor, TileID.Spikes }, x, y, 8, 8))
+                    if (WorldGen.genRand.NextBool(80) && Main.tile[x, y].HasTile && Main.tile[x, y].TileType == TileID.BlueDungeonBrick && !GenUtils.AreaContainsSensitiveTiles(new List<int> { TileID.ClosedDoor, TileID.Spikes }, x, y, 8, 8))
                     {
                         GenUtils.GetSurroundingTiles(x, y, out Tile left, out Tile right, out Tile up, out Tile down);
                         if (!up.HasTile || !down.HasTile || !right.HasTile || !left.HasTile)

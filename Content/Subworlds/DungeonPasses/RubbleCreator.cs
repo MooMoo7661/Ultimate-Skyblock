@@ -24,7 +24,7 @@ namespace UltimateSkyblock.Content.Subworlds.DungeonPasses
                 for (int y = 0; y  < Main.maxTilesY; y++)
                 {
                     Tile tileUp = Framing.GetTileSafely(x, y - 1);
-                    if ((!tileUp.HasTile && WorldGen.genRand.NextBool(7)) || (Main.tile[x, y].TileType == TileID.Platforms && WorldGen.genRand.NextBool(3)))
+                    if ((!tileUp.HasTile && WorldGen.genRand.NextBool(7)) || (Main.tile[x, y].TileType == TileID.Platforms && WorldGen.genRand.NextBool(3)) && !GenUtils.AreaContainsSensitiveTile(TileID.ClosedDoor, x, y, 4, 3))
                     {
                         if (Main.tile[x, y].Slope == SlopeType.Solid && Main.tile[x, y].TileType != TileID.Spikes)
                         {

@@ -14,7 +14,7 @@ namespace UltimateSkyblock.Content.SceneEffects
     {
         public override bool IsSceneEffectActive(Player player)
         {
-            return ModContent.GetInstance<MainClientConfig>().OWSoundtrack;
+            return UltimateSkyblock.IsSkyblock() && ModContent.GetInstance<MainClientConfig>().OWSoundtrack;
         }
         public override int Music
         {
@@ -22,7 +22,7 @@ namespace UltimateSkyblock.Content.SceneEffects
             {
                 Player player = Main.LocalPlayer;
 
-                if (Main.dayTime && Main.LocalPlayer.ZoneForest)
+                if (Main.dayTime && player.ZoneForest)
                  return MusicLoader.GetMusicSlot(Mod, "Content/Sounds/Music/OWDay");
                  else if (!Main.dayTime && Main.LocalPlayer.ZoneForest)
                     return MusicLoader.GetMusicSlot(Mod, "Content/Sounds/Music/OWNight");
@@ -81,7 +81,7 @@ namespace UltimateSkyblock.Content.SceneEffects
     {
         public override bool IsSceneEffectActive(Player player)
         {
-            return player.ZoneBeach && SubworldSystem.Current == ModContent.GetInstance<MiningSubworld>();
+            return UltimateSkyblock.IsSkyblock() && player.ZoneBeach && SubworldSystem.Current == ModContent.GetInstance<MiningSubworld>();
         }
 
         public override int Music => MusicID.Underground;

@@ -18,7 +18,7 @@ namespace UltimateSkyblock.Content.Subworlds
     {
         public override int Width => 3000;
         public override int Height => 1000;
-        public override bool ShouldSave => false;
+        public override bool ShouldSave => ModContent.GetInstance<SubworldConfig>().SubworldSaving;
         public override string Name => "Dungeon Subworld";
 
         public static bool Music = false;
@@ -53,10 +53,7 @@ namespace UltimateSkyblock.Content.Subworlds
             UltimateSkyblock.Instance.Logger.Info("Logging tag \"NPC.downedGolemBoss\"" + " - " + NPC.downedGolemBoss);
             UltimateSkyblock.Instance.Logger.Info("Logging tag \"NPC.downedBoss3\"" + " - "+ NPC.downedBoss3);
             UltimateSkyblock.Instance.Logger.Info("Logging tag \"Main.hardMode:\"" + " - " + Main.hardMode);
-        }
 
-        public override void OnLoad()
-        {
             Main.worldSurface = 0;
             GenVars.worldSurfaceHigh = 0;
             GenVars.worldSurfaceLow = 0;
@@ -64,6 +61,8 @@ namespace UltimateSkyblock.Content.Subworlds
             GenVars.oceanWaterStartRandomMin = 0;
             GenVars.oceanWaterStartRandomMax = 0;
         }
+
+
 
         public sealed override List<GenPass> Tasks
         {

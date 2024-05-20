@@ -49,15 +49,6 @@ namespace UltimateSkyblock.Content.ModSystems
 
             var config = ModContent.GetInstance<MainClientConfig>();
 
-            //UIElement WorldIcon = (UIElement)typeof(UIWorldListItem).GetField("_worldIcon", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(uiItem);
-            //UIImage element = new UIImage(ModContent.Request<Texture2D>("UltimateSkyblock/Assets/WorldIcons/Skyblock"))
-            //{
-            //    Top = new StyleDimension(0f, 0f),
-            //    Left = new StyleDimension(1f, 0f),
-            //    IgnoresMouseInteraction = true
-            //};
-            //WorldIcon.Append(element);
-
             if (config.WorldBackgroundColorLerp)
             uiItem.BackgroundColor = uiItem.IsMouseHovering ? UICommon.DefaultUIBlueMouseOver : Color.Lerp(UICommon.DefaultUIBlueMouseOver, new(15, 26, 68, UICommon.MainPanelBackground.A), (MathF.Sin(Main.GlobalTimeWrappedHourly * 2f) + 1) / 2f);
             if (config.WorldBorderColor)

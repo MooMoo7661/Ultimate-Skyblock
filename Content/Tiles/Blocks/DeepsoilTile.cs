@@ -2,9 +2,9 @@
 using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using UltimateSkyblock.Content.Items.Placeable;
 using UltimateSkyblock.Content.Subworlds;
 using UltimateSkyblock.Content.Tiles.Environment.Foliage;
+using UltimateSkyblock.Content.Items.Placeable.Tiles;
 
 namespace UltimateSkyblock.Content.Tiles.Blocks
 {
@@ -17,6 +17,9 @@ namespace UltimateSkyblock.Content.Tiles.Blocks
 
             Main.tileMerge[ModContent.TileType<DeepstoneTile>()][Type] = true;
             Main.tileMerge[Type][ModContent.TileType<DeepstoneTile>()] = true;
+
+            Main.tileMerge[ModContent.TileType<HardenedDeepstoneTile>()][Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<HardenedDeepstoneTile>()] = true;
 
             Main.tileLighted[Type] = false;
             Main.tileNoSunLight[Type] = false;

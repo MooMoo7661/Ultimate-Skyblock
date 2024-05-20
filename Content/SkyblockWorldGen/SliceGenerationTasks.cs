@@ -1,9 +1,13 @@
-﻿using Terraria.ModLoader.UI;
+﻿using System;
+using System.Reflection;
+using Terraria.ModLoader.UI;
 using tModPorter;
 using UltimateSkyblock.Content.Items.Bombs;
-using UltimateSkyblock.Content.Items.Placeable;
+using UltimateSkyblock.Content.Items.Placeable.Objects;
+using UltimateSkyblock.Content.Subworlds;
 using UltimateSkyblock.Content.Tiles.Environment;
 using UltimateSkyblock.Content.Utils;
+using static tModPorter.ProgressUpdate;
 using static UltimateSkyblock.Content.SkyblockWorldGen.ChestLootHelpers;
 using static UltimateSkyblock.Content.SkyblockWorldGen.IslandHandler;
 using static UltimateSkyblock.Content.SkyblockWorldGen.MainWorld;
@@ -14,6 +18,7 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
     public class SliceGenerationTasks
     {
         public static int IslandHeight { get => Main.maxTilesY / 2 - Main.maxTilesY / 5; }
+        
 
         public static void ClearWorld()
         {
@@ -57,6 +62,163 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
             }
         }
 
+        public static int numIslandHouses = 0;
+        public static int houseCount = 0;
+        public static int[] floatingIslandHouseX = new int[30];
+        public static int[] floatingIslandHouseY = new int[30];
+        public static int[] floatingIslandStyle = new int[30];
+        public static bool[] skyLake = new bool[30];
+
+        public static void SkyIslandRunner()
+        {
+            // Yeah so I just copied and pasted vanilla sky island & house generation, because the vanilla genpass does it too high.
+            // I renamed a few of the variables to make more sense, and changed the minimum & maximum world height to be under the planetoids.
+
+            numIslandHouses = 0;
+            houseCount = 0;
+            int islandCountWorldModifier = (int)((double)Main.maxTilesX * 0.0008);
+            int totalIslandsCount = 0;
+            float maxIslandsCount = islandCountWorldModifier + 8;
+            for (int islandsCount = 0; (float)islandsCount < maxIslandsCount; islandsCount++)
+            {
+                int num829 = Main.maxTilesX;
+                while (--num829 > 0) // odd way to loop through the world
+                {
+                    bool flag54 = true;
+                    int genPos = WorldGen.genRand.Next((int)((double)Main.maxTilesX * 0.1), (int)((double)Main.maxTilesX * 0.9));
+                    for (int num831 = 0; num831 < numIslandHouses; num831++)
+                    {
+                        if (genPos > floatingIslandHouseX[num831] - 180 && genPos < floatingIslandHouseX[num831] + 180)
+                        {
+                            flag54 = false;
+                            break;
+                        }
+                    }
+                    if (flag54)
+                    {
+                        flag54 = false;
+                        int num832 = 0;
+                        for (int num833 = 200; (double)num833 < Main.worldSurface; num833++)
+                        {
+                            if (Main.tile[genPos, num833].HasTile)
+                            {
+                                num832 = num833;
+                                flag54 = true;
+                                break;
+                            }
+                        }
+                        if (flag54)
+                        {
+                            int num834 = 0;
+                            num829 = -1;
+                            int min = Main.maxTilesY / 8 - Main.maxTilesY / 30;
+                            int max = Main.maxTilesY / 8;
+                            if (min >= max)
+                                throw new Exception("Error generating sky islands. The minimum height, " + min + ", was greater than the maximum height, " +  max + ". Please ensure if you're using any mod to change world size, that the world isn't too small.");
+
+                            int val = WorldGen.genRand.Next(PlanetoidGeneration.PlanetoidHeight +  Main.maxTilesY / 18, PlanetoidGeneration.PlanetoidHeight + Main.maxTilesY / 12);
+                            if (totalIslandsCount >= islandCountWorldModifier)
+                            {
+                                skyLake[numIslandHouses] = true;
+                                WorldGen.CloudLake(genPos, val);
+                            }
+                            else
+                            {
+                                skyLake[numIslandHouses] = false;
+                                if (WorldGen.drunkWorldGen)
+                                {
+                                    if (WorldGen.genRand.NextBool(2))
+                                    {
+                                        num834 = 3;
+                                        WorldGen.SnowCloudIsland(genPos, val);
+                                    }
+                                    else
+                                    {
+                                        num834 = 1;
+                                        WorldGen.DesertCloudIsland(genPos, val);
+                                    }
+                                }
+                                else
+                                {
+                                    if (WorldGen.getGoodWorldGen)
+                                    {
+                                        num834 = ((!WorldGen.crimson) ? 4 : 5);
+                                    }
+                                    if (Main.tenthAnniversaryWorld)
+                                    {
+                                        num834 = 6;
+                                    }
+                                    WorldGen.CloudIsland(genPos, val);
+                                }
+                            }
+                            floatingIslandHouseX[numIslandHouses] = genPos;
+                            floatingIslandHouseY[numIslandHouses] = val;
+                            floatingIslandStyle[numIslandHouses] = num834;
+                            numIslandHouses++;
+                            totalIslandsCount++;
+                        }
+                    }
+                }
+            }
+
+            for (int num399 = 0; num399 < numIslandHouses; num399++)
+            {
+                if (!skyLake[num399])
+                {
+                    WorldGen.IslandHouse(floatingIslandHouseX[num399], floatingIslandHouseY[num399], floatingIslandStyle[num399]);
+                }
+            }
+
+
+            //Making sure sky islands have greass & trees. Also affects planetoids, so it's a 2 in 1.
+            for (int x = 0; x < Main.maxTilesX; x++)
+            {
+                for (int y = 0; y < 400; y++)
+                {
+                    Tile tile = Framing.GetTileSafely(x, y);
+                    if (tile.TileType == TileID.Dirt)
+                    {
+                        if (GenUtils.TileHasAir(x, y))
+                        {
+                            switch (Slice.GetIslandsFromCoordinate(x).Name)
+                            {
+                                case "Evil":
+                                    tile.TileType = WorldGen.crimson ? TileID.CrimsonGrass : TileID.CorruptGrass;
+                                    break;
+                                default:
+                                    tile.TileType = TileID.Grass;
+                                    break;
+                            }
+                        }
+                    }
+
+                    if (tile.HasTile && WorldGen.genRand.NextBool(4) && GenUtils.TileHasAir(x, y))
+                    {
+                        WorldGen.GrowTree(x, y);
+                    }
+                }
+            }
+        }
+
+        public static void GenerateDeepstoneIsland(Slice slice)
+        {
+            Point16 placePoint = new(slice.CenterInWorld, IslandHeight + WorldGen.genRand.Next(-50, 50));
+            string path = "Content/SkyblockWorldGen/Structures/DeepstoneIsland";
+            Generator.GenerateMultistructureRandom(path + "Main", placePoint, UltimateSkyblock.Instance);
+
+            for (int i = 0; i < 2; i++)
+            {
+                Point16 pos = i switch
+                {
+                    0 => new Point16(slice.LengthMin + slice.Length / 6 + WorldGen.genRand.Next(-10, 30), IslandHeight + WorldGen.genRand.Next(-10, 30)), // left
+                    _ => new Point16(slice.LengthMax - slice.Length / 7, IslandHeight + WorldGen.genRand.Next(-20, 20)), // right
+                };
+
+                string smallPath = "Content/SkyblockWorldGen/Structures/DeepstoneIslandSmall";
+                Generator.GenerateMultistructureSpecific(smallPath, pos, UltimateSkyblock.Instance, i);
+            }
+        }
+
         public static void GenerateDungeon(Slice slice)
         {
             // y - 44
@@ -86,7 +248,36 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
             Generator.GenerateStructure("Content/SkyblockWorldGen/Structures/MushroomIsland", new Point16(WorldGen.genRand.Next(slice.LengthMin + slice.Length / 4, slice.LengthMax - slice.Length / 4), IslandHeight + WorldGen.genRand.Next(-40, 40)), UltimateSkyblock.Instance);
         }
 
-        public static void GenerateEvilIslands(Slice slice) { }
+        public static void GenerateEvilIslands(Slice slice)
+        {
+            Point16 center = new Point16(slice.CenterInWorld, IslandHeight);
+            
+            Generator.GenerateStructure(WorldHelpers.evilPath + "Main", center, UltimateSkyblock.Instance);
+
+            List<string> structures = new()
+            {
+                evilPath + "House",
+                evilPath + "Duo",
+                evilPath + "Sign",
+                evilPath + "Tiny",
+            };
+
+            for (int i = 0; i < 4; i++)
+            {
+                Point16 genPoint = i switch
+                {
+                    0 => new Point16(slice.LengthMin + slice.Length / 4 + WorldGen.genRand.Next(-20, 30), IslandHeight + slice.Length / 8 + WorldGen.genRand.Next(-30, 10)), // top left
+                    1 => WorldGen.genRand.NextBool() ? new Point16(slice.CenterInWorld + WorldGen.genRand.Next(-25, 25), IslandHeight - slice.Length / 8 + WorldGen.genRand.Next(-20, 20)) : new Point16(slice.LengthMin + slice.Length / 3 + WorldGen.genRand.Next(-10, 30), IslandHeight + WorldGen.genRand.Next(-10, 30)), // top
+                    2 => new Point16(slice.LengthMax - slice.Length / 4, IslandHeight + WorldGen.genRand.Next(-20, 20)), // right
+                    3 => WorldGen.genRand.NextBool() ? new Point16(slice.CenterInWorld + WorldGen.genRand.Next(-50, 50), IslandHeight + slice.Length / 8 + WorldGen.genRand.Next(40)) : new Point16(slice.CenterInWorld + WorldGen.genRand.Next(-slice.Length / 8, slice.Length / 8), IslandHeight - slice.Length / 6), // bottom
+                };
+
+                int index = WorldGen.genRand.Next(structures.Count);
+                string islandToGenerate = structures[index];
+                structures.RemoveAt(index);
+                Generator.GenerateStructure(islandToGenerate, genPoint, UltimateSkyblock.Instance);
+            }
+        }
 
         /// <summary>
         /// Handles generating the spawn island, as well as the starting chest.
@@ -157,6 +348,7 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
                         chest.Add(new Item(ItemID.WaterBucket));
                         chest.Add(new Item(ItemID.DirtStickyBomb, 5));
                         chest.Add(new Item(ModContent.ItemType<StickyStoneBomb>(), 5));
+                        chest.Add(new Item(ItemID.GrassSeeds, 3));
                         chest.Add(new Rule().GetItem(seeds));
                         chest.Add(new Rule().GetItem(planters));
                         chest.Add(new Item(ItemID.Acorn, Main.rand.Next(4, 9)));
@@ -167,6 +359,7 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
                         chest.Add(new Item(ItemID.EmptyBucket));
                         chest.Add(new Item(ItemID.SandBlock, 15));
                         chest.Add(new Item(ItemID.Acorn, 2));
+                        chest.Add(new Item(ItemID.GrassSeeds));
                         break;
 
                     case ChestType.Luxury:
@@ -186,10 +379,11 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
                         chest.Add(new Item(ItemID.CloudinaBottle));
                         chest.Add(new Item(ModContent.ItemType<StickyStoneBomb>(), 10));
                         chest.Add(new Item(ModContent.ItemType<AutoExtractor>()));
+                        chest.Add(new Item(ItemID.GrassSeeds, 3));
                         chest.Add(new Rule().GetItem(seeds));
                         chest.Add(new Rule().GetItem(potions));
                         chest.Add(new Rule().GetItem(planters));
-                        chest.Add(new Item(ItemID.Acorn, Main.rand.Next(9, 15)));
+                        chest.Add(new Item(ItemID.Acorn, Main.rand.Next(4, 7)));
                         chest.Add(new Item(ItemID.SandBlock, 50));
                         chest.Add(new Item(ItemID.DirtBlock, 50));
                         chest.Add(new Item(ItemID.StoneBlock, 50));
@@ -248,11 +442,11 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
                 hallowPath + "Lamp",
                 hallowPath + "Campfire",
                 hallowPath + "Tiny",
+                hallowPath + "House",
                 hallowPath + "Big",
-                hallowPath + "House"
             };
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 6; i++)
             {
                 Point16 genPoint = i switch
                 {
@@ -261,13 +455,15 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
                     2 => new Point16(slice.CenterInWorld + WorldGen.genRand.Next(-25, 25), IslandHeight - slice.Length / 5 + WorldGen.genRand.Next(-20, 20)), // top
                     3 => new Point16(slice.LengthMax - slice.Length / 7, IslandHeight + WorldGen.genRand.Next(-20, 20)), // right
                     4 => new Point16(slice.CenterInWorld + WorldGen.genRand.Next(-50, 50), IslandHeight + slice.Length / 6 + WorldGen.genRand.Next(40)), // bottom
-                    5 => new Point16(slice.CenterInWorld + WorldGen.genRand.Next(-slice.Length / 8, slice.Length / 8), IslandHeight - slice.Length / 6 -  140)
+                    5 => new Point16(slice.LengthMax - slice.Length / 9 - WorldGen.genRand.Next(-45, -25), IslandHeight + slice.Length / 4) // bottom.. right?
                 };
 
                 int index = WorldGen.genRand.Next(structures.Count);
                 string islandToGenerate = structures[index];
                 structures.RemoveAt(index);
+
                 Generator.GenerateStructure(islandToGenerate, genPoint, UltimateSkyblock.Instance);
+
             }
         }
 
@@ -284,7 +480,7 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
             Generator.GenerateStructure(junglePath + "Bridge", bridgePoint, UltimateSkyblock.Instance);
             Generator.GenerateStructure(junglePath + "Small", smallPoint, UltimateSkyblock.Instance);
 
-            Generator.GenerateStructure("Content/SkyblockWorldGen/Structures/LockedJungleChest", new Point16(mainPoint.X + 13, mainPoint.Y + 42), UltimateSkyblock.Instance);
+            Generator.GenerateStructure("Content/SkyblockWorldGen/Structures/LockedJungleChest", new Point16(mainPoint.X + 13, mainPoint.Y + 39), UltimateSkyblock.Instance);
 
             GenTemple(slice);
             GenPlanteraArena(slice);
@@ -317,7 +513,7 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
                     _ => new Point16(slice.LengthMax - slice.Length / 7, IslandHeight + WorldGen.genRand.Next(-20, 20)), // right
                 };
 
-                int index = Main.rand.Next(islandsToGenerate.Count);
+                int index = WorldGen.genRand.Next(islandsToGenerate.Count);
                 string island = islandsToGenerate[index];
                 islandsToGenerate.RemoveAt(index);
 

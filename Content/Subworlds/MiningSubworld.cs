@@ -37,7 +37,10 @@ namespace UltimateSkyblock.Content.Subworlds
 
         public override void OnLoad()
         {
-            Main.worldSurface = 0;
+            //Fixing offset between backgrounds.
+            //Underground backgrounds are dependant on Main.worldSurface,
+            //so setting it to a value that doesn't let backgrounds repeat correctly will cause black backgrounds between transitions.
+            Main.worldSurface = 2;
             GenVars.worldSurfaceHigh = 0;
             GenVars.worldSurfaceLow = 0;
             GenVars.rockLayer = Main.maxTilesY / 2;
@@ -66,6 +69,7 @@ namespace UltimateSkyblock.Content.Subworlds
             //Detailed worldgen
             new DeepstonePass("Deepstone", 90),
             new DeepstoneCaveFeaturesPass("DeepstoneCaveFeatures", 40f),
+            new DeepstoneOresPass("DeepstoneOres", 15f),
             new HellBarrierPass("HellBarrier", 30),
             new CaveFeaturesPass("CaveFeatures", 20),
             new SlatePass("Slate", 30),
@@ -108,6 +112,10 @@ namespace UltimateSkyblock.Content.Subworlds
                 SubVars.cobalt = Main.rand.NextBool() ? TileID.Cobalt : TileID.Palladium;
                 SubVars.mythril = Main.rand.NextBool() ? TileID.Mythril : TileID.Orichalcum;
                 SubVars.adamantite = Main.rand.NextBool() ? TileID.Adamantite : TileID.Titanium;
+
+                WorldGen.SavedOreTiers.Cobalt = new UnifiedRandom().NextBool() ? TileID.Cobalt : TileID.Palladium;
+                WorldGen.SavedOreTiers.Mythril = new UnifiedRandom().NextBool() ? TileID.Mythril : TileID.Orichalcum;
+                WorldGen.SavedOreTiers.Adamantite = new UnifiedRandom().NextBool() ? TileID.Adamantite : TileID.Titanium;
             }
 
             private static void FillWorldWithStone(ref GenerationProgress progress)
@@ -116,7 +124,7 @@ namespace UltimateSkyblock.Content.Subworlds
                 {
                     for (int y = 0; y < Main.maxTilesY; y++)
                     {
-                        Tile tile = Main.tile[x, y];
+                        Tile tile = Framing.GetTileSafely(x, y);
                         tile.HasTile = true;
                         Main.tile[x, y].TileType = TileID.Stone;
                         progress.Set((y + x * Main.maxTilesY) / (float)(Main.maxTilesX * Main.maxTilesY));

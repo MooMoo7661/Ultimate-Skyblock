@@ -35,6 +35,7 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
             AddSliceInfo();
             InvokeSliceGeneration();
             PlanetoidRunner();
+            SkyIslandRunner();
 
             AddHellSlices();
 
@@ -76,7 +77,7 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
             {
                     new SliceGenerationInfo("Jungle", new IslandGenerationEvent(GenerateJungleIslands)),
                     new SliceGenerationInfo("Desert", new IslandGenerationEvent(GenerateDesertIslands)),
-                    new SliceGenerationInfo("Pending", new IslandGenerationEvent(GenerateEvilIslands)),
+                    new SliceGenerationInfo("Deepstone", new IslandGenerationEvent(GenerateDeepstoneIsland)),
             };
 
             // Randomly orders the lists

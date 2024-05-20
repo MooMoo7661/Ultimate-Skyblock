@@ -16,8 +16,6 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
 
         /// <summary> Used with RollHellIslands to pick an island that is not the same as the previous one.</summary>
 
-        public static float ScaleBasedOnWorldSizeX;
-        public static float ScaleBasedOnWorldSizeY;
         public static WorldSizes WorldSize;
 
         public static SkyblockModConfig config = ModContent.GetInstance<SkyblockModConfig>();
@@ -46,8 +44,13 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
             List<string> tasksToRemove = new List<string>
             {
                 "Terrain",
+                "Reset",
+                "Jungle",
                 "Jungle Temple",
-                "Temple"
+                "Temple",
+                "Dungeon",
+                "Settle Liquids Again",
+
             };
 
             tasks.RemoveAll(task => !tasksToRemove.Contains(task.Name));
@@ -55,6 +58,9 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
 
         public override void OnWorldLoad()
         {
+            if (!UltimateSkyblock.IsSkyblock())
+                return;
+
             SetWorldSizeVars();
             LogInfo();
             if (!SubworldSystem.AnyActive())
@@ -66,7 +72,10 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
             Main.townNPCCanSpawn[NPCID.Angler] = true;
         }
 
-        public override void PreWorldGen() => SetWorldSizeVars();
+        public override void PreWorldGen()
+        {
+            SetWorldSizeVars();
+        }
 
         private void SetWorldSizeVars()
         {
@@ -76,30 +85,11 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
                 1 => WorldSizes.Medium,
                 _ => WorldSizes.Large,
             };
-
-            ScaleBasedOnWorldSizeX = WorldGen.GetWorldSize() switch
-            {
-                0 => 1,
-                1 => 30,
-                2 => 60,
-                _ => 80,
-
-            };
-
-            ScaleBasedOnWorldSizeY = WorldGen.GetWorldSize() switch
-            {
-                0 => 20,
-                1 => 30,
-                2 => 40,
-                _ => 50,
-            };
         }
 
         private void LogInfo()
         {
             Mod.Logger.Info("World Size : " + WorldSize);
-            Mod.Logger.Info("World Size Scale X : " + ScaleBasedOnWorldSizeX);
-            Mod.Logger.Info("World Size Scale Y : " + ScaleBasedOnWorldSizeY);
             Mod.Logger.Info("Dungeon Side : " + (DungeonLeft ? "Left" : "Right"));
         }
 
@@ -126,6 +116,7 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
         /// </summary>
         public override void ModifyHardmodeTasks(List<GenPass> list)
         {
+            if (UltimateSkyblock.IsSkyblock())
             list.RemoveAll(task => task.Name != "Hardmode Announcement");
         }
     }

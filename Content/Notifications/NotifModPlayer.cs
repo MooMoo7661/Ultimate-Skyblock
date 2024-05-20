@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using Terraria.UI;
 using SubworldLibrary;
 using UltimateSkyblock.Content.Subworlds;
+using Terraria.ModLoader.IO;
 
 namespace UltimateSkyblock.Content.Notifications
 {
@@ -13,11 +14,14 @@ namespace UltimateSkyblock.Content.Notifications
         public override void OnEnterWorld()
         {
             var config = ModContent.GetInstance<NotificationsConfig>();
-            if (!config.EnabledNotifs) { return; }
+            if (!config.EnabledNotifs || !UltimateSkyblock.IsSkyblock()) { return; }
 
-            if (Player.whoAmI == Main.myPlayer && SubworldSystem.Current == null && config.EnterWorldNotification) { InGameNotificationsTracker.AddNotification(new JoinWorldNotif()); }
-            if (Player.whoAmI == Main.myPlayer && SubworldSystem.Current == ModContent.GetInstance<MiningSubworld>() && config.EnterMiningSubworldNotification) { InGameNotificationsTracker.AddNotification(new MiningSubworldEnterNotification()); }
-            if (Player.whoAmI == Main.myPlayer && SubworldSystem.Current == ModContent.GetInstance<DungeonSubworld>() && config.EnterMiningSubworldNotification) { InGameNotificationsTracker.AddNotification(new DungeonSubworldEnterNotification()); }
+            if (Player.whoAmI == Main.myPlayer)
+            {
+                if (SubworldSystem.Current == null && config.EnterWorldNotification) { InGameNotificationsTracker.AddNotification(new JoinWorldNotif()); }
+                if (SubworldSystem.Current == ModContent.GetInstance<MiningSubworld>() && config.EnterMiningSubworldNotification) { InGameNotificationsTracker.AddNotification(new MiningSubworldEnterNotification()); }
+                if (SubworldSystem.Current == ModContent.GetInstance<DungeonSubworld>() && config.EnterMiningSubworldNotification) { InGameNotificationsTracker.AddNotification(new DungeonSubworldEnterNotification()); }
+            }
         }
     }
 }

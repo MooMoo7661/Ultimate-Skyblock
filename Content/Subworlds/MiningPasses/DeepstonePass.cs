@@ -38,15 +38,27 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
                     }
                     progress.Set((y + x * Main.maxTilesY) / (float)(Main.maxTilesX * Main.maxTilesY));
                 }
-
-                for (int y = Main.UnderworldLayer - 200; y < Main.maxTilesY; y++)
-                {
-                    if (WorldGen.genRand.NextBool(100) && GenUtils.TileHasAir(x, y) && !GenUtils.AreaContainsSensitiveTiles(new List<int> { ModContent.TileType<DeepsoilTile>() }, x, y, 15, 15) && Main.tile[x, y].TileType == ModContent.TileType<DeepstoneTile>())
-                        WorldGen.TileRunner(x, y, WorldGen.genRand.Next(12, 16), WorldGen.genRand.Next(7, 28), ModContent.TileType<DeepsoilTile>());
-                }
             }
 
-            FastNoise caveNoise = new FastNoise(FractalType.PingPong, NoiseType.OpenSimplex2S, seed:new UnifiedRandom().Next(400));
+            //FastNoise dirtNoise = new FastNoise(FractalType.PingPong, NoiseType.Perlin, seed: new UnifiedRandom(DateTime.Now.Microsecond + Environment.TickCount).Next(1600));
+            //dirtNoise.SetFractalPingPongStrength(2.5f);
+            //dirtNoise.SetFractalOctaves(4);
+
+            //for (int x = 0; x < Main.maxTilesX; x++)
+            //{
+            //    for (int y = Main.UnderworldLayer - 300; y < Main.UnderworldLayer; y++)
+            //    {
+            //        float noiseValue = (float)(dirtNoise.GetNoise(Main.spawnTileX * Main.tile.Width + x, Main.spawnTileY * Main.tile.Height + y) * 0.25f);
+            //        if (Main.tile[x, y].TileType == ModContent.TileType<DeepstoneTile>() && noiseValue >= 0.01f)
+            //        {
+            //            Main.tile[x, y].TileType = (ushort)ModContent.TileType<DeepsoilTile>();
+            //        }
+            //    }
+            //}
+
+            FastNoise caveNoise = new FastNoise(FractalType.PingPong, NoiseType.OpenSimplex2S, seed:new UnifiedRandom().Next(1600));
+            caveNoise.SetFractalPingPongStrength(2f);
+            caveNoise.SetFractalOctaves(4);
   
             for (int x = 0; x < Main.maxTilesX; x++)
             {

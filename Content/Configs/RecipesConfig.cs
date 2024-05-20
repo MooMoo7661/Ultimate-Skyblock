@@ -42,10 +42,6 @@ namespace UltimateSkyblock.Content.Configs
         public bool CraftHermesBoots { get; set; }
 
         [DefaultValue(true)]
-        [BackgroundColor(255, 209, 214)]
-        public bool CraftMagicMirror { get; set; }
-
-        [DefaultValue(true)]
         [BackgroundColor(255, 202, 212)]
         public bool CraftIceMirror { get; set; }
 
@@ -68,6 +64,10 @@ namespace UltimateSkyblock.Content.Configs
         [DefaultValue(true)]
         [BackgroundColor(179, 140, 149)]
         public bool CraftAglet { get; set; }
+
+        [DefaultValue(true)]
+        [BackgroundColor(157, 129, 137)]
+        public bool PotionPlantDecrafting { get; set; }
 
         //157, 129, 137
         //166, 140, 148

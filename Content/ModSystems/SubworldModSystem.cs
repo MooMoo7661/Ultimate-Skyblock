@@ -48,7 +48,7 @@ namespace UltimateSkyblock.Content.ModSystems
 
         public override void PreUpdateTime()
         {
-            if (SubworldSystem.AnyActive())
+            if (SubworldSystem.IsActive<MiningSubworld>() || SubworldSystem.IsActive<DungeonSubworld>())
             {
                 Main.pumpkinMoon = false;
                 Main.snowMoon = false;

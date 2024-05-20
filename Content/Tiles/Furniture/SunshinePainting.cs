@@ -4,6 +4,7 @@ using Terraria.GameContent.ObjectInteractions;
 using Terraria.Localization;
 using Terraria.ObjectData;
 using UltimateSkyblock.Content.Items.Placeable;
+using UltimateSkyblock.Content.Items.Placeable.Objects;
 
 namespace UltimateSkyblock.Content.Tiles.Furniture
 {
@@ -28,8 +29,8 @@ namespace UltimateSkyblock.Content.Tiles.Furniture
             TileObjectData.newTile.AnchorWall = true;
             TileObjectData.addTile(Type);
 
-            RegisterItemDrop(ItemID.Wood);
-            RegisterItemDrop(ItemID.Wood, 1);
+            RegisterItemDrop(ModContent.ItemType<SunshinePaintingItem>());
+            RegisterItemDrop(ModContent.ItemType<SunshinePaintingItem>(), 1);
 
             // Etc
             AddMapEntry(new Color(69, 43, 28), Language.GetText("Mods.UltimateSkyblock.Tiles.SunshinePainting"));

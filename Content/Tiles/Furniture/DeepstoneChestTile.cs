@@ -3,7 +3,7 @@ using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.Localization;
 using Terraria.ObjectData;
-using UltimateSkyblock.Content.Items.Placeable;
+using UltimateSkyblock.Content.Items.Placeable.Objects;
 
 namespace UltimateSkyblock.Content.Tiles.Furniture
 {
@@ -24,6 +24,7 @@ namespace UltimateSkyblock.Content.Tiles.Furniture
             TileID.Sets.InteractibleByNPCs[Type] = true;
             TileID.Sets.IsAContainer[Type] = true;
             TileID.Sets.FriendlyFairyCanLureTo[Type] = true;
+            TileID.Sets.PreventsSandfall[Type] = true;
 
             DustType = DustID.Obsidian;
             AdjTiles = new int[] { TileID.Containers };
@@ -105,6 +106,7 @@ namespace UltimateSkyblock.Content.Tiles.Furniture
             }
 
             int chest = Chest.FindChest(left, top);
+
             if (chest < 0)
             {
                 return Language.GetTextValue("LegacyChestType.0");
@@ -127,6 +129,7 @@ namespace UltimateSkyblock.Content.Tiles.Furniture
         {
             // We override KillMultiTile to handle additional logic other than the item drop. In this case, unregistering the Chest from the world
             Chest.DestroyChest(i, j);
+           
         }
 
         public override bool RightClick(int i, int j)
@@ -244,7 +247,7 @@ namespace UltimateSkyblock.Content.Tiles.Furniture
                 player.cursorItemIconText = Main.chest[chest].name.Length > 0 ? Main.chest[chest].name : defaultName;
                 if (player.cursorItemIconText == defaultName)
                 {
-                    player.cursorItemIconID = ModContent.ItemType<Items.Placeable.DeepstoneChest>();
+                    player.cursorItemIconID = ModContent.ItemType<DeepstoneChest>();
                     if (Main.tile[left, top].TileFrameX / 36 == 1)
                     {
                         player.cursorItemIconID = ModContent.ItemType<DeepstoneChestKey>();

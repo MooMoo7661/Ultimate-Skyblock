@@ -23,6 +23,8 @@ namespace UltimateSkyblock.Content.Tiles.Furniture
             TileID.Sets.IgnoredByNpcStepUp[Type] = true;
             TileID.Sets.PreventsSandfall[Type] = true;
             TileID.Sets.AvoidedByMeteorLanding[Type] = true;
+            TileID.Sets.PreventsTileReplaceIfOnTopOfIt[Type] = true;
+            TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
 
             DustType = DustID.t_LivingWood;            
 
@@ -42,15 +44,14 @@ namespace UltimateSkyblock.Content.Tiles.Furniture
             AddMapEntry(new Color(69, 43, 28), Language.GetText("Mods.UltimateSkyblock.Tiles.DungeonDoor"));
         }
 
-        //public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
-        //{
-        //    fail = true;
-        //    noItem = true;
-        //}
+        public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
+        {
+            fail = true;
+            noItem = true;
+        }
 
         public override bool RightClick(int i, int j)
         {
-            Main.NewText("Dungeon Subworld coming soon!", Color.IndianRed);
 
             if (!SubworldSystem.IsActive<DungeonSubworld>())
                 SubworldSystem.Enter<DungeonSubworld>();

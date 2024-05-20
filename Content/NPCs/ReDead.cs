@@ -140,8 +140,11 @@ namespace UltimateSkyblock.Content.NPCs
             }
         }
 
-        public override bool PreKill()
+        public override void OnKill()
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
             if (NPCState != (int)State.Idle)
                 Gore.NewGore(NPC.GetSource_Death(), NPC.position, Main.rand.NextVector2Circular(2f, 2f), ModContent.GoreType<ReDeadGores_Head_Active>());
             else
@@ -152,8 +155,6 @@ namespace UltimateSkyblock.Content.NPCs
             Gore.NewGore(NPC.GetSource_Death(), new(NPC.position.X, NPC.position.Y + NPC.height - 6), Main.rand.NextVector2Circular(4f, 4f), ModContent.GoreType<ReDeadGores_Leg_Left>());
             Gore.NewGore(NPC.GetSource_Death(), new(NPC.position.X + NPC.width, NPC.position.Y + NPC.height - 6), Main.rand.NextVector2Circular(4f, 4f), ModContent.GoreType<ReDeadGores_Leg_Right>());
             Gore.NewGore(NPC.GetSource_Death(), NPC.Center, Main.rand.NextVector2Circular(4f, 4f), ModContent.GoreType<ReDeadGores_Chest>());
-
-            return true;
         }
 
         public override void FindFrame(int frameHeight)

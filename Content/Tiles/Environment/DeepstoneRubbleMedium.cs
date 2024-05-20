@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria.ObjectData;
-using UltimateSkyblock.Content.Items.Placeable;
+using UltimateSkyblock.Content.Items.Placeable.Tiles;
 
 namespace UltimateSkyblock.Content.Tiles.Environment
 {

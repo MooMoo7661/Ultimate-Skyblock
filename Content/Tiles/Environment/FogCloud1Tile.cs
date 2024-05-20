@@ -6,9 +6,9 @@ using Terraria.DataStructures;
 using Terraria.ObjectData;
 using Microsoft.Xna.Framework.Graphics;
 using UltimateSkyblock.Content.Configs;
-using UltimateSkyblock.Content.Items.Placeable;
 using System;
 using Terraria.Enums;
+using UltimateSkyblock.Content.Items.Placeable.Tiles;
 
 namespace UltimateSkyblock.Content.Tiles.Environment
 {

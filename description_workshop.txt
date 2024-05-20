@@ -1,7 +1,7 @@
 This mod re-imagines Skyblock, adding many new features to make it more enjoyable.
 From 30+ islands to themed planetoids, and even whole new dimensions, there is a lot to do!
 
-Special thanks to [url=https://www.youtube.com/c/tommytsunami]Tommy Tsunami[/url] for building all of the islands!
+Special thanks to [url=https://www.youtube.com/c/tommytsunami]Tommy Tsunami[/url] for building most of the islands!
 
 [h3]Current features include:[/h3]
 [list]
@@ -13,9 +13,43 @@ Special thanks to [url=https://www.youtube.com/c/tommytsunami]Tommy Tsunami[/url
 [b]Need help?[/b]
 You are provided with a guidebook that has information about the mod.
 Make sure to read through it when you are lost, or need help with something.
+It contains info on the mod itself, as well as some terraria tricks that you might not know.
 
 [h3][b]This mod is multiplayer friendly![/b][/h3]
 You should be able to do this with other players, but there may still be some bugs.
+There's a couple issues, but you can still play mostly normally.
+
+[h1][u][b] Can I use Calamity with this? [/b][/u][/h1]
+Unfortunately, there is no current support that includes any of Calamity's worldgen. I personally have not played Calamity, so I can't say what content you can access without the biomes and structures, but I will likely include an addon or future update for this to allow Calamity worldgen support.
+
+[h2] What about other large mods? [/h2]
+There is no support for modded worldgen, since the world is cleared after generation. If you'd like to see support for a certain mod, [b]please create a thread in my discord[/b], and provide a detailed description of what you want, from which mod, and with what content.
+
+[h2] Experiencing Subworld Issues?[/h2]
+Subworlds are a little odd, and might have some troubles in multiplayer.
+If you're worried about this mod's subworlds working in multiplayer, then give it a try, but it's very likely that they will work. I have tested them myself, both on the same system and with other people online.
+In singleplayer, there will be a progress bar for generation, however it will not appear in multiplayer. It will show "loading" for a short bit, so just be patient until it fully loads.
+
+[h2] Can I use custom world sizes? [/h2]
+Yes, you should be able to use custom world sizes. However, keep in mind anything below small can cause overlapping and ugly generation, due to the amount of islands there are. It should work just fine with anything larger than normal, though. Keep in mind for large worlds, it already takes a long time to bridge to each island, so be wary when doing any sizes larger than that.
+
+[h1] What do you plan for future updates? [/h1]
+My current plans include:
+[list]
+[*]Automation tech for material gathering
+[*]More island variety
+[*]Better worldgen for the mining subworld
+[*]Crossmod support for larger mods
+[*]Events, such as moons and weathers
+[*]More unique items and chest loot
+[/list]
+
+[h3] Localization? [/h3]
+I will not be doing any localization until I get to the point where I feel like I won't be adding anything else. This doesn't mean I do not want to add localization, or that I never will, it's simply just easier to do everything at once rather than each time I add content.
+
+I am open to anybody offering to localize this, but keep in mind I do plan on updating this somewhat frequently, meaning you'll have to keep adding localization. You can either wait until I'm done adding stuff, or offer to help me through discord, where I can have you provide localization before updates are pushed out.
+It would be far easier if you contacted me through discord, since then I can give you the localization before each update, to ensure things won't break.
+
 [u]Please report any issues to me on discord, and [b]not[/b] in the steam comments.[/u]
 
 [url=https://discord.gg/G5cbT7tj9K]Discord[/url]

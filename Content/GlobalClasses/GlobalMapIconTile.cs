@@ -1,4 +1,5 @@
 ﻿using Terraria.ObjectData;
+using UltimateSkyblock.Content.Items.Placeable.Objects;
 using UltimateSkyblock.Content.UI.MapDrawing;
 
 namespace UltimateSkyblock.Content.GlobalClasses
@@ -7,14 +8,16 @@ namespace UltimateSkyblock.Content.GlobalClasses
     {
         public override void SetStaticDefaults()
         {
-            TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
-            TileObjectData.newTile.Width = 3;
-            TileObjectData.newTile.Height = 2;
-            TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
-            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<GolemAltarMapIconEntity>().Hook_AfterPlacement, -1, 0, false);
-            TileObjectData.newTile.UsesCustomCanPlace = true;
-            TileObjectData.addTile(TileID.LihzahrdAltar);
+            //TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
+            //TileObjectData.newTile.Width = 3;
+            //TileObjectData.newTile.Height = 2;
+            //TileObjectData.newTile.StyleHorizontal = true;
+            //TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
+            //TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<GolemAltarMapIconEntity>().Hook_AfterPlacement, -1, 0, false);
+            //TileObjectData.newTile.UsesCustomCanPlace = true;
+            //TileObjectData.addTile(TileID.LihzahrdAltar);
+
+            ItemID.Sets.ShimmerTransformToItem[ItemID.Waldo] = ModContent.ItemType<SunshinePaintingItem>();
         }
     }
 

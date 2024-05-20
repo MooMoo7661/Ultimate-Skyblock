@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 using Terraria;
 using UltimateSkyblock.Content.UI.Guidebook;
 
-namespace UltimateSkyblock.Content.Items.Guidebook
+namespace UltimateSkyblock.Content.Items.Generic
 {
     public class GuidebookItem : ModItem
     {

@@ -8,12 +8,6 @@ namespace UltimateSkyblock.Content.ModSystems
 {
     public class TileMerging : ModSystem
     {
-        public override void Load()
-        {
-            TileID.Sets.PreventsSandfall[TileID.Sand] = true;
-            TileID.Sets.PreventsSandfall[TileID.Slush] = true;
-        }
-
         public override void SetStaticDefaults()
         {
             SetupTileMerge(TileID.Hellstone, TileID.Ash);
@@ -33,6 +27,12 @@ namespace UltimateSkyblock.Content.ModSystems
             SetupTileMerge(TileID.Palladium, ModContent.TileType<HardenedDeepstoneTile>());
             SetupTileMerge(TileID.Mythril, ModContent.TileType<HardenedDeepstoneTile>());
             SetupTileMerge(TileID.Orichalcum, ModContent.TileType<HardenedDeepstoneTile>());
+
+            TileID.Sets.PreventsSandfall[TileID.Sand] = true;
+            TileID.Sets.PreventsSandfall[TileID.Slush] = true;
+
+            if (!ModLoader.TryGetMod("HammerableHeartCrystals", out Mod mod))
+            Main.tileHammer[TileID.Heart] = false;
         }
     }
 }

@@ -31,22 +31,5 @@ namespace UltimateSkyblock.Content.GlobalClasses
                 noItem = true;
             }
         }
-
-        public bool[] HardmodeOres = TileID.Sets.Factory.CreateBoolSet(
-            TileID.Cobalt,
-            TileID.Mythril,
-            TileID.Adamantite,
-            TileID.Palladium,
-            TileID.Orichalcum,
-            TileID.Titanium
-            );
-
-        public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged)
-        {
-            if (HardmodeOres[type])
-                return false;
-
-            return true;
-        }
     }
 }

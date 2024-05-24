@@ -11,11 +11,6 @@ namespace UltimateSkyblock.Content.Items.Placeable.Objects
 {
     public class AutoExtractor : ModItem
     {
-        public override bool IsLoadingEnabled(Mod mod)
-        {
-            return false;
-        }
-
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;
@@ -30,7 +25,7 @@ namespace UltimateSkyblock.Content.Items.Placeable.Objects
             Item.autoReuse = true;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.maxStack = Item.CommonMaxStack;
-            Item.createTile = ModContent.TileType<SunshinePainting>();
+            Item.createTile = ModContent.TileType<AutoExtractorTier1Tile>();
             Item.rare = ItemRarityID.Green;
             Item.useTime = 10;
             Item.useTurn = true;

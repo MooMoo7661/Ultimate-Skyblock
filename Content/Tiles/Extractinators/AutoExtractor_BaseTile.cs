@@ -21,7 +21,6 @@ namespace UltimateSkyblock.Content.Tiles.Extractinators
 
         public override void SetStaticDefaults()
         {
-
             // Properties
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
@@ -50,7 +49,6 @@ namespace UltimateSkyblock.Content.Tiles.Extractinators
             // Placement
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
             TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(postPlacementHook, -1, 0, false);
-            TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 18 };
             TileObjectData.newTile.UsesCustomCanPlace = true;
 
             AnimationFrameHeight = 54;
@@ -328,7 +326,7 @@ namespace UltimateSkyblock.Content.Tiles.Extractinators
             int chest = Chest.FindChest(left, top);
             if (chest < 0)
             {
-                return "Auto-Extractor";
+                return "Auto-Extractor Storage";
             }
 
             if (Main.chest[chest].name == "")

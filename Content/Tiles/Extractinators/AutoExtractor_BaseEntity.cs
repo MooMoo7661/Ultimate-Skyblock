@@ -20,14 +20,9 @@ namespace UltimateSkyblock.Content.Tiles.Extractinators
         {
             if (Main.netMode == NetmodeID.MultiplayerClient)
             {
-                // Sync the entire multitile's area.  Modify "width" and "height" to the size of your multitile in tiles
-                int width = 2;
-                int height = 2;
-                NetMessage.SendTileSquare(Main.myPlayer, i, j, width, height);
-
-                // Sync the placement of the tile entity with other clients
-                // The "type" parameter refers to the tile type which placed the tile entity, so "Type" (the type of the tile entity) needs to be used here instead
+                NetMessage.SendTileSquare(Main.myPlayer, i, j, 3, 3);
                 NetMessage.SendData(MessageID.TileEntityPlacement, number: i, number2: j, number3: Type);
+                return -1;
             }
 
             // ModTileEntity.Place() handles checking if the entity can be placed, then places it for you
@@ -44,13 +39,7 @@ namespace UltimateSkyblock.Content.Tiles.Extractinators
         }
 
 
-        public override void OnNetPlace()
-        {
-            if (Main.netMode == NetmodeID.Server)
-            {
-                NetMessage.SendData(MessageID.TileEntitySharing, number: ID, number2: Position.X, number3: Position.Y);
-            }
-        }
+        public override void OnNetPlace() => NetMessage.SendData(MessageID.TileEntitySharing, number: ID, number2: Position.X, number3: Position.Y);
 
         public override void Update()
         {

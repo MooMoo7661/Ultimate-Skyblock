@@ -326,3 +326,12 @@ MainClientConfig: {
 		Tooltip: Toggles the "pulsating" background color for skyblock worlds on the world select menu.
 	}
 }
+
+BugsConfig: {
+	DisplayName: Bugs Config
+
+	HeartCrystalDropFix: {
+		Label: Heart Crystal Drop Fix
+		Tooltip: Fixes life crystals not dropping anything. Only enable if this is happening.
+	}
+}

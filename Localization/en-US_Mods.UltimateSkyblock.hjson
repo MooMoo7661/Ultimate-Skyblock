@@ -218,7 +218,7 @@ LocalizedPages: {
 		'''
 		Biome cores are large objects that appear on one of the islands for each biome.
 		They create a marker on the map, to help you find the different islands.
-		[c/EE5252:Currently, this part does not work in multiplayer, but I am looking to fix it.]
+		[c/EE5252:Currently, this part is disabled, but I am looking to fix it.]
 		Each biome core has different attributes, listed as the following:
 
 		Forest - Purifies nearby blocks

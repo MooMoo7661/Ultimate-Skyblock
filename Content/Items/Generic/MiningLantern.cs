@@ -39,7 +39,7 @@ namespace UltimateSkyblock.Content.Items.Generic
             Item.maxStack = 1;
             Item.consumable = false;
             Item.rare = ItemRarityID.Orange;
-            Item.value = Item.buyPrice(gold: 5);
+            Item.value = Item.sellPrice(silver:15);
             Item.holdStyle = ItemHoldStyleID.HoldLamp;
         }
 

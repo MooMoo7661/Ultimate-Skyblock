@@ -1,2 +1,1 @@
-Main update - 1.2 -> 1.3
-Too many changes to list here, sorry.
+Attempt at fixing life crystal bug

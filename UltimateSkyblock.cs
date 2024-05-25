@@ -11,6 +11,7 @@ using SubworldLibrary;
 using UltimateSkyblock.Content.DaySystem;
 using UltimateSkyblock.Content.ModSystems;
 using Terraria.ModLoader.IO;
+using UltimateSkyblock.Content.Tiles.Extractinators;
 
 namespace UltimateSkyblock
 {
@@ -96,53 +97,64 @@ namespace UltimateSkyblock
             }
         }
 
-        // Thank god SpritMod was open source
-        // This code was "borrowed" from => https://github.com/GabeHasWon/SpiritMod/blob/367e1da73022ec8741673b4bfbc629c3798a04e4/SpiritMultiplayer.cs
-        // Purpose of this is to spawn a boss from right clicking a tile, which is called client side only.
+		// Thank god SpritMod was open source
+		// This code was "borrowed" from => https://github.com/GabeHasWon/SpiritMod/blob/367e1da73022ec8741673b4bfbc629c3798a04e4/SpiritMultiplayer.cs
+		// Purpose of this is to spawn a boss from right clicking a tile, which is called client side only.
 
-        //public override void HandlePacket(BinaryReader reader, int whoAmI)
-        //{
-        //    var id = reader.ReadByte();
-        //    byte player;
-        //    switch (id)
-        //    {
-        //        case 0:
-        //            if (Main.netMode == NetmodeID.Server)
-        //            {
-        //                player = reader.ReadByte();
-        //                int bossType = reader.ReadInt32();
-        //                int spawnX = reader.ReadInt32();
-        //                int spawnY = reader.ReadInt32();
+		//public override void HandlePacket(BinaryReader reader, int whoAmI)
+		//{
+		//    var id = reader.ReadByte();
+		//    byte player;
+		//    switch (id)
+		//    {
+		//        case 0:
+		//            if (Main.netMode == NetmodeID.Server)
+		//            {
+		//                player = reader.ReadByte();
+		//                int bossType = reader.ReadInt32();
+		//                int spawnX = reader.ReadInt32();
+		//                int spawnY = reader.ReadInt32();
 
-        //                if (NPC.AnyNPCs(bossType))
-        //                    return;
+		//                if (NPC.AnyNPCs(bossType))
+		//                    return;
 
-        //                int npcID = NPC.NewNPC(NPC.GetSource_NaturalSpawn(), spawnX, spawnY, bossType);
-        //                Main.npc[npcID].netUpdate2 = true;
-        //            }
-        //            break;
-        //    }
-        //}
+		//                int npcID = NPC.NewNPC(NPC.GetSource_NaturalSpawn(), spawnX, spawnY, bossType);
+		//                Main.npc[npcID].netUpdate2 = true;
+		//            }
+		//            break;
+		//    }
+		//}
+        public enum PacketId {
+            ChestIndicatorInfo
+        }
+		public override void HandlePacket(BinaryReader reader, int whoAmI) {
+			PacketId packetId = (PacketId)reader.ReadByte();
+            switch (packetId) {
+                case PacketId.ChestIndicatorInfo:
+                    ChestIndicatorInfo.Read(reader);
+					break;
+            }
+		}
 
-        public static ModPacket WriteToPacket(ModPacket packet, byte msg, params object[] param)
+		public static ModPacket WriteToPacket(ModPacket packet, byte msg, params object[] param)
         {
             packet.Write(msg);
 
             for (int m = 0; m < param.Length; m++)
             {
                 object obj = param[m];
-                if (obj is bool) packet.Write((bool)obj);
-                else if (obj is byte) packet.Write((byte)obj);
-                else if (obj is int) packet.Write((int)obj);
-                else if (obj is float) packet.Write((float)obj);
-                else if (obj is double) packet.Write((double)obj);
-                else if (obj is short) packet.Write((short)obj);
-                else if (obj is ushort) packet.Write((ushort)obj);
-                else if (obj is sbyte) packet.Write((sbyte)obj);
-                else if (obj is uint) packet.Write((uint)obj);
-                else if (obj is decimal) packet.Write((decimal)obj);
-                else if (obj is long) packet.Write((long)obj);
-                else if (obj is string) packet.Write((string)obj);
+                if (obj is bool boolObj) packet.Write(boolObj);
+                else if (obj is byte byteObj) packet.Write(byteObj);
+                else if (obj is int intObj) packet.Write(intObj);
+                else if (obj is float floatObj) packet.Write(floatObj);
+                else if (obj is double doubleObj) packet.Write(doubleObj);
+                else if (obj is short shortObj) packet.Write(shortObj);
+                else if (obj is ushort ushortObj) packet.Write(ushortObj);
+                else if (obj is sbyte sbyteObj) packet.Write(sbyteObj);
+                else if (obj is uint uintObj) packet.Write(uintObj);
+                else if (obj is decimal decimalObj) packet.Write(decimalObj);
+                else if (obj is long longObj) packet.Write(longObj);
+                else if (obj is string stringObj) packet.Write(stringObj);
             }
             return packet;
         }

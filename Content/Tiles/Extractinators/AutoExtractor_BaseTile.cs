@@ -18,8 +18,26 @@ namespace UltimateSkyblock.Content.Tiles.Extractinators
         protected abstract string TilesheetPath { get; }
         protected abstract int ExtractorTile { get; }
         protected abstract ModTileEntity Entity { get; }
+        protected abstract Func<int> MyItemType { get; }
+        
+        private bool TryGetEntity(int x, int y, out AutoExtractor_BaseEntity entity) {
+            Point16 topLeft = AutoExtractor_BaseEntity.TilePositionToMultiTileTopLeft(x, y);
+            return TryGetEntity(topLeft, out entity);
+		}
+        private bool TryGetEntityChest(int x, int y, out int chest) => AutoExtractor_BaseEntity.TryGetChest(AutoExtractor_BaseEntity.TilePositionToMultiTileTopLeft(x, y), out chest);
 
-        public override void SetStaticDefaults()
+		private bool TryGetEntity(Point16 position, out AutoExtractor_BaseEntity entity) {
+            if (TileEntity.ByPosition.TryGetValue(position, out TileEntity tileEntity)) {
+                if (tileEntity is AutoExtractor_BaseEntity autoExtractorEntity) {
+                    entity = autoExtractorEntity;
+                    return true;
+                }
+            }
+
+			entity = null;
+            return false;
+		}
+		public override void SetStaticDefaults()
         {
             // Properties
             Main.tileFrameImportant[Type] = true;
@@ -36,36 +54,29 @@ namespace UltimateSkyblock.Content.Tiles.Extractinators
             DustType = DustID.Stone;
             AdjTiles = new int[] { TileID.Extractinator };
             // Names
-            AddMapEntry(new Color(200, 200, 200), CreateMapEntryName(), MapChestName);
+            AddMapEntry(new Color(200, 200, 200), CreateMapEntryName());
 
-            Func<int, int, int, int, int, int, int> postPlacementHook = (x, y, type, style, direction, alternate) =>
+            Func<int, int, int, int, int, int, int> postPlacementHook = (i, j, type, style, direction, alternate) =>
             {
-                int location = Chest.AfterPlacement_Hook(x, y, type, style, direction, alternate);
-                Entity.Hook_AfterPlacement(x, y, type, style, direction, alternate);
+                Point16 topLeft = AutoExtractor_BaseEntity.TilePositionToMultiTileTopLeft(i, j);
+                int x = topLeft.X;
+                int y = topLeft.Y;
+                int chestId = Chest.AfterPlacement_Hook(i, j, type, style, direction, alternate);
+                int entityReturn = Entity.Hook_AfterPlacement(x, y, type, style, direction, alternate);
+                if (entityReturn == -1)
+                    chestId = -1;
 
-                return location;
+                return chestId;
             };
 
-            // Placement
-            TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
+			// Placement
+			AnimationFrameHeight = 54;
+			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
             TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(postPlacementHook, -1, 0, false);
-            TileObjectData.newTile.UsesCustomCanPlace = true;
-
-            AnimationFrameHeight = 54;
             TileObjectData.newTile.DrawYOffset = 2;
-
-            TileObjectData.newTile.LavaDeath = false;
+			TileObjectData.newTile.Origin = new Point16(0, 1);
+			TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
-        }
-
-        public override bool CanPlace(int i, int j)
-        {
-            if (Framing.GetTileSafely(i, j).TileType == ExtractorTile)
-            {
-                return false;
-            }
-
-            return true;
         }
         public override LocalizedText DefaultContainerName(int frameX, int frameY)
         {
@@ -92,20 +103,12 @@ namespace UltimateSkyblock.Content.Tiles.Extractinators
 
         public override bool RightClick(int i, int j)
         {
-            Player player = Main.LocalPlayer;
-            Tile tile = Main.tile[i, j];
-            Main.mouseRightRelease = false;
-            int left = i;
-            int top = j;
-            if (tile.TileFrameX % 36 != 0)
-            {
-                left--;
-            }
+            Point16 topLeft = AutoExtractor_BaseEntity.TilePositionToMultiTileTopLeft(i, j);
+            int x = topLeft.X;
+            int y = topLeft.Y;
 
-            if (tile.TileFrameY != 0)
-            {
-                top--;
-            }
+            Player player = Main.LocalPlayer;
+            Main.mouseRightRelease = false;
 
             player.CloseSign();
             player.SetTalkNPC(-1);
@@ -124,10 +127,10 @@ namespace UltimateSkyblock.Content.Tiles.Extractinators
                 player.editedChestName = false;
             }
 
-            bool isLocked = Chest.IsLocked(left, top);
+            bool isLocked = Chest.IsLocked(x, y);
             if (Main.netMode == NetmodeID.MultiplayerClient && !isLocked)
             {
-                if (left == player.chestX && top == player.chestY && player.chest != -1)
+                if (x == player.chestX && y == player.chestY && player.chest != -1)
                 {
                     player.chest = -1;
                     Recipe.FindRecipes();
@@ -135,7 +138,7 @@ namespace UltimateSkyblock.Content.Tiles.Extractinators
                 }
                 else
                 {
-                    NetMessage.SendData(MessageID.RequestChestOpen, -1, -1, null, left, top);
+                    NetMessage.SendData(MessageID.RequestChestOpen, -1, -1, null, x, y);
                     Main.stackSplit = 600;
                 }
             }
@@ -143,36 +146,31 @@ namespace UltimateSkyblock.Content.Tiles.Extractinators
             {
                 if (isLocked)
                 {
-                    // Make sure to change the code in UnlockChest if you don't want the chest to only unlock at night.
-                    int key = ItemID.GoldenKey;
-                    if (player.ConsumeItem(key, includeVoidBag: true) && Chest.Unlock(left, top))
+                    //Chest for the AutoExtractors should never be locked.  Force it to unlock.
+                    if (Chest.Unlock(x, y))
                     {
                         if (Main.netMode == NetmodeID.MultiplayerClient)
                         {
-                            NetMessage.SendData(MessageID.LockAndUnlock, -1, -1, null, player.whoAmI, 1f, left, top);
+                            NetMessage.SendData(MessageID.LockAndUnlock, -1, -1, null, player.whoAmI, 1f, x, y);
                         }
                     }
                 }
                 else
                 {
-                    int chest = Chest.FindChest(left, top);
-                    if (chest != -1)
-                    {
-                        Main.stackSplit = 600;
-                        if (chest == player.chest)
-                        {
-                            player.chest = -1;
-                            SoundEngine.PlaySound(SoundID.MenuClose);
-                        }
-                        else
-                        {
-                            SoundEngine.PlaySound(player.chest < 0 ? SoundID.MenuOpen : SoundID.MenuTick);
-                            player.OpenChest(left, top, chest);
-                        }
+                    if (AutoExtractor_BaseEntity.TryGetChest(topLeft, out int chestId)) {
+						Main.stackSplit = 600;
+						if (chestId == player.chest) {
+							player.chest = -1;
+							SoundEngine.PlaySound(SoundID.MenuClose);
+						}
+						else {
+							SoundEngine.PlaySound(player.chest < 0 ? SoundID.MenuOpen : SoundID.MenuTick);
+							player.OpenChest(x, y, chestId);
+						}
 
-                        Recipe.FindRecipes();
-                    }
-                }
+						Recipe.FindRecipes();
+					}
+				}
             }
 
             return true;
@@ -206,135 +204,43 @@ namespace UltimateSkyblock.Content.Tiles.Extractinators
             // Return false to stop vanilla draw
             return false;
         }
-
-        // This is not a hook, this is just a normal method used by the MouseOver and MouseOverFar hooks to avoid repeating code.
-        public void MouseOverNearAndFarSharedLogic(Player player, int i, int j)
-        {
-            Tile tile = Main.tile[i, j];
-            int left = i;
-            int top = j;
-            left -= tile.TileFrameX % 54 / 18;
-            if (tile.TileFrameY % 36 != 0)
-            {
-                top--;
-            }
-            int chestIndex = Chest.FindChest(left, top);
-            player.cursorItemIconID = -1;
-            if (chestIndex < 0)
-            {
-                player.cursorItemIconText = "Auto-Extractor";
-            }
-            else
-            {
-                string defaultName = TileLoader.DefaultContainerName(tile.TileType, tile.TileFrameX, tile.TileFrameY); // This gets the ContainerName text for the currently selected language
-
-                if (Main.chest[chestIndex].name != "")
-                {
-                    player.cursorItemIconText = Main.chest[chestIndex].name;
-                }
-                else
-                {
-                    player.cursorItemIconText = defaultName;
-                }
-                if (player.cursorItemIconText == defaultName)
-                {
-                    player.cursorItemIconID = ItemID.Chest;
-                    player.cursorItemIconText = "";
-                }
-            }
-            player.noThrow = 2;
-            player.cursorItemIconEnabled = true;
-        }
-
-        public override void MouseOverFar(int i, int j)
-        {
-            Player player = Main.LocalPlayer;
-            MouseOverNearAndFarSharedLogic(player, i, j);
-            if (player.cursorItemIconText == "")
-            {
-                player.cursorItemIconEnabled = false;
-                player.cursorItemIconID = 0;
-            }
-        }
+		public override void MouseOverFar(int i, int j) {
+			Player player = Main.LocalPlayer;
+			player.cursorItemIconText = "";
+		}
 
         public override void MouseOver(int i, int j)
         {
             Player player = Main.LocalPlayer;
-            MouseOverNearAndFarSharedLogic(player, i, j);
-            if (Main.tile[i, j].TileFrameY > 0)
-            {
-                player.cursorItemIconID = ItemID.Extractinator;
-                player.cursorItemIconText = "";
-            }
+			player.cursorItemIconID = MyItemType();
+			player.cursorItemIconText = "";
         }
+		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
+			Entity.Kill(i, j);
 
-        public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
-        {
-            Entity.Kill(i, j);
+			if (!TryGetEntityChest(i, j, out int chestID))
+				return;
 
-            Tile tile = Framing.GetTileSafely(i, j);
-            int left = i;
-            int top = j;
-            left -= tile.TileFrameX % 54 / 18;
-            if (tile.TileFrameY % 36 != 0)
-            {
-                top--;
-            }
+			Chest chest = Main.chest[chestID];
 
-            if (!Chest.DestroyChest(i, j))
-            {
-                Chest chest = Main.chest[Chest.FindChest(i, j)];
-                for (int k = 0; k < chest.item.Length; k++)
-                {
-                    Item.NewItem(null, i * 16, j * 16, 1, 1, chest.item[k].type, chest.item[k].stack, noBroadcast: false, -1);
-                    chest.item[k].TurnToAir();
-                }
-            }
-        }
-        //public override void KillMultiTile(int i, int j, int frameX, int frameY)
-        //{
-        //    Chest chest = Main.chest[Chest.FindChest(i, j)];
+			if (!Chest.DestroyChest(chest.x, chest.y)) {
+				EntitySource_TileBreak source = new EntitySource_TileBreak(i, j, "Breaking AutoExtractor");
+				for (int k = 0; k < chest.item.Length; k++) {
+					Item.NewItem(source, i * 16, j * 16, 1, 1, chest.item[k].type, chest.item[k].stack, noBroadcast: false, -1);
+					chest.item[k].TurnToAir();
+				}
 
-        //    if (chest != null)
-        //    {
-        //        for (int k = 0; k < chest.item.Length; k++)
-        //        {
-        //            Item.NewItem(null, i * 16, j * 16, 1, 1, chest.item[k].type, chest.item[k].stack, noBroadcast: false, -1);
-        //            chest.item[k].TurnToAir();
-        //        }
-        //    }
+				Chest.DestroyChestDirect(chest.x, chest.y, chestID);
+			}
+		}
+		public override bool CanKillTile(int i, int j, ref bool blockDamaged) {
+            if (TryGetEntityChest(i, j, out int chestId)) {
+                Chest chest = Main.chest[chestId];
+				bool canDestroyChest = Chest.CanDestroyChest(chest.x, chest.y);
+				return canDestroyChest;
+			}
 
-        //    Chest.DestroyChest(i, j);
-
-        //}
-
-        public static string MapChestName(string name, int i, int j)
-        {
-            int left = i;
-            int top = j;
-            Tile tile = Main.tile[i, j];
-            if (tile.TileFrameX % 36 != 0)
-            {
-                left--;
-            }
-
-            if (tile.TileFrameY != 0)
-            {
-                top--;
-            }
-
-            int chest = Chest.FindChest(left, top);
-            if (chest < 0)
-            {
-                return "Auto-Extractor Storage";
-            }
-
-            if (Main.chest[chest].name == "")
-            {
-                return name;
-            }
-
-            return name + ": " + Main.chest[chest].name;
-        }
+            return true;
+		}
     }
 }

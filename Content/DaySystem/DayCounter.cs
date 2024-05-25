@@ -54,7 +54,7 @@ namespace UltimateSkyblock.Content.DaySystem
 
         public override void NetReceive(BinaryReader reader)
         {
-           Day = reader.Read();
+           Day = reader.ReadInt32();
         }
     }
 

@@ -77,7 +77,6 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
 
         public override void Update()
         {
-            Main.NewText("Updated");
             if (Main.netMode == NetmodeID.Server)
             {
                 NetMessage.SendData(MessageID.TileEntitySharing, number: ID, number2: Position.X, number3: Position.Y);

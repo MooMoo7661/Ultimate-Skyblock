@@ -1,10 +1,12 @@
 ﻿using Terraria;
 using Terraria.Audio;
+using Terraria.Chat;
 using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.Localization;
 using Terraria.ObjectData;
 using UltimateSkyblock.Content.Items.Placeable;
+using UltimateSkyblock.Content.Items.Placeable.MapMarkers;
 using UltimateSkyblock.Content.Tiles.Blocks;
 using UltimateSkyblock.Content.UI.MapDrawing;
 
@@ -21,6 +23,9 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
             TileID.Sets.DisableSmartCursor[Type] = true;
 
             DustType = DustID.Corruption;
+
+            RegisterItemDrop(ModContent.ItemType<CorruptBiomeCoreItem>(), 1);
+            RegisterItemDrop(ModContent.ItemType<CorruptBiomeCoreItem>());
 
             // Placement
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
@@ -42,14 +47,6 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
 
     public class CorruptBiomeMapMarkerEntity : ModTileEntity
     {
-        private MapIcon icon;
-        private static Asset<Texture2D> corrupt;
-
-        public override void Load()
-        {
-            corrupt = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/MapDrawing/Icons/IconEvilCorruption");
-        }
-
         // This code is called as a hook when the player places the host tile so that the turret tile entity may be placed.
         public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
         {
@@ -75,6 +72,12 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
 
         public override void OnNetPlace() => NetMessage.SendData(MessageID.TileEntitySharing, number: ID, number2: Position.X, number3: Position.Y);
 
+        public override void OnKill()
+        {
+            ChatHelper.SendChatMessageToClient(NetworkText.FromLiteral("removed"), Color.White, 0);
+            TileIconDrawing.TEs.Remove(Position);
+        }
+
         public override void Update()
         {
             if (Main.netMode == NetmodeID.Server)
@@ -82,10 +85,19 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
                 NetMessage.SendData(MessageID.TileEntitySharing, number: ID, number2: Position.X, number3: Position.Y);
             }
 
-            if (Main.rand.NextBool(2))
+            if (!TileIconDrawing.TEs.Exists(_ => _ == Position))
             {
-                int x = Position.X + Main.rand.Next(-8, 8);
-                int y = Position.Y + Main.rand.Next(-8, 8);
+                ChatHelper.SendChatMessageToClient(NetworkText.FromLiteral("added"), Color.White, 0);
+                TileIconDrawing.TEs.Add(Position);
+            }
+
+            if (!Main.tile[Position.X, Position.Y].HasTile)
+                Kill(Position.X, Position.Y);
+
+            if (Main.rand.NextBool(8))
+            {
+                int x = Position.X + Main.rand.Next(-8, 11);
+                int y = Position.Y + Main.rand.Next(-8, 11);
                 Tile tile = Framing.GetTileSafely(x, y);
                 if (tile.HasTile)
                 {
@@ -105,19 +117,13 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
                         return;
 
 
-                    WorldGen.PlaceTile(x, y, type, true, true);
+                    Framing.GetTileSafely(x, y).TileType = (ushort)type;
                     if (Main.netMode == NetmodeID.Server)
                     {
                         NetMessage.SendTileSquare(-1, x, y);
                     }
                 }
             }
-        }
-
-
-        public override void OnKill()
-        {
-            TileIconDrawing.icons.Remove(icon);
         }
     }
 }

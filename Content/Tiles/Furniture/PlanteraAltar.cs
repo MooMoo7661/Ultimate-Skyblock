@@ -53,7 +53,7 @@ namespace UltimateSkyblock.Content.Tiles.Furniture
 
         public override bool RightClick(int i, int j)
         {
-            if (!Main.hardMode)
+            if (!NPC.downedMechBoss1 || !NPC.downedMechBoss2 || !NPC.downedMechBoss3)
                 return false;
 
             bool plantera = false;
@@ -95,6 +95,7 @@ namespace UltimateSkyblock.Content.Tiles.Furniture
                 {
                     UltimateSkyblock.SpawnBossFromClient((byte)Main.LocalPlayer.whoAmI, NPCID.Plantera, i * 16 + spawnPosX, j * 16 + spawnPosY);
                 }
+                
             }
 
             return true;

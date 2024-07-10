@@ -10,7 +10,13 @@ namespace UltimateSkyblock.Content.CheesePrevention
     {
         public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
-            if (HardmodeOres[type] && !Condition.Hardmode.IsMet() && UltimateSkyblock.IsSkyblock())
+            if (!UltimateSkyblock.IsSkyblock())
+                return;
+            
+            if (HardmodeOres[type] && !Condition.Hardmode.IsMet())
+                fail = true;
+
+            if (type == TileID.Meteorite && !NPC.downedBoss2)
                 fail = true;
         }
 

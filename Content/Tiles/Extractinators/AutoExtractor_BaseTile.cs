@@ -15,6 +15,11 @@ namespace UltimateSkyblock.Content.Tiles.Extractinators
 {
     public abstract class AutoExtractor_BaseTile : ModTile, IExtractinatorTile
     {
+        bool IExtractinatorTile.ShouldDoChlorophyteExtractinatorItemTrades { get { return ChlorophyteTrades; } }
+        bool IExtractinatorTile.UseChlorophyteExtractinatorLootTable { get { return ChlorophyteTable; } }
+        
+        protected abstract bool ChlorophyteTable { get; }
+        protected abstract bool ChlorophyteTrades { get; }
         protected abstract string TilesheetPath { get; }
         protected abstract int ExtractorTile { get; }
         protected abstract ModTileEntity Entity { get; }
@@ -175,6 +180,8 @@ namespace UltimateSkyblock.Content.Tiles.Extractinators
 
             return true;
         }
+
+        int currentFrameY = 0;
 
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {

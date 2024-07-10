@@ -4,6 +4,7 @@ using Terraria.GameContent.ObjectInteractions;
 using Terraria.Localization;
 using Terraria.ObjectData;
 using UltimateSkyblock.Content.Items.Placeable;
+using UltimateSkyblock.Content.Items.Placeable.MapMarkers;
 using UltimateSkyblock.Content.Tiles.Blocks;
 using UltimateSkyblock.Content.UI.MapDrawing;
 
@@ -18,20 +19,16 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
             Main.tileLavaDeath[Type] = true;
             Main.tileFrameImportant[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
-            TileID.Sets.IgnoredByNpcStepUp[Type] = true;
-            TileID.Sets.PreventsSandfall[Type] = true;
-            TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
             DustType = DustID.SnowBlock;
 
+            RegisterItemDrop(ModContent.ItemType<SnowBiomeCoreItem>(), 1);
+            RegisterItemDrop(ModContent.ItemType<SnowBiomeCoreItem>());
+
             // Placement
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
-            TileObjectData.newTile.Width = 3;
-            TileObjectData.newTile.Height = 3;
-            TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 18 };
-            //TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<SnowBiomeMapMarkerEntity>().Hook_AfterPlacement, -1, 0, false);
-            TileObjectData.newTile.UsesCustomCanPlace = true;
+            TileObjectData.newTile.DrawYOffset = 6;
+            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<SnowBiomeMapMarkerEntity>().Hook_AfterPlacement, -1, 0, true);
             TileObjectData.addTile(Type);
 
             // Etc
@@ -51,35 +48,27 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
 
         public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
         {
+            // If in multiplayer, tell the server to place the tile entity and DO NOT place it yourself. That would mismatch IDs.
+            // Also tell the server that you placed tiles in whatever space the host tile occupies.
             if (Main.netMode == NetmodeID.MultiplayerClient)
             {
-                int width = 3;
-                int height = 3;
-                NetMessage.SendTileSquare(Main.myPlayer, i, j, width, height);
-                NetMessage.SendData(MessageID.TileEntityPlacement, number: i, number2: j, number3: Type);
+                NetMessage.SendTileSquare(Main.myPlayer, i, j, 3, 3);
+                NetMessage.SendData(MessageID.TileEntityPlacement, -1, -1, null, i, j, Type);
+                return -1;
             }
 
-            // ModTileEntity.Place() handles checking if the entity can be placed, then places it for you
-            // Set "tileOrigin" to the same value you set TileObjectData.newTile.Origin to in the ModTile
-            Point16 tileOrigin = new Point16(1, 1);
-            int placedEntity = Place(i - tileOrigin.X, j - tileOrigin.Y);
-            return placedEntity;
+            // If in single player, just place the tile entity, no problems.
+            int id = Place(i, j);
+            return id;
         }
 
         public override bool IsTileValidForEntity(int x, int y)
         {
             var tile = Main.tile[x, y];
-            return tile.HasTile && tile.TileType == ModContent.TileType<SnowBiomeCore>();
+            return tile != null && tile.HasTile && tile.TileType == ModContent.TileType<SnowBiomeCore>();
         }
 
-
-        public override void OnNetPlace()
-        {
-            if (Main.netMode == NetmodeID.Server)
-            {
-                NetMessage.SendData(MessageID.TileEntitySharing, number: ID, number2: Position.X, number3: Position.Y);
-            }
-        }
+        public override void OnNetPlace() => NetMessage.SendData(MessageID.TileEntitySharing, number: ID, number2: Position.X, number3: Position.Y);
 
         public override void Update()
         {
@@ -93,30 +82,38 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
             icon = new MapIcon(new(Position.X + 1.5f, Position.Y), snow.Value, Color.White, 1.1f, 0.8f, "Snow Marker");
             TileIconDrawing.icons.Add(icon);
 
-            if (Main.rand.NextBool(60))
+            if (Main.rand.NextBool(8))
             {
-                int x = Position.X + Main.rand.Next(-8, 8);
-                int y = Position.Y + Main.rand.Next(-8, 8);
+                int x = Position.X + Main.rand.Next(-8, 11);
+                int y = Position.Y + Main.rand.Next(-8, 11);
                 Tile tile = Framing.GetTileSafely(x, y);
 
-                if (tile.HasTile)
+                if (tile.HasTile && Main.tileSolid[tile.TileType])
                 {
                     int type = tile.TileType switch
                     {
                         TileID.BreakableIce => TileID.IceBlock,
-                        TileID.Dirt => TileID.SnowBlock,
+                        TileID.Dirt or TileID.Grass => TileID.SnowBlock,
                         _ => -1
                     };
 
                     if (type == -1)
                         return;
 
-                    WorldGen.PlaceTile(x, y, type, true, true);
+                    Framing.GetTileSafely(x, y).TileType = (ushort)type;
+                    if (Main.netMode == NetmodeID.Server)
+                    {
+                        NetMessage.SendTileSquare(-1, x, y);
+                    }
                 }
-                else if (tile.LiquidType == LiquidID.Water && tile.LiquidAmount >= 50)
+                else if (tile.LiquidType == LiquidID.Water && tile.LiquidAmount >= 50 && !Framing.GetTileSafely(x, y).HasTile)
                 {
                     tile.LiquidAmount = 0;
                     WorldGen.PlaceTile(x, y, TileID.BreakableIce, true, true);
+                    if (Main.netMode == NetmodeID.Server)
+                    {
+                        NetMessage.SendTileSquare(-1, x, y);
+                    }
                 }
             }
         }

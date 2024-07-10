@@ -160,17 +160,18 @@ namespace UltimateSkyblock.Content.Tiles.Extractinators
 					for (int z = 0; z < ConsumeMultiplier; z++) {
 						for (; i < extractorChest.item.Length; i++) {
 							if (extractorChest.item[i].type != ItemID.None && ItemID.Sets.ExtractinatorMode[extractorChest.item[i].type] != -1) {
-								if (extractorChest.item[i].stack > 0)
-									extractorChest.item[i].stack -= 1;
+                                int extractionMode = ItemID.Sets.ExtractinatorMode[extractorChest.item[i].type];
+                                if (extractorChest.item[i].stack > 0)
+                                    extractorChest.item[i].stack -= 1;
 
-								if (extractorChest.item[i].stack <= 0)
-									extractorChest.item[i].TurnToAir();
+                                if (extractorChest.item[i].stack <= 0)
+                                    extractorChest.item[i].TurnToAir();
 
-								ExtractionItem.AutoExtractinatorUse(ItemID.Sets.ExtractinatorMode[extractorChest.item[i].type], TileToBeValidOn, out int type, out int stack);
+                                ExtractionItem.AutoExtractinatorUse(extractionMode, TileToBeValidOn, out int type, out int stack);
 
-								TryDepositToChest(storageChests.Select(c => c.item), type, stack * LootMultiplier, extractorWordCoordinates);
+                                TryDepositToChest(storageChests.Select(c => c.item), type, stack * LootMultiplier, extractorWordCoordinates);
 
-								break;
+                                break;
 							}
 						}
 					}

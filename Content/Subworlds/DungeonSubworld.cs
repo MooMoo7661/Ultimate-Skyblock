@@ -86,7 +86,7 @@ namespace UltimateSkyblock.Content.Subworlds
                     new PotMaker("Creating Pots", 10f),
                     new RubbleCreator("Growing Rubble", 15f),
                     new ShelfInhabitor("Feeding the Shelves", 15f),
-                    new BannerPlacer("Cultivating Banners", 5f)
+                    new BannerPlacer("Cultivating Banners", 5f),
                 };
 
                 return returnList;

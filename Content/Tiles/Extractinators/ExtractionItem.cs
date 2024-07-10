@@ -42,7 +42,6 @@ namespace UltimateSkyblock.Content.Tiles.Extractinators
             extractinatorHook.Undo();
         }
 
-        private static Player player = new();
         public static readonly MethodInfo extractinatorUse = typeof(Player).GetMethod("ExtractinatorUse", BindingFlags.NonPublic | BindingFlags.Instance);
         public delegate void ExtractinatorUseDelegate(Player player, int extractType, int extractinatorBlockType);
         public static ExtractinatorUseDelegate ExtractinatorUseMethod = (ExtractinatorUseDelegate)Delegate.CreateDelegate(typeof(ExtractinatorUseDelegate), extractinatorUse);

@@ -32,6 +32,12 @@ namespace UltimateSkyblock.Content.Subworlds.DungeonPasses
                             if (tileUp.HasTile)
                                 continue;
 
+                            if (WorldGen.genRand.NextBool(14))
+                            {
+                                WorldGen.PlaceTile(x, y - 1, TileID.WaterCandle, true);
+                                continue;
+                            }
+
                             if (!WorldGen.genRand.NextBool(4))
                             {
                                 int type = WorldGen.genRand.Next(6);

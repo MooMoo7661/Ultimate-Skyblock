@@ -22,23 +22,16 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
             Main.tileLavaDeath[Type] = true;
             Main.tileFrameImportant[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
-            TileID.Sets.IgnoredByNpcStepUp[Type] = true;
-            TileID.Sets.PreventsSandfall[Type] = true;
-            TileID.Sets.AvoidedByMeteorLanding[Type] = true;
 
             DustType = DustID.HallowedPlants;
-
 
             RegisterItemDrop(ModContent.ItemType<HallowBiomeCoreItem>(), 1);
             RegisterItemDrop(ModContent.ItemType<HallowBiomeCoreItem>());
 
             // Placement
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
-            TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.DrawYOffset = 6;
-            TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16 };
-            //TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<HallowBiomeMapMarkerEntity>().Hook_AfterPlacement, -1, 0, false);
-            TileObjectData.newTile.UsesCustomCanPlace = true;
+            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<HallowBiomeMapMarkerEntity>().Hook_AfterPlacement, -1, 0, true);
             TileObjectData.addTile(Type);
 
             // Etc
@@ -59,30 +52,27 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
 
         public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
         {
-            // i - 1 and j - 2 come from the fact that the origin of the tile is "new Point16(1, 2);", so we need to pass the coordinates back to the top left tile. If using a vanilla TileObjectData.Style, make sure you know the origin value.
+            // If in multiplayer, tell the server to place the tile entity and DO NOT place it yourself. That would mismatch IDs.
+            // Also tell the server that you placed tiles in whatever space the host tile occupies.
             if (Main.netMode == NetmodeID.MultiplayerClient)
             {
-                NetMessage.SendTileSquare(Main.myPlayer, i, j, 1); // this is -1, -1, however, because -1, -1 places the 3 diameter square over all the tiles, which are sent to other clients as an update.
-                NetMessage.SendData(MessageID.TileEntityPlacement, -1, -1, null, i, j, Type, 0f, 0, 0, 0);
+                NetMessage.SendTileSquare(Main.myPlayer, i, j, 3, 3);
+                NetMessage.SendData(MessageID.TileEntityPlacement, -1, -1, null, i, j, Type);
                 return -1;
             }
-            return Place(i, j);
+
+            // If in single player, just place the tile entity, no problems.
+            int id = Place(i, j);
+            return id;
         }
 
         public override bool IsTileValidForEntity(int x, int y)
         {
             var tile = Main.tile[x, y];
-            return tile.HasTile && tile.TileType == ModContent.TileType<HallowBiomeCore>();
+            return tile != null && tile.HasTile && tile.TileType == ModContent.TileType<HallowBiomeCore>();
         }
 
-
-        public override void OnNetPlace()
-        {
-            if (Main.netMode == NetmodeID.Server)
-            {
-                NetMessage.SendData(MessageID.TileEntitySharing, number: ID, number2: Position.X, number3: Position.Y);
-            }
-        }
+        public override void OnNetPlace() => NetMessage.SendData(MessageID.TileEntitySharing, number: ID, number2: Position.X, number3: Position.Y);
 
         public override void Update()
         {
@@ -97,12 +87,12 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
             TileIconDrawing.icons.Add(icon);
 
 
-            if (Main.rand.NextBool(60))
+            if (Main.rand.NextBool(8))
             {
                 int x = Position.X + Main.rand.Next(-8, 8);
                 int y = Position.Y + Main.rand.Next(-8, 8);
                 Tile tile = Framing.GetTileSafely(x, y);
-                if (tile.HasTile)
+                if (tile.HasTile && Main.tileSolid[tile.TileType])
                 {
                     int type = tile.TileType switch
                     {
@@ -118,7 +108,11 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
                     if (type == -1)
                         return;
 
-                    WorldGen.PlaceTile(x, y, type, true, true);
+                    Framing.GetTileSafely(x, y).TileType = (ushort)type;
+                    if (Main.netMode == NetmodeID.Server)
+                    {
+                        NetMessage.SendTileSquare(-1, x, y);
+                    }
                 }
             }
         }

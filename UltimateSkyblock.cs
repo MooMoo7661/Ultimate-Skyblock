@@ -125,7 +125,9 @@ namespace UltimateSkyblock
 		//    }
 		//}
         public enum PacketId {
-            ChestIndicatorInfo
+            ChestIndicatorInfo,
+            SpawnPlantera,
+            SendIconDraw
         }
 		public override void HandlePacket(BinaryReader reader, int whoAmI) {
 			PacketId packetId = (PacketId)reader.ReadByte();
@@ -133,8 +135,23 @@ namespace UltimateSkyblock
                 case PacketId.ChestIndicatorInfo:
                     ChestIndicatorInfo.Read(reader);
 					break;
+                case PacketId.SpawnPlantera:
+                    if (Main.netMode == NetmodeID.Server)
+                    {
+                        byte player = reader.ReadByte();
+                        int bossType = reader.ReadInt32();
+                        int spawnX = reader.ReadInt32();
+                        int spawnY = reader.ReadInt32();
+
+                        if (NPC.AnyNPCs(bossType))
+                            return;
+
+                        int npcID = NPC.NewNPC(NPC.GetSource_NaturalSpawn(), spawnX, spawnY, bossType);
+                        Main.npc[npcID].netUpdate2 = true;
+                    }
+                    break;
             }
-		}
+        }
 
 		public static ModPacket WriteToPacket(ModPacket packet, byte msg, params object[] param)
         {
@@ -159,6 +176,6 @@ namespace UltimateSkyblock
             return packet;
         }
 
-        public static void SpawnBossFromClient(byte whoAmI, int type, int x, int y) => WriteToPacket(Instance.GetPacket(), 0, whoAmI, type, x, y).Send();
+        public static void SpawnBossFromClient(byte whoAmI, int type, int x, int y) => WriteToPacket(Instance.GetPacket(), (int)PacketId.SpawnPlantera, whoAmI, type, x, y).Send();
     }
 }

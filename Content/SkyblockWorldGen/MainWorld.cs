@@ -48,11 +48,15 @@ namespace UltimateSkyblock.Content.SkyblockWorldGen
                 "Jungle",
                 "Jungle Temple",
                 "Temple",
+                "Traps",
                 "Dungeon",
                 "Settle Liquids Again",
-
             };
 
+
+            tasks.RemoveAll(task => task.Name == "Guide");
+                
+            if (!ModLoader.TryGetMod("CalamityMod", out Mod cal))
             tasks.RemoveAll(task => !tasksToRemove.Contains(task.Name));
         }
 

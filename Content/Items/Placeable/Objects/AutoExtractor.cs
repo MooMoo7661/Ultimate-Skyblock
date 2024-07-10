@@ -56,7 +56,6 @@ namespace UltimateSkyblock.Content.Items.Placeable.Objects
                     Main.tileBlockLight[nullTile.Type] = false;
                     Main.tileNoSunLight[nullTile.Type] = false;
 
-                    TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
                     TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.None, count: 0, start: 0);
                     TileObjectData.addTile(nullTile.Type);
                 }

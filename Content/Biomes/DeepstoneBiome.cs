@@ -30,7 +30,7 @@ namespace UltimateSkyblock.Content.Biomes
 
         public override void OnInBiome(Player player)
         {
-            if (player.ZoneNormalCaverns) player.AddBuff(BuffID.Darkness, 301);
+            if (player.Center.Y / 16 >= Main.maxTilesY / 3) player.AddBuff(BuffID.Darkness, 301);
         }
 
         public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => base.SurfaceBackgroundStyle;

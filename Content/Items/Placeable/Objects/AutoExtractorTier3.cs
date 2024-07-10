@@ -7,11 +7,6 @@ namespace UltimateSkyblock.Content.Items.Placeable.Objects
 {
     public class AutoExtractorTier3 : ModItem
     {
-
-        public override bool IsLoadingEnabled(Mod mod)
-        {
-            return false;
-        }
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 1;

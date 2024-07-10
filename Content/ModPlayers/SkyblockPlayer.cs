@@ -41,8 +41,16 @@ namespace UltimateSkyblock.Content.ModPlayers
             }
         }
 
+        public override void OnConsumeAmmo(Item weapon, Item ammo)
+        {
+            foreach (var val in UI.MapDrawing.TileIconDrawing.TEs)
+                Main.NewText(val);
+        }
+
         public override void PostUpdate()
         {
+            WorldGen.PlantAlch();
+
             if (KeybindSystem.OpenBookKeybind.JustPressed)
             {
                 if (ModContent.GetInstance<GuidebookSystem>().IsUIOpen())

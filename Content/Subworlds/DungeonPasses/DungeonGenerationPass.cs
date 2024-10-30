@@ -30,7 +30,7 @@ namespace UltimateSkyblock.Content.Subworlds.DungeonPasses
 
             Point16 dims = Point16.Zero;
             Generator.GetDimensions(prePath + "DungeonEntrance", UltimateSkyblock.Instance, ref dims);
-            Point16 MainPoint = new Point16(Main.maxTilesX / 2 - dims.X / 2, Main.maxTilesY / 2);
+            Point16 MainPoint = new Point16(Main.maxTilesX / 2 - dims.X / 2, Main.maxTilesY - Main.maxTilesY / 3);
 
             Generator.GenerateMultistructureRandom(prePath + "DungeonEntrance", MainPoint, UltimateSkyblock.Instance);
             HallwayRunner(new Point16(MainPoint.X, MainPoint.Y));

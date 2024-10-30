@@ -29,7 +29,7 @@ namespace UltimateSkyblock.Content.Buffs
         public override void SetStaticDefaults()
         {
             BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
-            BuffID.Sets.LongerExpertDebuff[Type] = true;
+            BuffID.Sets.LongerExpertDebuff[Type] = false;
             Main.buffNoSave[Type] = true;
             Main.debuff[Type] = true;
         }

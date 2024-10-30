@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using Terraria.ModLoader.Config;
-using static UltimateSkyblock.Content.SceneEffects.SkyblockScene_Radio;
 
 namespace UltimateSkyblock.Content.Configs
 {
@@ -12,14 +11,6 @@ namespace UltimateSkyblock.Content.Configs
         [BackgroundColor(185, 216, 194)]
         [DefaultValue(true)]
         public bool OWSoundtrack { get; set; }
-
-        [BackgroundColor(170, 205, 198)]
-        [DefaultValue(-1)]
-        [Slider]
-        [Range(-1, 1)]
-        [DrawTicks]
-        [Increment(1)]
-        public RadioID RadioSlider { get; set; }
 
         [BackgroundColor(154, 194, 201)]
         [Header("WorldSelectMenu")]

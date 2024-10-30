@@ -8,18 +8,6 @@ namespace UltimateSkyblock.Content.CheesePrevention
 {
     public class TileConversion : GlobalTile
     {
-        public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem)
-        {
-            if (!UltimateSkyblock.IsSkyblock())
-                return;
-            
-            if (HardmodeOres[type] && !Condition.Hardmode.IsMet())
-                fail = true;
-
-            if (type == TileID.Meteorite && !NPC.downedBoss2)
-                fail = true;
-        }
-
         public static bool[] HardmodeOres = TileID.Sets.Factory.CreateBoolSet(
             TileID.Cobalt,
             TileID.Mythril,
@@ -27,5 +15,19 @@ namespace UltimateSkyblock.Content.CheesePrevention
             TileID.Palladium,
             TileID.Orichalcum,
             TileID.Titanium);
+
+        public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem)
+        {
+            if (!UltimateSkyblock.IsSkyblock())
+                return;
+
+            if (HardmodeOres[type] && !Condition.Hardmode.IsMet())
+                fail = true;
+
+            if (type == TileID.Meteorite && !NPC.downedBoss2)
+                fail = true;
+        }
+
+
     }
 }

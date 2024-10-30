@@ -42,41 +42,6 @@ namespace UltimateSkyblock.Content.SceneEffects
         public override SceneEffectPriority Priority => SceneEffectPriority.BiomeMedium;
     }
 
-    public class SkyblockScene_Radio : ModSceneEffect
-    {
-        public enum RadioID
-        {
-            None = -1,
-            SubwaySurfers,
-            PortalRadio
-        }
-
-        public override bool IsSceneEffectActive(Player player)
-        {
-            return ModContent.GetInstance<MainClientConfig>().RadioSlider != RadioID.None;
-        }
-
-        public override int Music
-        {
-            get
-            {
-                int result = (int)ModContent.GetInstance<MainClientConfig>().RadioSlider switch
-                {
-                    1 => MusicLoader.GetMusicSlot(Mod, "Content/Sounds/Music/PortalRadio"),
-                    _ => MusicLoader.GetMusicSlot(Mod, "Content/Sounds/Music/SubwaySurfers")
-                };
-
-                return result;
-            }
-        }
-        public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
-
-        public override float GetWeight(Player player)
-        {
-            return 1f;
-        }
-    }
-
     public class SkyblockScene_OceanRemover : ModSceneEffect
     {
         public override bool IsSceneEffectActive(Player player)

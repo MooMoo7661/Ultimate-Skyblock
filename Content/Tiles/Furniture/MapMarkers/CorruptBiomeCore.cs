@@ -75,31 +75,23 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
         public override void OnKill()
         {
             ChatHelper.SendChatMessageToClient(NetworkText.FromLiteral("removed"), Color.White, 0);
-            TileIconDrawing.TEs.Remove(Position);
         }
 
         public override void Update()
         {
-            if (Main.netMode == NetmodeID.Server)
+            int i = Position.X;
+            int j = Position.Y;
+            if (!Framing.GetTileSafely(i, j).HasTile)
             {
-                NetMessage.SendData(MessageID.TileEntitySharing, number: ID, number2: Position.X, number3: Position.Y);
+                Kill(i, j);
             }
-
-            if (!TileIconDrawing.TEs.Exists(_ => _ == Position))
-            {
-                ChatHelper.SendChatMessageToClient(NetworkText.FromLiteral("added"), Color.White, 0);
-                TileIconDrawing.TEs.Add(Position);
-            }
-
-            if (!Main.tile[Position.X, Position.Y].HasTile)
-                Kill(Position.X, Position.Y);
 
             if (Main.rand.NextBool(8))
             {
                 int x = Position.X + Main.rand.Next(-8, 11);
                 int y = Position.Y + Main.rand.Next(-8, 11);
                 Tile tile = Framing.GetTileSafely(x, y);
-                if (tile.HasTile)
+                if (tile.HasTile && Main.tileSolid[tile.TileType])
                 {
                     int type = tile.TileType switch
                     {
@@ -115,7 +107,6 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
 
                     if (type == -1)
                         return;
-
 
                     Framing.GetTileSafely(x, y).TileType = (ushort)type;
                     if (Main.netMode == NetmodeID.Server)

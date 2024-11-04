@@ -38,14 +38,6 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
 
     public class JungleBiomeMapMarkerEntity : ModTileEntity
     {
-        private MapIcon icon;
-        private static Asset<Texture2D> jungle;
-
-        public override void Load()
-        {
-            jungle = ModContent.Request<Texture2D>("UltimateSkyblock/Content/UI/MapDrawing/Icons/IconJungle");
-        }
-
         public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
         {
             // If in multiplayer, tell the server to place the tile entity and DO NOT place it yourself. That would mismatch IDs.
@@ -79,10 +71,6 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
                 Kill(i, j);
             }
 
-            icon = new MapIcon(new(Position.X + 1.5f, Position.Y), jungle.Value, Color.White, 1.1f, 0.8f, "Jungle Marker");
-            TileIconDrawing.icons.Add(icon);
-
-
             if (Main.rand.NextBool(8))
             {
                 int x = Position.X + Main.rand.Next(-8, 11);
@@ -109,11 +97,6 @@ namespace UltimateSkyblock.Content.Tiles.Furniture.MapMarkers
                     }
                 }
             }
-        }
-
-        public override void OnKill()
-        {
-            TileIconDrawing.icons.Remove(icon);
         }
     }
 }

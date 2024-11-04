@@ -13,7 +13,7 @@ namespace UltimateSkyblock.Content.DaySystem
 {
     public class DayCounter : ModSystem
     {
-        public static int Day = 0;
+        public static int Day = 1;
 
         public override void Load()
         {
@@ -44,7 +44,7 @@ namespace UltimateSkyblock.Content.DaySystem
 
         public override void ClearWorld()
         {
-            Day = 0;
+            Day = 1;
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -57,8 +57,6 @@ namespace UltimateSkyblock.Content.DaySystem
            Day = reader.ReadInt32();
         }
     }
-
-    
 
     public class GetDayCommand : ModCommand
     {
@@ -84,7 +82,7 @@ namespace UltimateSkyblock.Content.DaySystem
 
         public override void Action(CommandCaller caller, string input, string[] args)
         {
-            DayCounter.Day = 0;
+            DayCounter.Day = 1;
             ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral($"[c/32FF82:Reset the day counter.]"), Color.White);
             if (Main.netMode == NetmodeID.Server)
             {

@@ -122,18 +122,6 @@ namespace UltimateSkyblock.Content.Items.Bombs
 
         public override void OnKill(int timeLeft)
         {
-            //// If we are the original projectile running on the owner, spawn the 5 child projectiles.
-            //if (Projectile.owner == Main.myPlayer && Projectile.ai[1] == 0)
-            //{
-            //    for (int i = 0; i < 5; i++)
-            //    {
-            //        // Random upward vector.
-            //        Vector2 launchVelocity = new Vector2(Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-10, -8));
-            //        // Importantly, ai1 is set to 1 here. This is checked in OnTileCollide to prevent bouncing and here in Kill to prevent an infinite chain of splitting projectiles.
-            //        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, launchVelocity, Projectile.type, Projectile.damage, Projectile.knockBack, Main.myPlayer, 0, 1);
-            //    }
-            //}
-
             // Play explosion sound
             SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
 
@@ -143,18 +131,6 @@ namespace UltimateSkyblock.Content.Items.Bombs
             // Finally, actually explode the tiles and walls. Run this code only for the owner
             if (Projectile.owner == Main.myPlayer)
             {
-                int explosionRadius = 7;
-                int minTileX = (int)(Projectile.Center.X / 16f - explosionRadius);
-                int maxTileX = (int)(Projectile.Center.X / 16f + explosionRadius);
-                int minTileY = (int)(Projectile.Center.Y / 16f - explosionRadius);
-                int maxTileY = (int)(Projectile.Center.Y / 16f + explosionRadius);
-
-                // Ensure that all tile coordinates are within the world bounds
-                Terraria.Utils.ClampWithinWorld(ref minTileX, ref minTileY, ref maxTileX, ref maxTileY);
-
-                // These 2 methods handle actually mining the tiles and walls while honoring tile explosion conditions
-                bool explodeWalls = Projectile.ShouldWallExplode(Projectile.Center, explosionRadius, minTileX, maxTileX, minTileY, maxTileY);
-
                 Projectile.Resize(22, 22);
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -163,6 +139,8 @@ namespace UltimateSkyblock.Content.Items.Bombs
                     Projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(pt, 4.2f, SpreadDirt);
                 }
             }
+
+            SpreadDirt((int)Projectile.position.X, (int)Projectile.position.Y);
         }
 
         public bool SpreadDirt(int x, int y)
@@ -172,13 +150,8 @@ namespace UltimateSkyblock.Content.Items.Bombs
                 return false;
             }
 
-
             if (WorldGen.PlaceTile(x, y, BlockID, true))
             {
-                if (Main.netMode != 0)
-                {
-                    NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 1, x, y);
-                }
                 Vector2 position = new Vector2(x * 16, y * 16);
                 int num = 0;
                 for (int i = 0; i < 3; i++)
@@ -240,6 +213,10 @@ namespace UltimateSkyblock.Content.Items.Bombs
                     }
                 }
                 return true;
+            }
+            if (Main.netMode == NetmodeID.Server)
+            {
+                NetMessage.SendTileSquare(-1, x, y);
             }
             return false;
         }

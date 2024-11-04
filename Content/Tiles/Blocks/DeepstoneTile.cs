@@ -28,7 +28,7 @@ namespace UltimateSkyblock.Content.Tiles.Blocks
             TileID.Sets.Stone[Type] = true;
 
             DustType = DustID.Stone;
-            MinPick = 70;   
+            MinPick = 55;   
             MineResist = 1.3f;
             HitSound = SoundID.Tink;
             RegisterItemDrop(ModContent.ItemType<Deepstone>());

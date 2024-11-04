@@ -35,7 +35,7 @@ namespace UltimateSkyblock.Content.ModSystems
             tag["UltimateSkyblock:PlanteraDungeon"] = NPC.downedPlantBoss;
             tag["UltimateSkyblock:DownedGolem"] = NPC.downedGolemBoss;
             tag["UltimateSkyblock:DownedBoss3"] = NPC.downedBoss3;
-            tag["UltimateSkyblock:Hardmode"] = Main.hardMode;
+            //tag["UltimateSkyblock:Hardmode"] = Main.hardMode;
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -43,7 +43,7 @@ namespace UltimateSkyblock.Content.ModSystems
             NPC.downedPlantBoss = tag.GetBool("UltimateSkyblock:PlanteraDungeon");
             NPC.downedGolemBoss = tag.GetBool("UltimateSkyblock:DownedGolem");
             NPC.downedBoss3 = tag.GetBool("UltimateSkyblock:DownedBoss3");
-            Main.hardMode = tag.GetBool("UltimateSkyblock:Hardmode");
+            //Main.hardMode = tag.GetBool("UltimateSkyblock:Hardmode");
         }
 
         public override void PreUpdateTime()

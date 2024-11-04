@@ -47,7 +47,7 @@ namespace UltimateSkyblock.Content.Subworlds.DungeonPasses
             if (iterations >= 20)
                 return null;
 
-            int[] tileType = new UnifiedRandom(DateTime.Now.Millisecond + iterations + 1).Next(24) switch
+            int[] tileType = WorldGen.genRand.Next(28) switch
             {
                 1 or 2 => new int[2] { TileID.GrandfatherClocks, 30 },
                 3 or 4 => new int[2] { TileID.Pianos, 11 },
@@ -57,6 +57,8 @@ namespace UltimateSkyblock.Content.Subworlds.DungeonPasses
                 12 or 13 or 14 or 15 => new int[2] { TileID.Statues, 46 },
                 16 or 17 => new int[2] { TileID.WorkBenches, 11 },
                 18 or 19 or 20 or 21 => new int[2] { TileID.Lamps, 24 },
+                22 => new int[2] { TileID.AlchemyTable, 0 },
+                23 => new int[2] { TileID.BewitchingTable, 0 },
                 _ => new int[2] { TileID.Bookcases, 1 },
             };
 

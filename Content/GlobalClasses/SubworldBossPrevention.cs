@@ -21,7 +21,7 @@ namespace UltimateSkyblock.Content.GlobalClasses
     {
         public override void OnSpawn(NPC npc, IEntitySource source)
         {
-            if ((npc.townNPC || npc.type == NPCID.BoundGoblin || npc.type == NPCID.BoundMechanic || npc.type == NPCID.BoundWizard || npc.type == NPCID.BoundWizard) && (SubworldSystem.IsActive<MiningSubworld>() || SubworldSystem.IsActive<DungeonSubworld>()))
+            if ((npc.townNPC || npc.type == NPCID.BoundGoblin || npc.type == NPCID.BoundMechanic || npc.type == NPCID.BoundWizard || npc.type == NPCID.BoundWizard || npc.type == NPCID.BoundTownSlimeOld) && (SubworldSystem.IsActive<MiningSubworld>() || SubworldSystem.IsActive<DungeonSubworld>()))
                 npc.active = false;
         }
     }

@@ -24,8 +24,8 @@ namespace UltimateSkyblock.Content.UI.MapDrawing
 
         public override void Draw(ref MapOverlayDrawContext context, ref string text)
         {
-            // Hardcoded check for my other mod that does something similar.
-            if (ModLoader.TryGetMod("WorldMapExpansion", out Mod MapExpansion) || !ModContent.GetInstance<SkyblockModConfig>().DrawNPCIcons || !UltimateSkyblock.IsSkyblock()) { return; }
+            // Check for my other mod that does something similar.
+            if (ModLoader.TryGetMod("WorldMapExpansion", out Mod _) || !ModContent.GetInstance<SkyblockModConfig>().DrawNPCIcons || !UltimateSkyblock.IsSkyblock()) { return; }
 
             foreach (NPC npc in Main.npc.SkipLast(1)) //Last is a dummy npc, don't want to interact with it
             {
@@ -33,8 +33,8 @@ namespace UltimateSkyblock.Content.UI.MapDrawing
 
                 if (npc.active && npc.life > 0 && !npc.boss && !npc.townNPC)
                 {
-                    var hell = context.Draw(iconToDraw, new Vector2(npc.Center.ToTileCoordinates().X, npc.Center.ToTileCoordinates().Y), Color.White, new SpriteFrame(1, 1, 0, 0), 0.5f, 0.5f, Alignment.Center);
-                    if (hell.IsMouseOver) { text = npc.FullName; }
+                    var npcIcon = context.Draw(iconToDraw, new Vector2(npc.Center.ToTileCoordinates().X, npc.Center.ToTileCoordinates().Y), Color.White, new SpriteFrame(1, 1, 0, 0), 0.5f, 0.5f, Alignment.Center);
+                    if (npcIcon.IsMouseOver) { text = npc.FullName; }
                 }
             }
         }

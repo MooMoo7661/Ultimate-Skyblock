@@ -1,12 +1,12 @@
 ﻿using System;
-using CombinationsMod.Content.Keybindings;
 using Terraria.Audio;
 using Terraria;
 using UltimateSkyblock.Content.Utils;
 using Terraria.ModLoader.UI;
+using UltimateSkyblock.Content.Keybinds;
 
 namespace UltimateSkyblock.Content.UI.Guidebook
-{   
+{
     public class GuidebookUIState : UIState
     {
         public DraggableUIPanel GuidebookPanel;

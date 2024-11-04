@@ -27,12 +27,12 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
                     Tile tile = Framing.GetTileSafely(x, y);
                     if (!tile.HasTile && tile.Slope == SlopeType.Solid && Framing.GetTileSafely(x, y - 1).HasTile && WorldGen.genRand.NextBool(5))
                     {
-                        WorldGen.PlaceUncheckedStalactite(x, y, Main.rand.NextBool(), Main.rand.Next(3), false);
+                        WorldGen.PlaceUncheckedStalactite(x, y, WorldGen.genRand.NextBool(), WorldGen.genRand.Next(3), false);
                     }
 
                     if (tile.HasTile && !Framing.GetTileSafely(x, y - 1).HasTile && !Framing.GetTileSafely(x, y - 2).HasTile && WorldGen.genRand.NextBool(8) && tile.Slope == SlopeType.Solid)
                     {
-                        WorldGen.PlaceUncheckedStalactite(x, y - 1, Main.rand.NextBool(), Main.rand.Next(3), false);
+                        WorldGen.PlaceUncheckedStalactite(x, y - 1, WorldGen.genRand.NextBool(), WorldGen.genRand.Next(3), false);
                     }
 
                     progress.Set((y + x * Main.maxTilesY) / (float)(Main.maxTilesX * Main.maxTilesY));

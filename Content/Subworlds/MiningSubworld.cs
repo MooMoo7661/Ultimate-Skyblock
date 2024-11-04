@@ -16,23 +16,21 @@ namespace UltimateSkyblock.Content.Subworlds
         public override bool ShouldSave => ModContent.GetInstance<SubworldConfig>().SubworldSaving;
         public override string Name => "Mining Subworld";
 
-        private UIWorldLoad _menu;
-
         public static int Slate { get { return ModContent.TileType<SlateTile>(); } }
         public static int Deepstone { get { return ModContent.TileType<DeepstoneTile>(); } }
         public static int DeepstoneLayer { get { return Main.UnderworldLayer - 100; } }
 
         public override void DrawMenu(GameTime gameTime)
         {
-            if (WorldGenerator.CurrentGenerationProgress != null)
-                (_menu ??= new UIWorldLoad()).Draw(Main.spriteBatch);
-            else
-                base.DrawMenu(gameTime);
+           new UIWorldLoad().Draw(Main.spriteBatch);
+           base.DrawMenu(gameTime);
         }
 
         public override void OnEnter()
         {
             SubworldSystem.hideUnderworld = false;
+
+            UltimateSkyblock.Instance.Logger.Info("Logging tag \"Main.hardMode:\"" + " - " + Main.hardMode);
         }
 
         public override void OnLoad()
@@ -48,7 +46,6 @@ namespace UltimateSkyblock.Content.Subworlds
             GenVars.oceanWaterStartRandomMax = 0;
         }
 
-
         public override bool ChangeAudio()
         {
             if (Main.gameMenu && ModContent.GetInstance<SubworldClientConfig>().SubworldLoadingMusic)
@@ -63,6 +60,7 @@ namespace UltimateSkyblock.Content.Subworlds
         public override List<GenPass> Tasks => new List<GenPass>()
         {
             //Basic worldgen
+            new RandGenpass("SetRandomness", 5),
             new InitialEarthPass("FillWorld", 210f),
             new BasicPerlinCaveWorldFeatureGenerator("Perlin", 177.4298f),
 
@@ -84,11 +82,24 @@ namespace UltimateSkyblock.Content.Subworlds
             new DropletsPass("Droplets", 10),
             new StalactitesPass("Stalactites", 30),
             new DeepstoneBunkerPass("DeepstoneBunker", 40),
+            new SpiderPass("SpiderCaves", 10),
+            new CaveWallsPass("CaveWalls", 15),
             new CaveDecorationsPass("CaveDecorations", 20),
             new MiningPasses.CleanupPass("Cleanup", 80),
 
             new SpawnPass("Setting up Spawn", 0.5f)
         };
+
+        public class RandGenpass : GenPass
+        {
+            public RandGenpass(string name, double loadWeight) : base(name, loadWeight) { }
+
+            protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
+            {
+                Main.ActiveWorldFileData.SetSeedToRandom();
+                WorldGen.genRand.SetSeed(Main.ActiveWorldFileData.Seed);
+            }
+        }
 
         public class InitialEarthPass : GenPass
         {
@@ -104,18 +115,18 @@ namespace UltimateSkyblock.Content.Subworlds
 
             private static void SetGenVars()
             {
-                SubVars.copper = Main.rand.NextBool() ? TileID.Copper : TileID.Tin;
-                SubVars.iron = Main.rand.NextBool() ? TileID.Iron : TileID.Lead;
-                SubVars.silver = Main.rand.NextBool() ? TileID.Silver : TileID.Tungsten;
-                SubVars.gold = Main.rand.NextBool() ? TileID.Gold : TileID.Platinum;
+                SubVars.copper = WorldGen.genRand.NextBool() ? TileID.Copper : TileID.Tin;
+                SubVars.iron = WorldGen.genRand.NextBool() ? TileID.Iron : TileID.Lead;
+                SubVars.silver = WorldGen.genRand.NextBool() ? TileID.Silver : TileID.Tungsten;
+                SubVars.gold = WorldGen.genRand.NextBool() ? TileID.Gold : TileID.Platinum;
 
-                SubVars.cobalt = Main.rand.NextBool() ? TileID.Cobalt : TileID.Palladium;
-                SubVars.mythril = Main.rand.NextBool() ? TileID.Mythril : TileID.Orichalcum;
-                SubVars.adamantite = Main.rand.NextBool() ? TileID.Adamantite : TileID.Titanium;
+                SubVars.cobalt = WorldGen.genRand.NextBool() ? TileID.Cobalt : TileID.Palladium;
+                SubVars.mythril = WorldGen.genRand.NextBool() ? TileID.Mythril : TileID.Orichalcum;
+                SubVars.adamantite = WorldGen.genRand.NextBool() ? TileID.Adamantite : TileID.Titanium;
 
-                WorldGen.SavedOreTiers.Cobalt = new UnifiedRandom().NextBool() ? TileID.Cobalt : TileID.Palladium;
-                WorldGen.SavedOreTiers.Mythril = new UnifiedRandom().NextBool() ? TileID.Mythril : TileID.Orichalcum;
-                WorldGen.SavedOreTiers.Adamantite = new UnifiedRandom().NextBool() ? TileID.Adamantite : TileID.Titanium;
+                WorldGen.SavedOreTiers.Cobalt = WorldGen.genRand.NextBool() ? TileID.Cobalt : TileID.Palladium;
+                WorldGen.SavedOreTiers.Mythril = WorldGen.genRand.NextBool() ? TileID.Mythril : TileID.Orichalcum;
+                WorldGen.SavedOreTiers.Adamantite = WorldGen.genRand.NextBool() ? TileID.Adamantite : TileID.Titanium;
             }
 
             private static void FillWorldWithStone(ref GenerationProgress progress)
@@ -157,7 +168,7 @@ namespace UltimateSkyblock.Content.Subworlds
                             if (WorldGen.genRand.NextBool(5))
                             {
                                 WorldGen.PlaceWall(x, y, WallID.Rocks1Echo);
-                                if (Main.rand.NextBool(2))
+                                if (WorldGen.genRand.NextBool(2))
                                 {
                                     SpreadToNearbyWall(x, y, WallID.Rocks1Echo, 10);
                                 }

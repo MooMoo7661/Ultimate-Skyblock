@@ -13,6 +13,7 @@ using UltimateSkyblock.Content.Tiles.Blocks;
 using System.IO;
 using Terraria.ModLoader.IO;
 using Terraria.ModLoader;
+using System.Diagnostics;
 
 namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 {
@@ -48,18 +49,22 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 
         Point16 RollHousePoint(byte iterations)
         {
-            if (iterations >= 100)
+            if (iterations >= 200)
                 return Point16.Zero;
 
             int x = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
 
             int y = WorldGen.genRand.Next(100, Main.maxTilesY - 500);
 
-            if (!Framing.GetTileSafely(x, y).HasTile || GenUtils.MostlyAir(45, 45, x, y) || GenUtils.AreaContainsSensitiveTiles(restrictedTiles, x, y, 60, 60))
+            //TODO: FIX HOUSES SPAWNING CLOSE TO SPAWN
+
+            if (new Vector2(x, y).Distance(new (Main.spawnTileX, Main.spawnTileY)) < 150 || !Framing.GetTileSafely(x, y).HasTile || GenUtils.MostlyAir(45, 45, x, y) || GenUtils.AreaContainsSensitiveTiles(restrictedTiles, x, y, 60, 60))
             {
                 iterations++;
                 return RollHousePoint(iterations);
             }
+
+            UltimateSkyblock.Instance.Logger.Info("Generated Mining House at " + new Vector2(x, y) + " with distance from spawn as " + new Vector2(x, y).Distance(new(Main.spawnTileX, Main.spawnTileY)));
 
             return new(x, y);
         }

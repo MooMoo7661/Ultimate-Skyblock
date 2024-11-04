@@ -27,7 +27,6 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
                 {
                     if (WorldGen.genRand.NextBool(14) && !Framing.GetTileSafely(x, y - 1).HasTile && Framing.GetTileSafely(x - 1, y).HasTile && Framing.GetTileSafely(x + 1, y).HasTile && Main.tile[x, y].TileType == TileID.Stone)
                     {
-
                         int height = WorldGen.genRand.Next(8, 15);
 
                         if (WorldGen.genRand.NextBool(3))
@@ -80,6 +79,8 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
                         }
                     }
                 }
+
+               
             }
 
             for (int x = 0; x < Main.maxTilesX; x++)

@@ -19,26 +19,27 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
-            for (int x = 0; x < Main.maxTilesX; x++)
-            {
-                for (int y = 0; y < Main.maxTilesY - 500; y++)
-                {
-                    Tile tile = Framing.GetTileSafely(x, y);
-                    if (!tile.HasTile && WorldGen.genRand.NextBool(900) && !GenUtils.MostlyAir(22, 22, x, y))
-                    {
-                        int xOffset = WorldGen.genRand.Next(12, 16);
-                        int yOffset = WorldGen.genRand.Next(12, 16);
 
-                        for (int x2 = x - xOffset; x2 < x + xOffset; x2++)
+            for (int i = 0; i < (Main.maxTilesY * Main.maxTilesX) * 0.3; i++)
+            {
+                int x = WorldGen.genRand.Next(20, Main.maxTilesX - 20);
+                int y = WorldGen.genRand.Next(20, Main.maxTilesY - 400);
+                Tile tile = Framing.GetTileSafely(x, y);
+                if (!tile.HasTile && WorldGen.genRand.NextBool(1500) && !GenUtils.MostlyAir(22, 22, x, y))
+                {
+                    int xOffset = WorldGen.genRand.Next(12, 16);
+                    int yOffset = WorldGen.genRand.Next(12, 16);
+
+                    for (int x2 = x - xOffset; x2 < x + xOffset; x2++)
+                    {
+                        for (int y2 = y - yOffset; y2 < y + yOffset; y2++)
                         {
-                            for (int y2 = y - yOffset; y2 < y + yOffset; y2++)
-                            {
-                                if (WorldGen.InWorld(x2, y2) && !Framing.GetTileSafely(x2, y2).HasTile)
-                                    WorldGen.PlaceLiquid(x2, y2, (byte)LiquidID.Water, (byte)WorldGen.genRand.Next(150, 255));
-                            }
+                            if (WorldGen.InWorld(x2, y2) && !Framing.GetTileSafely(x2, y2).HasTile)
+                                WorldGen.PlaceLiquid(x2, y2, (byte)LiquidID.Water, (byte)WorldGen.genRand.Next(150, 255));
                         }
                     }
                 }
+
             }
 
             for (int x = 0; x < Main.maxTilesX; x++)

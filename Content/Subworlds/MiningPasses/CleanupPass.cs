@@ -51,6 +51,8 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
                     progress.Set((y + x * Main.maxTilesY) / (float)(Main.maxTilesX * Main.maxTilesY));
                 }
             }
+
+            WaterPass.SettleLiquids(ref progress);
         }
     }
 }

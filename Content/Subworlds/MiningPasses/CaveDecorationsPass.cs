@@ -11,6 +11,7 @@ using UltimateSkyblock.Content.Items.Placeable;
 using static UltimateSkyblock.Content.Subworlds.MiningSubworld;
 using UltimateSkyblock.Content.Tiles.Blocks;
 using UltimateSkyblock.Content.Tiles.Environment;
+using UltimateSkyblock.Content.Utils;
 
 namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 {
@@ -47,20 +48,21 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
                     if (y > Main.UnderworldLayer - 300 && WorldGen.genRand.NextBool(5) && tile.TileType == ModContent.TileType<DeepstoneTile>())
                     {
                         if (!WorldGen.genRand.NextBool(3))
-                            WorldGen.PlaceTile(x, y - 1, ModContent.TileType<DeepstoneRubbleSmallNatural>(), mute: true, style: new UnifiedRandom().Next(6));
+                            WorldGen.PlaceTile(x, y - 1, ModContent.TileType<DeepstoneRubbleSmallNatural>(), mute: true, style: WorldGen.genRand.Next(6));
                         else
-                            WorldGen.PlaceTile(x, y - 1, ModContent.TileType<DeepstoneRubbleMediumNatural>(), mute: true, style: new UnifiedRandom().Next(6));
+                            WorldGen.PlaceTile(x, y - 1, ModContent.TileType<DeepstoneRubbleMediumNatural>(), mute: true, style: WorldGen.genRand.Next(6));
                     }
 
                     if (y < Main.UnderworldLayer && WorldGen.genRand.NextBool(50) && GenUtils.SuitableFor2x2(x, y) && !GenUtils.AreaContainsSensitiveTiles(new List<int> { TileID.Heart }, x, y, 16, 16))
-                    {
-                        WorldGen.PlaceObject(x, y - 1, TileID.Heart, true);
+                    {   
+                        UltimateSkyblock.Instance.Logger.Info(WorldGen.PlaceObject(x, y - 2, TileID.Heart, true));
                     }
 
                     progress.Set((y + x * Main.maxTilesY) / (float)(Main.maxTilesX * Main.maxTilesY));
                 }
-            }
+            }   
         }
+
         public static bool PotMaker(int x, int y)
         {
             int type = WorldGen.genRand.Next(4);
@@ -76,7 +78,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 
         public static bool SmallRubbleMaker(int x, int y)
         {
-            int type = Main.tile[x, y].TileType; // This helps me type less cuz I'm lazy
+            int type = Main.tile[x, y].TileType;
             int rubbleType = -1;
 
             if (type == TileID.Dirt)

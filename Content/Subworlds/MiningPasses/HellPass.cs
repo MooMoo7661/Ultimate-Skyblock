@@ -116,7 +116,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
                 {
                     Tile tile = Framing.GetTileSafely(x, y);
                     Tile right = Framing.GetTileSafely(x + 1, y);
-                    if (Main.rand.NextBool(15) && tile.HasTile && tile.TileType == TileID.ObsidianBrick && right.HasTile && right.TileType == TileID.ObsidianBrick && tile.Slope == SlopeType.Solid && right.Slope == SlopeType.Solid)
+                    if (Main.rand.NextBool(22) && tile.HasTile && tile.TileType == TileID.ObsidianBrick && right.HasTile && right.TileType == TileID.ObsidianBrick && tile.Slope == SlopeType.Solid && right.Slope == SlopeType.Solid)
                     {
                         if (GenUtils.SuitableFor2x2(x, y) && !GenUtils.AreaContainsSensitiveTiles(new List<int> { TileID.Containers }, x, y, 8, 8))
                         {

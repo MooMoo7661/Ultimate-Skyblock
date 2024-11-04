@@ -12,7 +12,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
-            FastNoise caveNoise = new FastNoise(FractalType.PingPong, NoiseType.Perlin, seed: new UnifiedRandom().Next(1600));
+            FastNoise caveNoise = new FastNoise(FractalType.PingPong, NoiseType.Perlin, seed: WorldGen.genRand.Next(1600));
             caveNoise.SetFractalPingPongStrength(3f);
             caveNoise.SetFractalOctaves(1);
 
@@ -35,7 +35,6 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 
                 float depth = Math.Clamp(y - (Main.UnderworldLayer - 250), 1, Main.maxTilesY);
                 depth /= 90f;
-                GenLogger.QuickLog("Depth chance at " + y + ": " + depth);
 
                 if (WorldGen.genRand.NextBool(4 + (int)(30 / depth)) && depth > 1.9f)
                 WorldGen.TileRunner(x, y, 3f + depth,(int)(3 * depth), WorldGen.SavedOreTiers.Adamantite);
@@ -53,11 +52,10 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
             for (int k = 0; k < (int)(Main.maxTilesX * Main.maxTilesY * 0.002); k++)
             {
                 int x = WorldGen.genRand.Next(Main.maxTilesX);
-                int y = WorldGen.genRand.Next(Main.UnderworldLayer - 250, Main.UnderworldLayer);
+                int y = WorldGen.genRand.Next(Main.UnderworldLayer - 200, Main.UnderworldLayer);
 
                 float depth = Math.Clamp(Main.UnderworldLayer - y, 1, Main.maxTilesY);
                 depth /= 80f;
-                GenLogger.QuickLog("Depth chance at " + y + ": " + depth);
 
                 if (WorldGen.genRand.NextBool((int)(2 + (30 / depth))))
                     WorldGen.TileRunner(x, y, 3.3f + depth, (int)(5 * depth), WorldGen.SavedOreTiers.Cobalt);

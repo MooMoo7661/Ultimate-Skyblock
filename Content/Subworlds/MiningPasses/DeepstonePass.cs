@@ -56,7 +56,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
             //    }
             //}
 
-            FastNoise caveNoise = new FastNoise(FractalType.PingPong, NoiseType.OpenSimplex2S, seed:new UnifiedRandom().Next(1600));
+            FastNoise caveNoise = new FastNoise(FractalType.PingPong, NoiseType.OpenSimplex2S, seed: WorldGen.genRand.Next(69420));
             caveNoise.SetFractalPingPongStrength(2f);
             caveNoise.SetFractalOctaves(4);
   

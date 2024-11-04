@@ -24,12 +24,12 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 
         void CreateGeode(ref GenerationProgress progress, byte iteration)
         {
-            int x = Main.rand.Next(60, Main.maxTilesX - 60);
-            int y = Main.rand.Next(60, Main.UnderworldLayer - 200);
+            int x = WorldGen.genRand.Next(60, Main.maxTilesX - 60);
+            int y = WorldGen.genRand.Next(60, Main.UnderworldLayer - 200);
 
             Tile tile = Framing.GetTileSafely(x, y);
 
-            if (tile.HasTile && !GenUtils.AreaContainsSensitiveTiles(new List<int> { TileID.Marble, TileID.WoodBlock, TileID.GrayBrick }, x, y, 9, 9) && GenUtils.MostlyAir(15, 15, x, y) && tile.TileType == TileID.Stone && WorldGen.InWorld(x, y) && iteration < 20)
+            if (new Vector2(x, y).Distance(new(Main.spawnTileX, Main.spawnTileY)) > 95 || tile.HasTile && !GenUtils.AreaContainsSensitiveTiles(new List<int> { TileID.Marble, TileID.WoodBlock, TileID.GrayBrick }, x, y, 9, 9) && GenUtils.MostlyAir(20, 20, x, y) && tile.TileType == TileID.Stone && WorldGen.InWorld(x, y) && iteration < 60)
             {
                 Point placePoint = new Point(x, y);
                 ShapeData fullData = new ShapeData();
@@ -37,8 +37,8 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 
                 for (int i = 0; i < 2; i++)
                 {
-                    int width = Main.rand.Next(8, 14);
-                    int height = Main.rand.Next(8, 14);
+                    int width = WorldGen.genRand.Next(8, 14);
+                    int height = WorldGen.genRand.Next(8, 14);
 
                     WorldUtils.Gen(placePoint, new Shapes.Circle(width, height), new Actions.SetTile(TileID.Marble));
                     WorldUtils.Gen(placePoint, new Shapes.Circle(width, height), new Actions.Blank().Output(fullData));
@@ -46,8 +46,8 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 
                 for (int i = 0; i < 5; i++)
                 {
-                    int width = Main.rand.Next(4, 7);
-                    int height = Main.rand.Next(4, 7);
+                    int width = WorldGen.genRand.Next(4, 7);
+                    int height = WorldGen.genRand.Next(4, 7);
 
                     WorldUtils.Gen(placePoint, new Shapes.Circle(width, height), new Actions.ClearTile());
                     WorldUtils.Gen(placePoint, new Shapes.Circle(width, height), new Actions.Blank().Output(innerData));

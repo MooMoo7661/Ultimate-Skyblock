@@ -220,14 +220,14 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
         public void HallwayRunner(int x, int y)
         {
             //using new UnifiedRandoms for actual randomness,
-            //due to Main.rand functioning identical to WorldGen.genRand in subworlds.
+            //due to WorldGen.genRand functioning identical to WorldGen.genRand in subworlds.
 
-            GenerateHallway(x, y, -1, new UnifiedRandom(Environment.TickCount).Next(3, 6));
-            GenerateHallway(x, y, 1, new UnifiedRandom(Environment.TickCount).Next(3, 6));
-            GenerateHallway(x, y + 11, -1, new UnifiedRandom(Environment.TickCount).Next(5, 10));
-            GenerateHallway(x, y + 11, 1, new UnifiedRandom(Environment.TickCount).Next(5, 10));
-            GenerateHallway(x, y + 22, -1, new UnifiedRandom(Environment.TickCount).Next(8, 13));
-            GenerateHallway(x, y + 22, 1, new UnifiedRandom(Environment.TickCount).Next(8, 13));
+            GenerateHallway(x, y, -1, WorldGen.genRand.Next(3, 6));
+            GenerateHallway(x, y, 1, WorldGen.genRand.Next(3, 6));
+            GenerateHallway(x, y + 11, -1, WorldGen.genRand.Next(5, 10));
+            GenerateHallway(x, y + 11, 1, WorldGen.genRand.Next(5, 10));
+            GenerateHallway(x, y + 22, -1, WorldGen.genRand.Next(8, 13));
+            GenerateHallway(x, y + 22, 1, WorldGen.genRand.Next(8, 13));
 
             //43
             //-12
@@ -259,7 +259,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
                 startingOffset = Xoffset * i;
 
                 // Getting a random hallway to generate, then removing it to prevent repetition.
-                int index = new UnifiedRandom(Environment.TickCount).Next(_hallways.Count);
+                int index = WorldGen.genRand.Next(_hallways.Count);
                 RoomID currentHallway = _hallways[index];
                 _hallways.RemoveAt(index);
 
@@ -276,8 +276,8 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 
         }
 
-        public static RoomID RollUpperRoom(int dir) => dir == -1 ? LeftRooms[new UnifiedRandom(Environment.TickCount).Next(0, LeftRooms.Count)] : RightRooms[new UnifiedRandom(Environment.TickCount).Next(0, RightRooms.Count)];
-        public RoomID RollBasementDropdownRoom(int dir) => dir == -1 ? LeftBasementDropdownRooms[new UnifiedRandom(Environment.TickCount).Next(0, LeftBasementDropdownRooms.Count)] : RightBasementDropdownRooms[new UnifiedRandom(Environment.TickCount).Next(0, RightBasementDropdownRooms.Count)];
+        public static RoomID RollUpperRoom(int dir) => dir == -1 ? LeftRooms[WorldGen.genRand.Next(0, LeftRooms.Count)] : RightRooms[WorldGen.genRand.Next(0, RightRooms.Count)];
+        public RoomID RollBasementDropdownRoom(int dir) => dir == -1 ? LeftBasementDropdownRooms[WorldGen.genRand.Next(0, LeftBasementDropdownRooms.Count)] : RightBasementDropdownRooms[WorldGen.genRand.Next(0, RightBasementDropdownRooms.Count)];
 
         public List<RoomID> RollHallways(int numRooms)
         {
@@ -291,7 +291,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 
             for (int i = 0; i < numRooms; i++)
             {
-                int index = new UnifiedRandom(Environment.TickCount).Next(locHallways.Count);
+                int index = WorldGen.genRand.Next(locHallways.Count);
                 RoomID result = locHallways[index];
                 locHallways.RemoveAt(index);
                 output.Add(result);

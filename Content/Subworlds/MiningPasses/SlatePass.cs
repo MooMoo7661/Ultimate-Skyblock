@@ -22,7 +22,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
 
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
-            LoopWorldAndGenerateTilesWithDepthModifiers(15, strength: Main.rand.Next(25, 40), steps: Main.rand.Next(20, 30), type: ModContent.TileType<SlateTile>(), new List<int> { TileID.Stone }, levelToDisperse: (int)Main.rockLayer + 100, canGenerateAfterLevel: true);
+            LoopWorldAndGenerateTilesWithDepthModifiers(15, strength: Main.rand.Next(25, 35), steps: Main.rand.Next(15, 32), type: ModContent.TileType<SlateTile>(), new List<int> { TileID.Stone }, levelToDisperse: (int)Main.rockLayer + 100, canGenerateAfterLevel: true);
         }
     }
 }

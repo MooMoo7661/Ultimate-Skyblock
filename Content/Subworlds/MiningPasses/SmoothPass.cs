@@ -24,7 +24,7 @@ namespace UltimateSkyblock.Content.Subworlds.MiningPasses
             {
                 for (int y = 50; y < Main.maxTilesY - 50; y++)
                 {
-                    if (Main.rand.NextBool(7) && WorldGen.InWorld(x, y) && Framing.GetTileSafely(x, y + 1).TileType != TileID.WaterDrip && Framing.GetTileSafely(x, y + 1).TileType != TileID.LavaDrip)
+                    if (WorldGen.genRand.NextBool(7) && WorldGen.InWorld(x, y) && Framing.GetTileSafely(x, y + 1).TileType != TileID.WaterDrip && Framing.GetTileSafely(x, y + 1).TileType != TileID.LavaDrip)
                         Tile.SmoothSlope(x, y);
                     progress.Set((y + x * Main.maxTilesY) / (float)(Main.maxTilesX * Main.maxTilesY));
                 }

@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.UI;
 using UltimateSkyblock.Content.Biomes;
 using UltimateSkyblock.Content.Buffs;
 using UltimateSkyblock.Content.Gores;
+using UltimateSkyblock.Content.Items.Placeable.Objects;
 
 namespace UltimateSkyblock.Content.NPCs
 {
@@ -46,12 +48,12 @@ namespace UltimateSkyblock.Content.NPCs
             NPC.width = 29;
             NPC.height = 92;
             NPC.aiStyle = -1;
-            NPC.damage = 80;
+            NPC.damage = 30;
             NPC.defense = 8;
-            NPC.lifeMax = 250;
+            NPC.lifeMax = 150;
             NPC.HitSound = new SoundStyle("UltimateSkyblock/Content/Sounds/ReDeadHit") with { PitchVariance = 0.5f };
             NPC.DeathSound = new SoundStyle("UltimateSkyblock/Content/Sounds/ReDeadDie");
-            NPC.value = 300;
+            NPC.value = 600;
             NPC.knockBackResist = 0f;
             SpawnModBiomes = new int[1] { ModContent.GetInstance<DeepstoneBiome>().Type };
         }
@@ -133,11 +135,16 @@ namespace UltimateSkyblock.Content.NPCs
                 SoundStyle sound = new SoundStyle("UltimateSkyblock/Content/Sounds/ReDeadScream").WithPitchOffset(-Main.rand.NextFloat(1f, 2.6f) / 10);
 
                 SoundEngine.PlaySound(sound);
-                player.AddBuff(ModContent.BuffType<Fear>(), 300);
+                player.AddBuff(ModContent.BuffType<Fear>(), 180);
                 screamCooldown = 240;
                 locked = true;
                 NPC.dontTakeDamage = false;
             }
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DeepstoneChestKey>(), 5));
         }
 
         public override void OnKill()

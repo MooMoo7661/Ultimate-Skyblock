@@ -3,7 +3,6 @@
 using System;
 using System.ComponentModel;
 using Terraria.ModLoader.Config;
-using static UltimateSkyblock.Content.SceneEffects.SkyblockScene_Radio;
 using static UltimateSkyblock.Content.SkyblockWorldGen.MainWorld;
 
 namespace UltimateSkyblock.Content.Configs

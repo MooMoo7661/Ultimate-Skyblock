@@ -96,34 +96,6 @@ namespace UltimateSkyblock
                 }
             }
         }
-
-		// Thank god SpritMod was open source
-		// This code was "borrowed" from => https://github.com/GabeHasWon/SpiritMod/blob/367e1da73022ec8741673b4bfbc629c3798a04e4/SpiritMultiplayer.cs
-		// Purpose of this is to spawn a boss from right clicking a tile, which is called client side only.
-
-		//public override void HandlePacket(BinaryReader reader, int whoAmI)
-		//{
-		//    var id = reader.ReadByte();
-		//    byte player;
-		//    switch (id)
-		//    {
-		//        case 0:
-		//            if (Main.netMode == NetmodeID.Server)
-		//            {
-		//                player = reader.ReadByte();
-		//                int bossType = reader.ReadInt32();
-		//                int spawnX = reader.ReadInt32();
-		//                int spawnY = reader.ReadInt32();
-
-		//                if (NPC.AnyNPCs(bossType))
-		//                    return;
-
-		//                int npcID = NPC.NewNPC(NPC.GetSource_NaturalSpawn(), spawnX, spawnY, bossType);
-		//                Main.npc[npcID].netUpdate2 = true;
-		//            }
-		//            break;
-		//    }
-		//}
         public enum PacketId {
             ChestIndicatorInfo,
             SpawnPlantera,

@@ -34,7 +34,7 @@ namespace UltimateSkyblock.Content.NPCs
         {
 
             NPC.CloneDefaults(NPCID.BlueArmoredBonesSword);
-            NPC.damage = 40;
+            NPC.damage = 25;
             NPC.defense = 8;
             NPC.lifeMax = 80;
 
@@ -51,8 +51,9 @@ namespace UltimateSkyblock.Content.NPCs
             foreach (var skeletonDropRule in skeletonDropRules)
             {
                 npcLoot.Add(skeletonDropRule);
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DeepstoneChestKey>(), 4));
             }
+
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DeepstoneChestKey>(), 10));
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

@@ -17,7 +17,7 @@ namespace UltimateSkyblock.Content.Subworlds
     public class DungeonSubworld : Subworld
     {
         public override int Width => 3000;
-        public override int Height => 1000;
+        public override int Height => 1500;
         public override bool ShouldSave => ModContent.GetInstance<SubworldConfig>().SubworldSaving;
         public override string Name => "Dungeon Subworld";
 
@@ -61,8 +61,6 @@ namespace UltimateSkyblock.Content.Subworlds
             GenVars.oceanWaterStartRandomMin = 0;
             GenVars.oceanWaterStartRandomMax = 0;
         }
-
-
 
         public sealed override List<GenPass> Tasks
         {

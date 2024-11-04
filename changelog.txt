@@ -1,8 +1,0 @@
-Fixed a bug introduced from the last update that broke the Plantera Altar in Multiplayer.
-
-
-Added 3 new dungeon rooms
-Fix wooden spikes being non-solid?
-Fix placement of biome cores and update speeds
-Re-write system for biome cores appearing on the map + include config to disable them
-uhh some more idk I gotta go to work

@@ -14,10 +14,10 @@ namespace UltimateSkyblock.Content.Subworlds
 
         public BasicPerlinCaveWorldFeatureGenerator(string name, double loadWeight) : base(name, loadWeight)
         {
-            int noiseSeed = new UnifiedRandom().Next(int.MaxValue);
+            int noiseSeed = Main.ActiveWorldFileData.Seed;
             seed = noiseSeed;
             caveNoise = new FastNoise(noiseSeed);
-            caveNoise.SetFrequency(0.02f); //0.02
+            caveNoise.SetFrequency(0.04f); //0.02
             caveNoise.SetFractalOctaves(2); // 2
             caveNoise.SetFractalGain(1.6f); // 1.6f
             caveNoise.SetFractalLacunarity(1.6f); // 1.6f

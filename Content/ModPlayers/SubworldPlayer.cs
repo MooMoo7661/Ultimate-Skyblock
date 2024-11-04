@@ -7,6 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.ObjectData;
 
 namespace UltimateSkyblock.Content.ModPlayers
 {
@@ -19,7 +20,13 @@ namespace UltimateSkyblock.Content.ModPlayers
                 Player.ZoneSkyHeight = false;
                 Player.ZoneBeach = false;
                 Main.oceanBG = 0;
-            }            
+            }
+
+            if (SubworldSystem.IsActive<DungeonSubworld>())
+            {
+                Player.ZoneDungeon = true;
+                Player.ZoneDirtLayerHeight = true;
+            }
                 
             SubworldSystem.hideUnderworld = SubworldSystem.Current == ModContent.GetInstance<MiningSubworld>() && ((Player.position.Y / 16) <= Main.UnderworldLayer - 20);
         }

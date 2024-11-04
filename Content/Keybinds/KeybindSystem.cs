@@ -2,7 +2,7 @@
 
 using Terraria.ModLoader;
 
-namespace CombinationsMod.Content.Keybindings
+namespace UltimateSkyblock.Content.Keybinds
 {
     public class KeybindSystem : ModSystem
     {
@@ -15,11 +15,11 @@ namespace CombinationsMod.Content.Keybindings
         public override void Load()
         {
             Mod.Logger.Info("Registered keybinds for book UI");
-            PageLeftKeybind = KeybindLoader.RegisterKeybind(Mod, "Page Left", "Left");
-            PageRightKeybind = KeybindLoader.RegisterKeybind(Mod, "Page Right", "Right");
-            CloseBookKeybind = KeybindLoader.RegisterKeybind(Mod, "Close Book", "Escape");
-            WikiPageKeybind = KeybindLoader.RegisterKeybind(Mod, "Open Wiki Page", "L");
-            OpenBookKeybind = KeybindLoader.RegisterKeybind(Mod, "Open Guidebook", "K");
+            PageLeftKeybind = KeybindLoader.RegisterKeybind(Mod, "PageLeft", "Left");
+            PageRightKeybind = KeybindLoader.RegisterKeybind(Mod, "PageRight", "Right");
+            CloseBookKeybind = KeybindLoader.RegisterKeybind(Mod, "CloseBook", "Escape");
+            WikiPageKeybind = KeybindLoader.RegisterKeybind(Mod, "OpenWikiPage", "L");
+            OpenBookKeybind = KeybindLoader.RegisterKeybind(Mod, "OpenGuidebook", "K");
         }
 
         public override void Unload()

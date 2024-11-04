@@ -12,9 +12,7 @@ namespace UltimateSkyblock.Content.Subworlds.DungeonRoomUtils
 
         public static void QuickLog(object message)
         {
-            UltimateSkyblock.Instance.Logger.Info(message.ToString());
-
-            
+            UltimateSkyblock.Instance.Logger.Info(message.ToString()); 
         }
 
         //This exists so I can print logs that stand out, since it's hard for me to read the logs for a specific thing.

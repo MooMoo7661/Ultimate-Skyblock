@@ -43,23 +43,4 @@ namespace UltimateSkyblock.Content.Items.Placeable.Objects
                 .Register();
         }
     }
-
-    public class GlobalNullTile : GlobalTile
-    {
-        public override void SetStaticDefaults()
-        {
-            if (ModLoader.TryGetMod("StructureHelper", out Mod structureHelper))
-            {
-                if (structureHelper.TryFind("NullBlock", out ModTile nullTile))
-                {
-                    Main.tileSolid[nullTile.Type] = false;
-                    Main.tileBlockLight[nullTile.Type] = false;
-                    Main.tileNoSunLight[nullTile.Type] = false;
-
-                    TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.None, count: 0, start: 0);
-                    TileObjectData.addTile(nullTile.Type);
-                }
-            }
-        }
-    }
 }

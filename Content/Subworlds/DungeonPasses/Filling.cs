@@ -27,7 +27,7 @@
         {
             for (int x = 0; x < Main.maxTilesX; x++)
             {
-                for (int y = Main.maxTilesY / 2; y < Main.maxTilesY; y++)
+                for (int y = 0; y < Main.maxTilesY; y++)
                 {
                     Tile tile = Main.tile[x, y];
                     if (tile.WallType == WallID.None)

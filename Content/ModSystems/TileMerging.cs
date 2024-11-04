@@ -30,9 +30,6 @@ namespace UltimateSkyblock.Content.ModSystems
 
             TileID.Sets.PreventsSandfall[TileID.Sand] = true;
             TileID.Sets.PreventsSandfall[TileID.Slush] = true;
-
-            if (!ModLoader.TryGetMod("HammerableHeartCrystals", out Mod mod))
-            Main.tileHammer[TileID.Heart] = false;
         }
     }
 }

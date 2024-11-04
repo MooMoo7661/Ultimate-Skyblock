@@ -122,12 +122,18 @@ namespace UltimateSkyblock.Content.Utils
                 }
             }
         }
+
         private static bool IsTheSameAs(this Item item, Item compareItem)
         {
             if (item.netID == compareItem.netID)
                 return item.type == compareItem.type;
 
             return false;
+        }
+
+        public static T Random<T>(this List<T> list)
+        {
+            return list[Main.rand.Next(list.Count)];
         }
 
     }

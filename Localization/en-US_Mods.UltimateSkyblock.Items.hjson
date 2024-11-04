@@ -199,8 +199,6 @@ CorruptBiomeCoreItem: {
 		'''
 		Resembles a large, grotesque worm
 		Spreads the corruption to nearby blocks
-		[c/EE5252:This is currently disabled due to issues in multiplayer. It will be fixed soon.]
-
 		'''
 }
 
@@ -210,7 +208,6 @@ CrimsonBiomeCoreItem: {
 		'''
 		A meaty, pulsating organism that looks like a brain
 		Spreads the crimson to nearby blocks
-		[c/EE5252:This is currently disabled due to issues in multiplayer. It will be fixed soon.]
 		'''
 }
 
@@ -220,7 +217,6 @@ ForestBiomeCoreItem: {
 		'''
 		"Smells like freshly cut grass"
 		Purifies surrounding blocks
-		[c/EE5252:This is currently disabled due to issues in multiplayer. It will be fixed soon.]
 		'''
 }
 
@@ -230,7 +226,6 @@ HallowBiomeCoreItem: {
 		'''
 		"You are my sunshine..."
 		Spreads the hallow to nearby blocks
-		[c/EE5252:This is currently disabled due to issues in multiplayer. It will be fixed soon.]
 		'''
 }
 
@@ -240,7 +235,6 @@ JungleBiomeCoreItem: {
 		'''
 		Has an earthy fragrance
 		Spreads the jungle to nearby blocks
-		[c/EE5252:This is currently disabled due to issues in multiplayer. It will be fixed soon.]
 		'''
 }
 
@@ -251,7 +245,6 @@ MushroomBiomeCoreItem: {
 		"There is a fungus amongus"
 		Turns nearby exposed mud into mushroom grass
 		Converts jungle grass into mushroom grass
-		[c/EE5252:This is currently disabled due to issues in multiplayer. It will be fixed soon.]
 		'''
 }
 
@@ -262,7 +255,6 @@ SnowBiomeCoreItem: {
 		Chills the air around you
 		Nearby water gets turned into thin ice, then later solid ice
 		Converts dirt into snow
-		[c/EE5252:This is currently disabled due to issues in multiplayer. It will be fixed soon.]
 		'''
 }
 
@@ -298,11 +290,7 @@ DecorativeGlimmerTonic: {
 
 DesertBiomeCoreItem: {
 	DisplayName: Desert Biome Core Item
-	Tooltip:
-		'''
-		Spreads the desert to nearby blocks
-		[c/EE5252:This is currently disabled due to issues in multiplayer. It will be fixed soon.]
-		'''
+	Tooltip: Spreads the desert to nearby blocks
 }
 
 SunshinePaintingItem: {

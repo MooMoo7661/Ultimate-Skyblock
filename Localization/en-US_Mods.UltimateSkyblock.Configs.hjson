@@ -277,13 +277,6 @@ ChestType: {
 	None.Label: None
 }
 
-RadioID: {
-	Tooltip: ""
-	None.Label: None
-	SubwaySurfers.Label: Subway Surfers
-	PortalRadio.Label: Portal Radio
-}
-
 MainClientConfig: {
 	DisplayName: General Client
 
@@ -324,14 +317,5 @@ MainClientConfig: {
 	WorldBackgroundColorLerp: {
 		Label: World Background Color Lerp
 		Tooltip: Toggles the "pulsating" background color for skyblock worlds on the world select menu.
-	}
-}
-
-BugsConfig: {
-	DisplayName: Bugs Config
-
-	HeartCrystalDropFix: {
-		Label: Heart Crystal Drop Fix
-		Tooltip: Fixes life crystals not dropping anything. Only enable if this is happening.
 	}
 }

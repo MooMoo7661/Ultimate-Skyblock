@@ -218,9 +218,8 @@ LocalizedPages: {
 		'''
 		Biome cores are large objects that appear on one of the islands for each biome.
 		They create a marker on the map, to help you find the different islands.
-		[c/EE5252:Currently, this part is disabled, but I am looking to fix it.]
-		Each biome core has different attributes, listed as the following:
 
+		Each biome core has different attributes, listed as the following:
 		Forest - Purifies nearby blocks
 		Hallow - Spreads hallow
 		Corruption/Crimson - Spreads corruption/crimson
@@ -256,32 +255,16 @@ NPCs: {
 	DeepstoneBat.DisplayName: Deepstone Bat
 	Deepknight.DisplayName: Deepknight
 	ReDead.DisplayName: ReDead
-
-	ColtColossal: {
-		DisplayName: Colt Colossal
-
-		TownNPCMood: {
-			Content: I am content.
-			NoHome: I hate not having a home.
-			FarFromHome: I am too far from home.
-			LoveSpace: I love having so much space.
-			DislikeCrowded: I dislike how crowded I am.
-			HateCrowded: I hate how crowded I am.
-			LikeNPC_Princess: I like {NPCName}.
-			Princess_LovesNPC: I like {NPCName}.
-		}
-	}
 }
 
 Keybinds: {
 	CloseBook.DisplayName: Close Book
 	PageRightKeybind.DisplayName: Page Right Keybind
 	PageLeftKeybind.DisplayName: Page Left Keybind
-	"Open Wiki Page.DisplayName": Open  Wiki  Page
-	"Close Book.DisplayName": Close  Book
-	"Page Right.DisplayName": Page  Right
-	"Page Left.DisplayName": Page  Left
-	"Open Guidebook.DisplayName": Open  Guidebook
+	OpenWikiPage.DisplayName: Open Wiki Page
+	PageRight.DisplayName: Page Right
+	PageLeft.DisplayName: Page Left
+	OpenGuidebook.DisplayName: Open Guidebook
 }
 
 Notifications: {

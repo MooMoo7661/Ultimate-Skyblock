@@ -9,12 +9,14 @@ using SubworldLibrary;
 using System.Threading;
 using Terraria.Audio;
 using UltimateSkyblock.Content.UI.Guidebook;
-using CombinationsMod.Content.Keybindings;
 using UltimateSkyblock.Content.Items.Generic;
 using UltimateSkyblock.Content.NPCs;
 using UltimateSkyblock.Content.Tiles.Walls;
 using System;
 using System.Net;
+using UltimateSkyblock.Content.Keybinds;
+using Terraria.GameInput;
+using Terraria.ObjectData;
 
 namespace UltimateSkyblock.Content.ModPlayers
 {
@@ -30,7 +32,7 @@ namespace UltimateSkyblock.Content.ModPlayers
             {
                 if (joinTimer == 360)
                 {
-                    if ((WorldSize is WorldSizes.Small or WorldSizes.Large) && ModContent.GetInstance<SkyblockModConfig>().SmallWorldWarning && SubworldSystem.Current == null && UltimateSkyblock.IsSkyblock())
+                    if ((WorldSize is WorldSizes.Small or WorldSizes.Large) && ModContent.GetInstance<SkyblockModConfig>().SmallWorldWarning && SubworldSystem.Current == null && UltimateSkyblock.IsSkyblock() && Main.myPlayer == Player.whoAmI)
                     {
                         Main.NewText("----------" + "\nYou are currently on a " + WorldSize.ToString().ToLower() + " world\nFor the best experience, please create a medium world, as the islands will be " + (WorldSize == WorldSizes.Small ? "too close together." : "too far apart.") + "\n[c/E136EE:This message can be disabled at any time through the Gameplay Config.]\n" + "----------");
                     }
@@ -41,16 +43,8 @@ namespace UltimateSkyblock.Content.ModPlayers
             }
         }
 
-        public override void OnConsumeAmmo(Item weapon, Item ammo)
+        public override void ProcessTriggers(TriggersSet triggersSet)
         {
-            foreach (var val in UI.MapDrawing.TileIconDrawing.TEs)
-                Main.NewText(val);
-        }
-
-        public override void PostUpdate()
-        {
-            WorldGen.PlantAlch();
-
             if (KeybindSystem.OpenBookKeybind.JustPressed)
             {
                 if (ModContent.GetInstance<GuidebookSystem>().IsUIOpen())
@@ -64,6 +58,10 @@ namespace UltimateSkyblock.Content.ModPlayers
                     ModContent.GetInstance<GuidebookSystem>().ShowMyUI();
                 }
             }
+        }
+
+        public override void PostUpdate()
+        {
 
             //Kills player when falling out
             if (Main.myPlayer == Player.whoAmI && Player.position.ToTileCoordinates().Y >= Main.maxTilesY - 45 && SubworldSystem.Current == null)

@@ -136,14 +136,6 @@ namespace UltimateSkyblock.Content.Tiles.Furniture
 
     public class PlanteraAltarMapIconEntity : ModTileEntity
     {
-        private MapIcon icon;
-        private static Asset<Texture2D> plantera;
-
-        public override void Load()
-        {
-            plantera = Mod.Assets.Request<Texture2D>("Content/UI/Guidebook/Assets/PlanteraSWIcon");
-        }
-
         public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
         {
             if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -184,14 +176,6 @@ namespace UltimateSkyblock.Content.Tiles.Furniture
             {
                 Kill(i, j);
             }
-
-            icon = new MapIcon(new(Position.X + 1.5f, Position.Y), plantera.Value, Color.White, 1.1f, 0.8f, "Plantera Altar");
-            TileIconDrawing.icons.Add(icon);
-        }
-
-        public override void OnKill()
-        {
-            TileIconDrawing.icons.Remove(icon);
         }
     }
 }

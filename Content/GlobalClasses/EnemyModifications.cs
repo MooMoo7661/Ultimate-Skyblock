@@ -12,12 +12,13 @@ namespace UltimateSkyblock.Content.GlobalClasses
     public class EnemyModifications : GlobalNPC
     {
         public override bool InstancePerEntity => true;
+
         public override void PostAI(NPC npc)
         {
             if (!UltimateSkyblock.IsSkyblock() || !(NPCID.Sets.Zombies[npc.type] || NPCID.Sets.DemonEyes[npc.type]))
                 return;
 
-            if (Main.dayTime && !npc.wet)
+            if (Main.dayTime && !npc.wet && !Main.player[npc.FindClosestPlayer()].ZoneGraveyard)
                 npc.AddBuff(BuffID.OnFire3, 60);
 
             if ((npc.HasBuff(BuffID.OnFire) || npc.HasBuff(BuffID.OnFire3)) && npc.wet)

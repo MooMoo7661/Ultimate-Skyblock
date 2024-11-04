@@ -274,48 +274,50 @@ namespace UltimateSkyblock.Content.Tiles.Extractinators
 		}
 	}
 
-	public class GlobalChest : GlobalTile {
+    public class GlobalChest : GlobalTile {
 		private static Asset<Texture2D> chestIndicatorTexture;
 		public override void Load() {
 			chestIndicatorTexture = ModContent.Request<Texture2D>("UltimateSkyblock/Content/Tiles/Extractinators/ExtractinatorIndicatorDot");
 		}
 
 		public static Dictionary<Point, ChestIndicatorInfo> ChestPercentFullInfo = new();
-		public override void PostDraw(int i, int j, int type, SpriteBatch spriteBatch) {
-            if (!AutoExtractor_BaseEntity.ValidTileTypeForStorageChest(type))
-                return;
+		public override void PostDraw(int i, int j, int type, SpriteBatch spriteBatch)
+		{
+			if (!AutoExtractor_BaseEntity.ValidTileTypeForStorageChest(type))
+				return; 
 
-            Tile tile = Main.tile[i, j];
+			Tile tile = Main.tile[i, j];
 			if (!tile.HasTile)
 				return;
 
-			TileObjectData data = TileObjectData.GetTileData(tile);
-			if (data == null)
-				return;
+            TileObjectData data = TileObjectData.GetTileData(tile);
+			if (data == null) return;
 
 			if (tile.TileFrameY % (data.Height * 18) != 0)
-                return;
+				return;
 
             int localFrameX = tile.TileFrameX % (data.Width * 18);
 			if (localFrameX > 18)
-                return;
+				return;
 
 			int chestX = i;
-            if (localFrameX == 0) {
-                //Left
-                if (i <= 0)
-                    return;
+			if (localFrameX == 0)
+			{
+				//Left
+				if (i <= 0)
+					return;
 
-                Tile left = Main.tile[i - 1, j];
-                if (!AutoExtractor_BaseEntity.AutoExtractorTileType(left.TileType))
-                    return;
-            }
-            else {
-                //Right
-                if (i >= Main.maxTilesX - 1)
-                    return;
+				Tile left = Main.tile[i - 1, j];
+				if (!AutoExtractor_BaseEntity.AutoExtractorTileType(left.TileType))
+					return;
+			}
+			else
+			{
+				//Right
+				if (i >= Main.maxTilesX - 1)
+					return;
 
-                Tile right = Main.tile[i + 1 ,j];
+				Tile right = Main.tile[i + 1, j];
 				if (!AutoExtractor_BaseEntity.AutoExtractorTileType(right.TileType))
 					return;
 
@@ -324,7 +326,7 @@ namespace UltimateSkyblock.Content.Tiles.Extractinators
 
 			if (!TryGetChestFill(chestX, j, out float stackPercentFull, out float slotsPercentFull))
 				return;
-			
+
 			Vector2 center = new Point(chestX + 1, j).ToWorldCoordinates(0f, 0f);
 			float indicatorRadius = 5f;
 
